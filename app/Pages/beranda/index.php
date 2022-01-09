@@ -1,0 +1,1 @@
+<h1>Welcome, <?= $page_title; ?>!</h1>
