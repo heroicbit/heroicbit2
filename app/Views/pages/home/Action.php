@@ -10,7 +10,7 @@ class PageAction {
 	// This method handle get request
 	public function run()
 	{
-		$data['page_title'] = 'The Page';
+		$data['page_title'] = 'The Excelent Page';
 		return $data;
 	}
 

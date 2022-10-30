@@ -1,6 +1,5 @@
-<?php 
+<?php namespace App\Controllers;
 
-namespace App\Controllers;
 use Symfony\Component\Yaml\Yaml;
 
 class Page extends BaseController
@@ -14,13 +13,12 @@ class Page extends BaseController
             $segments = ['home'];
 
         $pageDetail = $this->pageDetail($segments);
-        $pageTemplate = file_get_contents(APPPATH.'Pages/'.$pageDetail['uri'].'/index.php');
+        $fileTemplate = 'pages/'.$pageDetail['uri'].'/index.html';
+        if(! file_exists(APPPATH . 'Views/' . $fileTemplate))
+            throw new \CodeIgniter\Exceptions\ConfigException('Template page file not found: index.html');
 
-        $view = \Config\Services::renderer();
-        $output = $view->setData($pageDetail)
-                       ->renderString($pageTemplate);
-
-        echo $output;
+        $view = service('latte');
+        $view->render($fileTemplate, $pageDetail);
     }
 
     private function pageDetail($segments, $customdata = [], $return_as_string = false)
@@ -29,7 +27,8 @@ class Page extends BaseController
         $strseg = implode('/', $segments);
 
         // Ambil page, Kalo page 404 pun ga ada juga, show 404 bawaan ci
-        if(! $page = $this->getPage($strseg)) show_404();
+        if(! $page = $this->getPage($strseg))
+            throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 
         // Run page action class
         $pagedata = [];
@@ -89,8 +88,8 @@ class Page extends BaseController
      */
     private function pageExists($url = null, $remain_uri = '')
     {
-        if(file_exists(realpath(APPPATH.'Pages/'.$url.'/meta.yml'))){
-            $pagePath = realpath(APPPATH.'Pages/'.$url);
+        if(file_exists(realpath(APPPATH.'Views/pages/'.$url.'/meta.yml'))){
+            $pagePath = realpath(APPPATH.'Views/pages/'.$url);
             $metaFile = $pagePath.'/meta.yml';
         }
         else {
