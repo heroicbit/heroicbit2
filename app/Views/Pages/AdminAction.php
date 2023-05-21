@@ -1,6 +1,6 @@
 <?php 
 
-namespace App\Pages;
+namespace App\Views\Pages;
 
 class AdminAction extends FrontAction 
 {

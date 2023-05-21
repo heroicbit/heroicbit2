@@ -1,14 +1,13 @@
-<?php namespace App\Pages\home;
+<?php namespace App\Views\Pages\home;
 
-use App\Pages\AdminAction;
+use App\Views\Pages\AdminAction;
 
 class PageAction extends AdminAction {
 
 	// This method handle GET request
 	public function render()
 	{
-		$this->data['page_title'] = 'The Excelent Page';
-		return $this->data;
+		return [];
 	}
 
 	// This method handle GET request via AJAX

@@ -4,7 +4,7 @@
 <meta http-equiv="x-pjax-version" content="v123">
 <base href="{site_url('admin')}">
 
-<title>{$page_title}</title>
+<title><?= $page_title; ?></title>
 
 <meta name='robots' content='noindex, nofollow' />
 
@@ -28,18 +28,18 @@
 <!-- FIELDTYPE ASSETS -->
 
 <!-- jquery Choosen -->
-<link rel="stylesheet" href="{$theme_url . 'assets/chosen/chosen.min.css'}">
-<link rel="stylesheet" href="{$theme_url . 'assets/chosen/component-chosen.min.css'}">
+<link rel="stylesheet" href="<?= $theme_url . 'assets/chosen/chosen.min.css'; ?>">
+<link rel="stylesheet" href="<?= $theme_url . 'assets/chosen/component-chosen.min.css'; ?>">
 
 <!-- Select2 -->
-<link rel="stylesheet" href="{$theme_url . 'assets/select2/select2.min.css'}">
+<link rel="stylesheet" href="<?= $theme_url . 'assets/select2/select2.min.css'; ?>">
 
 <!-- Tagsinput -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-tagsinput/1.3.6/jquery.tagsinput.min.css">
 
 <!-- Can be replace with app-blue, green, orange, purple, red, seagreen, pink -->
-<link rel="stylesheet" id="theme-style" href="{$theme_url . 'assets/css/app-blue.css?v1.3'}">
-<link rel="stylesheet" id="theme-style" href="{$theme_url . 'assets/css/custom.css?v1.1'}">
+<link rel="stylesheet" id="theme-style" href="<?= $theme_url . 'assets/css/app-blue.css?v1.3'; ?>">
+<link rel="stylesheet" id="theme-style" href="<?= $theme_url . 'assets/css/custom.css?v1.1'; ?>">
 
 <!-- Fancybox -->
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.7/dist/jquery.fancybox.min.css" />

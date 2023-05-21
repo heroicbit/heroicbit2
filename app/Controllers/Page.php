@@ -13,12 +13,11 @@ class Page extends BaseController
             $segments = ['home'];
 
         $pageDetail = $this->pageDetail($segments);
-        $fileTemplate = $pageDetail['uri'].'/index.html';
-        if(! file_exists(APPPATH . 'Pages/' . $fileTemplate))
-            throw new \CodeIgniter\Exceptions\ConfigException('Template page file not found: index.html');
+        $fileTemplate = 'Pages/'.$pageDetail['uri'].'/content.php';
+        if(! file_exists(APPPATH . 'Views/' . $fileTemplate))
+            throw new \CodeIgniter\Exceptions\ConfigException('Template page file not found: content.php');
 
-        $view = service('latte');
-        $view->render($fileTemplate, $pageDetail);
+        return view($fileTemplate, $pageDetail);
     }
 
     private function pageDetail($segments, $customdata = [], $return_as_string = false)
@@ -34,16 +33,16 @@ class Page extends BaseController
         $pagedata = [];
         if(file_exists($page['path'].'/PageAction.php')){
             $actionPath = str_replace('/', '\\', $page['uri']);
-            $ActionClassName = "App\Pages\\{$actionPath}\PageAction";
+            $ActionClassName = "App\Views\Pages\\{$actionPath}\PageAction";
             $Action = new $ActionClassName;
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();
             } elseif($this->request->isAJAX() && $this->request->getGet('dataonly')) {
-                $pagedata = $Action->supply();
+                $pagedata = $Action->_outputAjax();
                 return $this->response->setJSON($pagedata);
 			} else {
-                $pagedata = $Action->render();
+                $pagedata = $Action->_output();
 			}
         }
 
@@ -92,8 +91,8 @@ class Page extends BaseController
      */
     private function pageExists($url = null, $remain_uri = '')
     {
-        if(file_exists(realpath(APPPATH.'Pages/'.$url.'/meta.yml'))){
-            $pagePath = realpath(APPPATH.'Pages/'.$url);
+        if(file_exists(realpath(APPPATH.'Views/Pages/'.$url.'/meta.yml'))){
+            $pagePath = realpath(APPPATH.'Views/Pages/'.$url);
             $metaFile = $pagePath.'/meta.yml';
         }
         else {
