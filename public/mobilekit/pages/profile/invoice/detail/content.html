@@ -1,0 +1,122 @@
+{layout '../../../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+  
+<div class="card bg-white mt-2">
+    <div class="card-body row">
+      <div class="col-lg-9">
+        <div class="row">
+          <div class="col-md-6 mb-24pt mb-lg-0">
+            <p class=" mb-0"><strong>Prepared for</strong></p>
+            <h2 class="h3">{$transaction['customer']['fullname']}</h2>
+            <p class="text-50">({$transaction['customer']['phone']}) <br>
+              {$transaction['customer']['address']}<br />
+              {$transaction['customer']['city']}, {$transaction['customer']['province']}
+            </p>
+          </div>
+          <div class="col-md-6">
+            <p class=" mb-0"><strong>Prepared by</strong></p>
+            <h2 class="h3">{setting_item('site.site_title')}</h2>
+            <p class="text-50">{setting_item('site.address')}</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 text-lg-right d-flex flex-lg-column mb-24pt mb-lg-0 border-bottom border-lg-0 pb-16pt pb-lg-0">
+        <div class="flex">
+          <p class=" mb-0"><strong>Invoice</strong></p>
+          <p class="text-50">
+            <strong class="text-primary">#{$transaction['order_code']}</strong><br />
+            {date('d M Y', strtotime($transaction['created_at']))}<br>
+            
+            Status:
+            {if in_array($transaction['transaction_status'], ['settled','processing','done','shipped'])}
+						<span class="badge badge-success mt-2 text-uppercase">{$transaction['transaction_status'] == 'settled' ? 'paid' : $transaction['transaction_status']}</span>
+
+            {if $transaction['receipt_code']}<br><br>
+            <span>Ekspedisi: {$transaction['shipment']['courier']}</span><br>
+            <span>Kode resi: {$transaction['receipt_code']}</span>
+            {/if}
+
+            {elseif $transaction['transaction_status'] == 'pending'}
+            <span class="badge badge-danger mt-2 text-uppercase">{$transaction['transaction_status']}</span>
+            
+            {elseif $transaction['transaction_status'] == 'expired'}
+            <span class="badge badge-danger mt-2 text-uppercase">{$transaction['transaction_status']}</span>
+            
+            {/if}
+
+          </p>
+        </div>
+      </div>
+
+      <div class="d-grid gap-2 col-12 col-md-6 mx-auto pb-3 mt-2">
+          <button class="btn btn-block btn-outline-primary d-print-none" onclick="window.print()"><i class="icon ion-md-download"></i> &nbsp;Download Invoice</button>
+
+          {if $transaction['transaction_status'] == 'pending'}
+          <a class="btn btn-block btn-success d-print-none" href="{$transaction['payment_link']}"><i class="icon ion-md-cash"></i> Lanjutkan Pembayaran</a>
+          {/if}
+        </div>
+    </div>
+</div>
+
+<div class="card container page__container my-3">
+  <div class="card-body">
+    <h5 class="mb-2 text-secondary">Invoice Summary</h5>
+
+    <div class="table-responsive">
+      <table class="table table-flush mb-0 table--elevated">
+        <thead>
+          <tr>
+            <th class="text-left"></th>
+            <th class="text-end">Price</th>
+            <th class="text-end">Subtotal</th>
+          </tr>
+        </thead>
+        <tbody>
+
+          {foreach $transaction['items'] as $item}
+
+          <tr>
+            <td colspan="3" class="text-left">
+              <p class="mb-0">{$item['product']['product_name']}</p>
+            </td>
+          </tr>
+          <tr>
+            <td class="text-left"></td>
+            <td class="text-nowrap text-end">{$item['qty']} x (Rp {$item['price']|number:'0',',','.'})</td>
+            <td class="text-nowrap text-end">Rp {$item['subtotal']|number:'0',',','.'}</td>
+          </tr>
+
+          {/foreach}
+          
+        </tbody>
+
+        <tfoot>
+          <tr>
+            <td colspan="2" class="text-end pt-3"><strong>Shipping Cost</strong></td>
+            <td class="text-nowrap text-end pt-3 text-info"><strong>Rp {($transaction['shipping_cost']) ? $transaction['shipping_cost']|number:'0',',','.'}</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-end "><strong>Tax</strong></td>
+            <td class="text-nowrap text-end text-info"><strong>Rp {$transaction['tax']|number:'0',',','.'}</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-end "><strong>Transaction Fee</strong></td>
+            <td class="text-nowrap text-end text-info"><strong>Rp {$transaction['transaction_fee']|number:'0',',','.'}</strong></td>
+          </tr>
+          <tr>
+            <td colspan="2" class="text-end "><strong>Total</strong></td>
+            <td class="text-nowrap text-end text-success"><strong>Rp {$transaction['total']|number:'0',',','.'}</strong></td>
+          </tr>
+        </tfoot>
+      </table>
+    </div>
+  </div>
+</div>
+  
+{/block}

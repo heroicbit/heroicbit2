@@ -27,6 +27,7 @@ class LatteFileLoader extends Latte\Loaders\FileLoader
     public function getContent($fileName): string
     {
         $viewPaths = [
+            APPPATH . 'Pages/',
             APPPATH . 'Views/',
         ];
 

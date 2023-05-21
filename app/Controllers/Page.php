@@ -13,8 +13,8 @@ class Page extends BaseController
             $segments = ['home'];
 
         $pageDetail = $this->pageDetail($segments);
-        $fileTemplate = 'pages/'.$pageDetail['uri'].'/index.html';
-        if(! file_exists(APPPATH . 'Views/' . $fileTemplate))
+        $fileTemplate = $pageDetail['uri'].'/index.html';
+        if(! file_exists(APPPATH . 'Pages/' . $fileTemplate))
             throw new \CodeIgniter\Exceptions\ConfigException('Template page file not found: index.html');
 
         $view = service('latte');
@@ -32,15 +32,19 @@ class Page extends BaseController
 
         // Run page action class
         $pagedata = [];
-        if(file_exists($page['path'].'/Action.php')){
-            include_once($page['path'].'/Action.php');
-            $Action = new \PageAction;
+        if(file_exists($page['path'].'/PageAction.php')){
+            $actionPath = str_replace('/', '\\', $page['uri']);
+            $ActionClassName = "App\Pages\\{$actionPath}\PageAction";
+            $Action = new $ActionClassName;
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();
-            } else {
-                $pagedata = $Action->run() ?? [];
-            }
+            } elseif($this->request->isAJAX() && $this->request->getGet('dataonly')) {
+                $pagedata = $Action->supply();
+                return $this->response->setJSON($pagedata);
+			} else {
+                $pagedata = $Action->render();
+			}
         }
 
         // merge page data and other custom data
@@ -88,8 +92,8 @@ class Page extends BaseController
      */
     private function pageExists($url = null, $remain_uri = '')
     {
-        if(file_exists(realpath(APPPATH.'Views/pages/'.$url.'/meta.yml'))){
-            $pagePath = realpath(APPPATH.'Views/pages/'.$url);
+        if(file_exists(realpath(APPPATH.'Pages/'.$url.'/meta.yml'))){
+            $pagePath = realpath(APPPATH.'Pages/'.$url);
             $metaFile = $pagePath.'/meta.yml';
         }
         else {

@@ -1,0 +1,27 @@
+<div n:if="$presenters" class="section full mb-3" id="presenters">
+
+<style>
+#presenters p.title { line-height: 15px;text-align: center; font-size: 12px; }	
+</style>
+
+<div class="section-title mb-2 d-flex justify-content-between">
+	<h2 class="title mb-0">Para Pemateri</h2>
+</div>
+
+<div class="carousel-small2 splide">	
+	<div class="splide__track">
+		<ul class="splide__list">
+			<!-- slide -->
+			<li n:foreach="$presenters as $p" class="splide__slide">
+				<a href="{site_url('event-presenter/'.$p['id'].'?ref=premium')}">
+					<img src="{$p['photo'] ? $p['photo'] : $child_theme_url.'assets/img/default-presenter.jpg'}" alt="{$p['name']}" class="imaged w-100" style="border-radius:50%;">
+					<p class="title mt-1 text-dark">{$p['name']}</p>
+				</a>
+			</li>
+			<!-- * slide -->
+		</ul>
+	</div>
+</div>
+<!-- * Post Carousel -->
+
+</div>

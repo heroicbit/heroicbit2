@@ -1,0 +1,5 @@
+# General
+page_title: Detail Workshop
+module: online-event
+accept_param_uri: true
+require_login: false

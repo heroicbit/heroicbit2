@@ -1,0 +1,68 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+    {include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+#appCapsule { min-height: 100vh; }
+.appHeader .text-secondary{ color:#aaa!important }
+.appHeader .badge{ min-width:0;height:11px;display:block;top:10px;right:0 }
+#appCapsule{ background-image:linear-gradient(140deg,hsl(0deg 0% 100%) 0,hsl(44deg 100% 96%) 32%,hsl(44deg 98% 93%) 66%,hsl(45deg 95% 89%) 81%,hsl(46deg 92% 85%) 89%,hsl(46deg 90% 81%) 94%,hsl(45deg 90% 75%) 97%,hsl(43deg 92% 70%) 99%,hsl(42deg 93% 65%) 100%,hsl(41deg 95% 59%) 100%,hsl(41deg 97% 50%) 100%) }
+.premium-title { text-shadow:rgba(107, 107, 107, 0.29) 3px 4px 3px;color:rgb(237, 140, 36); }
+</style>
+    
+{if $events || $upcoming}
+    {include 'online-event.html'}
+    {include 'presenter.html'}
+{else}
+
+<img src="{$child_theme_url}assets/img/collage-premium.jpg" class="image w-100">
+
+<div class="post-body px-4">
+    <h1 class="text-center mt-3 premium-title">Premium Workshop</h1>
+
+    {if ($membership['status'] ?? null) == false || ($membership['status'] ?? null) == 'expired'}
+
+    <p class="text-dark lead text-center">Bergabunglah sebagai member premium Evapora dan dapatkan akses eksklusif premium workshop 2 kali dalam sebulan serta semua rekaman sessinya!</p>
+
+    <div class="mt-4 text-center">
+        <h3>Premium Membership Fee</h3>
+
+        <p class="d-flex justify-content-center align-items-center m-0 mb-2">
+            <span style="color:#CA377F" class="h4 m-0 me-2 font-weight-normal">Rp</span>&nbsp;
+            <span style="color:#CA377F" class="h2 m-0 font-weight-normal">{$harga_membership|number:0,',','.'}</span>
+            <small>/bulan</small>
+        </p>
+
+        {if session('logged_in')}
+        <a href="{site_url()}cart/add/membership?reset=1&checkout=1" class="btn btn-success btn-lg text-uppercase mb-3">Gabung Sebulan</a>
+        {else}
+        <a href="{site_url()}auth/login?red=cart/add/membership?checkout=1" class="btn btn-success btn-lg text-uppercase mb-3">Gabung Sebulan</a>
+        {/if}
+
+        <p class="d-flex justify-content-center align-items-center m-0 mb-2">
+            <span style="color:#CA377F" class="h4 m-0 me-2 font-weight-normal">Rp</span>&nbsp;
+            <span style="color:#CA377F" class="h2 m-0 font-weight-normal">{$harga_membership_tahunan|number:0,',','.'}</span>
+            <small>/tahun</small>
+        </p>
+
+        {if session('logged_in')}
+        <a href="{site_url()}cart/add/membership-1-tahun?reset=1&checkout=1" class="btn btn-success btn-lg text-uppercase mb-3">Gabung Setahun</a>
+        {else}
+        <a href="{site_url()}auth/login?red=cart/add/membership-1-tahun?checkout=1" class="btn btn-success btn-lg text-uppercase">Gabung Sekarang</a>
+        {/if}
+    </div>
+
+    {else}
+
+    <p class="text-dark lead text-center">Premium Workshop segera hadir!</p>
+
+    {/if}
+</div>
+
+{/if}
+
+
+{/block}

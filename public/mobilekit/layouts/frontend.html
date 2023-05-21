@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="id" dir="ltr">
+<head>
+	{include '../partials/head.html'}
+
+	{block stylesheet}{/block}
+    {include '../partials/custom_css.html'}
+</head>
+
+<body>
+
+    <header class="shadow">
+        {block header}
+            {include '../partials/navbar.html'}
+        {/block}
+    </header>
+
+    <div id="main" style="max-width:1024px; margin:0 auto">
+
+        <!-- App Capsule -->
+        <div id="appCapsule">
+
+            <!-- loader -->
+            <div id="loader"><div class="spinner-border text-primary" role="status"></div></div>
+            <!-- * loader -->
+
+            <div class="appContent">
+
+                {block content}{/block}
+
+            </div>
+
+            {block footer}{/block}    
+
+        </div>
+        <!-- * appCapsule -->
+
+        {block bottommenu}
+            {include '../partials/bottommenu.html'}
+        {/block}
+
+    </div>
+
+    {include '../partials/sidebar.html'}
+
+    <!-- ///////////// Js Files ////////////////////  -->
+    <!-- Bootstrap-->
+    <script src="{$theme_url}assets/js/lib/bootstrap.min.js"></script>
+    <!-- Ionicons -->
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <!-- Splide -->
+    <script src="{$theme_url}assets/js/plugins/splide/splide.min.js"></script>
+    <!-- ProgressBar js -->
+    <script src="{$theme_url}assets/js/plugins/progressbar-js/progressbar.min.js"></script>
+    <!-- Base Js File -->
+    <script src="{$theme_url}assets/js/base.js"></script>
+    
+    {if ($immediate_loading ?? true)}
+    <script n:syntax="off">
+        $(window).on('beforeunload', function() {
+            $('#loading').css('display','flex').css('opacity',1);
+        });
+    </script>
+    {/if}
+
+    {embed_entry_script()}
+
+    {if setting_item('theme.enable_sw') && file_exists('sw_'.$_ENV['SITENAME'].'.js')}
+    <div id="serviceWorkerName" data-name="sw_{$_ENV['SITENAME']}"></div>
+    <script n:syntax="off">
+    // Check that service workers are supported
+    if ('serviceWorker' in navigator) {
+      // Use the window load event to keep the page load performant
+      window.addEventListener('load', () => {
+        let serviceWorkerName = document.querySelector('#serviceWorkerName').dataset.name;
+        navigator.serviceWorker.register(`/${serviceWorkerName}.js`);
+      });
+    } else {
+        console.debug('Service-worker not supported');
+    }
+    </script>
+    {/if}
+
+</body>
+
+</html>

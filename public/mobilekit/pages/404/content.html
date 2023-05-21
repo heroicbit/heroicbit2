@@ -1,0 +1,30 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+
+<div class="splashBlock pt-5">
+  <div class="splashTitle text-primary mb-1">
+    <img src="{$theme_url}assets/img/404.png" class="img-fluid">
+  </div>
+
+  <div class="sectionTitle text-center">
+    <div class="lead">
+      Halaman tidak ditemukan.
+    </div>
+  </div>
+
+  <footer class="mb-0 pb-2">
+    <div class="row">
+      <div class="col-12">
+        <a href="{site_url('dashboard')}" class="btn btn-outline-info btn-block"><i class="icon ion-md-arrow-back"></i> Kembali</a>
+      </div>
+    </div>
+  </footer>
+</div>
+
+
+{/block}

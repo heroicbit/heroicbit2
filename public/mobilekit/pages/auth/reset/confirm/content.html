@@ -1,0 +1,70 @@
+{layout '../../../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+#appCapsule { height: 100vh; }
+.form-button-group { max-width: 576px !important; margin: 0 auto; }
+</style>
+
+<div class="login-form mt-1">
+  <div class="section mt-1 mb-5">
+    {flashdata('message')|noescape}
+
+  {form_open()|noescape}
+    <div class="section-title text-center mt-3">
+      <div class="lead mb-2">Masukkan kode OTP yang kami kirimkan ke alamat email Anda</div>
+    </div>
+
+    
+    <div class="form-group boxed">
+      <div class="input-wrapper not-empty">
+        <input type="text" class="form-control verify-input" name="otp" id="smscode" placeholder="••••••" maxlength="6" autocomplete="one-time-code" autofill="off" role="presentation" required>
+      </div>
+    </div>
+
+    <div class="section-title text-center mt-3">
+      <div class="lead">Masukkan password baru</div>
+    </div>
+    <div class="form-group boxed">
+      <div class="input-wrapper">
+        <input type="password" name="password" class="form-control text-center" placeholder="Password Baru" autocomplete="new-password" autofill="off" role="presentation" required>
+        <i class="clear-input"><ion-icon name="close-circle"></ion-icon></i>
+      </div>
+    </div>
+    <div class="form-group boxed">
+      <div class="input-wrapper">
+        <input type="password" name="confirm_password" class="form-control text-center" placeholder="Ulangi Password Baru" autocomplete="new-password" autofill="off" role="presentation" required>
+        <i class="clear-input"><ion-icon name="close-circle"></ion-icon></i>
+      </div>
+    </div>
+    
+    <div class="mt-3">
+      <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg btn-block mb-1">
+        <span id="submitSpinner" class="d-none spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+        <span id="submitText">Konfirmasi</span>
+      </button>
+    </div>
+  </form>
+
+  </div>
+</div>
+
+<script>
+  $(function(){
+    let allowSubmit = true;
+    $('form').on('submit', function(){
+      if(allowSubmit){
+        allowSubmit = false;
+        $('#btnSubmit').addClass('disabled')
+        $('#submitText').text('Updating new password..');
+        $('#submitSpinner').removeClass('d-none');
+      } else return false;
+    })
+  })
+</script>
+
+{/block}

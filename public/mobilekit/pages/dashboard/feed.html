@@ -1,0 +1,67 @@
+{if $feed}
+<div class="section full mb-3" id="videos">
+
+<style>
+#videos .splide__slide .title {
+	font-size: 16px;
+    line-height: 1.3em;
+    overflow: hidden;
+	text-overflow: ellipsis;
+	display: -webkit-box;
+	-webkit-line-clamp: 2;
+	-webkit-box-orient: vertical;
+	margin-bottom: 5px;
+}
+#videos .splide__slide .date-streaming {
+	margin-top: 0 !important;
+	line-height: 16px;
+}
+#videos .image {
+  position: relative;
+  border-radius: 10px;
+}
+#videos .image .d-flex {
+  position: absolute;
+    width: 100%;
+    bottom: 0px;
+    padding: 0 3px 0 7px;
+    border-radius: 5px;
+}
+</style>
+
+<div class="section-title mt-5 mb-2 d-flex justify-content-between">
+	<h2 class="title mb-0">Video &amp; Artikel</h2>
+	<a href="{site_url('feed')}">Lihat Semua</a>
+</div>
+
+<div class="carousel-multiple2 splide">	
+	<div class="splide__track">
+		<ul class="splide__list">
+			<!-- slide -->
+			<li n:foreach="$feed as $p" class="splide__slide">
+				<a href="{site_url('feed/detail/'.$p->id)}">
+					<div class="image">
+						<img src="{!empty($p->featured_image) ? $p->featured_image : 'https://img.youtube.com/vi/'.$p->embed_video.'/mqdefault.jpg'}" alt="{$p->title}" class="image w-100">
+				        {if !empty($p->video_duration)}
+							{var $durationArray = explode(":", $p->video_duration)}
+							{var $duration = ($durationArray[0] ?? null) == '00' ? $durationArray[1].':'.$durationArray[2] : $p->video_duration}
+							<div class="d-flex justify-content-between">
+								<div class="">
+									<i class="bi bi-play-btn-fill text-white"></i>
+								</div>
+								<div class="badge badge-dark">{$duration}</div>
+							</div>
+						{/if}
+					</div>
+					<h2 class="title mt-1">{$p->title}</h2>
+					<p class="date-streaming text-muted mt-1">{time_ago($p->published_at)}</p>
+				</a>
+			</li>
+			<!-- * slide -->
+		</ul>
+	</div>
+</div>
+<!-- * Post Carousel -->
+
+</div>
+{/if}

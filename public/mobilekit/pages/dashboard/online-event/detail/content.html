@@ -1,0 +1,70 @@
+{layout '../../../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+
+  <!-- title -->
+  <h1 class="title-lg mt-2 mb-2">
+      {$pembinaan['title']}
+  </h1>
+  <!-- * title -->
+
+  <!-- post header -->
+  <div class="postHeader mb-2">
+      <div>
+          <a href="#" class="badge badge-primary text-uppercase">{$pembinaan['type']}</a>
+      </div>
+      <div>{PHP81_BC\strftime('%d %B %Y', strtotime($pembinaan['date']), ci()->config->item('locale'))}</div>
+  </div>
+  <!-- * post header-->
+
+  <!-- post body -->
+  <div class="postBody">
+
+      <figure>
+          <img src="{$pembinaan['poster']}" alt="image">
+      </figure>
+      
+      <dl>
+        <div class="row">
+          <div class="col-6">
+            <a class="btn btn-block btn-primary" style="background-color: blue" href="{$pembinaan['zoom_link']}" target="_blank"><i class="icon ion-md-videocam"></i> Zoom</a>
+          </div>
+          <div class="col-6">
+            <a class="btn btn-block btn-danger" href="{$pembinaan['youtube_link']}" target="_blank"><i class="icon ion-logo-youtube"></i> Youtube</a>
+          </div>
+        </div>
+      </dl>
+
+      <dl>
+        <dt>Pemateri:</dt>
+        <dd>{$pembinaan['speaker']}</dd>
+      </dl>
+
+      <dl>
+        <dt>Waktu:</dt>
+        <dd>{PHP81_BC\strftime("%d %B %Y, %H:%M", strtotime($pembinaan['date']), ci()->config->item('locale'))} {$pembinaan['timezone']}
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Zoom:</dt>
+        <dd>
+          <strong>Meeting ID:&nbsp;</strong>{$pembinaan['zoom_meeting_id']}<br>
+          <strong>Meeting Passcode:&nbsp;</strong>{$pembinaan['zoom_passcode']}
+        </dd>
+      </dl>
+
+      <dl>
+        <dt>Catatan:</dt>
+        <dd>{nl2br($pembinaan['notes'])|noescape}</dd>
+      </dl>
+
+
+  </div>
+  <!-- * post body -->
+
+{/block}

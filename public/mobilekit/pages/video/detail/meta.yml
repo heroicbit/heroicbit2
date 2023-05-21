@@ -1,0 +1,5 @@
+# General
+page_title: Detail Events
+module: video
+accept_param_uri: true
+require_login: true

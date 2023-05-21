@@ -1,0 +1,205 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+#appCapsule { min-height: 100vh; }
+  .row, input[type=text] {
+    font-size: 110%;
+    padding: .5rem !important;
+  }
+  .form-control-sm {
+    min-height: 20px !important;
+    height: 30px;
+    padding: 0 0 !important;
+    width: 50px;
+  }
+  .btn-sm {
+    padding: 12px;
+  }
+</style>
+  <div class="row justify-content-center mt-2" x-data="cart()">
+    <div class="col-12">
+      <div class="card rounded-lg shadow-lg">
+        <div class="card-body p-1">
+          <template x-if="data.products.length > 0">
+            <form @submit.prevent="updateCart" x-data="cart()">
+              <div class="row m-0 d-none d-md-flex" style="background-color:#eee">
+                <div class="col-md-6 ">
+                  <strong>Nama Produk </strong>
+                </div>
+                <div class="col-md-3 text-center">
+                  <strong>Qty</strong>
+                </div>
+                <div class="col-md-3 text-end">
+                  <strong>Subtotal</strong>
+                </div>
+              </div>
+              <template x-for="product in data.products">
+                <div class="row m-0 border-bottom">
+
+                  <div class="col-md-6 mb-1">
+                    <div x-text="product.product_name"></div>
+                    <span class="text-primary">Rp</span>
+                    <span class="text-primary" x-text="product.retail_price.toLocaleString()"></span>
+                  </div>
+              
+                  <div class="col-md-3 col-7 ps-0">
+                    <div class="input-group">
+                      <div class="d-flex">  
+                      <span class="btn btn-link btn-sm text-danger px-0" @click="deleteProduct(product.id)"><i class="bi bi-trash"></i></span>
+                      <div class="input-group-prepend">
+                        <button type="button" @click="computedItem(product.id, 'substract')" class="cart-minus btn btn-secondary btn-sm">-</button>
+                      </div>
+                      <input x-model="product.quantity < 0 ? product.quantity = 0 : product.quantity" type="text" class="form-control form-control-sm cart-qty text-center mx-1" required readonly>
+                      <div class="input-group-appe0d">
+                        <button type="button" @click="computedItem(product.id, 'add')" class="cart-plus btn btn-secondary btn-sm">+</button>
+                      </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="col-md-3 col-5 mt-1 pe-0 text-end text-nowrap">
+                    Rp <span x-text="(product.retail_price * product.quantity).toLocaleString()"></span>
+                  </div>
+                </div>
+              </template>
+
+              <div class="row mx-0 mb-4" style="background-color: #eee;">
+                <div class="col-md-9 col-6">
+                  <strong>Total</strong>
+                </div>
+                <div class="col-md-3 col-6 text-end pe-0 text-nowrap">
+                  <strong class="me-1">Rp</strong>
+                  <strong x-text="data.total_price < 0 ? data.total_price = 0 : data.total_price.toLocaleString()"></strong>
+                </div>
+              </div>
+                
+              <div class="row">
+                {if setting_item('product.enable') == 'on'}
+                <div class="col">
+                  <a href="{site_url('products')}" class="btn btn-sm btn-outline-info"><i class="icon ion-md-add mr-2"></i> Produk</a>
+                </div>
+                {/if}
+                <div class="col text-end">
+                  <a href="{site_url('payment/checkout')}" class="btn btn-sm btn-primary text-uppercase">Checkout <i class="bi bi-arrow-right ms-1 me-0"></i></a>
+                </div>
+              </div>
+            </form>
+          </template>
+
+          <template x-if="data.products.length == 0">
+            <div class="text-center py-4">
+              <p>Keranjang belanja masih kosong.</p>
+              <a class="btn btn-outline-info btn-sm" href="{site_url('catalog')}">
+                <i class="bi bi-gift"></i> Lihat produk
+              </a>
+            </div>
+          </template>
+
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+<script n:syntax="off">
+
+  function cart() {
+    return {
+      cart_id: localStorage.getItem('cart_id'),
+      user_token: localStorage.getItem('cdplusertoken'),
+      loading: false,
+      data: {
+        products: [],
+        user_id: "",
+        product_id: "",
+        total_price: 0,
+        // products: [
+        //   {
+        //     id: 1,
+        //     name: 'Kelas Mahir',
+        //     price: 550000,
+        //     qty: 1
+        //   },
+        //   {
+        //     id: 2,
+        //     name: 'Kelas Masak',
+        //     price: 340000,
+        //     qty: 3
+        //   },
+        // ],
+      },
+      computedItem(id, type) {
+        // Find product where id same
+        const product = this.data.products.find(product => product.id == id)
+
+        // Check type for add/substract item price
+        if(type === 'add') {
+          product.quantity++
+          this.data.total_price += product.retail_price
+        } else {
+          if(product.quantity > 0) {
+            product.quantity--
+            this.data.total_price -= product.retail_price
+          }
+        }
+      },
+      deleteProduct(id) {
+        if(confirm('yakin akan menghapus dari keranjang?')) {
+          window.location = base_url + "api/payment/cart/delete/" + id
+        }
+      },
+      init() {
+        
+        // Get list cart
+        const headers = this.user_token ? { headers: { Authorization: this.user_token } } : null
+        axios(`${base_url}api/payment/cart?id=${this.cart_id}`, headers)
+        .then((res) => {
+          const data = res.data.data
+          data.map((item) => {
+            item.retail_price = parseInt(item.retail_price);
+            item.quantity = parseInt(item.quantity);
+          })
+          this.data.products = data
+          this.data.products.map(product => this.data.total_price += product.retail_price * product.quantity)
+        })
+        .catch(err => console.log(err))
+      },
+      checkout() {
+
+        // Init form data
+        const formData = new FormData();
+        formData.append("email", this.data.email);
+        formData.append("password", this.data.password);
+
+        // Set state if request
+        this.loading = true
+        this.errorLogin = ""
+
+        // Request AJAX
+        axios.post(`${base_url}api/v2/user/auth/login`, formData)
+        .then(response => {
+          this.loading = false
+          if(response.data.response_code == 401) this.errorLogin = response.data.response_message
+
+          // Set localstorage
+          localStorage.setItem('cdplusertoken', response.data.data.token)
+
+          // Check query params for redirect
+          const url = new URL(window.location.href)
+          const value = url.searchParams.get('red') ?? 'dashboard'
+
+          window.location.href= base_url + value;
+
+        })
+        .catch(() => this.loading = false)
+      }
+    }
+  }
+</script>
+
+{/block}

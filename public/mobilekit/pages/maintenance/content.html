@@ -1,0 +1,28 @@
+<!doctype html>
+<title>{$title}</title>
+<style>
+  html { height: 100%; }
+  body { 
+    text-align: center; 
+    padding: 100px;
+    background: #9796f0;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #fbc7d4, #9796f0);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #fbc7d4, #9796f0); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+  }
+  h1 { font-size: 50px; }
+  body { font: 20px Helvetica, sans-serif; color: #333; }
+  article { display: block; text-align: left; width: 650px; margin: 0 auto; }
+  a { color: #dc8100; text-decoration: none; }
+  a:hover { color: #333; text-decoration: none; }
+  article { text-align: center }
+  article img { height: 100px }
+</style>
+
+<article>
+    <img src="{$theme_url.'assets/img/under-maintenance.png'}" />
+    <h1>Hold your breath..!</h1>
+    <div>
+        <p>Sorry for the inconvenience but we&rsquo;re performing some deployment at the moment. We&rsquo;ll be back online shortly! You can refresh page after you release your breath.</p>
+        <p style="color:#666">&mdash; {setting_item('site.site_title')}</p>
+    </div>
+</article>

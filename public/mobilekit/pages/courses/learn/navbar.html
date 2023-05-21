@@ -1,0 +1,26 @@
+<style>
+  .appHeader .pageTitle { 
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .badge { padding: 7px 12px 6px 30px; }
+  .badge i {
+    background: #91a4bc;
+    width: 23px;
+    height: 23px;
+    left: 2px;
+    top: 1px;
+    color: #36465b;
+  }
+</style>
+<!-- App Header -->
+<div class="appHeader shadow-sm">
+  <div class="left">
+      <a href="{site_url('courses/intro/'.$course)}" class="headerButton goBack">
+          <i class="bi bi-chevron-left"></i>
+      </a>
+  </div>
+  <div class="right">
+    <a class="headerButton href="#" data-bs-toggle="offcanvas" data-bs-target="#listMateri" aria-controls="listMateri"><i class="bi bi-list"></i></a>
+  </div>
+</div>

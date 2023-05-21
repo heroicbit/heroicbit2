@@ -1,0 +1,187 @@
+{layout '../../../layouts/basic.html'}
+
+{block content}
+<style>
+  #deskripsi { font-size: 16px; color: #444; line-height: 1.6; }
+</style>
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5fed719b6121d80012b3b9cc&product=inline-share-buttons" async="async"></script>
+
+<div class="row pt-xs-0 pt-sm-4 px-xs-0 px-sm-3">
+  <div class="col-md-5 mb-3">
+
+    <a href="{$product->product_image}" data-fancybox><img src="{$product->product_image}" alt="image" class="imageBlock img-fluid rounded"></a>
+
+    <!--
+    <div class="carousel-multiple postCarousel splide" id="gallery">
+      <div class="splide__track">
+          <ul class="splide__list">
+              <li class="splide__slide">
+                  <a href="{$product->product_image}" data-fancybox><img src="{$product->product_image}" alt="image" class="imageBlock img-fluid rounded"></a>
+              </li>
+          </ul>
+      </div>
+    </div> -->
+
+  </div>
+
+  <div class="col-md-7 p-2">
+    <h1 class="h3">{$product->product_name}</h1>
+
+    <p class="h4">
+      {if $product->strike_price > 0}
+        <strong class="text-secondary fs-5"><del class="me-2">Rp {$product->strike_price|number:0,',','.'}</del></strong><br>
+      {/if}
+      <strong class="text-success"><span>Rp {$product->retail_price|number:0,',','.'}</span></strong>
+    </p>
+    
+    <div id="deskripsi" class="mt-5 mb-3">
+      <p class="lead"><strong>Deskripsi Produk</strong></p>
+      <p>{nl2br($product->product_desc)|noescape}</p>
+    </div>
+
+      {if setting_item('referral.enable') == 1 && session('logged_in')}
+      <div id="referral" class="mb-3 px-3 py-1" style="background-color: #eee; border-radius: 15px;">
+        <p class="lead mt-2"><strong>Link Referral</strong></p>
+        <div class="form-group-inline mt-2 mb-3">
+      
+          {if $referral['referral_code'] ?? ''}
+          <div class="input-group">
+            <input type="text" id="product-link" class="form-control form-control-sm"
+              value="{base_url() . 'catalog/detail/' . $product->id . '/' . $product->product_slug . '?ref=' . $referral['referral_code']}">
+            <button class="btn btn-outline-primary text-uppercase" id="copylink" onclick="copylink(this)">
+              <i class="bi bi-clipboard"></i> Salin Tautan
+            </button>
+          </div>
+      
+          {else}
+      
+          <div>
+            <div class="input-group">
+              <input type="text" id="product-link-disabled" class="form-control form-control-sm" value="-" disabled>
+              <button class="btn btn-secondary disabled" disabled>
+                <i class="icon ion-md-copy"></i> Salin Tautan
+              </button>
+            </div>
+            <div class="alert alert-warning mt-2">
+              <span class="fa fa-info-circle"></span> &nbsp;
+              Silakan aktifkan terlebih dahulu kode afiliasi Kamu di halaman <strong><a
+                  href="{site_url('earnings')}">Penghasilan</a></strong>
+            </div>
+          </div>
+          {/if}
+      
+        </div>
+      </div>
+      {/if}
+
+  </div>
+
+  <div class="copywriting" x-data="copywriting()" x-init="getCopywriting()" x-show="false">
+    
+    <h3 class="mt-5">Copywriting</h3>
+
+    <template x-for="(copy,index) in copywriting" :key="copy.id">
+    <div class="card">
+      <div class="row card-body">
+        <div class="col-md-4 mb-3">
+          <img x-bind:src="copy.image.original" class="img-fluid">
+        </div>
+        <div class="col-md-8 lead">
+          <div class="caption lead" x-html="nl2br(copy.caption)">Copywriting content here</div>
+          <!-- <button class="btn btn-info btn-sm mt-2"><span class="fa fa-copy"></span>&nbsp; Copy caption</button> -->
+          </div>
+        </div>
+      </div>
+    </div>
+    </template>
+
+  </div>
+</div>
+
+{block bottommenu}
+  {include 'bottommenu.html'}
+{/block}
+
+<script>
+// Shared data
+// document.addEventListener('alpine:init', () => {
+//   Alpine.store('affiliate', {
+//     code: ''
+//   });
+// });
+
+// $(function(){
+//   axios.get(base_url + 'api/referral?authorization=' + localStorage.getItem('cdplusertoken'))
+//   .then(data => {
+//     Alpine.store('affiliate').code = data.data.referral_code ?? '0';
+//   });
+// })
+
+// function product(){
+//   return {
+//     product: [],
+//     getProduct(){
+//       axios.get(base_url + 'api/product/detail/{$seg_3|noescape}?authorization=' + localStorage.getItem('cdplusertoken'))
+//       .then(data => {
+//         console.log(data);
+//         this.product = data.data.product;
+//         $('title').text(data.data.product.product_name + ` - {setting_item('site.site_title')}`)
+//       });
+//     }
+//   }
+// }
+
+// function copywriting(){
+//   return {
+//     copywriting: [],
+//     getCopywriting(){
+//       axios.get(base_url + 'api/entry/index/product_content/?filter[product]={$seg_3|noescape}&authorization=' + localStorage.getItem('cdplusertoken'))
+//       .then(data => {
+//         this.copywriting = data.data.results;
+//       });
+//     }
+//   }
+// }
+
+function copylink(e){
+  /* Get the text field */
+  var copyText = $('#product-link')[0];
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  var btn = $(e);
+  btn.text('Copied!')
+  setTimeout(function(){
+    btn.html(`<i class="icon ion-md-copy"></i> Salin Tautan`);
+  }, 2000);
+}
+
+$(function(){
+  new Splide( '#gallery', {
+    perPage: 1,
+    arrows: false,
+    pagination: false,
+    gap: '1em',
+    padding: {
+      left : '2rem',
+      right: '2rem',
+    }
+  } ).mount();
+})
+
+// function nl2br (str, is_xhtml) {
+//   if (typeof str === 'undefined' || str === null) {
+//     return '';
+//   }
+//   var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+//   return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+// }
+</script>
+
+{/block}

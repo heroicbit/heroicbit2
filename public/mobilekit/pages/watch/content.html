@@ -1,0 +1,70 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+#appCapsule { min-height: 100vh; }
+dl dt, dl dd { font-size: 110%; color: #555; }  
+dl.large dt, dl.large dd { font-size: 120%; color: #333; }  
+</style>
+
+<div class="blog-post">  
+  <div class="ratio ratio-16x9 mb-3">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/{$event['youtube_link']}" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+  </div>
+
+  <!-- title -->
+  <h1 class="h2 title mt-2 mb-2">
+      {$event['title']}
+  </h1>
+  <!-- * title -->
+
+  <div class="post-body">
+
+    {if $presenters}
+    <dl class="large">
+      <dt>Pemateri:</dt>
+      <dd>
+        {foreach $presenters as $presenter}
+        {var $thePresenters[] = '<a href="'.site_url('online-event/presenter/'.$presenter['id']).'">'.$presenter['name'].'</a>'}
+        {/foreach}
+        {implode(', ',$thePresenters)|noescape}
+      </dd>
+    </dl>
+    {/if}
+
+    <dl class="large">
+      <dt>Waktu:</dt>
+      <dd>{PHP81_BC\strftime("%d %B %Y, %H:%M", strtotime($event['date']), 'id_ID')} {$event['timezone']}
+      </dd>
+    </dl>
+
+    <dl class="large">
+      <dt>Jenis Event:</dt>
+      <dd>{ucfirst($event['type'])}</dd>
+    </dl>
+
+    {if $event['zoom_meeting_id'] && setting_item('workshop.hide_zoom_link') != '1'}
+    <dl class="large">
+      <dt>Zoom:</dt>
+      <dd>
+        <strong>Meeting ID:&nbsp;</strong>{$event['zoom_meeting_id']}<br>
+        <strong>Meeting Passcode:&nbsp;</strong>{$event['zoom_passcode']}
+      </dd>
+    </dl>
+    {/if}
+
+    {if $event['notes']}
+    <dl class="mt-5">
+      <dd>{nl2br($event['notes'])|noescape}</dd>
+    </dl>
+    {/if}
+
+  </div>
+
+</div>
+
+{/block}

@@ -1,0 +1,131 @@
+{layout '../../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+.form-button-group { max-width: 576px !important; margin: 0 auto; }
+</style>
+
+<div class="login-form mt-1">
+  <div class="section my-5">
+    {if setting_item('site.site_logo')}
+    <img src="{setting_item('site.site_logo')}" alt="image" class="form-image">
+    {/if}
+  </div>
+
+  <div class="section mt-1 mb-5">
+    
+    <form x-data="loginForm()" @submit.prevent="submitForm">
+
+      <template x-if="errorLogin">
+        <div class="alert alert-danger" x-text="errorLogin"></div>
+      </template>
+      
+      <div class="form-group boxed">
+        <div class="input-wrapper">
+          <input type="text" x-model="data.email" class="form-control" name="username" placeholder="Alamat email" required>
+          <i class="clear-input">
+            <ion-icon name="close-circle"></ion-icon>
+          </i>
+        </div>
+      </div>
+
+      <div class="form-group boxed">
+        <div class="input-wrapper">
+          <input type="password" x-model="data.password" class="form-control" name="password" placeholder="Kata sandi" autocomplete="off" required>
+          <i class="clear-input">
+            <ion-icon name="close-circle"></ion-icon>
+          </i>
+        </div>
+      </div>
+
+      <div class="form-links mt-2">
+        <div>
+          <a href="{site_url('auth/register')}">Registrasi</a>
+        </div>
+        <div><a href="{site_url('auth/reset')}" class="text-muted">Lupa kata sandi?</a></div>
+      </div>
+
+      <div class="mt-3">
+        <button type="submit" id="btnSubmit" class="btn btn-primary btn-lg btn-block">
+          <div x-show="loading" class="spinner-border" role="status">
+            <span class="visually-hidden">Loading...</span>
+          </div>
+          <span x-show="!loading" id="submitText" class="text-uppercase">Masuk</span>
+        </button>
+      </div>
+      
+      {if $google_signin ?? ''}
+      <div class="mt-4">
+        <p class="text-start">Punya akun Google? Masuk instan tanpa daftar, dengan mengklik tombol di bawah ini.</p>
+        <a class="btn btn-lg btn-block btn-outline-secondary" href="{$google_signin}" role="button" style="text-transform:none;border-radius:0">
+          <img width="25px" style="margin-bottom:3px; margin-right:5px" alt="Google sign-in"
+            src="https://upload.wikimedia.org/wikipedia/commons/thumb/5/53/Google_%22G%22_Logo.svg/512px-Google_%22G%22_Logo.svg.png" />
+          Login with Google
+        </a>
+      </div>
+      {/if}
+
+    </form>
+  </div>
+</div>
+
+<script n:syntax="off">
+  function loginForm() {
+    return {
+      errorLogin: "",
+      loading: false,
+      data: {
+        email: "",
+        password: ""
+      },
+      submitForm() {
+        // Init form data
+        const formData = new FormData();
+        formData.append("email", this.data.email);
+        formData.append("password", this.data.password);
+
+        // Set state if request
+        this.loading = true
+        this.errorLogin = ""
+
+        // Request AJAX
+        axios.post(`${base_url}api/v2/user/auth/login`, formData)
+        .then(response => {
+          this.loading = false
+          if(response.data.response_code == 401) this.errorLogin = response.data.response_message
+
+          // Set localstorage
+          localStorage.setItem('cdplusertoken', response.data.data.token)
+
+          // Check query params for redirect
+          const url = new URL(window.location.href)
+          const value = url.searchParams.get('red') ?? 'dashboard'
+
+          window.location.href= base_url + value;
+
+        })
+        .catch(() => this.loading = false)
+      }
+    }
+  }
+</script>
+
+<!-- <script>
+  $(function(){
+    let allowSubmit = true;
+    $('form').on('submit', function(){
+      if(allowSubmit){
+        allowSubmit = false;
+        $('#btnSubmit').addClass('disabled')
+        $('#submitText').text('Logging in..');
+        $('#submitSpinner').removeClass('d-none');
+      } else return false;
+    })
+  })
+</script> -->
+
+{/block}

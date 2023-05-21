@@ -1,0 +1,94 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+
+<style>
+.pagination a,
+.pagination strong {
+  position: relative;
+  display: block;
+  color: #0d6efd;
+  text-decoration: none;
+  background-color: #fff;
+  border: 1px solid #dee2e6;
+  transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  padding: 6px 12px;
+}
+.pagination a {
+  box-shadow: none !important;
+  color: #8D95A0;
+  position: relative;
+  z-index: 1;
+  font-size: 16px;
+}
+.pagination strong {
+  color: #fff;
+  background: #565EFF;
+  border-color: #565EFF;
+  position: relative;
+  z-index: 2;
+}
+.image {
+  position: relative;
+  margin-bottom: 10px;
+}
+.image img { width: 100%; }
+.image .badge {
+  position: absolute;
+  bottom: 5px;
+  right: 5px;
+  font-size: 10px;
+  padding: 3px 5px 2px;
+  border-radius: 5px;
+}
+</style>
+
+<!-- item list -->
+<div class="row">
+
+  {if $videos}
+
+    <div n:foreach="$videos as $p" class="col-md-6 col-lg-4 mb-2">
+      <a href="{site_url('video/detail/'.$p['id'])}">
+        <div class="image">
+          <img src="{empty($p['cover']) ? 'https://img.youtube.com/vi/'.$p['youtube_id'].'/mqdefault.jpg' : $p['cover']}" alt="image" class="img-fluid">
+          <div class="badge badge-dark">{$p['duration']}</div>
+        </div>
+        <div class="text px-2">
+          <h2 class="h6 title m-0">{$p['title']}</h2>
+          <small class="text-secondary">{PHP81_BC\strftime('%d %B %Y', strtotime($p['date_streaming']), ci()->config->item('locale'))}</small>
+        </div>
+      </a>
+    </div>
+
+  <div class="divider my-3"></div>
+  <div class="pagination d-flex justify-content-between mb-5">
+    <div class="ps-2">
+    {if $page > 1}
+      <a class="btn btn--primary" href="{site_url('video?page='.($page-1))}">
+        <span class="btn__text">&laquo; Sebelumnya</span>
+      </a>
+      {/if}
+    </div>
+    <div class="text-end pe-2">
+    {if count($videos) >= $perpage}
+      <a class="btn btn--primary" href="{site_url('video?page='.($page+1))}">
+        <span class="btn__text">Selanjutnya &raquo;</span>
+      </a>
+      {/if}
+    </div>
+    </div>
+  </div>
+
+  {else}
+  <p class="p-2">Belum ada list video.</p>
+  {/if}
+
+</div>
+<!-- * item list -->
+
+{/block}

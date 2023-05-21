@@ -1,0 +1,69 @@
+<meta charset="utf-8" />
+<title>{$title|noescape}</title>
+
+<!-- Core theme CSS (includes Bootstrap)-->
+<link href="{$theme_url}assets/frontend/css/styles.css" rel="stylesheet" />
+
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="viewport"
+    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover, shrink-to-fit=no" />
+<link rel="icon" type="image/png" href="{setting_item('site.site_logo_small') ?? $theme_url.'assets/img/icon/favicon.png'}" sizes="32x32">
+<link rel="apple-touch-icon" sizes="180x180" href="{setting_item('site.site_logo_small') ?? $theme_url.'assets/img/icon/192x192.png'}">
+<link rel="stylesheet" href="{$theme_url}assets/css/style.css">
+
+<link rel="canonical" href="{current_url()}">
+<meta property="og:locale" content="id_ID">
+<meta property="og:type" content="article">
+<meta property="og:title" content="{$title}">
+<meta property="og:description" content="{$meta_description}">
+<meta property="og:url" content="{current_url()}">
+<meta property="og:site_name" content="{setting_item('site.site_title')}">
+
+<meta property="og:image" content="{$og_image ?? ''}">
+<meta property="og:image:width" content="700">
+<meta property="og:image:height" content="350">
+<link rel="alternate" type="application/rss+xml" title="{$title}" href="{$site_url}feed/">
+<meta name="description" content="{$meta_description}">
+<meta property="description" content="{$meta_description}">
+<meta property="language" content="Indonesia">
+<meta property="revisit-after" content="7">
+<meta property="rating" content="general">
+
+{if $tags ?? ''}
+{foreach $tags as $tag}
+<meta property="article:tag" content="{$tag['name']}" />
+{/foreach}
+{/if}
+
+{if env('CI_ENV') == 'production'}
+<meta property="webcrawlers" content="all">
+<meta property="spiders" content="all">
+<meta property="robots" content="all">
+{else}
+<meta name="robots" content="noindex, nofollow">
+{/if}
+
+{embed_entry_style()}
+
+<!-- JS Cookie Plugin -->
+<script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+{if setting_item('theme.gtag_id')}
+<script async src="https://www.googletagmanager.com/gtag/js?id={setting_item('theme.gtag_id')}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){ dataLayer.push(arguments); }
+  gtag('js', new Date());
+
+  gtag('config', {setting_item('theme.gtag_id')});
+</script>
+{/if}
+
+<!-- Config Js -->
+<script>const base_url={$site_url};</script>
+<input type="hidden" id="base_url" value="{$base_url}">
+
+{setting_item('theme.custom_scripts')|noescape}

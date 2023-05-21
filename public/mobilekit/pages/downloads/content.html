@@ -1,0 +1,80 @@
+{layout '../../../layouts/basic.html'}
+
+{block content}
+
+<!-- SECTION OVERVIEW -->
+<div class="page-section">
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col-lg-7">
+
+                <!-- Membership -->
+                <div class="card mt-5" x-data="downloadable()" x-init="getDownloadable()">
+                    <div class="card-header d-flex border-0">
+                        <div class="flex">
+                            <p class="h3">Unduhan untuk Member</p>
+                            <hr>
+
+                            <template x-for="(download,index) in downloadable" :key="download.id">
+                                <div class="media">
+                                    <div class="avatar avatar-lg me-3">
+                                        <img x-bind:src="download.cover" alt="avatar" class="avatar-img rounded">
+                                    </div>
+                                    <div class="media-body">
+                                        <div class="card-title mt-2 mb-1" x-text="download.title">download Title</div>
+
+                                        {if ($membership['status'] ?? '') == 'active'}
+                                            <a x-bind:href="download.file" target="_blank" class="btn btn-primary btn-sm">Unduh</a>
+                                        {else}
+                                            <template x-if="download.membership == 0">
+                                                <a x-bind:href="download.file" target="_blank" class="btn btn-primary btn-sm">Unduh Gratis</a>
+                                            </template>
+                                            <template x-if="download.membership == 1">
+                                                <a href="#" class="btn btn-primary btn-sm disabled" disabled>Unduhan khusus Gold Member</a>
+                                            </template>
+                                        {/if}
+                                    </div>
+                                </div>
+                            </template>
+
+                        </div>
+                    </div>
+                </div> 
+                <!-- END : Membership --> 
+            
+            </div>
+
+            {if setting_item('membership.enable') == 'on'}
+            <div class="col-lg-5">
+                <!-- Membership -->
+                <div class="card mt-5">
+                	{include '../membership/widget.html'}
+                </div> 
+                <!-- END : Membership --> 
+            </div>
+            {/if}         
+
+        </div>
+
+    </div>
+</div>
+<!-- END : SECTION OVERVIEW -->
+
+<script>
+function downloadable(){
+    return {
+        downloadable: [],
+        getDownloadable: function(){
+            axios.get(base_url + `api/entry/downloadable`)
+            // .then(data => console.log(data.data));
+            .then((data) => {
+                this.downloadable = data.data.results;
+            });
+        }
+    };
+}
+</script>
+
+{/block}

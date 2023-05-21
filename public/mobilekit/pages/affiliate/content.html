@@ -1,0 +1,43 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+
+<div class="card mt-2 mb-2">
+    <div class="card-body">
+        <img src="{$theme_url.'assets/images/affiliate-marketing.png'}" class="img-fluid p-4">
+            
+        <p class="hero__lead text-50">Dapatkan komisi penghasilan dengan cara mereferensikan produk {setting_item('site.site_title')} kepada orang lain hanya dengan membagikan link affiliasimu di sosial media atau blog.</p>
+
+        <p>Program Afiliasi {setting_item('site.site_title')} merupakan sebuah peluang bisnis dengan menggunakan viral sistem, konten, dan entertaiment. BISNIS TANPA MODAL. Cukup terdaftar sebagai MEMBERSHIP AJA! </p>
+
+        <p>Dengan begabung sebagai Premium Member {setting_item('site.site_title')} Anda bisa menjalankan bisnis dengan sangat praktis. Tanpa repot-repot harus stok barang, mikirin packing dan pengiriman. Dengan bantuan sistem di {setting_item('site.site_title')} semua sudah teratasi. Bahkan, produk sudah disediakan dan Anda bisa dapet komisi dari setiap produk yang Anda jual. Anda hanya perlu promosi produk dan share link affiliasi ke customermu.</p>
+
+        <p>Selain itu dengan resmi terdaftar sebagai Member Premium {setting_item('site.site_title')}, Anda juga akan mendapatkan akses penuh semua konten belajar yang ada di kanal Learn {setting_item('site.site_title')} dan juga event seminar bisnis online yang diselenggarakan oleh {setting_item('site.site_title')}.</p>
+
+        <h3 class="h4">Bagaimana Cara Menjadi Member Premium?</h3>
+
+        <p>Anda akan tergabung sebagai Member Premium {setting_item('site.site_title')} setelah melakukan pembelian produk seharga Rp 250.000 minimal sekali seumur hidup. Ini untuk memastikan bahwa Anda benar-benar telah mengenal dan menggunakan produk kami sebelum kemudian memasarkannya nanti.</p>
+
+        {if $me ?? ''}
+        <p>Untuk memulai bergabung sebagai Member Premium silakan lakukan pembelian pertama melalui halaman <a href="{site_url('catalog')}">Katalog</a>.</p>
+        {else}
+        <p>Untuk memulai bergabung sebagai Member Premium silakan login atau registrasi terlebih dahulu melalui tautan di bawah ini:</p>
+        <div class="row">
+            <div class="col">
+                <a href="{site_url('auth/login')}" class="btn btn-block btn-primary">Login</a>
+            </div>
+            <div class="col">
+                <a href="{site_url('auth/register')}" class="btn btn-block btn-outline-primary">Registrasi</a>
+            </div>
+        </div>
+        {/if}
+
+        <p></p>
+    </div>
+</div>
+
+{/block}

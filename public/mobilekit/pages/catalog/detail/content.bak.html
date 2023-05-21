@@ -1,0 +1,190 @@
+{layout '../../../layouts/basic.html'}
+
+{block content}
+
+{#if $membership['status'] != 'active'}
+  {set_flashdata('message','not-member')}
+  {redirect('catalog')}
+{/if}
+
+<script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=5fed719b6121d80012b3b9cc&product=inline-share-buttons" async="async"></script>
+
+<div x-data="product()" x-init="getProduct()">
+
+  <div class="pt-32pt yes mb-4">
+    <div class="container page__container d-flex flex-column flex-md-row align-items-center text-center text-sm-left">
+      <div class="flex d-flex flex-column flex-sm-row align-items-center mb-24pt mb-md-0">
+        <div class="mb-24pt mb-sm-0 me-sm-24pt">
+          <h2 class="mb-0">Detail Produk</h2>
+
+          <ol class="breadcrumb p-0 m-0">
+            <li class="breadcrumb-item"><a href="{$site_url}">Beranda</a></li>
+            <li class="breadcrumb-item"><a href="{$site_url}catalog">Katalog</a></li>
+            <li class="breadcrumb-item active" x-text="product.product_name"></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SECTION WEBINAR DETAIL -->
+  <div class="bg-white pb-lg-64pt py-32pt pb-5">
+    <div class="container page__container">
+
+      <div class="row">
+        <div class="col-md-5">
+          <img x-bind:src="product.product_image" class="img-fluid" alt="Responsive image">
+        </div>
+        <div class="col-md-7">
+          <h2 x-text="product.product_name">Adrianna Papell Women's</h2>
+
+          <p class="h3">
+            <template x-if="product.normal_price > 0">
+              <strong class="text-muted"><del class="me-2" x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.normal_price)"></del></strong>
+            </template>
+            <strong class="text-success"><span x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR' }).format(product.retail_price)"></span></strong>
+
+            <br>
+            <strong class="text-info">Komisi: 
+              {setting_item('affiliate.commision_percentage')}%
+            </strong>
+          </p>
+
+          <p class="lead"><strong>Sebarkan Info Produk</strong></p>
+          <div class="form-group-inline mb-3">
+
+            <template x-if="$store.affiliate.code > 0">
+            <div class="input-group">
+              <input type="text" id="product-link" class="form-control" x-bind:value="base_url + `products/detail/` + product.id + `/` + product.product_slug + `?ref=` + $store.affiliate.code">
+              <div class="btn-group">
+                <button class="btn btn-primary" id="copylink" onclick="copylink(this)">
+                  <span class="material-icons me-2">content_copy</span> Salin Tautan
+                </button>
+                <a target="_blank" class="btn btn-secondary" x-bind:href="base_url + `products/detail/` + product.id + `/` + product.product_slug + `?ref=` + $store.affiliate.code"><span class="material-icons me-2">launch</span> Buka</a>
+              </div>
+            </div>
+            </template>
+
+            <template x-if="$store.affiliate.code <= 0">
+            <div>
+              <div class="input-group">
+                <input type="text" id="product-link-disabled" class="form-control" x-bind:value="base_url + `products/detail/` + product.id + `/` + product.product_slug + `?ref=` + $store.affiliate.code" disabled>
+                <div class="btn-group">
+                  <button class="btn btn-secondary disabled" disabled>
+                    <span class="material-icons me-2">content_copy</span> Salin Tautan
+                  </button>
+                </div>
+              </div>
+              <div class="alert alert-warning mt-2">
+                <span class="fa fa-info-circle"></span> &nbsp;
+                Silakan aktifkan terlebih dahulu kode afiliasi Kamu di halaman <strong><a href="{$site_url}earnings">Penghasilan</a></strong>
+              </div>
+            </div>
+            </template>
+
+          </div>
+          <!-- <div class="sharethis-inline-share-buttons"></div> -->
+
+          <p class="lead mt-3"><strong>Deskripsi Produk</strong></p>
+          <p class="lead mt-3"><span x-html="nl2br(product.product_desc)">Lorem ipsum dolor sit amet consectetur adipisicing elit. Error modi, voluptatem repudiandae perspiciatis reiciendis fugiat, animi, eveniet totam dicta ad, assumenda ipsa cum est. Quas sit ducimus ut natus, voluptates.</span></p>
+
+        </div>
+
+        <div class="copywriting" x-data="copywriting()" x-init="getCopywriting()" x-show="false">
+          
+          <h3 class="mt-5">Copywriting</h3>
+
+          <template x-for="(copy,index) in copywriting" :key="copy.id">
+          <div class="card">
+            <div class="row card-body">
+              <div class="col-md-4 mb-3">
+                <img x-bind:src="copy.image.original" class="img-fluid">
+              </div>
+              <div class="col-md-8 lead">
+                <div class="caption lead" x-html="nl2br(copy.caption)">Copywriting content here</div>
+                <!-- <button class="btn btn-info btn-sm mt-2"><span class="fa fa-copy"></span>&nbsp; Copy caption</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+          </template>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <!-- END : SECTION WEBINAR DETAIL -->
+
+</div>
+
+<script>
+// Shared data
+document.addEventListener('alpine:init', () => {
+  Alpine.store('affiliate', {
+    code: ''
+  });
+});
+
+$(function(){
+  axios.get(base_url + 'api/referral?authorization=' + localStorage.getItem('cdplusertoken'))
+  .then(data => {
+    Alpine.store('affiliate').code = data.data.referral_code ?? '0';
+  });
+})
+
+function product(){
+  return {
+    product: [],
+    getProduct(){
+      axios.get(base_url + 'api/product/detail/{$seg_4|noescape}?authorization=' + localStorage.getItem('cdplusertoken'))
+      .then(data => {
+        console.log(data);
+        this.product = data.data.product;
+        $('title').text(data.data.product.product_name + ` - {setting_item('site.site_title')}`)
+      });
+    }
+  }
+}
+
+function copywriting(){
+  return {
+    copywriting: [],
+    getCopywriting(){
+      axios.get(base_url + 'api/entry/index/product_content/?filter[product]={$seg_3|noescape}&authorization=' + localStorage.getItem('cdplusertoken'))
+      .then(data => {
+        this.copywriting = data.data.results;
+      });
+    }
+  }
+}
+
+function copylink(e){
+  /* Get the text field */
+  var copyText = $('#product-link')[0];
+
+  /* Select the text field */
+  copyText.select();
+  copyText.setSelectionRange(0, 99999); /* For mobile devices */
+
+  /* Copy the text inside the text field */
+  document.execCommand("copy");
+
+  /* Alert the copied text */
+  var btn = $(e);
+  btn.text('Copied!')
+  setTimeout(function(){
+    btn.html(`<span class="material-icons me-2">content_copy</span> Salin Tautan`);
+  }, 2000);
+}
+
+function nl2br (str, is_xhtml) {
+  if (typeof str === 'undefined' || str === null) {
+    return '';
+  }
+  var breakTag = (is_xhtml || typeof is_xhtml === 'undefined') ? '<br />' : '<br>';
+  return (str + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+}
+</script>
+
+{/block}

@@ -1,0 +1,172 @@
+{layout '../../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+  .judulCourse { overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 1;-webkit-box-orient: vertical; }
+  .accordion-item { background-color: #f5f7f7; }
+  .card { border: 0; }
+  .accordion-body { padding: .75rem .75rem;background: #f4f7fb; -webkit-box-shadow:0 .125rem .25rem rgba(0,0,0,.075) inset;-moz-box-shadow:0 .125rem .25rem rgba(0,0,0,.075) inset;box-shadow:0 .125rem .25rem rgba(0,0,0,.075) inset; }
+  .list-group-item { background-color: #f4f7fb; border-color: transparent; color:#66707a; }
+  .list-group-item:hover { background-color: #fafafa; box-shadow: 0 .125rem .25rem rgba(0,0,0,.075); z-index: 10; }
+  .list-group-item.active { background-color: #fff; border-color: transparent; color:#444; }
+  .theory img { max-width:100%; }
+  #quizContainer .accordion-item { border:0; }
+  #quizContainer .accordion-header { background: #fff; }
+  #quizContainer .accordion-body { background: #fff; box-shadow: none; -webkit-box-shadow: none; }
+  #quizContainer .accordion-button { display: block;
+    background-color: #F8D8DE !important;
+    outline: none !important;
+    border: none;
+    color: #474544 !important;
+    font-weight: 700;
+    padding: 13px 20px;
+    position: relative;
+    width: 90%;
+    font-size: 20px;
+    border-radius: 15px;
+    margin: 0 auto;
+    text-align: center; }
+    .list-group-item i.bi { margin-top: 3px; }
+</style>
+
+{if $lesson['video']}
+<div class="ratio ratio-16x9">
+  <iframe src="https://www.youtube.com/embed/{$lesson['video']}" title="YouTube video player" frameborder="0"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>
+</div>
+{/if}
+
+<div class="p-2">
+  <h1 class="h2 mt-2 mb-3 text-center">{$page_title}</h1>
+
+  <div class="theory">
+  {($lesson['content']['theory']??null)|noescape}
+  </div>
+
+  {if $course_detail['enableQuiz'] == 1}
+  <div class="course-action mt-5">
+    {if $lesson['quiz_id']}
+      <div class="accordion full" id="quizContainer">
+        <div class="accordion-item">
+          <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne" data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+              <iframe id="quiz-frame" src="{base_url()}/quiz/index/{$lesson['quiz_id']}/1?lesson_id={$lesson['id']}&course_id={$course_detail['id']}" width="100%" height="700px"/>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    {/if}
+  </div>
+  {/if}
+
+  {var $currentLessonIndex = array_search($lesson['id'], $lesson_order)}
+  <div class="course-action mt-3 border-top pt-3 d-flex justify-content-center" id="next-action" data-hash="{$lesson['hash']}" data-current="{$lesson_order[$currentLessonIndex]}" data-cid="{$course_detail['id']}" data-next="{isset($lesson_order[$currentLessonIndex+1]) ? $lesson_order[$currentLessonIndex+1] : ''}">
+    {if $course_detail['enable_checklist'] && !in_array($lesson['id'], $lesson_checked) && !$lesson['quiz_id']}
+      {if isset($lesson_order[$currentLessonIndex+1])}
+      <button class="btn btn-outline-primary btn-lg" id="button-complete">Saya paham, Lanjutkan materi &nbsp;<i class="bi bi-arrow-right"></i></button>
+      {else}
+      <button class="btn btn-outline-primary btn-block" id="button-complete" data-next="">Saya sudah paham &nbsp;<i class="bi bi-arrow-right"></i></button>
+      {/if}
+      
+    {elseif isset($lesson_order[$currentLessonIndex+1])}
+      <button class="btn btn-outline-primary btn-lg" id="button-next" onclick="nextLesson()">Berikutnya &nbsp;<i class="bi bi-arrow-right"></i></button>
+    {/if}
+  </div>
+
+  <div class="offcanvas offcanvas-end" style="width:360px;z-index:10000;background:#fff;" tabindex="-1" id="listMateri" aria-labelledby="listMateriLabel">
+    <div class="offcanvas-header">
+      <h3 class="mb-0" id="listMateriLabel">List Materi</h3>
+      <button type="button" class="btn-close text-reset" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+    </div>
+    <div class="offcanvas-body" style="overflow-x:hidden;">
+      <div class="accordion full" id="courseTopic">
+        {foreach $lesson_tree as $topicIndex => $topicList}
+        {if $topicList['lessons']}
+        <div class="accordion-item">
+          <h2 class="accordion-header" id="heading{$topicIndex}">
+            <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#{$topicList['topic_slug']}" aria-expanded="true" aria-controls="{$topicList['topic_slug']}">
+              {$topicList['topic_title']}
+            </button>
+          </h2>
+          <div id="{$topicList['topic_slug']}" class="accordion-collapse collapse {$topic['topic_slug'] == $topicList['topic_slug'] ? 'show' : ''}" aria-labelledby="heading{$topicIndex}" data-bs-parent="#courseTopic">
+            <div class="accordion-body">
+              <div class="list-group list-group-flush">
+                
+                {foreach $topicList['lessons'] as $lessonIndex => $lessonList}
+
+                  {if $course_detail['enable_finish'] == 1 && ! $opened_lesson[$lessonList['id']] && ! $preview_mode}
+                  <a class="list-group-item d-flex disable" onclick="toastr.info('Anda harus menyelesaikan terlebih dahulu materi sebelumnya.')">
+                    <i class="bi bi-lock text-secondary"></i>
+                  {elseif !$isSubscribeActive && !$topicList['free'] && !$lessonList['free'] && ! $preview_mode}
+                  <a class="list-group-item d-flex disable" onclick="toastr.info('Untuk membuka materi ini silakan mendaftar kelas terlebih dahulu.')">
+                    <i class="bi bi-lock text-secondary"></i>
+                  {else}
+                  <a href="{site_url('courses/learn/'.$course.'/'.$topicIndex.'/'.$lessonIndex.($preview_mode?'?preview=true':''))}" class="list-group-item d-flex text-primary justify-content-between {$lesson['lesson_slug'] == $lessonList['lesson_slug'] ? 'active shadow-sm' : ''}">
+                    {if $course_detail['enable_checklist'] && in_array($lessonList['id'], $lesson_checked)}
+                    <i class="bi bi-check-circle-fill text-success"></i>
+                    {else}
+                    <i class="bi bi-play-circle text-primary"></i>
+                    {/if}
+                  {/if}
+
+                    <div class="mx-2" style="width:100%" id="lesson_{$lessonList['id']}" data-url="courses/learn/{$course}/{$topicIndex}/{$lessonIndex}">{$lessonList['lesson_title']}</div>
+                    <span class="text-muted">{$lessonList['duration'] ? '('.$lessonList['duration'].')' : ''}</span>
+                  </a>
+
+                {/foreach}
+                
+              </div>
+            </div>
+          </div>
+        </div>
+        {/if}
+        {/foreach}
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<script n:syntax="off">
+  $(function(){
+    $('#button-complete').on('click', function(){
+      let cid = $('#next-action').data('cid');
+      let hash = $('#next-action').data('hash');
+      let current = $('#next-action').data('current');
+      let next = $('#next-action').data('next');
+      $(this).prop('disabled',true).html(`Saya paham, Lanjutkan materi &nbsp;<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>`);
+      let url = base_url + `courses/learn/${cid}/${hash}/${next}`;
+      $.post(url, function(data){
+        if(next)
+          nextLesson();
+        else {
+          $('#lesson_' + current).prev('.ion-md-play-circle').removeClass('ion-md-play-circle text-primary').addClass('ion-md-checkmark-circle text-success');
+          $('#button-complete').html(`Materi selesai &nbsp;<i class="bi bi-checkmark-circle"></i>`)
+        }
+      })
+    })
+  })
+
+  function nextLesson()
+  {
+    let next = $('#next-action').data('next');
+    red = base_url + $('#lesson_' + next).data('url');
+    location.href = red;
+  }
+  function updateIframeHeight()
+  {
+    let fh = $('#quiz-frame').contents().height() + 20
+    $('#quiz-frame').height(fh+'px')
+    console.debug(fh)
+  }
+</script>
+
+{/block}
+
+{block bottommenu}{/block}

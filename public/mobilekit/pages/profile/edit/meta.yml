@@ -1,0 +1,4 @@
+# General
+page_title: Edit Profile
+module: user
+require_login: true

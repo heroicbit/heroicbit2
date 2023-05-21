@@ -1,0 +1,51 @@
+{layout '../../../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+#appCapsule { height: 100vh; }
+.form-button-group { max-width: 576px !important; margin: 0 auto; }
+</style>
+
+<div class="login-form mt-1">
+  <div class="section mt-1 mb-5">
+    {flashdata('message')|noescape}
+
+    <div class="section-title text-center mt-3">
+      <p class="lead mb-2">Anda akan mengaktifkan akun {setting_item('site.site_title')} dengan email <strong>{$user['email']}</strong> dan nama <strong>{$user['name']}</strong>. <br>Untuk melanjutkan aktivasi akun, konfirmasikan dengan menekan tombol berikut:</p>
+    </div>
+
+    <div class="mt-2 mb-4 text-center">
+      {form_open('auth/register/confirm_link?token='.$user['token'])|noescape}
+      <div class="form-button">
+        <button type="submit" id="btnSubmit" name="otp" value="{$user['otp']}" class="btn btn-primary btn-lg btn-block mb-1">
+          <span id="submitSpinner" class="d-none spinner-border spinner-border-sm me-1" role="status" aria-hidden="true"></span>
+          <span id="submitText">Konfirmasi</span>
+        </button>
+      </div>
+      {form_close()|noescape}
+    </div>
+
+    <div>Merasa belum pernah mendaftar? <a href="{site_url('user/register')}">Registrasi ulang disini</a></div>
+
+  </div>
+</div>
+
+<script>
+  $(function(){
+    let allowSubmit = true;
+    $('form').on('submit', function(){
+      if(allowSubmit){
+        allowSubmit = false;
+        $('#btnSubmit').addClass('disabled')
+        $('#submitText').text('Verifying..');
+        $('#submitSpinner').removeClass('d-none');
+      } else return false;
+    })
+  })
+</script>
+
+{/block}

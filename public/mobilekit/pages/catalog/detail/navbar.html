@@ -1,0 +1,30 @@
+<style>
+  .appHeader .pageTitle { 
+    font-size: 22px;
+    font-weight: 700;
+  }
+  .cart-notif {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 3px 4px;
+    font-size: 9px !important;
+  }
+</style>
+<!-- App Header -->
+<div class="appHeader">
+  <div class="left">
+      <a href="{site_url('catalog')}" class="headerButton goBack">
+          <i class="bi bi-chevron-left"></i>
+      </a>
+  </div>
+  <div class="right">
+    <a href="{site_url('cart')}" class="mb-0 headerButton">
+      <i class="bi bi-cart"></i>
+      {var $total = ci()->cart->getTotalItem()}
+      {if $total > 0}
+      <span class="badge badge-danger cart-notif">{$total}</span>
+      {/if}
+    </a>
+  </div>
+</div>

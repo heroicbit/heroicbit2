@@ -1,0 +1,241 @@
+{layout '../../layouts/basic.html'}
+
+{block content}
+<style>
+  #appCapsule { min-height: 100vh; }
+  small.text-muted { font-size: 12px; }
+</style>
+
+<div class="header-large-title mt-3">
+  <h1 class="title">Referral</h1>
+  <h4 class="subtitle text-secondary">Dapatkan penghasilan tambahan dengan merekomendasikan {setting_item('site.site_title')} kepada teman dan keluargamu</h4>
+  <hr>
+</div>
+
+<!-- SECTION EARNING OVERVIEW -->
+<div class="px-3 mt-2" x-data="referral()" x-init="getReferral()">
+
+  {flashdata('message')|noescape}
+
+  <div class="row">
+    <div class="col-6 col-lg-3 mb-2">
+      <div class="card border-1 text-center mb-lg-0 rounded-lg shadow">
+        <div class="card-body p-1">
+          <h5 class="lead text-dark mb-0" x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(referral.total_commision ?? 0)">0</h5>
+          <div class="text-soft">Total Komisi</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-2">
+      <div class="card border-1 text-center mb-lg-0 rounded-lg shadow">
+        <div class="card-body p-1">
+          <h5 class="lead text-dark mb-0" x-text="$store.earning.totalTransaction">0</h5>
+          <div class="text-soft">Transaksi</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-2">
+      <div class="card text-center mb-lg-0 rounded-lg shadow">
+        <div class="card-body p-1">
+          <h5 class="lead text-dark mb-0" x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(referral.disbursed ?? 0)">0</h5>
+          <div class="text-soft">Dicairkan</div>
+        </div>
+      </div>
+    </div>
+    <div class="col-6 col-lg-3 mb-2">
+      <div class="card text-center mb-lg-0 rounded-lg shadow">
+        <div class="card-body p-1">
+          <h5 class="lead text-dark mb-0" x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(referral.balance ?? 0)">0</h5>
+          <div class="text-soft">Saldo</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<!-- END : SECTION EARNING OVERVIEW -->
+
+
+<!-- SECTION AFFILIATE -->
+<div class="page-section px-3 pb-3" x-data="{}">
+
+  <button class="btn btn-sm btn-link btn-block" type="button" data-bs-toggle="collapse" data-bs-target="#affiliate-desc">Lihat Kode Referral</button>
+
+  <div class="card rounded-lg shadow">
+    <div class="card-body collapse" id="affiliate-desc">
+
+      <div id="inactiveAffiliate" x-show="$store.earning.affiliateStatus == 0">
+        <p class="mb-3">{$site_title} menyediakan program referral bagi Kamu yang ingin mendapatkan penghasilan tambahan dari {$site_title}. Kamu akan mendapatkan komisi untuk setiap penjualan yang terjadi melalui tautan referensi yang kamu bagikan kepada orang lain.</p>
+
+        {if $membership['status'] == 'active' || setting_item('referral.require_membership') === '0'}
+
+        <div class="text-center">
+          {form_open()|noescape}
+          <div class="row">
+            <label class="mb-1">Masukkan kode referral yang diinginkan</label>
+            <div class="col-6">
+              <input type="text" name="referral_code" class="form-control mb-1" style="height:45px;" placeholder="Kode referral Anda">
+            </div>
+            <div class="col-6">
+              <button type="submit" class="btn btn-block btn-primary"><span class="fa fa-paste"></span>&nbsp;Dapatkan Kode</button>
+            </div>
+          </div>
+          {form_close()|noescape}
+        </div>
+
+        {else}
+        
+        <div class="alert alert-warning p-2">
+          <div class="row justify-content-between">
+            <div class="col-md-8">
+              <p class="mb-0">Anda dapat mengakses detail produk setelah menjadi premium member. </p>
+            </div>
+            <div class="col-md-4 text-end">
+              <a href="{$site_url}membership" class="btn btn-sm btn-warning font-weight-bold btn-block mt-1">Gabung premium Member</a></div>
+            </div>
+          </div>
+          <button disabled title="Fitur Khusus premium Member" class="btn btn-secondary disabled btn-block"><span class="fa fa-paste"></span>&nbsp;Dapatkan Kode Referral</button>
+          {/if}
+          <a href="{$site_url}affiliate" class="btn btn-link btn-block"><span class="fa fa-link"></span>&nbsp;Pelajari selengkapnya..</a>
+        </div>
+
+        <div id="activeAffiliate" x-show="$store.earning.affiliateStatus == 1">
+          <p>Kode referral: <strong class="text-cp" x-text="$store.earning.code">xxx</strong></p>
+          <p>{setting_item('referral.referral_instruction')}</p>
+          <p>Lebih lengkap tentang program referral dapat dilihat melalui tautan di bawah ini:</p>
+          <a href="{$site_url}affiliate"><i class="icon ion-md-link"></i> Tentang Program Referral</a>
+        </div>
+      </div>
+    </div> 
+
+  </div>
+  <!-- END : SECTION AFFILIATE -->
+
+  <!-- SECTION TRANSACTION -->
+  <div class="page-section px-3 mb-5" x-data="referralTransactions()" x-init="getTransactions()">
+
+    <h2 class="h6 text-dark text-center mb-1">Daftar Komisi Transaksi</h2>
+
+    <template x-if="total > 0">
+      <template x-for="(transaction, index) in transactions" :key="transaction.id">
+
+        <!-- TRANSACTION ITEM -->
+        <div class="card" x-if="transaction.status == 'confirm' || transaction.status == 'refund'">
+          <div class="card-body d-flex justify-content-between">
+            <div>
+              <h3 class="mb-0 js-lists-values-course" :class="{'text-danger' : transaction.amount < 0}" x-text="new Intl.NumberFormat('id-ID', { style: 'currency', currency: 'IDR', minimumFractionDigits: 0, maximumFractionDigits: 0 }).format(transaction.amount)">Rp 0</h3>
+              <small class="js-lists-values-amount" x-html="transaction.description">Description</small>
+            </div>
+            <div class="text-end">
+              <span x-text="transaction.type" class="text-uppercase" :class="{'text-success' : transaction.type == 'commision', 'text-info' : transaction.type == 'disburse', 'text-danger' : transaction.type == 'refund'}"></span> <br>
+              <small class="text-muted text-uppercase js-lists-values-date" x-text='moment(transaction.created_at, "YYYYMMDD").fromNow();'></small>
+            </div>
+          </div>
+        </div>
+        <!-- END : TRANSACTION ITEM -->
+
+      </template>
+    </template>
+
+    <template x-if="total <= 0">
+      <p class="p-3 mb-0 text-center">Belum ada transaksi.</p>
+    </template>
+  </div>
+  <!-- END : TRANSACTION LOOP -->
+
+
+
+  <!-- PAGINATION -->
+  <!-- <div class="card-footer">
+
+      <ul class="pagination justify-content-start pagination-xsm m-0">
+          <li class="page-item disabled">
+              <a class="page-link"
+                 href="#"
+                 aria-label="Previous">
+                  <span aria-hidden="true"
+                        class="material-icons">chevron_left</span>
+                  <span>Prev</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link"
+                 href="#"
+                 aria-label="Page 1">
+                  <span>1</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link"
+                 href="#"
+                 aria-label="Page 2">
+                  <span>2</span>
+              </a>
+          </li>
+          <li class="page-item">
+              <a class="page-link"
+                 href="#"
+                 aria-label="Next">
+                  <span>Next</span>
+                  <span aria-hidden="true"
+                        class="material-icons">chevron_right</span>
+              </a>
+          </li>
+      </ul>
+    </div> -->
+    <!-- END : PAGINATION -->
+
+    </div>
+  </div>
+  <!-- END : SECTION TRANSACTION -->
+
+  <script n:syntax="double">
+    document.addEventListener('alpine:init', () => {
+      Alpine.store('earning', {
+        totalTransaction: 0,
+        affiliateStatus: 0,
+        code: ''
+      });
+    });
+
+    function referral(){
+      return {
+        referral: [],
+        getReferral(){
+          axios.get(base_url + 'api/referral?authorization=' + localStorage.getItem('cdplusertoken'))
+          .then((data) => {
+            if(data.data.status == 'success')
+            {
+              Alpine.store('earning').affiliateStatus = 1;
+              this.referral = data.data;
+              Alpine.store('earning').code = data.data.referral_code;
+
+              console.log(Alpine.store('earning'))
+            }
+          });
+        },
+      };
+    }
+
+    function referralTransactions(){
+      return {
+        transactions: [],
+        total: 0,
+        getTransactions(){
+          axios.get(base_url + 'api/referral/getTransactions?limit=500&authorization=' + localStorage.getItem('cdplusertoken'))
+        // .then(data => console.log(data.data));
+        .then((data) => {
+          this.transactions = data.data.data;
+          this.total = data.data.total;
+          Alpine.store('earning').totalTransaction = data.data.total ?? '0';
+        });
+      },
+      parseMetadata(metadata){
+        let parsed = JSON.parse(metadata);
+        return `${parsed.title} &bull; ${parsed.message}`;
+      }
+    };
+  }
+</script>
+
+{/block}

@@ -1,0 +1,52 @@
+{layout '../../../layouts/basic.html'}
+
+{block header}
+  {include 'navbar.html'}
+{/block}
+
+{block content}
+
+<style>
+#appCapsule { min-height: 100vh; }
+.in .text-dark { font-weight: 500; overflow: hidden;text-overflow: ellipsis;display: -webkit-box;-webkit-line-clamp: 2;-webkit-box-orient: vertical; }
+.date { font-size: 12px; }
+.image-listview.media > li.upcoming { border-bottom: 1px solid #60c4d1; }
+.upcoming:last-of-type { margin-bottom: 20px; }
+.upcoming .item { background: #03a9f4; }
+.upcoming .item .date { color: white !important; }
+</style>
+
+<!-- item list -->
+<div class="itemList mt-2">
+
+  {if $events}
+  <ul class="listview image-listview media mb-2">
+    {foreach $events as $event}
+      <li>
+        <div class="item">
+          <a data-fancybox href="{$event['event']['poster']}">
+            <div class="imageWrapper">
+                <img src="{$event['event']['poster']}" @error="$el.src=`https://i.ibb.co/W2WSzS4/default-sq.jpg`" alt="image" class="imaged w64">
+            </div>
+          </a>
+          <a href="{site_url('online-event/detail/'.$event['event_id'])}">
+            <div class="in">
+              <div>
+                <div class="text-dark">{$event['event']['title']}</div>
+                <p class="mb-0 text-muted text-nowrap">
+                  <i class="bi bi-calendar"></i>
+                  {PHP81_BC\strftime("%d %B %Y, %H:%M", strtotime($event['event']['date']), 'id_ID')} {$event['event']['timezone']}
+                </p>
+              </div>
+            </div>
+          </a>
+        </div>
+      </li>
+    {/foreach}
+  </ul>
+  {/if}
+
+</div>
+<!-- * item list -->
+
+{/block}

@@ -1,0 +1,55 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+{include 'navbar.html'}
+{/block}
+
+{block content}
+<style>
+  .nav-tabs { margin-left: -20px;margin-right: -20px;padding: 5px 8px; }  
+  #searchBox .form-control { padding-left: 56px !important; }
+</style>
+<div id="searchBox" class="search-active shadow-sm">
+  <form action="{site_url('search')}" method="get" accept-charset="utf-8">
+      <span class="inputIcon">
+        <a href="{site_url('dashboard')}" class="icon goBack">
+          <i class="icon ion-md-arrow-back"></i>
+        </a>
+      </span>
+      <input type="text" class="form-control" id="searchInput" name="keyword" placeholder="Search...">
+      <a href="javascript:;" class="closeButton" onclick="document.getElementById('searchInput').value='';document.getElementById('searchInput').focus();">
+          <i class="icon ion-md-close-circle"></i>
+      </a>
+  </form>
+</div>
+
+<ul class="nav nav-tabs" id="myTab" role="tablist">
+  <li class="nav-item">
+    <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#home" role="tab">
+      Artikel
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="contact-tab" data-bs-toggle="tab" href="#contact" role="tab">
+      Produk
+    </a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#profile" role="tab">
+      Kelas
+    </a>
+  </li>
+</ul>
+<div class="tab-content mt-3" id="myTabContent">
+  <div class="tab-pane fade show active" id="home" role="tabpanel">
+    Home Tab
+  </div>
+  <div class="tab-pane fade" id="profile" role="tabpanel">
+    Profile Tab
+  </div>
+  <div class="tab-pane fade" id="contact" role="tabpanel">
+    Contact Tab
+  </div>
+</div>
+
+{/block}

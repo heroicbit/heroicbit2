@@ -1,0 +1,106 @@
+<div n:if="$events || $upcoming" class="section full mb-3" id="events">
+
+	<style>
+		#events .splide__slide .title {
+			font-size: 18px;
+			line-height: 1.3em;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			display: -webkit-box;
+			-webkit-line-clamp: 2;
+			-webkit-box-orient: vertical;
+			margin-bottom: 5px;
+		}
+
+		#events .splide__slide .date-streaming {
+			margin-top: 0 !important;
+			line-height: 16px;
+		}
+
+		#events .image {
+			position: relative;
+		}
+
+		#events .image .badge {
+			position: absolute;
+			bottom: 5px;
+			right: 5px;
+			font-size: 10px;
+			padding: 3px 5px 2px;
+			border-radius: 5px;
+		}
+	</style>
+
+	{if $upcoming}
+	<div class="section-title mt-3 mb-2 d-flex justify-content-between">
+		<h2 class="title mb-0">Event Mendatang</h2>
+	</div>
+
+	<div class="carousel-single2 splide">
+		<div class="splide__track">
+			<ul class="splide__list">
+				<!-- slide -->
+				<li n:foreach="$upcoming as $p" class="splide__slide">
+					<a href="{site_url('online-event/detail/'.$p['id'].'?ref=dashboard')}">
+						<div class="image">
+							<img src="{$p['poster']}" alt="{$p['title']}"
+								onerror="this.src=`https://i.ibb.co/W2WSzS4/default-sq.jpg`" class="image w-100">
+						</div>
+						<h2 class="h5 mt-1">{$p['title']}</h2>
+						<p class="date-streaming text-muted mt-1">{PHP81_BC\strftime("%d %b %Y, %H:%M",
+							strtotime($p['date']), 'id_ID')}</p>
+					</a>
+				</li>
+				<!-- * slide -->
+			</ul>
+		</div>
+	</div>
+	<!-- * Post Carousel -->
+	{/if}
+
+	{if $events}
+	<div class="section-title mt-3 mb-2 d-flex justify-content-between">
+		<h2 class="title mb-0">Rekaman Event</h2>
+		<a href="{site_url('online-event')}">Lihat Semua</a>
+	</div>
+
+	<div class="carousel-multiple2 splide">
+		<div class="splide__track">
+			<ul class="splide__list">
+				<!-- slide -->
+				<li n:foreach="$events as $p" class="splide__slide">
+					<div class="card">
+						<a href="{site_url('online-event/detail/'.$p['id'].'?ref=dashboard')}">
+							<div class="image">
+								<img src="{$p['poster']}" alt="{$p['title']}"
+									onerror="this.src=`https://i.ibb.co/W2WSzS4/default-sq.jpg`" class="image w-100">
+							</div>
+							<div class="card-body p-1">
+								<h2 class="title mt-1">{$p['title']}</h2>
+								<p class="date-streaming text-muted mb-1">{PHP81_BC\strftime("%d %b %Y, %H:%M",
+									strtotime($p['date']), 'id_ID')}</p>
+							</div>
+						</a>
+					</div>
+				</li>
+				<!-- * slide -->
+
+				{if count($events) >= 8}
+				<li class="splide__slide">
+					<a href="{site_url('online-event')}">
+						<div class="card text-center" style="height:100%;">
+							<div class="card-body d-flex flex-column justify-content-center p-1">
+								<div class="h2 text-primary"><i class="bi bi-view-list"></i></div>
+								<h2 class="title mt-1">Lihat semua</h2>
+							</div>
+						</div>
+					</a>
+				</li>
+				{/if}
+			</ul>
+		</div>
+	</div>
+	<!-- * Post Carousel -->
+	{/if}
+
+</div>

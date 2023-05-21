@@ -1,0 +1,5 @@
+# General
+page_title: Detail Events
+module: dashboard
+accept_param_uri: true
+require_login: true

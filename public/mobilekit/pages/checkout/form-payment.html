@@ -1,0 +1,42 @@
+<div class="section-title">Metode pembayaran</div>
+  <div class="wide-block pt-2 pb-2">
+    
+    <h1 class="h5 mb-2"></h1>
+
+    <div class="dropdown mb-4">
+      <a class="btn btn-outline-secondary btn-block justify-content-between dropdown-toggle" href="#" role="button" id="currentMethod" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        <img src="{$theme_url}assets/images/payment-methods/pay.png" alt="Payment Method" width="50px"> <span>Pilih metode..</span>
+      </a>
+
+      <ul class="dropdown-menu btn-block" aria-labelledby="currentMethod">
+        {foreach $payment_methods as $method_key => $methodData}
+        <li><a class="dropdown-item btn-payment-method" href="#" data-slug="{$method_key}" data-name="{$methodData['name']}" data-method="{$method_key}" data-desc="{$methodData['description']}" data-fee="{$methodData['paymentFee']}" data-fee-type="{$methodData['paymentFeeType']}" data-thumbnail="{$methodData['thumbnail']}">
+          <img src="{$methodData['thumbnail']}" alt="{$methodData['name']}" class="me-3" width="50px"> {$methodData['name']}
+        </a></li>
+        {/foreach}
+      </ul>
+    </div>
+    
+    <h5 class="lead" id="method-name"></h5>
+    <p id="method-desc"></p>
+  </div>
+  
+
+<script>
+  $(function(){
+    $('.btn-payment-method').on('click', function(){
+      paymentMethodChosen = $(this);
+
+      $('.btn-payment-method').removeClass('active');
+      paymentMethodChosen.addClass('active');
+      $('#currentMethod').find('img').attr('src',paymentMethodChosen.data('thumbnail'))
+      $('#currentMethod').find('span').html(paymentMethodChosen.data('name'))
+      $('#currentMethod').removeClass('btn-outline-secondary').addClass('btn-outline-info')
+      $('#method-name').html(paymentMethodChosen.data('name'))
+      $('#method-desc').html(paymentMethodChosen.data('desc'))
+      $('#paymentMethod').val(paymentMethodChosen.data('slug'))
+
+      recalculateTotal();
+    })
+  })
+</script>

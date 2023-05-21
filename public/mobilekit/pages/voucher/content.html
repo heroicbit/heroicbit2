@@ -1,0 +1,78 @@
+{layout '../../layouts/basic.html'}
+
+{block header}
+    {include 'navbar.html'}
+{/block}
+
+{block content}
+
+<style>
+    .badge { font-size: 12px; }
+    .postItem { margin-bottom: 10px; padding-bottom: 5px; }
+    .postItem .title { min-height: 38px; font-weight: normal; font-size: 14px; overflow: hidden; text-overflow: ellipsis; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+    .border { border-radius: 6px; height: 100%; }
+    .postItem .imageWrapper .image { border-radius: 15px 15px 0 0; }
+</style>
+
+<!-- post list -->
+<div class="row mt-3">
+
+    {flashdata('message')|noescape}
+
+    {form_open(null, 'method="get"')|noescape}
+    <div class="page-section mb-3">
+        <div class="card mb-3">
+            <div class="card-body">
+                <p class="lead">Kamu punya voucher? Cek pada form di bawah ini</p>
+              
+                <div class="form-group mb-3">
+                    <input type="text" id="code" name="code" class="form-control" value="{$code}" placeholder="Kode voucher" autocomplete="off" required>
+                </div>
+
+                <div class="row">
+                    <div class="col">
+                        <button type="submit" class="btn btn-primary btn-block btn-save">Cek Voucher</button>
+                    </div>
+                    <div class="col">
+                        <a href="{site_url('voucher')}" class="btn btn-secondary btn-block">Reset</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    {form_close()|noescape}
+
+    {if $voucher ?? ''}
+    <div class="page-section mb-5">
+            <div class="card-body">
+                <p>Kode voucer Kamu valid untuk redeem produk berikut:</p>
+
+                <div class="itemList mb-3">
+                    <div class="item">
+                        <div class="image">
+                            <img src="{$voucher['product']['product_image']}" class="border" alt="">
+                        </div>
+                        <div class="text">
+                            <h4 class="title">{$voucher['product']['product_name']}</h4>
+                            {var $customData = json_decode($voucher['product']['custom_data'], true)}
+                            <div>
+                                {var $price = intval($customData['strike_price'] ?? 0) > 0 ? intval($customData['strike_price']) : $voucher['product']['retail_price']}
+                                <del>Rp {$price|number,0,',','.'}</del>
+                                <span class="text-success ms-1">Rp 0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                {form_open()|noescape}
+                <input type="hidden" value="{$code}" name="code">
+                <button type="submit" class="btn btn-success btn-block">Redeem Sekarang</button>
+                {form_close()|noescape}
+        </div>
+    </div>
+    {/if}
+
+</div>
+
+{/block}

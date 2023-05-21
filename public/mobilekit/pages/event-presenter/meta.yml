@@ -1,0 +1,4 @@
+# General
+page_title: Event Online
+module: dashboard
+accept_param_uri: true

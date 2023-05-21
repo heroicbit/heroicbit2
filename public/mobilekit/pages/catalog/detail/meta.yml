@@ -1,0 +1,4 @@
+# General
+page_title: Detail Produk
+module: catalog
+accept_param_uri: true
