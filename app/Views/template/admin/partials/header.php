@@ -71,8 +71,8 @@
 	}
 
 	.bgtop {
-		background-color: {setting_item('theme.admin_bgcolor')};
-		{setting_item('theme.admin_bg_css') ?? ''}
+		background-color: <?= setting_item('theme.admin_bgcolor') ?>;
+		<?= setting_item('theme.admin_bg_css') ?>?? ''}
 	}
 
 	.sidebar a {
@@ -80,7 +80,7 @@
 	}
 	.sidebar .sidebar-menu>li.active>a,
 	.sidebar .sidebar-menu>li.active>a:hover {
-		background-color: {setting_item('theme.admin_bgcolor')} !important;
+		background-color: <?= setting_item('theme.admin_bgcolor') ?> !important;
 	}
 </style>
 

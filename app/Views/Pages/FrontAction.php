@@ -2,6 +2,8 @@
 
 namespace App\Views\Pages;
 
+use CodeIgniter\Config\Factories;
+
 abstract class FrontAction
 {
     public $template = 'mobilekit';
@@ -11,7 +13,12 @@ abstract class FrontAction
     /**
      * Initiate global data here
      */
-    public function __construct(){}
+    public function __construct()
+    {
+        helper('Heroic\Helpers\module');
+
+        $this->data['theme_url'] = base_url($this->template . '/');
+    }
 
     /**
      * Child class should have these three methods 
@@ -23,7 +30,6 @@ abstract class FrontAction
     public function _output()
     {
         // Set spesific global data for rendering here
-        $this->data['theme_url'] = base_url($this->template . '/');
         
         return array_merge($this->data, $this->render());
     }

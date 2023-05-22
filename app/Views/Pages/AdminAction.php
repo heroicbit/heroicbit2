@@ -9,5 +9,12 @@ class AdminAction extends FrontAction
     public function __construct()
     {
         parent::__construct();
+
+        $this->setupSidebar();
+    }
+
+    private function setupSidebar()
+    {
+
     }
 }
