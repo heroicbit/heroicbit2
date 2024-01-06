@@ -1,10 +1,13 @@
-<?php namespace App\Controllers;
+<?php 
 
+namespace Heroic\Controllers;
+
+use App\Controllers\BaseController;
 use Symfony\Component\Yaml\Yaml;
 
 class Page extends BaseController
 {
-    public function index()
+    public function index(): string
     {
         $uri = service('uri');
         $segments = $uri->getSegments();

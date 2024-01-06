@@ -17,7 +17,8 @@
         "codeigniter4/framework": "^4.4",
         "codeigniter4/shield": "^1.0",
         "laminas/laminas-escaper": "^2.9",
-        "psr/log": "^1.1"
+        "psr/log": "^1.1",
+        "symfony/yaml": "^7.0"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
@@ -52,7 +53,8 @@
     },
     "autoload": {
         "psr-4": {
-            "CodeIgniter\\": "system/"
+            "CodeIgniter\\": "system/",
+            "Heroic\\": "heroic/"
         },
         "exclude-from-classmap": [
             "**/Database/Migrations/**"

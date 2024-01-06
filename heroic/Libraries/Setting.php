@@ -14,6 +14,6 @@ class Setting
 
     public function get($setting_name)
     {
-        return $this->data[$setting_name];
+        return $this->data[$setting_name] ?? '';
     }
 }
