@@ -2,6 +2,6 @@
 
 <?= $this->section('content') ?>
 
-<p>Welcome to my awesome homepage.</p>
+<h1>Welcome</h1>
 
 <?= $this->endSection() ?>

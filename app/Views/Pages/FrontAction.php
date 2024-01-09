@@ -2,22 +2,39 @@
 
 namespace App\Views\Pages;
 
-use CodeIgniter\Config\Factories;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
+
 
 abstract class FrontAction
 {
+    // Initiate properties to hold request, response and logger object from controller
+    protected $request, $response, $logger;
+
+    // Set default template
     public $template = 'mobilekit';
     
-    public $data;
+    // Global data
+    public $data = [];
 
     /**
      * Initiate global data here
      */
     public function __construct()
-    {
+    { 
+        // Load module helper
         helper('Heroic\Helpers\module');
 
-        $this->data['theme_url'] = base_url($this->template . '/');
+        setting('Theme.themeUrl', base_url($this->template . '/'));
+    }
+
+    // Require to be called after instantiate
+    public function initProperties(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        $this->request  = $request;
+        $this->response = $response;
+        $this->logger   = $logger;
     }
 
     /**

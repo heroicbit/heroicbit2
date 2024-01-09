@@ -7,7 +7,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class Page extends BaseController
 {
-    public function index(): string
+    public function index()
     {
         $uri = service('uri');
         $segments = $uri->getSegments();
@@ -38,6 +38,7 @@ class Page extends BaseController
             $actionPath = str_replace('/', '\\', $page['uri']);
             $ActionClassName = "App\Views\Pages\\{$actionPath}\PageAction";
             $Action = new $ActionClassName;
+            $Action->initProperties($this->request, $this->response, $this->logger);
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();

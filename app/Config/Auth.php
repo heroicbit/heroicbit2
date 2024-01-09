@@ -75,7 +75,7 @@ class Auth extends ShieldAuth
      */
     public array $redirects = [
         'register'          => '/',
-        'login'             => '/',
+        'login'             => 'admin',
         'logout'            => 'login',
         'force_reset'       => '/',
         'permission_denied' => '/',
@@ -99,7 +99,7 @@ class Auth extends ShieldAuth
      */
     public array $actions = [
         'register' => \CodeIgniter\Shield\Authentication\Actions\EmailActivator::class,
-        'login'    => \CodeIgniter\Shield\Authentication\Actions\Email2FA::class,
+        'login'    => null, //\CodeIgniter\Shield\Authentication\Actions\Email2FA::class,
     ];
 
     /**

@@ -1,8 +1,8 @@
 <?php namespace App\Views\Pages\home;
 
-use App\Views\Pages\AdminAction;
+use App\Views\Pages\FrontAction;
 
-class PageAction extends AdminAction {
+class PageAction extends FrontAction {
 
 	// This method handle GET request
 	public function render()
