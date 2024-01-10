@@ -21,8 +21,15 @@ abstract class FrontAction
     /**
      * Initiate global data here
      */
-    public function __construct()
-    { 
+    public function __construct(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    {
+        $this->request  = $request;
+        $this->response = $response;
+        $this->logger   = $logger;
+
+        // Run init()
+        $this->init();
+
         // Load module helper
         helper('Heroic\Helpers\module');
 
@@ -30,12 +37,7 @@ abstract class FrontAction
     }
 
     // Require to be called after instantiate
-    public function initProperties(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-    {
-        $this->request  = $request;
-        $this->response = $response;
-        $this->logger   = $logger;
-    }
+    public function init(){}
 
     /**
      * Child class should have these three methods 

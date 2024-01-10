@@ -11,7 +11,7 @@ class AdminAction extends FrontAction
     // Set admin template
     public $template = 'admin';
 
-    public function __construct()
+    public function init()
     {        
         // Redirect if not logged in
         if(! user_id()) {

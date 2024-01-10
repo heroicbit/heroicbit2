@@ -3,7 +3,7 @@
 use App\Views\Pages\AdminAction;
 
 class PageAction extends AdminAction {
-
+	
 	// This method handle GET request
 	public function render()
 	{
