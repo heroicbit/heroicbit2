@@ -21,16 +21,6 @@ class AdminAction extends FrontAction
 
     private function setupSidebar()
     {
-        $this->data['sidebar'] = [
-            'dashboard' => [
-                'label' => 'Dashboard',
-                'url' => 'admin',
-                'permission' => 'dashboard.view'
-            ],
-            'users' => [
-                'label' => 'Users',
-                'url' => 'admin/users',
-            ]
-        ];
+        $this->data['sidebarMenu'] = config('Config\\SidebarMenu')->menu;
     }
 }
