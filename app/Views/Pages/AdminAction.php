@@ -8,14 +8,11 @@ use Psr\Log\LoggerInterface;
 
 class AdminAction extends FrontAction 
 {
-    // Set admin template
-    public $template = 'admin';
-
-    public function init()
+    public function __construct()
     {        
         // Redirect if not logged in
         if(! user_id()) {
-            $this->response->redirect('login');
+            response()->redirect('login');
         }
         
         // Setup sidebar menu structure

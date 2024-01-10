@@ -1,3 +1,4 @@
+<?php $theme_url = config('Config\\Theme')->adminThemeURL; ?>
 <!DOCTYPE html><!--
 * CoreUI - Free Bootstrap Admin Template
 * @version v4.2.2
@@ -26,13 +27,13 @@
 	</div>
 
 	<!-- CoreUI and necessary plugins-->
-	<script src="<?= setting('Theme.themeUrl') ?>vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
-	<script src="<?= setting('Theme.themeUrl') ?>vendors/simplebar/js/simplebar.min.js"></script>
+	<script src="<?= $theme_url ?>vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+	<script src="<?= $theme_url ?>vendors/simplebar/js/simplebar.min.js"></script>
 	<!-- Plugins and scripts required by this view-->
-	<script src="<?= setting('Theme.themeUrl') ?>vendors/chart.js/js/chart.min.js"></script>
-	<script src="<?= setting('Theme.themeUrl') ?>vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
-	<script src="<?= setting('Theme.themeUrl') ?>vendors/@coreui/utils/js/coreui-utils.js"></script>
-	<script src="<?= setting('Theme.themeUrl') ?>js/main.js"></script>
+	<script src="<?= $theme_url ?>vendors/chart.js/js/chart.min.js"></script>
+	<script src="<?= $theme_url ?>vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+	<script src="<?= $theme_url ?>vendors/@coreui/utils/js/coreui-utils.js"></script>
+	<script src="<?= $theme_url ?>js/main.js"></script>
 	<script>
 	</script>
 

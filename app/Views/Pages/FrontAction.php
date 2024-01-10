@@ -9,35 +9,17 @@ use Psr\Log\LoggerInterface;
 
 abstract class FrontAction
 {
-    // Initiate properties to hold request, response and logger object from controller
-    protected $request, $response, $logger;
-
-    // Set default template
-    public $template = 'mobilekit';
-    
     // Global data
     public $data = [];
 
     /**
      * Initiate global data here
      */
-    public function __construct(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
+    public function __construct()
     {
-        $this->request  = $request;
-        $this->response = $response;
-        $this->logger   = $logger;
-
-        // Run init()
-        $this->init();
-
         // Load module helper
         helper('Heroic\Helpers\module');
-
-        setting('Theme.themeUrl', base_url($this->template . '/'));
     }
-
-    // Require to be called after instantiate
-    public function init(){}
 
     /**
      * Child class should have these three methods 

@@ -1,4 +1,6 @@
-<?php namespace App\Views\Pages\admin;
+<?php 
+
+namespace App\Views\Pages\admin;
 
 use App\Views\Pages\AdminAction;
 

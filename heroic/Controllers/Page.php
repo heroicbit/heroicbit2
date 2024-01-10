@@ -37,7 +37,7 @@ class Page extends BaseController
         if(file_exists($page['path'].'/PageAction.php')){
             $actionPath = str_replace('/', '\\', $page['uri']);
             $ActionClassName = "App\Views\Pages\\{$actionPath}\PageAction";
-            $Action = new $ActionClassName($this->request, $this->response, $this->logger);
+            $Action = new $ActionClassName;
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();
