@@ -13,9 +13,14 @@ class SidebarMenu extends BaseConfig
             'icon' => 'fa-solid fa-gauge',
         ],
         [
-            'url' => '#',
+            'url' => 'admin/users',
             'caption' => 'Users',
             'icon' => 'fa-solid fa-user-group',
+        ],
+        [
+            'url' => '#',
+            'caption' => 'Content',
+            'icon' => 'fa-regular fa-newspaper',
             'children' => [
                 [
                     'url' => 'admin/users',

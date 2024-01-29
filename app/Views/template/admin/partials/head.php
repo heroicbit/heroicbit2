@@ -31,6 +31,6 @@
 <!-- Main styles for this application-->
 <link href="<?= $theme_url ?>css/style.css" rel="stylesheet">
 <!-- We use those styles to show code examples, you should remove them in your application.-->
-<link href="<?= $theme_url ?>css/examples.css" rel="stylesheet">
+<link href="<?= $theme_url ?>css/custom.css" rel="stylesheet">
 <link href="<?= $theme_url ?>vendors/@coreui/chartjs/css/coreui-chartjs.css" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />

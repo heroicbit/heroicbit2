@@ -1,4 +1,5 @@
 <?php $theme_url = config('Config\\Theme')->adminThemeURL; ?>
+<?php $menu = config('Config\\SidebarMenu')->menu; ?>
 
 <div class="sidebar sidebar-dark sidebar-fixed" id="sidebar">
 	<div class="sidebar-brand d-none d-md-flex">
@@ -10,7 +11,7 @@
 		</svg>
 	</div>
 	<ul class="sidebar-nav" data-coreui="navigation" data-simplebar="">
-		<?php foreach ($sidebarMenu as $key => $item): ?>
+		<?php foreach ($menu ?? [] as $key => $item): ?>
 			<?php if (! empty($item['children'])): ?>
 				<li class="nav-group">
 					<a class="nav-link nav-group-toggle" href="<?= $item['url'] ?>">

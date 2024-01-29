@@ -18,7 +18,9 @@
 	<div class="wrapper d-flex flex-column min-vh-100 bg-light">
 		<?= $this->include('template/admin/partials/header') ?>
 
-		<?= $this->renderSection('content') ?>
+		<div class="body flex-grow-1 px-3">
+			<?= $this->renderSection('content') ?>
+		</div>
 
 		<footer class="footer">
 			<div><a href="https://coreui.io">CoreUI </a><a href="https://coreui.io">Bootstrap Admin Template</a> © 2023 creativeLabs.</div>
