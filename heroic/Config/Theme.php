@@ -11,9 +11,15 @@ class Theme extends BaseConfig
 
     public string $frontendThemePath;
     public string $adminThemePath;
-
     public string $frontendThemeURL;
     public string $adminThemeURL;
+
+    public string $homePage = 'home';
+    public string $adminBackgroundColor;
+    public string $adminBackgroundCSS;
+    public string $adminLogoWidth;
+    public string $minifyHTML;
+    public string $showProfiler;
 
     public function __construct()
     {

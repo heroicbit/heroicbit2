@@ -1,15 +1,15 @@
 @charset "UTF-8";
 @import url("inc/bootstrap/bootstrap.min.css");
 @import url("inc/splide/splide.min.css");
-@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css");
-@import url("https://fonts.googleapis.com/css?family=Heebo:100,300,400,500,700,800,900&display=swap");
+@import url("https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css");
+@import url("https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap");
 body {
-  font-family: "Heebo", sans-serif;
-  font-size: 16px;
+  font-family: "Inter", sans-serif;
+  font-size: 15px;
   line-height: 1.55rem;
-  letter-spacing: -0.007rem;
-  color: #444;
-  background: #F5F7FA;
+  letter-spacing: -0.015rem;
+  color: #4F5050;
+  background: #F9F9F9;
   width: 100%;
   height: 100%;
   overflow-x: hidden;
@@ -46,25 +46,6 @@ button:hover, button:active, button:focus {
   outline: 0 !important;
 }
 
-header {
-  display: flex;
-  justify-content: center;
-  background-color: white;
-  min-height: 56px;
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  z-index: 10;
-}
-
-.headerMenu {
-  padding: 1.2rem;
-  line-height: 28px;
-  color: #333;
-  font-weight: 500;
-}
-
 .appHeader {
   min-height: 56px;
   display: flex;
@@ -77,6 +58,7 @@ header {
   z-index: 999;
   background: #FFF;
   color: #141515;
+  box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
 }
 
 .appHeader:before {
@@ -422,7 +404,7 @@ header {
   margin: 1px auto 3px auto;
   font-size: 26px;
   line-height: 1em;
-  color: #444;
+  color: #141515;
   transition: none;
   display: block;
   margin-top: 1px;
@@ -477,7 +459,7 @@ header {
 .appBottomMenu .item.active i.icon,
 .appBottomMenu .item.active ion-icon,
 .appBottomMenu .item.active strong {
-  color: #1E74FD;
+  color: #1E74FD !important;
   font-weight: 500;
 }
 
@@ -543,12 +525,9 @@ header {
 }
 
 #appCapsule {
-  position: relative;
   padding: 56px 0;
   margin-bottom: env(safe-area-inset-bottom);
   margin-top: env(safe-area-inset-top);
-  max-width: 1024px;
-  margin: 0 auto;
 }
 
 #appCapsule.extra-header-active {
@@ -632,12 +611,18 @@ header {
 }
 
 .profileBox {
-  padding: 16px;
+  width: 300px;
+  padding-left: 16px;
+  padding-right: 16px;
   display: flex;
   align-items: center;
   position: relative;
   background: #1E74FD;
   box-shadow: 0 3px 6px 0 rgba(0, 0, 0, 0.1), 0 1px 3px 0 rgba(0, 0, 0, 0.08);
+  position: fixed;
+  z-index: 100;
+  left: 0;
+  top: 0;
   margin-top: env(safe-area-inset-top);
 }
 
@@ -1301,10 +1286,11 @@ h6 .badge {
 }
 
 .text-muted {
+  font-size: 13px;
   color: #4F5050 !important;
 }
 
-/* h1 {
+h1 {
   font-size: 34px;
   font-weight: 700;
 }
@@ -1332,7 +1318,7 @@ h5 {
 h6 {
   font-size: 11px;
   font-weight: 500;
-} */
+}
 
 .lead {
   font-weight: 400;
@@ -1585,22 +1571,14 @@ i.bi {
   transform: scaleX(-1);
 }
 
-#main {
-  opacity: 0;
-  transition: 0.2s ease-in-out;
-}
-
 #loader {
-  background: url(https://kelasmahir.id/uploads/kelasmahir/sources/bg-grey.jpg) no-repeat center center;
-  background-size: cover;
-  margin: 0 auto;
   position: fixed;
   left: 0;
-  top: 55px;
+  top: 0;
   right: 0;
   bottom: 0;
   z-index: 99999;
-  /* background: #FFF; */
+  background: #FFF;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -2195,6 +2173,8 @@ a.badge-dark {
 .btn {
   height: 40px;
   padding: 3px 18px;
+  font-size: 13px;
+  line-height: 1.2em;
   font-weight: 500;
   box-shadow: none !important;
   display: inline-flex;
@@ -4714,9 +4694,9 @@ textarea,
   display: block;
   width: 22px;
   height: 22px;
-  background: #eee;
+  background: transparent;
   border-radius: 100px;
-  border: 1px solid #aaa;
+  border: 1px solid #E1E1E1;
 }
 
 .form-check .form-check-label:before {
@@ -4753,7 +4733,7 @@ textarea,
 
 .form-check-inline .form-check-label {
   margin-bottom: -3px;
-  padding-left: 27px;
+  padding-left: 24px;
 }
 
 .input-list .form-check:after {
@@ -9484,58 +9464,4 @@ body.dark-mode-active .story-block .passive img {
 
 body.dark-mode-active.rtl-mode .notification-dialog.android-style .notification-footer .notification-button {
   border-left-color: #1B283B;
-}
-
-.bg-grey {
-  background-color: #e5ebee !important;
-}
-
-.postItem {
-  margin-bottom: 20px;
-  display: block; }
-  .postItem .imageWrapper {
-    position: relative;
-    margin-bottom: 12px; }
-    .postItem .imageWrapper .badge {
-      position: absolute;
-      left: 16px;
-      bottom: 16px;
-      line-height: 20px;
-      height: auto;
-      border-radius: 5px; }
-    .postItem .imageWrapper .image {
-      width: 100%;
-      height: auto;
-      border-radius: 6px; }
-  .postItem .title { 
-    min-height: 38px; 
-    font-weight: normal; 
-    font-size: 16px; 
-    overflow: hidden; 
-    text-overflow: ellipsis; 
-    display: -webkit-box; 
-    -webkit-line-clamp: 2; 
-    -webkit-box-orient: vertical;
-    line-height: 20px;
-    color: #444;
-      color: #1B2C42;
-    margin: 0 0 6px 0;}
-  .col-12 .postItem .title { 
-    font-size: 24px;
-    line-height: 28px;
-  }
-  .postItem footer {
-    display: flex;
-    font-size: 16px;
-    align-content: center;
-    color: #8D95A0; }
-    .postItem footer .avatar {
-      width: 24px;
-      height: 24px;
-      border-radius: 100px;
-      margin-right: 8px; }
-
-.appHeader .pageTitle { 
-  font-size: 22px;
-  font-weight: 700;
 }

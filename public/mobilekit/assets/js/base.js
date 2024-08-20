@@ -52,7 +52,6 @@ const Mobilekit = {
 //-----------------------------------------------------------------------
 var pageBody = document.querySelector("body");
 var appSidebar = document.getElementById("sidebarPanel")
-var main = document.getElementById("main")
 var loader = document.getElementById('loader');
 //-----------------------------------------------------------------------
 
@@ -74,8 +73,7 @@ if (Mobilekit.PWA.enable) {
 // Page Loader
 //----------------------------------------------------------------------
 setTimeout(() => {
-    loader.setAttribute("style", "pointer-events: none; opacity: 0; transition: 0.3s ease-in-out;");
-    main.setAttribute("style", "opacity: 1;")
+    loader.setAttribute("style", "pointer-events: none; opacity: 0; transition: 0.2s ease-in-out;");
     setTimeout(() => {
         loader.setAttribute("style", "display: none;")
     }, 1000);
@@ -345,6 +343,112 @@ stepperDown.forEach(function (el) {
 //-----------------------------------------------------------------------
 
 
+//-----------------------------------------------------------------------
+// Carousel
+// Splide Carousel
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Full Carousel
+    document.querySelectorAll('.carousel-full').forEach(carousel => new Splide(carousel, {
+        perPage: 1,
+        rewind: true,
+        type: "loop",
+        gap: 0,
+        arrows: false,
+        pagination: false,
+    }).mount());
+
+    // Single Carousel
+    document.querySelectorAll('.carousel-single').forEach(carousel => new Splide(carousel, {
+        perPage: 3,
+        rewind: true,
+        type: "loop",
+        gap: 16,
+        padding: 16,
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+            768: {
+                perPage: 1
+            },
+            991: {
+                perPage: 2
+            }
+        }
+    }).mount());
+
+    // Multiple Carousel
+    document.querySelectorAll('.carousel-multiple').forEach(carousel => new Splide(carousel, {
+        perPage: 4,
+        rewind: true,
+        type: "loop",
+        gap: 16,
+        padding: 16,
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+            768: {
+                perPage: 2
+            },
+            991: {
+                perPage: 3
+            }
+        }
+    }).mount());
+
+    // Small Carousel
+    document.querySelectorAll('.carousel-small').forEach(carousel => new Splide(carousel, {
+        perPage: 9,
+        rewind: false,
+        type: "loop",
+        gap: 16,
+        padding: 16,
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+            768: {
+                perPage: 5
+            },
+            991: {
+                perPage: 7
+            }
+        }
+    }).mount());
+
+    // Slider Carousel
+    document.querySelectorAll('.carousel-slider').forEach(carousel => new Splide(carousel, {
+        perPage: 1,
+        rewind: false,
+        type: "loop",
+        gap: 16,
+        padding: 16,
+        arrows: false,
+        pagination: true
+    }).mount());
+
+    // Stories Carousel
+    document.querySelectorAll('.story-block').forEach(carousel => new Splide(carousel, {
+        perPage: 16,
+        rewind: false,
+        type: "slide",
+        gap: 16,
+        padding: 16,
+        arrows: false,
+        pagination: false,
+        breakpoints: {
+            500: {
+                perPage: 4
+            },
+            768: {
+                perPage: 7
+            },
+            1200: {
+                perPage: 11
+            }
+        }
+    }).mount());
+});
+//-----------------------------------------------------------------------
 
 
 //-----------------------------------------------------------------------

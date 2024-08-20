@@ -1,4 +1,4 @@
-<?php namespace App\Views\Pages\home;
+<?php namespace App\Views\Pages\components;
 
 use App\Views\Pages\FrontAction;
 
@@ -10,7 +10,6 @@ class PageAction extends FrontAction {
 		$data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
 		$data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
 		$data['title'] = service('settings')->get('Site.siteName');
-
 		return $data;
 	}
 
