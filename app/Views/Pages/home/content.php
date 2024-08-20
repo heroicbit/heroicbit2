@@ -30,6 +30,31 @@
             this.id = context.params.id
         },
     })
+
+    // Mendapatkan hash dari URL
+    document.addEventListener('pinecone-end', () => {
+        updateActiveMenu();
+    });
+
+    function updateActiveMenu() {
+        // Mendapatkan hash dari URL
+        let hash = window.location.hash;
+
+        // Menghapus tanda '#' dan '/' dari hash untuk mendapatkan segmen
+        let segment = hash.replace(/^#\/?/, '');
+        console.log(segment);
+
+        // Menghapus class 'active' dari semua menu
+        let menus = document.querySelectorAll('[id^="bottommenu-"]');
+        menus.forEach(menu => menu.classList.remove('active'));
+
+        // Menambahkan class 'active' ke menu yang sesuai dengan segmen
+        if(segment == '') segment = 'home';
+        let activeMenu = document.getElementById('bottommenu-' + segment);
+        if (activeMenu) {
+            activeMenu.classList.add('active');
+        }
+    }
 </script>
 
 <?php $this->endSection() ?>

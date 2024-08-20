@@ -4,14 +4,19 @@ use App\Views\Pages\FrontAction;
 
 class PageAction extends FrontAction {
 
+	public $data;
+
+	public function __construct()
+	{
+		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
+		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
+		$this->data['title'] = service('settings')->get('Site.siteName');
+	}
+
 	// This method handle GET request
 	public function render()
 	{
-		$data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
-		$data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
-		$data['title'] = service('settings')->get('Site.siteName');
-
-		return $data;
+		return $this->data;
 	}
 
 	// This method handle GET request via AJAX

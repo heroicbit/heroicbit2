@@ -68,36 +68,6 @@ if (Mobilekit.PWA.enable) {
 }
 //-----------------------------------------------------------------------
 
-
-//-----------------------------------------------------------------------
-// Page Loader
-//----------------------------------------------------------------------
-setTimeout(() => {
-    loader.setAttribute("style", "pointer-events: none; opacity: 0; transition: 0.2s ease-in-out;");
-    setTimeout(() => {
-        loader.setAttribute("style", "display: none;")
-    }, 1000);
-}, 450);
-//-----------------------------------------------------------------------
-
-
-//-----------------------------------------------------------------------
-// RTL (Right to Left)
-//-----------------------------------------------------------------------
-if (Mobilekit.RTL.enable) {
-    var pageHTML = document.querySelector("html")
-    pageHTML.dir = "rtl"
-    document.querySelector("body").classList.add("rtl-mode")
-    if (appSidebar != null) {
-        appSidebar.classList.remove("offcanvas-start")
-        appSidebar.classList.add("offcanvas-end")
-    }
-    document.querySelectorAll(".carousel-full, .carousel-single, .carousel-multiple, .carousel-small, .carousel-slider, .story-block").forEach(function (el) {
-        el.setAttribute('data-splide', '{"direction":"rtl"}')
-    })
-}
-//-----------------------------------------------------------------------
-
 //-----------------------------------------------------------------------
 // Fix for # href
 //-----------------------------------------------------------------------
@@ -541,22 +511,24 @@ toastTaptoClose.forEach(function (el) {
 //-----------------------------------------------------------------------
 // Header Scrolled
 // Animated header style
-var appHeader = document.querySelector(".appHeader.scrolled");
-function animatedScroll() {
-    var scrolled = window.scrollY;
-    if (scrolled > 20) {
-        appHeader.classList.add("is-active")
+document.addEventListener('pinecone-end', () => {
+    var appHeader = document.querySelector(".appHeader.scrolled");
+    function animatedScroll() {
+        var scrolled = window.scrollY;
+        if (scrolled > 20) {
+            appHeader.classList.add("is-active")
+        }
+        else {
+            appHeader.classList.remove("is-active")
+        }
     }
-    else {
-        appHeader.classList.remove("is-active")
-    }
-}
-if (document.body.contains(appHeader)) {
-    animatedScroll();
-    window.addEventListener("scroll", function () {
+    if (document.body.contains(appHeader)) {
         animatedScroll();
-    })
-}
+        document.addEventListener("scroll", function () {
+            animatedScroll();
+        })
+    }
+});
 //-----------------------------------------------------------------------
 
 
