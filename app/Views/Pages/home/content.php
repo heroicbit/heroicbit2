@@ -1,7 +1,7 @@
-<?= $this->extend('template/admin/layouts/basic') ?>
+<?= $this->extend('template/mobilekit/layouts/basic') ?>
 
-<?= $this->section('content') ?>
+<?php $this->section('content') ?>
 
 <h1>Welcome</h1>
 
-<?= $this->endSection() ?>
+<?php $this->endSection() ?>

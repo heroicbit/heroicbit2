@@ -7,7 +7,12 @@ class PageAction extends FrontAction {
 	// This method handle GET request
 	public function render()
 	{
-		return [];
+		$ThemeConfig = config('Heroic\\Config\\Theme'); 
+		$data['themeURL'] = $ThemeConfig->frontendThemeURL; 
+		$data['themePath'] = $ThemeConfig->frontendThemePath; 
+
+		$data['title'] = service('settings')->get('Site.siteName');
+		return $data;
 	}
 
 	// This method handle GET request via AJAX

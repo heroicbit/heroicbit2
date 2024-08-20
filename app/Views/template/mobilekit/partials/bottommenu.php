@@ -1,5 +1,3 @@
-{if isset($module)}
-
 <style>
   .item .icon, .item .bi { color:#555 !important; }
   .appBottomMenu { max-width: 576px !important; margin: 0 auto; }
@@ -27,21 +25,15 @@
 </style>
 
 <!-- App Bottom Menu -->
-{var $area = array_values(shortcode('navigation.area', ['area'=>'frontend']))}
-{if $area}
 <div class="bottomMenuContainer bg-white shadow-lg">
   <div class="appBottomMenu d-flex">
-    {foreach $area as $index => $nav}
     <a href="{$nav['url_type'] == 'uri' ? site_url($nav['url']) : $nav_url}" class="item {$module} {$module == $nav['url'] ? 'active' ?? ''}">
       <div class="col {$index == 2 && setting_item('theme.highlight_center_bottommenu') == '1' ? 'btn-float shadow' : ''}">
         <i class="{$nav['icon']}"></i>
         <strong>{$nav['caption']}</strong>
       </div>
     </a>
-    {/foreach}
   </div>
 </div>
-{/if}
 <!-- * App Bottom Menu -->
-
-{/if}
+ 

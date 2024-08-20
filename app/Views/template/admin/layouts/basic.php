@@ -1,4 +1,8 @@
-<?php $theme_url = config('Config\\Theme')->adminThemeURL; ?>
+<?php 
+$ThemeConfig = config('Config\\Theme'); 
+$themeURL = $ThemeConfig->adminThemeURL; 
+$themePath = $ThemeConfig->adminThemePath; 
+?>
 <!DOCTYPE html><!--
 * CoreUI - Free Bootstrap Admin Template
 * @version v4.2.2
@@ -9,14 +13,14 @@
 <html lang="en">
 
 <head>
-	<?= $this->include('template/admin/partials/head') ?>
+	<?= $this->include($themePath . 'partials/head') ?>
 </head>
 
 <body>
-	<?= $this->include('template/admin/partials/sidebar') ?>
+	<?= $this->include($themePath . 'partials/sidebar') ?>
 
 	<div class="wrapper d-flex flex-column min-vh-100 bg-light">
-		<?= $this->include('template/admin/partials/header') ?>
+		<?= $this->include($themePath . 'partials/header') ?>
 
 		<div class="body flex-grow-1 px-3">
 			<?= $this->renderSection('content') ?>
@@ -29,13 +33,19 @@
 	</div>
 
 	<!-- CoreUI and necessary plugins-->
-	<script src="<?= $theme_url ?>vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
-	<script src="<?= $theme_url ?>vendors/simplebar/js/simplebar.min.js"></script>
+	<script src="<?= $themeURL ?>vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+	<script src="<?= $themePath ?>vendors/@coreui/coreui/js/coreui.bundle.min.js"></script>
+	<script src="<?= $themeURL ?>vendors/simplebar/js/simplebar.min.js"></script>
+	<script src="<?= $themePath ?>vendors/simplebar/js/simplebar.min.js"></script>
 	<!-- Plugins and scripts required by this view-->
-	<script src="<?= $theme_url ?>vendors/chart.js/js/chart.min.js"></script>
-	<script src="<?= $theme_url ?>vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
-	<script src="<?= $theme_url ?>vendors/@coreui/utils/js/coreui-utils.js"></script>
-	<script src="<?= $theme_url ?>js/main.js"></script>
+	<script src="<?= $themeURL ?>vendors/chart.js/js/chart.min.js"></script>
+	<script src="<?= $themePath ?>vendors/chart.js/js/chart.min.js"></script>
+	<script src="<?= $themeURL ?>vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+	<script src="<?= $themePath ?>vendors/@coreui/chartjs/js/coreui-chartjs.js"></script>
+	<script src="<?= $themeURL ?>vendors/@coreui/utils/js/coreui-utils.js"></script>
+	<script src="<?= $themePath ?>vendors/@coreui/utils/js/coreui-utils.js"></script>
+	<script src="<?= $themeURL ?>js/main.js"></script>
+	<script src="<?= $themePath ?>js/main.js"></script>
 	<script>
 	</script>
 

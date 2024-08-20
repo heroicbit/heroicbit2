@@ -1,50 +1,43 @@
 <meta charset="utf-8" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
-<title>{$title|noescape}</title>
+<title><?=$title?></title>
 
 <meta http-equiv="x-pjax-version" content="v123">
-<base href="{site_url()}">
-
-{if file_exists('manifest_'.$_ENV['SITENAME'].'.json')}
-<link rel="manifest" href="manifest_{$_ENV['SITENAME']}.json">
-{/if}
+<base href="<?=site_url()?>">
 
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="viewport"
-    content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
-<link rel="icon" type="image/png" href="{setting_item('site.site_logo_small') ?? $theme_url.'assets/img/icon/favicon.png'}" sizes="32x32">
-<link rel="apple-touch-icon" sizes="180x180" href="{setting_item('site.site_logo_small') ?? $theme_url.'assets/img/icon/192x192.png'}">
-<link rel="stylesheet" href="{$theme_url}assets/css/style.css?v1.2">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
+<link rel="icon" type="image/png" href="<?= setting_item('site.site_logo_small') ?? $themeURL.'assets/img/icon/favicon.png'?>" sizes="32x32">
+<link rel="apple-touch-icon" sizes="180x180" href="<?= setting_item('site.site_logo_small') ?? $themeURL.'assets/img/icon/192x192.png'?>">
+<link rel="stylesheet" href="<?=$themeURL?>assets/css/style.css?v1.2">
 
-<link rel="canonical" href="{current_url()}">
+<link rel="canonical" href="<?=current_url()?>">
 <meta property="og:locale" content="id_ID">
 <meta property="og:type" content="article">
-<meta property="og:title" content="{$title}">
-<meta property="og:description" content="{$meta_description}">
-<meta property="og:url" content="{current_url()}">
-<meta property="og:site_name" content="{setting_item('site.site_title')}">
+<meta property="og:title" content="<?=$title?>">
+<meta property="og:description" content="<?=$meta_description??''?>">
+<meta property="og:url" content="<?=current_url()?>">
+<meta property="og:site_name" content="<?= service('settings')->get('Site.siteName')?>">
 
-<meta property="og:image" content="{$og_image ?? ''}">
+<meta property="og:image" content="<?=$og_image ?? ''?>">
 <meta property="og:image:width" content="700">
 <meta property="og:image:height" content="350">
-<link rel="alternate" type="application/rss+xml" title="{$title}" href="{$site_url}feed/">
-<meta name="description" content="{$meta_description}">
-<meta property="description" content="{$meta_description}">
+<link rel="alternate" type="application/rss+xml" title="<?=$title?>" href="<?=site_url()?>feed/">
+<meta name="description" content="<?=$meta_description??''?>">
+<meta property="description" content="<?=$meta_description??''?>">
 <meta property="language" content="Indonesia">
 <meta property="revisit-after" content="7">
 <meta property="rating" content="general">
 
-{if env('CI_ENV') == 'production'}
+<?php if(env('CI_ENV') == 'production'):?>
 <meta property="webcrawlers" content="all">
 <meta property="spiders" content="all">
 <meta property="robots" content="all">
-{else}
+<?php else: ?>
 <meta name="robots" content="noindex, nofollow">
-{/if}
-
-{embed_entry_style()}
+<?php endif ?>
 
 <!-- JS Cookie Plugin -->
 <script src="//cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
@@ -58,37 +51,37 @@
 <script src="//cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js" integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg==" crossorigin="anonymous"></script>
 
 <!-- Global site tag (gtag.js) - Google Analytics -->
-{if setting_item('theme.gtag_id')}
-<script async src="https://www.googletagmanager.com/gtag/js?id={setting_item('theme.gtag_id')}"></script>
+<?php if(setting_item('theme.gtag_id')): ?>
+<script async src="https://www.googletagmanager.com/gtag/js?id=<?= setting_item('theme.gtag_id')?>"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  gtag('config', {setting_item('theme.gtag_id')});
+  gtag('config', <?= setting_item('theme.gtag_id') ?>);
 </script>
-{/if}
+<?php endif ?>
 
 <!-- Moment.js -->
 <script src="//cdn.jsdelivr.net/npm/moment@2.29.1/moment.min.js"></script>
 <script src="//cdn.jsdelivr.net/npm/moment@2.29.1/locale/id.js"></script>
 <!-- JQUERY -->
-<script src="{$theme_url}assets/vendor/jquery.min.js"></script>
+<script src="<?=$themeURL?>assets/vendor/jquery.min.js"></script>
 
 <!-- Config Js -->
-<script>const base_url={$site_url};</script>
-<script src="{$theme_url}assets/config.js"></script>
+<script>const base_url=<?=site_url()?>;</script>
+<script src="<?=$themeURL?>assets/config.js"></script>
 
 <!-- Helper JS -->
-<script src="{$theme_url}assets/helper.js"></script>
+<script src="<?=$themeURL?>assets/helper.js"></script>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/blueimp-md5/2.18.0/js/md5.min.js"></script>
 
 <style>
-  body { background: url({setting_item('theme.frontend_background')}) no-repeat center center; background-size: cover; background-attachment: fixed; }
-  .appHeader { max-width:1024px; margin:0 auto; border: 0; background-color: {setting_item('theme.navbar_color')|noescape}; }
-  .appHeader .pageTitle { color: {setting_item('theme.navbar_text_color')|noescape}; }
+  body { background: url(<?= setting_item('theme.frontend_background')?>) no-repeat center center; background-size: cover; background-attachment: fixed; }
+  .appHeader { max-width:1024px; margin:0 auto; border: 0; background-color: <?= setting_item('theme.navbar_color')?>; }
+  .appHeader .pageTitle { color: <?= setting_item('theme.navbar_text_color')?>; }
   .appBottomMenu .item.active:after { height: 3px;width: 75%;margin: 0 auto; }
   .postBody img { width: 100%; }
 
@@ -96,7 +89,7 @@
   #appCapsule {  background-color: #F5F7FA99; }
   .rounded-lg { border-radius: 15px !important; }
   .appBottomMenu, .offcanvas { backdrop-filter: saturate(180%) blur(10px); background-color: rgba(255,255,255,.9); }
-  #loader { background: url({setting_item('theme.frontend_background')}) no-repeat center center; }
+  #loader { background: url(<?= setting_item('theme.frontend_background')?>) no-repeat center center; }
 
   #toast-container.toast-bottom-full-width>div, #toast-container.toast-top-full-width>div { width: 100%; margin-bottom: 0; opacity: 1; padding: 10px 8px 10px 50px; }
   #toast-container>div { box-shadow: 0 0 12px #0000005e; -moz-border-radius: 0; -webkit-border-radius: 0; border-radius: 0; }
@@ -106,8 +99,8 @@
   .appBottomMenu .item.active > a, 
   .item.active .icon, .item.active .bi, 
   .item.active .icon, .item.active ion-icon, 
-  .item.active .icon, .item.active strong { color:{setting_item('theme.link_color')|noescape} !important; }
-  .appBottomMenu .item.active:after { background-color: {setting_item('theme.link_color')|noescape} !important; }
+  .item.active .icon, .item.active strong { color:<?= setting_item('theme.link_color')?> !important; }
+  .appBottomMenu .item.active:after { background-color: <?= setting_item('theme.link_color')?> !important; }
 </style>
 
-{setting_item('theme.custom_scripts')|noescape}
+<?= setting_item('theme.custom_scripts')?>
