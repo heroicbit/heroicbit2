@@ -37,12 +37,8 @@
     });
 
     function updateActiveMenu() {
-        // Mendapatkan hash dari URL
         let hash = window.location.hash;
-
-        // Menghapus tanda '#' dan '/' dari hash untuk mendapatkan segmen
         let segment = hash.replace(/^#\/?/, '');
-        console.log(segment);
 
         // Menghapus class 'active' dari semua menu
         let menus = document.querySelectorAll('[id^="bottommenu-"]');

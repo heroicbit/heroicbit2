@@ -17,6 +17,7 @@ $themePath = service('settings')->get('Theme.frontendThemePath'); ?>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <!-- Base Js File -->
     <script src="<?= $themeURL ?>assets/js/base.js"></script>
+    <script src="<?= $themeURL ?>assets/js/pagescript.min.js"></script>
 
     <script>
 		document.addEventListener('alpine:initialized', () => {
