@@ -638,6 +638,6 @@
     <!-- * App Capsule -->
 
     <!-- App Bottom Menu -->
-    <?= $this->include($themePath . 'partials/bottommenu') ?>
+    <?= $this->include('Pages/home/bottommenu') ?>
     <!-- * App Bottom Menu -->
 </div>
