@@ -46,7 +46,7 @@ class Page extends BaseController
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();
             } elseif($this->request->getGet('dataonly')) {
-                $pagedata = $Action->supply();
+                $pagedata = json_encode($Action->supply());
                 return $this->response->setJSON($pagedata);
 			} else {
                 $pagedata = $Action->_output();

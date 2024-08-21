@@ -1,8 +1,8 @@
-<div id="template-container" x-data="member_component()">
+<div id="template-container" x-data="pageData('member/component')">
     <div class="appHeader bg-primary scrolled">
         <div class="left">
         </div>
-        <div class="pageTitle" x-text="title"></div>
+        <div class="pageTitle" x-text="data.title"></div>
         <div class="right">
             <a href="#" class="headerButton toggle-searchbox">
                 <ion-icon name="search-outline"></ion-icon>
@@ -14,12 +14,12 @@
     <div id="appCapsule">
 
         <div class="header-large-title">
-            <h1 class="title" x-text="title"></h1>
+            <h1 class="title" x-text="data.title"></h1>
             <h4 class="subtitle"></h4>
         </div>
 
         <ul class="listview image-listview flush transparent mt-3 mb-2">
-            <template x-for="row in data">
+            <template x-for="row in data.components">
                 <li>
                     <a href="#" class="item">
                         <div class="icon-box bg-primary">

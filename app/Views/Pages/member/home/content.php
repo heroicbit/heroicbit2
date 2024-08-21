@@ -20,7 +20,7 @@
 
         <div class="listview-title mt-2">Article List</div>
         <ul class="listview simple-listview">
-            <template x-for="row in data">
+            <template x-for="row in data.articles">
                 <li x-text="row.title"></li>
             </template>
         </ul>

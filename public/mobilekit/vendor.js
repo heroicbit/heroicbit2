@@ -22,3 +22,14 @@ window.fetchPageData = function(page){
             console.log(error);
         });
 }
+
+window.pageData = function(page){
+    return {
+        data: [],
+        init(){
+            fetchPageData(page).then(data => {
+                this.data = data
+            })
+        }
+    }
+}

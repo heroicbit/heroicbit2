@@ -25,6 +25,8 @@ class PageAction extends MemberPageAction {
             ['icon' => 'megaphone-outline', 'label' => "Under Construction"],
         ];
 
-        return json_encode($components);
+        $title = 'Components';
+        $output = compact('title','components');
+        return $output;
     }
 }

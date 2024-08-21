@@ -5,7 +5,7 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 class PageAction extends MemberPageAction {
 
     public function supply(){
-        $data = [
+        $articles = [
             [
                 "id" => 1,
                 "title" => "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
@@ -33,7 +33,8 @@ class PageAction extends MemberPageAction {
             ]
         ];
 
-        return json_encode($data);
+        $output = compact('articles');
+        return $output;
     }
 
 }
