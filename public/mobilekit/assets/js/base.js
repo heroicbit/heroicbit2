@@ -511,24 +511,24 @@ toastTaptoClose.forEach(function (el) {
 //-----------------------------------------------------------------------
 // Header Scrolled
 // Animated header style
-document.addEventListener('pinecone-end', () => {
-    var appHeader = document.querySelector(".appHeader.scrolled");
-    function animatedScroll() {
-        var scrolled = window.scrollY;
-        if (scrolled > 20) {
-            appHeader.classList.add("is-active")
-        }
-        else {
-            appHeader.classList.remove("is-active")
-        }
-    }
-    if (document.body.contains(appHeader)) {
-        animatedScroll();
-        document.addEventListener("scroll", function () {
-            animatedScroll();
-        })
-    }
-});
+// document.addEventListener('pinecone-end', () => {
+//     var appHeader = document.querySelector(".appHeader.scrolled");
+//     function animatedScroll() {
+//         var scrolled = window.scrollY;
+//         if (scrolled > 20) {
+//             appHeader.classList.add("is-active")
+//         }
+//         else {
+//             appHeader.classList.remove("is-active")
+//         }
+//     }
+//     if (document.body.contains(appHeader)) {
+//         animatedScroll();
+//         document.addEventListener("scroll", function () {
+//             animatedScroll();
+//         })
+//     }
+// });
 //-----------------------------------------------------------------------
 
 

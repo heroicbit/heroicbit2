@@ -1,5 +1,5 @@
 // Page member/component
-function member_component(){
+window.member_component = function(){
     return {
         title: "Components",
         data: [],
@@ -9,8 +9,7 @@ function member_component(){
             axios
                 .get(base_url + 'member/component?dataonly=1')
                 .then(response => {
-                    console.log(response.data);
-                    this.data = response.data;
+                    this.data = response.data
                 })
                 .catch(error => {
                     console.log(error);

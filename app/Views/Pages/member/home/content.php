@@ -27,8 +27,4 @@
 
     </div>
     <!-- * App Capsule -->
-
-    <!-- App Bottom Menu -->
-    <?= $this->include('Pages/member/bottommenu') ?>
-    <!-- * App Bottom Menu -->
 </div>

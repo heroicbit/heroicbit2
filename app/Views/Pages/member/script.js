@@ -1,10 +1,6 @@
 // Script untuk halaman utama home
 // Mendapatkan hash dari URL
-document.addEventListener('pinecone-end', () => {
-    updateActiveMenu();
-});
-
-function updateActiveMenu() {
+function updateActiveBottomMenu() {
     let hash = window.location.hash;
     let segment = hash.replace(/^#\/?/, '');
 
@@ -19,3 +15,30 @@ function updateActiveMenu() {
         activeMenu.classList.add('active');
     }
 }
+window.updateActiveBottomMenu = updateActiveBottomMenu;
+
+//****************************************************************** */
+// Animated header style on scroll
+//****************************************************************** */
+function animatedScroll() {
+    var appHeader = document.querySelector(".appHeader.scrolled");
+    var scrolled = window.scrollY;
+    if (scrolled > 20) {
+        appHeader.classList.add("is-active")
+    }
+    else {
+        appHeader.classList.remove("is-active")
+    }
+}
+window.animatedScroll = animatedScroll
+
+document.addEventListener('pinecone-end', () => {
+    updateActiveBottomMenu();
+    var appHeader = document.querySelector(".appHeader.scrolled");
+    if (document.body.contains(appHeader)) {
+        animatedScroll();
+        document.addEventListener("scroll", function () {
+            animatedScroll();
+        })
+    }
+});

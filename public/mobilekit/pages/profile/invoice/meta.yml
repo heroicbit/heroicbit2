@@ -1,4 +1,0 @@
-# General
-page_title: Invoice History
-module: user
-require_login: true

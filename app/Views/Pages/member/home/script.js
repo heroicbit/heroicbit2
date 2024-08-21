@@ -1,5 +1,5 @@
 // Page member/home
-function member_home(){
+window.member_home = function(){
     return {
         title: "Discover",
         data: [],
@@ -9,7 +9,6 @@ function member_home(){
             axios
                 .get(base_url + 'member/home?dataonly=1')
                 .then(response => {
-                    console.log(response.data);
                     this.data = response.data;
                 })
                 .catch(error => {
