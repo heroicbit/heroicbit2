@@ -6,9 +6,14 @@ window.member_home = function(){
         init(){
             document.title = this.title;
 
-            fetchPageData('member/home').then(data => {
-                this.data = data
-            })
+            if(cachePageData['member/home']){
+                this.data = cachePageData['member/home']
+            } else {   
+                fetchPageData('member/home').then(data => {
+                    cachePageData['member/home'] = data
+                    this.data = data
+                })
+            }
         }
     }
 }
