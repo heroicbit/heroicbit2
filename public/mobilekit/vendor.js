@@ -40,3 +40,4 @@ window.pageData = function(page){
         }
     }
 }
+window.cachePageData = cachePageData;
