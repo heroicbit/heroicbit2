@@ -6,7 +6,7 @@ class PageAction extends MemberPageAction {
 
     public function supply(){
         $components = [
-            ['icon' => 'chatbubble-ellipses-outline', 'label' => "Chat"],
+            ['icon' => 'chatbubble-ellipses-outline', 'label' => "Chatting"],
             ['icon' => 'image-outline', 'label' => "Full Slider"],
             ['icon' => 'lock-closed-outline', 'label' => "Login"],
             ['icon' => 'person-outline', 'label' => "Register"],

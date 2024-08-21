@@ -23,13 +23,20 @@ window.fetchPageData = function(page){
         });
 }
 
+const cachePageData = {};
 window.pageData = function(page){
     return {
         data: [],
         init(){
-            fetchPageData(page).then(data => {
-                this.data = data
-            })
+            if (cachePageData[page]) {
+                console.log('Returning cached data for:', page);
+                this.data = cachePageData[page];
+            } else {
+                fetchPageData(page).then(data => {
+                    cachePageData[page] = data
+                    this.data = data
+                })
+            }
         }
     }
 }
