@@ -17,3 +17,5 @@
 <!-- OPTIONAL: nProgress for loading bar -->
 <script src="https://unpkg.com/nprogress@0.2.0/nprogress.js"></script>
 <link rel="stylesheet" href="https://unpkg.com/nprogress@0.2.0/nprogress.css" />
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>

@@ -20,6 +20,7 @@ $themePath = service('settings')->get('Theme.frontendThemePath'); ?>
     <script src="<?= $themeURL ?>assets/js/pagescript.min.js"></script>
 
     <script>
+        let base_url = `<?= site_url() ?>`;
 		document.addEventListener('alpine:initialized', () => {
 			window.PineconeRouter.settings.basePath = '/'
 			window.PineconeRouter.settings.hash = true; // use hash routing

@@ -16,10 +16,14 @@ class Page extends BaseController
             $segments = [service('settings')->get('Theme.homePage')];
 
         $pageDetail = $this->pageDetail($segments);
+        
+        // Return JSON output if set
+        if(is_object($pageDetail)) return $pageDetail;
+
+        // Render page
         $fileTemplate = 'Pages/'.$pageDetail['uri'].'/content.php';
         if(! file_exists(APPPATH . 'Views/' . $fileTemplate))
             throw new \CodeIgniter\Exceptions\ConfigException('Template page file not found: content.php');
-
         return view($fileTemplate, $pageDetail);
     }
 
@@ -41,8 +45,8 @@ class Page extends BaseController
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();
-            } elseif($this->request->isAJAX() && $this->request->getGet('dataonly')) {
-                $pagedata = $Action->_outputAjax();
+            } elseif($this->request->getGet('dataonly')) {
+                $pagedata = $Action->supply();
                 return $this->response->setJSON($pagedata);
 			} else {
                 $pagedata = $Action->_output();

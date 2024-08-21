@@ -13,10 +13,17 @@
     <!-- App Capsule -->
     <div id="appCapsule">
 
-        <div class="header-large-title">
+        <div class="header-large-title mb-3">
             <h1 class="title" x-text="title"></h1>
             <h4 class="subtitle"></h4>
         </div>
+
+        <div class="listview-title mt-2">Article List</div>
+        <ul class="listview simple-listview">
+            <template x-for="row in data">
+                <li x-text="row.title"></li>
+            </template>
+        </ul>
 
     </div>
     <!-- * App Capsule -->

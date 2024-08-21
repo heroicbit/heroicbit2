@@ -18,6 +18,19 @@
             <h4 class="subtitle"></h4>
         </div>
 
+        <ul class="listview image-listview flush transparent mt-3 mb-2">
+            <template x-for="row in data">
+                <li>
+                    <a href="#" class="item">
+                        <div class="icon-box bg-primary">
+                            <ion-icon x-bind:name="row.icon" role="img" class="md hydrated" aria-label="chatbubble ellipses outline"></ion-icon>
+                        </div>
+                        <div class="in" x-text="row.label"></div>
+                    </a>
+                </li>
+            </template>
+        </ul>
+
     </div>
     <!-- * App Capsule -->
 
