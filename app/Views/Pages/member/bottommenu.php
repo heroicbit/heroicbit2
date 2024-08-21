@@ -1,5 +1,5 @@
 <div class="appBottomMenu">
-    <a href="/" id="bottommenu-home" class="item" x-on:click.self="updateActiveMenu()">
+    <a href="/" id="bottommenu-member" class="item" x-on:click.self="updateActiveMenu()">
         <div class="col">
             <ion-icon name="home-outline"></ion-icon>
         </div>

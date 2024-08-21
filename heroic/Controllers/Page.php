@@ -13,7 +13,7 @@ class Page extends BaseController
         $segments = $uri->getSegments();
 
         if (empty($segments))
-            $segments = ['home'];
+            $segments = [service('settings')->get('Theme.homePage')];
 
         $pageDetail = $this->pageDetail($segments);
         $fileTemplate = 'Pages/'.$pageDetail['uri'].'/content.php';

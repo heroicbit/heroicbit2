@@ -3,7 +3,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="theme-color" content="#000000">
-<title>Mobilekit Mobile UI Kit</title>
+<title></title>
 <meta name="description" content="Mobilekit HTML Mobile UI Kit">
 <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
 <link rel="icon" type="image/png" href="<?= $themeURL ?>assets/img/favicon.png" sizes="32x32">

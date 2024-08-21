@@ -1,23 +1,3 @@
-// Page member/component
-function member_component(){
-    return {
-        title: "Components",
-        init(){
-            document.title = this.title
-        }
-    }
-}
-
-// Page member/home
-function member_home(){
-    return {
-        title: "Discover",
-        init(){
-            document.title = this.title
-        }
-    }
-}
-
 // Script untuk halaman utama home
 // Mendapatkan hash dari URL
 document.addEventListener('pinecone-end', () => {

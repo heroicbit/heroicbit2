@@ -1,4 +1,4 @@
-<div id="template-container" x-data="home_components()">
+<div id="template-container" x-data="member_component()">
     <div class="appHeader bg-primary scrolled">
         <div class="left">
         </div>
@@ -22,6 +22,6 @@
     <!-- * App Capsule -->
 
     <!-- App Bottom Menu -->
-    <?= $this->include('Pages/home/bottommenu') ?>
+    <?= $this->include('Pages/member/bottommenu') ?>
     <!-- * App Bottom Menu -->
 </div>

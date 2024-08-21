@@ -1,4 +1,4 @@
-<?php namespace App\Views\Pages\home;
+<?php namespace App\Views\Pages\member;
 
 use App\Views\Pages\FrontAction;
 

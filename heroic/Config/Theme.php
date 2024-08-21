@@ -14,7 +14,7 @@ class Theme extends BaseConfig
     public string $frontendThemeURL;
     public string $adminThemeURL;
 
-    public string $homePage = 'home';
+    public string $homePage = 'member';
     public string $adminBackgroundColor;
     public string $adminBackgroundCSS;
     public string $adminLogoWidth;
