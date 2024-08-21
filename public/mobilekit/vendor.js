@@ -11,5 +11,14 @@ window.PineconeRouter = PineconeRouter;
 window.Alpine = Alpine;
 Alpine.plugin(PineconeRouter);
 
-// Configure NProgress
-NProgress.configure({ showSpinner: false });
+// Helper functions
+window.fetchPageData = function(page){
+    return axios
+        .get(base_url + page + '?dataonly=1')
+        .then(response => {
+            return response.data
+        })
+        .catch(error => {
+            console.log(error);
+        });
+}

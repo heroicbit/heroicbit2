@@ -1,6 +1,6 @@
 // Script untuk halaman utama home
 // Mendapatkan hash dari URL
-function updateActiveBottomMenu() {
+window.updateActiveBottomMenu = function() {
     let hash = window.location.hash;
     let segment = hash.replace(/^#\/?/, '');
 
@@ -15,12 +15,11 @@ function updateActiveBottomMenu() {
         activeMenu.classList.add('active');
     }
 }
-window.updateActiveBottomMenu = updateActiveBottomMenu;
 
 //****************************************************************** */
 // Animated header style on scroll
 //****************************************************************** */
-function animatedScroll() {
+window.animatedScroll = function() {
     var appHeader = document.querySelector(".appHeader.scrolled");
     var scrolled = window.scrollY;
     if (scrolled > 20) {
@@ -30,7 +29,6 @@ function animatedScroll() {
         appHeader.classList.remove("is-active")
     }
 }
-window.animatedScroll = animatedScroll
 
 document.addEventListener('pinecone-end', () => {
     updateActiveBottomMenu();

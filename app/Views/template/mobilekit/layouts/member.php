@@ -21,6 +21,8 @@ $themePath = service('settings')->get('Theme.frontendThemePath'); ?>
 			window.PineconeRouter.settings.basePath = '/'
 			window.PineconeRouter.settings.hash = true; // use hash routing
 		});
+        // Configure NProgress
+        NProgress.configure({ showSpinner: false });
 		// add progress bar
         document.addEventListener('pinecone-start', () => NProgress.start());
 		document.addEventListener('pinecone-end', () => NProgress.done());
