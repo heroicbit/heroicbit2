@@ -5,6 +5,8 @@ window.member_component = function(){
         data: [],
         init(){
             document.title = this.title
+            Alpine.store('member').currentPage = 'component'
+
             fetchPageData('member/component').then(data => {
                 this.data = data
             })

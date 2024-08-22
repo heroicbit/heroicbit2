@@ -3,9 +3,12 @@
 <?php $this->section('content') ?>
 
 <!-- Define alpinejs router -->
-<div id="app" x-data>
-    <template x-route="/" x-template="/member/home"></template>
-    <template x-route="/components" x-template="/member/component"></template>
+<div id="app" x-data="member()">
+    <div class="page-content">
+        <template x-route="/login" x-template="/member/login"></template>
+        <template x-route="/" x-template="/member/home"></template>
+        <template x-route="/components" x-template="/member/component" x-handler="isLoggedIn"></template>
+    </div>
 
     <!-- App Bottom Menu -->
     <?= $this->include('Pages/member/bottommenu') ?>

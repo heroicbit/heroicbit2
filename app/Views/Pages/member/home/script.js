@@ -5,6 +5,8 @@ window.member_home = function(){
         data: [],
         init(){
             document.title = this.title;
+            Alpine.store('member').currentPage = 'home'
+            Alpine.store('member').showBottomMenu = true
 
             if(cachePageData['member/home']){
                 this.data = cachePageData['member/home']

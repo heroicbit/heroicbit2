@@ -1,5 +1,28 @@
-// Script untuk halaman utama home
-// Mendapatkan hash dari URL
+// Script untuk halaman utama member
+
+// Alpine Store
+Alpine.store('member', {
+    currentPage: 'home',
+    showBottomMenu: false,
+})
+
+// Alpine data function
+window.member = function(){
+    return {
+        title: "Member Dashboard",
+        sessionToken: null,
+        init(){
+            document.title = this.title;
+        },
+        // Check login session, dipanggil oleh x-handler template yang meemerlukan session
+        isLoggedIn(context){
+            this.sessionToken = localStorage.getItem('token')
+            if(this.sessionToken == null) return context.redirect('/login')
+        }
+    }
+}
+
+// Fungsi untuk set aktif current bottommenu 
 window.updateActiveBottomMenu = function() {
     let hash = window.location.hash;
     let segment = hash.replace(/^#\/?/, '');
