@@ -72,7 +72,6 @@ $themePath = service('settings')->get('Theme.frontendThemePath'); ?>
     <?= $this->renderSection('content') ?>
 
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
-    <script>let base_url = `<?= site_url() ?>`;</script>
     <script src="<?= $themeURL ?>assets/js/vendor.bundle.js"></script>
     <script src="<?= $themeURL ?>assets/js/base.js"></script>
     <script src="<?= $themeURL ?>assets/js/pagescript.js"></script>

@@ -3,7 +3,7 @@
 // Alpine Store
 Alpine.store('member', {
     currentPage: 'home',
-    showBottomMenu: false,
+    showBottomMenu: true,
 })
 
 // Alpine data function
@@ -11,8 +11,14 @@ window.member = function(){
     return {
         title: "Member Dashboard",
         sessionToken: null,
+        kodePesantren: null,
         init(){
             document.title = this.title;
+        },
+        // Check kode pesantren
+        isKodePesantrenSet(context){
+            this.kodePesantren = localStorage.getItem('kodepesantren')
+            if(this.kodePesantren == null) return context.redirect('/kodepesantren')
         },
         // Check login session, dipanggil oleh x-handler template yang meemerlukan session
         isLoggedIn(context){

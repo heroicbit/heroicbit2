@@ -5,7 +5,7 @@ window.member_home = function(){
         data: [],
         init(){
             if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro')
+                window.PineconeRouter.context.navigate('/intro');
             }
 
             document.title = this.title;
