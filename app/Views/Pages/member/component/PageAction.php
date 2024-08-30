@@ -4,6 +4,11 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
+    public function render(){
+        $data['message'] = 'Helo';
+        return $data;
+    }
+
     public function supply(){
         $components = [
             ['icon' => 'chatbubble-ellipses-outline', 'label' => "Cheating"],
@@ -29,4 +34,6 @@ class PageAction extends MemberPageAction {
         $output = compact('title','components');
         return $output;
     }
+
+    public function process(){}
 }

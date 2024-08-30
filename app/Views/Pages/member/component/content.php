@@ -11,7 +11,7 @@
     </div>
 
     <!-- App Capsule -->
-    <div id="appCapsule">
+    <div id="appCapsule" class="shadow">
 
         <div class="header-large-title">
             <h1 class="title" x-text="data.title"></h1>

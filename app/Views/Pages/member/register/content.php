@@ -1,7 +1,7 @@
 <div id="template-container" x-data="member_login()">
 
     <!-- App Capsule -->
-    <div id="appCapsule" class="pt-5">
+    <div id="appCapsule" class="shadow pt-5">
         <div class="login-form mt-1">
             <div class="section">
                 <img src="<?= $themeURL ?>assets/img/sample/photo/vector4.png" alt="image" class="form-image">

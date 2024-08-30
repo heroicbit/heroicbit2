@@ -9474,6 +9474,4 @@ body.dark-mode-active.rtl-mode .notification-dialog.android-style .notification-
   position: relative;
   margin-bottom: env(safe-area-inset-bottom);
   margin-top: env(safe-area-inset-top);
-  max-width: 768px;
-  margin: 0 auto;
 }

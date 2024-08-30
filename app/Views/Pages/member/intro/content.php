@@ -29,17 +29,17 @@
                     <div class="swiper swiper-intro">
                         <div class="swiper-wrapper py-4 text-center">
                             <div class="swiper-slide">
-                                <img src="https://pesantrenku.test/views/pesantrenku/assets/img/slide 1.png" alt="Slide 1" class="img-banner">
+                                <img src="<?= $themeURL ?>assets/img/walisantri/slide 1.png" alt="Slide 1" class="img-banner">
                                 <h3>Selamat Datang</h3>
                                 <p class="mx-5">Pantau kehadiran putra putri Anda beserta aktivitas mereka di pesantren secara realtime</p>
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://pesantrenku.test/views/pesantrenku/assets/img/slide 2.png" alt="Slide 2" class="img-banner">
+                                <img src="<?=base_url()?>mobilekit/assets/img/walisantri/slide 2.png" alt="Slide 2" class="img-banner">
                                 <h3>Selamat Datang</h3>
                                 <p class="mx-5">Pembayaran biaya bulanan pesantren lebih mudah secara online melalui aplikasi</p>
                             </div>
                             <div class="swiper-slide">
-                                <img src="https://pesantrenku.test/views/pesantrenku/assets/img/slide 3.png" alt="Slide 3" class="img-banner">
+                                <img src="<?=base_url()?>mobilekit/assets/img/walisantri/slide 3.png" alt="Slide 3" class="img-banner">
                                 <h3>Selamat Datang</h3>
                                 <p class="mx-5">Unduh rekap nilai dan rapor digital santri melalui aplikasi</p>
                             </div>
