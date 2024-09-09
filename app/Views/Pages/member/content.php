@@ -9,6 +9,7 @@
         <template x-route="/kodepesantren" x-template="/member/kodepesantren"></template>
         <template x-route="/login" x-template="/member/login" x-handler="isKodePesantrenSet"></template>
         <template x-route="/" x-template="/member/home"></template>
+        <template x-route="/info" x-template="/member/info" x-handler="isLoggedIn"></template>
         <template x-route="/components" x-template="/member/component" x-handler="isLoggedIn"></template>
     </div>
 

@@ -11,7 +11,7 @@
     </div>
 
     <!-- App Capsule -->
-    <div id="appCapsule" class="shadow">
+    <div id="appCapsule">
 
         <div class="bg-brand backlayer"></div>
         <div class="header-large-title my-3 ms-1">
@@ -24,7 +24,7 @@
             </div>
         </div>
 
-        <div class="bg-success-2 rounded-bottom-4" style="height: 150px; margin-bottom: 100px">
+        <div class="bg-success-2 rounded-bottom-4 pb-5" style="height: 150px; margin-bottom: 100px">
 
             <div class="container">
                 <div class="card bg-light rounded-4 py-3 px-4 glassmorph">
@@ -38,7 +38,7 @@
                         <div style="max-width: 90px">
                         <a href="/santri">
                             <img src="<?= $themeURL ?>assets/img/walisantri/icons/pengumuman.png" style="width: 50%">
-                            <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Pengumuman</small>
+                            <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Agenda</small>
                         </a>
                         </div>
                         <div style="max-width: 90px">
@@ -56,7 +56,20 @@
                     </div>
                 </div>
             </div>
-  
+
+            <div class="section mt-3 mb-5">
+                <h3 class="border-bottom pb-1 mb-2">Kabar pesantren</h3>
+                <div class="card mb-3">
+                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="card-img-top" alt="image">
+                    <div class="card-body">
+                        <h5 class="card-title">Card title</h5>
+                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of the
+                            card's content.</p>
+                    </div>
+                </div>
+
+            </div>
+            <hr class="pb-5">
         </div>
         
     </div>
