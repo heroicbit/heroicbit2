@@ -1,5 +1,5 @@
 // Page member/component
-window.member_login = function(){
+window.member_register = function(){
     return {
         title: "Login",
         data: [],
@@ -8,7 +8,7 @@ window.member_login = function(){
             Alpine.store('member').currentPage = 'login'
             Alpine.store('member').showBottomMenu = false
         },
-        login(){
+        register(){
             localStorage.setItem('token', 'yllumi')
             window.PineconeRouter.context.navigate('/')
         }

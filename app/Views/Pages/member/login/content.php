@@ -14,7 +14,7 @@
                 <form action="app-pages.html">
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="email" class="form-control" id="email1" placeholder="Alamat email">
+                            <input type="email" class="form-control" id="email1" placeholder="Alamat email" x-model="data.username">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
@@ -23,7 +23,7 @@
 
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="password" class="form-control" id="password1" placeholder="Kata sandi" autocomplete="off">
+                            <input type="password" class="form-control" id="password1" placeholder="Kata sandi" autocomplete="off" x-model="data.password">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
