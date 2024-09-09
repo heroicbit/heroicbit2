@@ -1,8 +1,8 @@
-<div id="template-container" x-data="member_info()">
-    <div class="appHeader bg-brand">
+<div id="template-container" x-data="member_santri()">
+<div class="appHeader bg-brand">
         <div class="left ps-2">
         </div>
-        <div class="pageTitle text-white">Kabar Pesantren</div>
+        <div class="pageTitle text-white">Santri</div>
         <div class="right">
         </div>
     </div>
