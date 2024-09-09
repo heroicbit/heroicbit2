@@ -1,14 +1,32 @@
 <div class="appBottomMenu no-border" x-show="Alpine.store('member').showBottomMenu">
     <a href="/" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
-            <ion-icon name="home-outline"></ion-icon>
+        <img src="<?= $themeURL ?>assets/img/walisantri/icons/presensi.png" style="width:28px">
             <strong>Beranda</strong>
         </div>
     </a>
-    <a href="/components" id="bottommenu-components" class="item" x-on:click.self="updateActiveBottomMenu()">
+    <a href="/info" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
-            <ion-icon name="cube-outline"></ion-icon>
-            <strong>Komponen</strong>
+        <img src="<?= $themeURL ?>assets/img/walisantri/icons/kabar-pesantren.png" style="width:28px">
+            <strong>Kabar</strong>
+        </div>
+    </a>
+    <a href="/pengumuman" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+        <div class="col">
+        <img src="<?= $themeURL ?>assets/img/walisantri/icons/pengumuman.png" style="width:28px">
+            <strong>Pengumuman</strong>
+        </div>
+    </a>
+    <a href="/santri" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+        <div class="col">
+        <img src="<?= $themeURL ?>assets/img/walisantri/icons/data-santri.png" style="width:28px">
+            <strong>Santri</strong>
+        </div>
+    </a>
+    <a href="/profile" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+        <div class="col">
+        <img src="<?= $themeURL ?>assets/img/walisantri/avatar/male.svg" style="width:28px">
+            <strong>Lainnya</strong>
         </div>
     </a>
 </div>

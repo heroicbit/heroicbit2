@@ -20,4 +20,27 @@
     max-width: 768px;
     margin: 0 auto;
 }
+.appHeader.bg-brand {
+    box-shadow: none !important;
+}
+.bg-brand {
+    background-color: #3BC0CF !important;
+}
+.backlayer {
+    width: 100%;
+    height: 150px;
+    position: absolute;
+    z-index: -10;
+    border-radius: 0 0 25px 25px;
+}
+.glassmorph {
+  backdrop-filter: blur(5px);
+  -webkit-backdrop-filter: blur(5px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+.smallthin { 
+    font-size: .74em;
+    line-height: 14px !important;
+    font-weight: 500; 
+}
 </style>

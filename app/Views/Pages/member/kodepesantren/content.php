@@ -14,7 +14,7 @@
                 <form action="app-pages.html">
                     <div class="form-group boxed">
                         <div class="input-wrapper">
-                            <input type="text" class="form-control text-uppercase text-center" id="kodepesantren" placeholder="Kode pesantren" x-model="kode">
+                            <input type="text" class="form-control text-uppercase text-center" id="kodepesantren" autocomplete="off" placeholder="Kode pesantren" x-on:input="enableButton" x-model="kode">
                             <i class="clear-input">
                                 <ion-icon name="close-circle"></ion-icon>
                             </i>
@@ -22,7 +22,7 @@
                     </div>
 
                     <div class="form-button-group">
-                        <button type="button" x-on:click="checkKodePesantren" class="btn btn-primary btn-block btn-lg">CEK KODE PESANTREN</button>
+                        <button type="button" x-on:click="checkKodePesantren" :disabled="buttonDisabled" x-on:click="checkKodePesantren" class="btn btn-primary btn-block btn-lg">CEK KODE PESANTREN</button>
                     </div>
 
                 </form>
