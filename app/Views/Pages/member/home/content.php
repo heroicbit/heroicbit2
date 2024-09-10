@@ -15,11 +15,11 @@
 
         <div class="bg-brand backlayer"></div>
         <div class="header-large-title my-3 ms-1">
-            <div class="d-flex justify-content-start">
-                <img src="<?= $themeURL; ?>assets/img/walisantri/avatar.png" alt="image" class="imaged w48 rounded">
-                <div class="ms-1 d-flex flex-column justify-content-center">
-                    <h5 class="fs-6 mb-0 text-white">Toni Haryanto</h5>
-                    <smal class="mb-0 text-white">Wali Santri</smal>
+            <div class="d-flex align-items-center justify-content-start gap-3">
+                <div><img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" class="rounded-circle" alt="Toni Haryanto" style="width:56px"></div>
+                <div class="use text-white">
+                    <div class="h5 m-0">Toni Haryanto</div>
+                    <div>Wali santri</div>
                 </div>
             </div>
         </div>
