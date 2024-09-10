@@ -12,6 +12,7 @@
         <template x-route="/info" x-template="/member/info" x-handler="isLoggedIn"></template>
         <template x-route="/santri" x-template="/member/santri" x-handler="isLoggedIn"></template>
         <template x-route="/profile" x-template="/member/profile" x-handler="isLoggedIn"></template>
+        <template x-route="/tagihan" x-template="/member/tagihan" x-handler="isLoggedIn"></template>
         <template x-route="/components" x-template="/member/component" x-handler="isLoggedIn"></template>
     </div>
 
