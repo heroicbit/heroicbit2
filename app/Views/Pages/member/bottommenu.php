@@ -11,10 +11,10 @@
             <strong>Kabar</strong>
         </div>
     </a>
-    <a href="/pengumuman" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+    <a href="/tagihan" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
-        <img src="<?= $themeURL ?>assets/img/walisantri/icons/pengumuman.png" style="width:28px">
-            <strong>Pengumuman</strong>
+        <img src="<?= $themeURL ?>assets/img/walisantri/icons/billing.png" style="width:28px">
+            <strong>Tagihan</strong>
         </div>
     </a>
     <a href="/santri" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
