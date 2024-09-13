@@ -19,7 +19,7 @@
         "codeigniter4/shield": "^1.0",
         "firebase/php-jwt": "^6.10",
         "laminas/laminas-escaper": "^2.9",
-        "symfony/yaml": "^7.0"
+        "symfony/yaml": "^6.4"
     },
     "require-dev": {
         "codeigniter/coding-standard": "^1.5",
