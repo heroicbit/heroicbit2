@@ -18,11 +18,12 @@ class PageAction extends MemberPageAction {
         $Encrypter = service('encrypter');
         $dbname = $Encrypter->decrypt(hex2bin($kodePesantrenHashed));
 
+        // Use database client
         $db = db_connect();
         $db->setDatabase($dbname);
 
         // Check login to database directly using $db
-        $found = $db->query('SELECT * FROM mein_users where email = :username:', ['username' => $username])->getRow();
+        $found = $db->query('SELECT * FROM mein_users where email = :username: OR phone = :username:', ['username' => $username])->getRow();
         $jwt = null;
         if($found) {
             $Phpass = new \App\Libraries\Phpass();

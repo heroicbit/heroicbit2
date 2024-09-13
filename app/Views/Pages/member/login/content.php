@@ -10,22 +10,22 @@
                 <h2>Pesantren Persis 67 Benda Tasikmalaya</h2>
                 <h3 class="my-3">Silakan masuk untuk melanjutkan</h3>
             </div>
+
             <div class="section mt-1 mb-5">
-                <form action="app-pages.html">
+                <div>
                     <div class="form-group boxed">
-                        <div class="input-wrapper">
-                            <input type="email" class="form-control" id="email1" placeholder="Alamat email" x-model="data.username">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
-                            </i>
+                        <div class="text-start input-wrapper">
+                            <label for="identity">Email atau no.WhatsApp, mis. 6289xxxx</label>
+                            <input type="text" class="form-control" id="identity" x-model="data.username">
                         </div>
                     </div>
 
                     <div class="form-group boxed">
-                        <div class="input-wrapper">
-                            <input type="password" class="form-control" id="password1" placeholder="Kata sandi" autocomplete="off" x-model="data.password">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
+                        <div class="text-start input-wrapper">
+                            <label for="identity">Kata Sandi</label>
+                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" placeholder="Kata sandi" autocomplete="off" x-model="data.password">
+                            <i x-on:click="showPwd = !showPwd" class="input-icon-append">
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                             </i>
                         </div>
                     </div>
@@ -40,8 +40,7 @@
                     <div class="form-button-group">
                         <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg">MASUK</button>
                     </div>
-
-                </form>
+                </div>
             </div>
         </div>
     </div>

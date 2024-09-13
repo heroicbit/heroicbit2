@@ -13,8 +13,8 @@
         <div class="bg-success-2 rounded-bottom-4 pb-5" style="height: 150px; margin-bottom: 100px">
 
             <div class="header-large-title">
-                <h1 class="title" x-text="data.title"></h1>
-                <h4 class="subtitle"></h4>
+                <h1 class="title mt-0" x-text="data.title"></h1>
+                <h4 class="subtitle mt-0"></h4>
             </div>
 
             <div class="section mt-0 p-0">

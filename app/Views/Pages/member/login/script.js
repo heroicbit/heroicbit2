@@ -2,6 +2,7 @@
 window.member_login = function(){
     return {
         title: "Login",
+        showPwd: false,
         data: [],
         init(){
             document.title = this.title
