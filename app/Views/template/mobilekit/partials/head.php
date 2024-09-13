@@ -43,4 +43,7 @@
     line-height: 14px !important;
     font-weight: 500; 
 }
+.text-primary {
+    color: #157CA1 !important;
+}
 </style>
