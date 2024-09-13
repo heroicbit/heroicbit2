@@ -11,21 +11,26 @@
                 <h4>Silakan masukkan kode pesantren</h4>
             </div>
             <div class="section mt-1 mb-5">
-                <form action="app-pages.html">
-                    <div class="form-group boxed">
-                        <div class="input-wrapper">
-                            <input type="text" class="form-control text-uppercase text-center" id="kodepesantren" autocomplete="off" placeholder="Kode pesantren" x-on:input="enableButton" x-model="kode">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
-                            </i>
-                        </div>
+                <div class="form-group boxed">
+                    <div class="input-wrapper">
+                        <input 
+                         type="text" 
+                         class="form-control text-uppercase text-center" 
+                         id="kodepesantren" 
+                         autocomplete="off" 
+                         placeholder="Kode pesantren" 
+                         x-on:input="enableButton" 
+                         x-on:keyup.enter="checkKodePesantren"
+                         x-model="kode">
+                        <i class="clear-input">
+                            <ion-icon name="close-circle"></ion-icon>
+                        </i>
                     </div>
+                </div>
 
-                    <div class="form-button-group">
-                        <button type="button" x-on:click="checkKodePesantren" :disabled="buttonDisabled" x-on:click="checkKodePesantren" class="btn btn-primary btn-block btn-lg">CEK KODE PESANTREN</button>
-                    </div>
-
-                </form>
+                <div class="form-button-group">
+                    <button type="button" x-on:click="checkKodePesantren" :disabled="buttonDisabled" x-on:click="checkKodePesantren" class="btn btn-primary btn-block btn-lg">CEK KODE PESANTREN</button>
+                </div>
             </div>
         </div>
     </div>
