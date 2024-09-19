@@ -1,47 +1,64 @@
-<div id="template-container" x-data="member_login()">
+<div id="template-container" x-data="member_register()">
 
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
         <div class="login-form mt-1">
             <div class="section">
-                <img src="<?= $themeURL ?>assets/img/sample/photo/vector4.png" alt="image" class="form-image">
+                <img src="<?= $themeURL ?>assets/img/walisantri/thumbnail-notif.png" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <h1>Selamat Datang</h1>
-                <h4>Silakan masuk untuk melanjutkan</h4>
+                <h2 class="my-3">Registrasi Data</h2>
+                <p>Silahkan isi formulir berikut untuk membuat akun</p>
             </div>
+
             <div class="section mt-1 mb-5">
-                <form action="app-pages.html">
+                <div>
                     <div class="form-group boxed">
-                        <div class="input-wrapper">
-                            <input type="email" class="form-control" id="email1" placeholder="Email address">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
-                            </i>
+                        <div class="text-start input-wrapper">
+                            <label for="name">Nama Lengkap</label>
+                            <input type="text" class="form-control" id="name" x-model="data.name" required>
                         </div>
                     </div>
 
                     <div class="form-group boxed">
-                        <div class="input-wrapper">
-                            <input type="password" class="form-control" id="password1" placeholder="Password" autocomplete="off">
-                            <i class="clear-input">
-                                <ion-icon name="close-circle"></ion-icon>
+                        <div class="text-start input-wrapper">
+                            <label for="email">Email</label>
+                            <input type="email" class="form-control" id="email" x-model="data.email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group boxed">
+                        <div class="text-start input-wrapper">
+                            <label for="whatsapp">No. Whatsapp</label>
+                            <small>&bull; Awali dengan 62, mis. 6289xxxxxx</small>
+                            <input type="text" class="form-control" id="whatsapp" x-model="data.whatsapp" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group boxed">
+                        <div class="text-start input-wrapper">
+                            <label for="identity">Kata Sandi</label>
+                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="new-password" x-model="data.password" required>
+                            <i x-on:click="showPwd = !showPwd" class="input-icon-append">
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                            </i>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group boxed">
+                        <div class="text-start input-wrapper">
+                            <label for="identity">Ulangi Kata Sandi</label>
+                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="repeat-pwd" autocomplete="new-password" x-model="data.repeat_password" required>
+                            <i x-on:click="showPwd = !showPwd" class="input-icon-append">
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                             </i>
                         </div>
                     </div>
 
-                    <div class="form-links mt-2">
-                        <div>
-                            <a href="page-register.html">Register Now</a>
-                        </div>
-                        <div><a href="page-forgot-password.html" class="text-muted">Forgot Password?</a></div>
+                    <div class="form-group border-top mt-3 pt-3">
+                        <button type="button" x-on:click="register" class="btn btn-primary btn-block btn-lg">Daftar Akun</button>
                     </div>
-
-                    <div class="form-button-group">
-                        <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg">MASUK</button>
-                    </div>
-
-                </form>
+                </div>
             </div>
         </div>
     </div>

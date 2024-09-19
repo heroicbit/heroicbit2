@@ -63,14 +63,17 @@
             </div>
 
             <div class="section mt-3 mb-5">
-                <h3 class="border-bottom pb-1 mb-2">Kabar pesantren</h3>
                 <div class="card mb-3">
-                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="card-img-top" alt="image">
+                    <div class="card-header p-1">
+                        <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
+                        <span>Edward Lindgren</span>
+                    </div>
+                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
                     <div class="card-body">
-                        <h5 class="card-title">Card title</h5>
+                        <small class="text-muted">19 September 2024</small>
+                        <h5 class="card-title fs-5">Card title</h5>
                         <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the
-                            card's content.</p>
+                            the card's content.</p>
                     </div>
                 </div>
 

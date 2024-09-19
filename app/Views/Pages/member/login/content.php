@@ -32,7 +32,7 @@
 
                     <div class="form-links mt-2">
                         <div>
-                            <a href="page-register.html">Daftar Akun Baru</a>
+                            <a href="/register">Daftar Akun Baru</a>
                         </div>
                         <div><a href="page-forgot-password.html" class="text-muted">Lupa Kata Sandi?</a></div>
                     </div>

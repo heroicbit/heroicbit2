@@ -8,6 +8,8 @@
         <template x-route="/intro" x-template="/member/intro"></template>
         <template x-route="/kodepesantren" x-template="/member/kodepesantren"></template>
         <template x-route="/login" x-template="/member/login" x-handler="isKodePesantrenSet"></template>
+        <template x-route="/register" x-template="/member/register" x-handler="isKodePesantrenSet"></template>
+        <template x-route="/reset_password" x-template="/member/reset_password" x-handler="isKodePesantrenSet"></template>
         <template x-route="/" x-template="/member/home" x-handler="isLoggedIn"></template>
         <template x-route="/info" x-template="/member/info" x-handler="isLoggedIn"></template>
         <template x-route="/santri" x-template="/member/santri" x-handler="isLoggedIn"></template>
