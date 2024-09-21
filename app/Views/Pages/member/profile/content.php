@@ -21,62 +21,88 @@
                                 <div>17.5383 | Super</div>
                             </div>
                         </div>
-                        <div class="text-center pt-5">
-                            <div class="">
-                                <a data-no-swup="" href="https://masagi.test/profile/edit" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                    </div>
+
+                    <div class="text-center">
+                        <ul class="listview image-listview flush transparent">
+                            <li>
+                                <a href="https://masagi.test/profile/edit" class="item">
                                     <i class="bi bi-person fs-2 text-primary me-2"></i>
                                     <span class="ms-1">Perbaharui Profil</span>
                                 </a>
-                            </div>
-                            <hr style="border-color:#aaa;">
-                        </div>
-                        <div class="text-center">
-                            <div>
-                                <a href="https://masagi.test/anggota/kode_aktivasi" class="link bg-info bg-opacity-25 text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/profile/edit" class="item">
+                                    <i class="bi bi-receipt fs-2 text-primary me-2"></i>
+                                    <span class="ms-1">Transaksi Saya</span>
+                                </a>
+                            </li>
+                        </ul>
+
+                        <div class="listview-title mt-1">Administrasi</div>
+                        <ul class="listview image-listview flush transparent">
+                            <li>
+                                <a href="https://masagi.test/anggota/kode_aktivasi" class="item">
                                     <i class="bi bi-people-fill fs-2 text-primary me-2"></i>
                                     <span class="ms-1">Data Santri</span>
                                 </a>
-                                <a href="https://masagi.test/iuran" class="link bg-info bg-opacity-25 text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/iuran" class="item">
                                     <i class="bi bi-calendar2-check-fill fs-2 text-primary me-2"></i>
                                     <span class="ms-1">Cek Presensi</span>
                                 </a>
-                                <a href="https://masagi.test/iuran" class="link bg-info bg-opacity-25 text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/iuran" class="item">
                                     <i class="bi bi-gear-fill fs-2 text-primary me-2"></i>
                                     <span class="ms-1">Pengaturan Aplikasi</span>
                                 </a>
-                            </div>
-                            <hr style="border-color:#aaa;">
-                        </div>
-                        <div class="text-center">
-                            <div>
-                                <a href="https://masagi.test/pageinfo/about" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                        </ul>
+
+                        <div class="listview-title mt-1">Aplikasi Tarbiyya</div>
+                        <ul class="listview image-listview flush transparent">
+                            <li>
+                                <a href="https://masagi.test/pageinfo/about" class="item">
                                     <i class="bi bi-info-circle text-primary fs-4"></i>
-                                    <span class="ms-2">Tentang Aplikasi Tarbiyya</span>
+                                    <span class="ms-2">Tentang Aplikasi</span>
                                 </a>
-                                <a href="https://masagi.test/pageinfo/contact" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/pageinfo/contact" class="item">
                                     <i class="bi bi-telephone text-primary fs-4"></i>
                                     <span class="ms-2">Kontak Kami</span>
                                 </a>
-                                <a href="https://masagi.test/pageinfo/tnc" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/pageinfo/tnc" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4"></i>
                                     <span class="ms-2">Syarat dan Ketentuan</span>
                                 </a>
-                                <a href="https://masagi.test/pageinfo/pp" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/pageinfo/pp" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4"></i>
                                     <span class="ms-2">Kebijakan Privasi</span>
                                 </a>
-                                <a href="https://masagi.test/pageinfo/faq" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a href="https://masagi.test/pageinfo/faq" class="item">
                                     <i class="bi bi-patch-question text-primary fs-4"></i>
                                     <span class="ms-2">Pertanyaan Umum</span>
                                 </a>
-                                <a onclick="logout()" class="link bg-white text-dark shadow-sm rounded-4 d-flex align-items-center py-2 px-3 mb-2">
+                            </li>
+                            <li>
+                                <a onclick="logout()" class="item">
                                     <i class="bi bi-lock text-danger fs-4"></i>
                                     <span class="ms-2 text-danger">Keluar</span>
                                 </a>
-                            </div>
+                            </li>
+                        </ul>
 
-                        </div>
                     </div>
+
                 </div>
             </section>
         </div>
