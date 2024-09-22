@@ -19,8 +19,12 @@ window.member_kodepesantren = function(){
                 }
             }).then(response => {
                 if(response.data.found == 1){
-                    // Kode pesantren tersedia
+                    // Save kodepesantren to localstorage
                     localStorage.setItem('kodepesantren', response.data.pesantrenID)
+
+                    // Save kodepesantren to cookie without cookie expire
+                    setCookie('kodepesantren', response.data.pesantrenID, 1000);
+
                     window.PineconeRouter.context.navigate('/login')
                 } else {
                     // Kode pesantren tidak tersedia
