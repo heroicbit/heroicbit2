@@ -1,4 +1,4 @@
-<?php namespace App\Views\Pages\member\info;
+<?php namespace App\Views\Pages\member\feed;
 
 use App\Views\Pages\member\PageAction as MemberPageAction;
 

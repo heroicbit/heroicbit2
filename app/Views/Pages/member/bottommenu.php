@@ -5,7 +5,7 @@
             <strong>Beranda</strong>
         </div>
     </a>
-    <a href="/info" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+    <a href="/feed" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
         <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="width:28px">
             <strong>Kabar</strong>

@@ -1,4 +1,4 @@
-<div id="template-container" x-data="member_info()">
+<div id="member_feed" x-data="member_feed()">
     <div class="appHeader bg-brand">
         <div class="left ps-2">
         </div>
@@ -21,45 +21,22 @@
             </div>
 
             <div class="section mt-0 p-0">
-                <div class="card border-top">
-                    <div class="card-header p-1">
-                        <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
-                        <span>Edward Lindgren</span>
+                <template x-for="(article,articleIndex) in data.articles">
+                    <div class="card border-top">
+                        <div class="card-header p-1">
+                            <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
+                            <span>Edward Lindgren</span>
+                        </div>
+                        <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
+                        <div class="card-body">
+                            <small class="text-muted">19 September 2024</small>
+                            <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#detailModal" x-on:click="showDetail(articleIndex)">
+                                <h5 class="card-title fs-5" x-text="article.title"></h5>
+                            </a>
+                            <p class="card-text" x-text="article.body"></p>
+                        </div>
                     </div>
-                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
-                    <div class="card-body">
-                        <small class="text-muted">19 September 2024</small>
-                        <h5 class="card-title fs-5">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                    </div>
-                </div>
-                <div class="card border-top">
-                    <div class="card-header p-1">
-                        <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
-                        <span>Edward Lindgren</span>
-                    </div>
-                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
-                    <div class="card-body">
-                        <small class="text-muted">19 September 2024</small>
-                        <h5 class="card-title fs-5">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                    </div>
-                </div>
-                <div class="card border-top">
-                    <div class="card-header p-1">
-                        <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
-                        <span>Edward Lindgren</span>
-                    </div>
-                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
-                    <div class="card-body">
-                        <small class="text-muted">19 September 2024</small>
-                        <h5 class="card-title fs-5">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                    </div>
-                </div>
+                </template>
 
                 <div class="text-center">
                     <button class="btn btn-outline-secondary my-3">Lihat lainnya</button>
@@ -127,7 +104,24 @@
             </div>
         </div>
         <!-- * Modal Form -->
-        
+
+        <div class="modal modalbox fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                <div class="modal-header">
+                    <h1 class="modal-title fs-5" id="detailModalLabel">Modal title</h1>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <h2 x-text="detailFeed.title"></h2>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+                </div>
+            </div>
+            </div>
     </div>
     <!-- * App Capsule -->
 </div>
