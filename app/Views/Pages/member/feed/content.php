@@ -30,7 +30,7 @@
                         <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
                         <div class="card-body">
                             <small class="text-muted">19 September 2024</small>
-                            <a href="javascript:void()" data-bs-toggle="modal" data-bs-target="#detailModal" x-on:click="showDetail(articleIndex)">
+                            <a href="javascript:void()" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(articleIndex)">
                                 <h5 class="card-title fs-5" x-text="article.title"></h5>
                             </a>
                             <p class="card-text" x-text="article.body"></p>
@@ -105,23 +105,18 @@
         </div>
         <!-- * Modal Form -->
 
-        <div class="modal modalbox fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="detailModalLabel">Modal title</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h2 x-text="detailFeed.title"></h2>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-                </div>
+        <!-- Offcanvas detail -->
+        <div class="offcanvas offcanvas-fullwidth offcanvas-end" tabindex="-1" id="detailCanvas" aria-labelledby="detailCanvasLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="detailCanvasLabel">Detail Kabar</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
+            <div class="offcanvas-body">
+                <h2 x-text="detailFeed.title"></h2>
+                <p x-text="detailFeed.body"></p>
             </div>
+        </div>
+
     </div>
     <!-- * App Capsule -->
 </div>
