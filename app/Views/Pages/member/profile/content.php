@@ -96,7 +96,7 @@
                             <li>
                                 <a onclick="logout()" class="item">
                                     <i class="bi bi-lock text-danger fs-4 me-2"></i>
-                                    text-danger">Keluar</span>
+                                    <span class="text-danger">Keluar</span>
                                 </a>
                             </li>
                         </ul>
