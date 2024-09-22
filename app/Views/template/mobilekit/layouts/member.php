@@ -22,10 +22,16 @@ $themePath = service('settings')->get('Theme.frontendThemePath'); ?>
         // Configure NProgress
         NProgress.configure({ showSpinner: false });
 		// add progress bar
-        document.addEventListener('pinecone-start', () => NProgress.start());
-		document.addEventListener('pinecone-end', () => NProgress.done());
+        document.addEventListener('pinecone-start', () => {
+            NProgress.start();
+            Alpine.store('member').pageLoaded = false
+        });
+		document.addEventListener('pinecone-end', () => {
+            NProgress.done();
+            Alpine.store('member').pageLoaded = true
+        });
 		document.addEventListener('fetch-error', (err) => console.error(err));
-
+        
         // Always run this code in the end of html to start AlpineJS
         Alpine.start();
 	</script>

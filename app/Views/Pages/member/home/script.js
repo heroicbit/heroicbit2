@@ -1,7 +1,7 @@
 // Page member/home
 window.member_home = function(){
     return {
-        title: "Discover",
+        title: "Beranda",
         data: [],
         init(){
             if(localStorage.getItem('intro') != 1){

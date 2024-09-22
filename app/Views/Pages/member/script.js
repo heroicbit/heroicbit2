@@ -3,6 +3,7 @@
 // Alpine Store
 Alpine.store('member', {
     currentPage: 'home',
+    pageLoaded: false,
     showBottomMenu: true,
 })
 
