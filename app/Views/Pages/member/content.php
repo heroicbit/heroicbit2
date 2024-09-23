@@ -2,8 +2,9 @@
 
 <?php $this->section('content') ?>
 
-<!-- Define alpinejs router -->
 <div id="app" x-data="member()">
+    
+    <!-- Define alpinejs router -->
     <div class="page-content">
         <template x-route="/intro" x-template.preload="/member/intro"></template>
         <template x-route="/kodepesantren" x-template.preload="/member/kodepesantren"></template>
@@ -22,5 +23,16 @@
     <?= $this->include('Pages/member/bottommenu') ?>
     <!-- * App Bottom Menu -->
 </div>
+
+<script>
+    // Alpine Store Member
+    document.addEventListener('alpine:init', () => {
+        Alpine.store('member', {
+            currentPage: 'home',
+            pageLoaded: false,
+            showBottomMenu: true,
+        })
+    })
+</script>
 
 <?php $this->endSection() ?>

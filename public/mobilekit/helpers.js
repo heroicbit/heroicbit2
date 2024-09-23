@@ -1,21 +1,4 @@
-import axios from 'axios';
-import 'bootstrap';
-import NProgress from 'nprogress';
-import PineconeRouter from 'pinecone-router'
-import Alpine from 'alpinejs';
-import Swiper from 'swiper/bundle';
-import toastr from 'toastr';
-
-// Attach libraries to the window object for global access
-window.axios = axios;
-window.NProgress = NProgress;
-window.PineconeRouter = PineconeRouter;
-window.Alpine = Alpine;
-window.Swiper = Swiper;
-window.toastr = toastr;
-Alpine.plugin(PineconeRouter);
-
-// Helper functions
+// Heroicbit2 Helper functions
 window.fetchPageData = function(page){ 
     return axios
         .get(base_url + page + '?dataonly=1')

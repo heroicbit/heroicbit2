@@ -1,15 +1,8 @@
 // Script untuk halaman utama member
 
-// Alpine Store
-Alpine.store('member', {
-    currentPage: 'home',
-    pageLoaded: false,
-    showBottomMenu: true,
-})
-
 // Alpine data function
-window.member = function(){
-    return {
+document.addEventListener('alpine:init', () => {
+    Alpine.data('member', () => ({
         title: "Member Dashboard",
         sessionToken: null,
         kodePesantren: null,
@@ -26,8 +19,8 @@ window.member = function(){
             this.sessionToken = localStorage.getItem('token')
             if(this.sessionToken == null) return context.redirect('/login')
         }
-    }
-}
+    }))
+})
 
 // Fungsi untuk set aktif current bottommenu 
 window.updateActiveBottomMenu = function() {

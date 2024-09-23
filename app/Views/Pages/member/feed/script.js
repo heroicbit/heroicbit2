@@ -1,9 +1,14 @@
-// Page member/home
+// Page member/feed
 window.member_feed = function(){
     return {
         title: "Info Pesantren",
         data: [],
-        detailFeed: null,
+        detailFeed: {
+            title: '',
+            content: '',
+            created_at: '',
+            updated_at: ''
+        },
         init(){
             if(localStorage.getItem('intro') != 1){
                 window.PineconeRouter.context.navigate('/intro');

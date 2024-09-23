@@ -25,11 +25,11 @@ function getAllScripts() {
 module.exports = {
   mode: 'production', // Set mode to 'production' for minification
   entry: {
-    'vendor.bundle': './vendor.js', // Entry point for vendor libraries
+    'helpers.bundle': './helpers.js', // Entry point for helpers libraries
     'pagescript': getAllScripts() // Menggabungkan semua script.js dari Pages/
   },
   output: {
-    filename: '[name].js', // Output filename pattern (e.g., vendor.bundle.js, pagescript.js)
+    filename: '[name].js', // Output filename pattern (e.g., helpers.bundle.js, pagescript.js)
     path: path.resolve(__dirname, 'assets/js'), // Output path
   },
   module: {
