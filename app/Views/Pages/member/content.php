@@ -16,6 +16,7 @@
         <template x-route="/profile" x-template.preload="/member/profile" x-handler="isLoggedIn"></template>
         <template x-route="/tagihan" x-template.preload="/member/tagihan" x-handler="isLoggedIn"></template>
         <template x-route="/components" x-template.preload="/member/component" x-handler="isLoggedIn"></template>
+        <template x-route="/pengumuman" x-template.preload="/member/pengumuman" x-handler="isLoggedIn"></template>
     </div>
 
     <!-- App Bottom Menu -->
