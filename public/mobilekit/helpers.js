@@ -39,6 +39,7 @@ window.setCookie = function(name, value, days) {
     }
     document.cookie = name + "=" + (value || "") + expires + "; path=/";
 }
+
 window.getCookie = function(name) {
     let nameEQ = name + "=";
     let ca = document.cookie.split(';');
