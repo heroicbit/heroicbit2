@@ -28,35 +28,7 @@
     });
     document.addEventListener('pinecone-end', () => {
         NProgress.done();
-        Alpine.store('member').pageLoaded = true
+        Alpine.store('member').pageLoaded = true;
     });
     document.addEventListener('fetch-error', (err) => console.error(err));
-
-    // Script to handle Android back button
-    document.addEventListener('DOMContentLoaded', function () {
-        const myOffcanvas = document.getElementById('detailCanvas');
-        const offcanvasInstance = bootstrap.Offcanvas.getOrCreateInstance(myOffcanvas);
-
-        function handleBackButton(event) {
-            // Cek apakah offcanvas sedang terbuka
-            if (myOffcanvas.classList.contains('show')) {
-                event.preventDefault(); // Mencegah kembali ke halaman sebelumnya
-                offcanvasInstance.hide(); // Menutup offcanvas
-            }
-        }
-
-        // Menambahkan state dummy ke history saat offcanvas terbuka
-        myOffcanvas.addEventListener('shown.bs.offcanvas', () => {
-            history.pushState(null, '', location.href);
-            window.addEventListener('popstate', handleBackButton); // Mendaftarkan event listener
-        });
-
-        // Menghapus event listener saat offcanvas ditutup
-        myOffcanvas.addEventListener('hidden.bs.offcanvas', () => {
-            window.removeEventListener('popstate', handleBackButton); // Menghapus event listener
-            if (history.state === null) {
-                history.back(); // Mengembalikan state history ke semula
-            }
-        });
-    });
 </script>

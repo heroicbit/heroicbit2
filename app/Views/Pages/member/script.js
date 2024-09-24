@@ -62,4 +62,70 @@ document.addEventListener('pinecone-end', () => {
             animatedScroll();
         })
     }
+
+    // Script to handle Android back button// Mendapatkan elemen offcanvas dan instance-nya
+    // Variabel global untuk menyimpan offcanvas yang sedang terbuka
+    let currentOffcanvasElement = null;
+    let currentOffcanvasInstance = null;
+    let previousState = null;
+    let previousTitle = null;
+    let previousUrl = null;
+
+    function handleBackButton(event) {
+        // Jika ada offcanvas yang sedang terbuka
+        if (currentOffcanvasElement && currentOffcanvasElement.classList.contains('show')) {
+            event.preventDefault(); // Mencegah navigasi kembali
+            currentOffcanvasInstance.hide(); // Menutup offcanvas dengan animasi
+            // Mengembalikan state history sebelumnya setelah animasi selesai
+            currentOffcanvasElement.addEventListener('hidden.bs.offcanvas', restoreHistoryState, { once: true });
+        }
+    }
+
+    function restoreHistoryState() {
+        if (previousState !== null) {
+            // Mengganti state history saat ini dengan state sebelumnya
+            history.replaceState(previousState, previousTitle, previousUrl);
+            previousState = null; // Reset state
+        }
+        // Reset currentOffcanvasElement dan instance
+        currentOffcanvasElement = null;
+        currentOffcanvasInstance = null;
+    }
+
+    // Mendapatkan semua elemen offcanvas di halaman
+    const offcanvasElements = document.querySelectorAll('.offcanvas');
+
+    offcanvasElements.forEach((offcanvasElement) => {
+        const offcanvasInstance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
+
+        // Saat offcanvas dibuka
+        offcanvasElement.addEventListener('shown.bs.offcanvas', () => {
+            // Jika sudah ada offcanvas yang terbuka, tidak perlu melakukan apa-apa
+            if (currentOffcanvasElement) {
+                return;
+            }
+            // Menyimpan state history sebelumnya
+            previousState = history.state;
+            previousTitle = document.title;
+            previousUrl = location.href;
+
+            // Menyimpan offcanvas yang sedang terbuka
+            currentOffcanvasElement = offcanvasElement;
+            currentOffcanvasInstance = offcanvasInstance;
+
+            // Menambahkan state baru ke history untuk offcanvas
+            history.pushState({ offcanvasOpen: true }, '', location.href);
+            window.addEventListener('popstate', handleBackButton);
+        });
+
+        // Saat offcanvas ditutup
+        offcanvasElement.addEventListener('hidden.bs.offcanvas', () => {
+            // Jika offcanvas yang ditutup adalah yang sedang aktif
+            if (currentOffcanvasElement === offcanvasElement) {
+                window.removeEventListener('popstate', handleBackButton);
+                // Tidak perlu manipulasi history di sini karena sudah ditangani di restoreHistoryState
+                // Reset currentOffcanvasElement dan instance akan dilakukan di restoreHistoryState
+            }
+        });
+    });
 });
