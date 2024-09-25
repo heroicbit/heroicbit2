@@ -4,7 +4,7 @@
 
 <div id="app" x-data="member()">
     
-    <!-- Define alpinejs router -->
+    <!-- Alpinejs Routers -->
     <div class="page-content">
         <template x-route="/intro" x-template.preload="/member/intro"></template>
         <template x-route="/kodepesantren" x-template.preload="/member/kodepesantren"></template>
@@ -20,13 +20,12 @@
         <template x-route="/pengumuman" x-template.preload="/member/pengumuman" x-handler="isLoggedIn"></template>
     </div>
 
-    <!-- App Bottom Menu -->
+    <!-- AppBottomMenu -->
     <?= $this->include('Pages/member/bottommenu') ?>
-    <!-- * App Bottom Menu -->
 </div>
 
 <script>
-    // Alpine Store Member
+    // ALL ALPINEJS STORE INITIALIZATION DEFINED HERE! *// 
     document.addEventListener('alpine:init', () => {
         Alpine.store('member', {
             currentPage: 'home',
