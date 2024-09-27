@@ -31,6 +31,8 @@
             currentPage: 'home',
             pageLoaded: false,
             showBottomMenu: true,
+            sessionToken: null,
+            kodePesantren: null,
         })
     })
 </script>

@@ -4,20 +4,20 @@
 document.addEventListener('alpine:init', () => {
     Alpine.data('member', () => ({
         title: "Member Dashboard",
-        sessionToken: null,
-        kodePesantren: null,
         init(){
             document.title = this.title;
+            Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+            Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
         },
+        
         // Check kode pesantren
         isKodePesantrenSet(context){
-            this.kodePesantren = localStorage.getItem('kodepesantren')
-            if(this.kodePesantren == null) return context.redirect('/kodepesantren')
+            if(Alpine.store('member').kodePesantren == null) return context.redirect('/kodepesantren')
         },
+
         // Check login session, dipanggil oleh x-handler template yang meemerlukan session
         isLoggedIn(context){
-            this.sessionToken = localStorage.getItem('token')
-            if(this.sessionToken == null) return context.redirect('/login')
+            if(Alpine.store('member').sessionToken == null) return context.redirect('/login')
         }
     }))
 })
@@ -53,6 +53,11 @@ window.animatedScroll = function() {
     }
 }
 
+// Variabel untuk melacak offcanvas yang sedang terbuka
+window.openOffcanvas = null;
+window.openModal = null;
+window.historyStateAdded = false;
+
 document.addEventListener('pinecone-end', () => {
     updateActiveBottomMenu();
     var appHeader = document.querySelector(".appHeader.scrolled");
@@ -63,69 +68,100 @@ document.addEventListener('pinecone-end', () => {
         })
     }
 
-    // Script to handle Android back button// Mendapatkan elemen offcanvas dan instance-nya
-    // Variabel global untuk menyimpan offcanvas yang sedang terbuka
-    let currentOffcanvasElement = null;
-    let currentOffcanvasInstance = null;
-    let previousState = null;
-    let previousTitle = null;
-    let previousUrl = null;
+    function handlePopState(event) {
+        if (window.openOffcanvas) {
+            // Menutup offcanvas yang terbuka dengan animasi
+            const offcanvasInstance = bootstrap.Offcanvas.getInstance(window.openOffcanvas);
+            offcanvasInstance.hide();
 
-    function handleBackButton(event) {
-        // Jika ada offcanvas yang sedang terbuka
-        if (currentOffcanvasElement && currentOffcanvasElement.classList.contains('show')) {
-            event.preventDefault(); // Mencegah navigasi kembali
-            currentOffcanvasInstance.hide(); // Menutup offcanvas dengan animasi
-            // Mengembalikan state history sebelumnya setelah animasi selesai
-            currentOffcanvasElement.addEventListener('hidden.bs.offcanvas', restoreHistoryState, { once: true });
+            // Tidak perlu manipulasi history di sini karena tombol kembali sudah mengubah state history
+            // Hanya perlu mereset flag
+            window.historyStateAdded = false;
+
+            // Menghapus referensi ke offcanvas yang terbuka
+            window.openOffcanvas = null;
+        } else if (window.openModal) {
+            // Menutup modal yang terbuka dengan animasi
+            const modalInstance = bootstrap.Modal.getInstance(window.openModal);
+            modalInstance.hide();
+
+            // Tidak perlu manipulasi history di sini karena tombol kembali sudah mengubah state history
+            // Hanya perlu mereset flag
+            historyStateAdded = false;
+
+            // Menghapus referensi ke modal yang terbuka
+            window.openModal = null;
+        } else {
+            // Tidak ada modal yang terbuka, biarkan perilaku default
+            // Ini akan berpindah ke halaman sebelumnya
         }
     }
 
-    function restoreHistoryState() {
-        if (previousState !== null) {
-            // Mengganti state history saat ini dengan state sebelumnya
-            history.replaceState(previousState, previousTitle, previousUrl);
-            previousState = null; // Reset state
-        }
-        // Reset currentOffcanvasElement dan instance
-        currentOffcanvasElement = null;
-        currentOffcanvasInstance = null;
-    }
-
-    // Mendapatkan semua elemen offcanvas di halaman
-    const offcanvasElements = document.querySelectorAll('.offcanvas');
+    // Mendapatkan semua elemen offcanvas dan modal
+    window.offcanvasElements = document.querySelectorAll('.offcanvas');
+    window.modalElements = document.querySelectorAll('.modal');
 
     offcanvasElements.forEach((offcanvasElement) => {
+        // Mendapatkan instance Bootstrap Offcanvas
         const offcanvasInstance = bootstrap.Offcanvas.getOrCreateInstance(offcanvasElement);
 
-        // Saat offcanvas dibuka
         offcanvasElement.addEventListener('shown.bs.offcanvas', () => {
-            // Jika sudah ada offcanvas yang terbuka, tidak perlu melakukan apa-apa
-            if (currentOffcanvasElement) {
-                return;
+            if (!window.historyStateAdded) {
+                // Menambahkan state baru ke history
+                history.pushState({ offcanvasOpen: true }, '');
+                window.historyStateAdded = true;
             }
-            // Menyimpan state history sebelumnya
-            previousState = history.state;
-            previousTitle = document.title;
-            previousUrl = location.href;
+            // Menetapkan offcanvas yang sedang terbuka
+            window.openOffcanvas = offcanvasElement;
 
-            // Menyimpan offcanvas yang sedang terbuka
-            currentOffcanvasElement = offcanvasElement;
-            currentOffcanvasInstance = offcanvasInstance;
-
-            // Menambahkan state baru ke history untuk offcanvas
-            history.pushState({ offcanvasOpen: true }, '', location.href);
-            window.addEventListener('popstate', handleBackButton);
+            // Menambahkan event listener untuk popstate
+            window.addEventListener('popstate', handlePopState);
         });
 
-        // Saat offcanvas ditutup
         offcanvasElement.addEventListener('hidden.bs.offcanvas', () => {
-            // Jika offcanvas yang ditutup adalah yang sedang aktif
-            if (currentOffcanvasElement === offcanvasElement) {
-                window.removeEventListener('popstate', handleBackButton);
-                // Tidak perlu manipulasi history di sini karena sudah ditangani di restoreHistoryState
-                // Reset currentOffcanvasElement dan instance akan dilakukan di restoreHistoryState
+            // Menghapus event listener popstate
+            window.removeEventListener('popstate', handlePopState);
+
+            if (window.historyStateAdded) {
+                // Menghapus state yang ditambahkan ke history
+                history.back();
+                window.historyStateAdded = false;
             }
+
+            // Menghapus referensi ke offcanvas yang terbuka
+            window.openOffcanvas = null;
+        });
+    });
+
+    modalElements.forEach((modalElement) => {
+        // Mendapatkan instance Bootstrap Modal
+        const modalInstance = bootstrap.Modal.getOrCreateInstance(modalElement);
+
+        modalElement.addEventListener('shown.bs.modal', () => {
+            if (!window.historyStateAdded) {
+                // Menambahkan state baru ke history
+                history.pushState({ modalOpen: true }, '');
+                window.historyStateAdded = true;
+            }
+            // Menetapkan modal yang sedang terbuka
+            window.openModal = modalElement;
+
+            // Menambahkan event listener untuk popstate
+            window.addEventListener('popstate', handlePopState);
+        });
+
+        modalElement.addEventListener('hidden.bs.modal', () => {
+            // Menghapus event listener popstate
+            window.removeEventListener('popstate', handlePopState);
+
+            if (window.historyStateAdded) {
+                // Menghapus state yang ditambahkan ke history
+                history.back();
+                window.historyStateAdded = false;
+            }
+
+            // Menghapus referensi ke modal yang terbuka
+            window.openModal = null;
         });
     });
 });

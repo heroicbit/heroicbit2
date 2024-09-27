@@ -3487,6 +3487,9 @@ a.badge-dark {
   bottom: 0;
   margin-top: env(safe-area-inset-top);
 }
+.modalbox.right .modal-dialog {
+  transform: translate(100%, 0) !important;
+}
 
 .modalbox .modal-dialog .modal-content {
   border-radius: 0;

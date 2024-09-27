@@ -21,6 +21,7 @@ window.member_kodepesantren = function(){
                 if(response.data.found == 1){
                     // Save kodepesantren to localstorage
                     localStorage.setItem('kodepesantren', response.data.pesantrenID)
+                    Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
 
                     // Save kodepesantren to cookie without cookie expire
                     setCookie('kodepesantren', response.data.pesantrenID, 1000);

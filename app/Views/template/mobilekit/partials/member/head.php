@@ -21,4 +21,5 @@
 .glassmorph { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3)}
 .smallthin {  font-size: .74em; line-height: 14px !important; font-weight: 500;}
 .text-primary { color: #157CA1 !important}
+dl { margin-bottom: .5rem; }
 </style>

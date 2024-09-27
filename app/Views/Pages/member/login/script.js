@@ -21,7 +21,8 @@ window.member_login = function(){
                 }
             }).then(response => {
                 if(response.data.found == 1){
-                    localStorage.setItem('token', response.data.jwt)
+                    localStorage.setItem('heroic_token', response.data.jwt)
+                    Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
                     window.PineconeRouter.context.navigate('/')
                 } else {
                     toastr.warning('Username atau password salah')

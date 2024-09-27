@@ -1,6 +1,8 @@
 <?php namespace App\Views\Pages\member;
 
 use App\Views\Pages\FrontAction;
+use Firebase\JWT\JWT;
+use Firebase\JWT\Key;
 
 class PageAction extends FrontAction {
 
@@ -24,5 +26,53 @@ class PageAction extends FrontAction {
 
 	// This method handle POST request
 	public function process(){}
+
+	public function initDBPesantren()
+	{
+		// Get header kodepesantren
+        $headers = getallheaders();
+        $kodePesantrenHashed = $headers['Pesantrenku-Id'] ?? $_GET['kodepesantren'] ?? null;
+
+		if(! $kodePesantrenHashed)
+			throw new \Exception('Pesantrenku-ID not set');
+
+		$Encrypter = service('encrypter');
+		$dbname = $Encrypter->decrypt(hex2bin($kodePesantrenHashed));
+		
+		// Use database client
+		$db = db_connect();
+		$db->setDatabase($dbname);
+
+		return $db;
+	}
+
+	public function checkToken()
+	{
+		$headers = getallheaders();
+		$request = service('request');
+		$response = service('response');
+
+		$token = $headers['Authorization'] ?? $request->getGet('authorization') ?? null;
+
+		if(! $token) throw new \Exception('Unauthorized');
+
+		$jwt = explode(' ', $token)[1] ?? null;
+
+		if ($jwt) {
+			try {
+				$key = config('AuthJWT')->keys['default'][0]['secret'];
+				$decodedToken = JWT::decode($jwt, new Key(config('AuthJWT')->keys['default'][0]['secret'], 'HS256'));
+			} catch (\Exception $e){
+				return $response->setStatusCode(401, 'Unauthorized');
+			}
+			
+			if ($decodedToken) {
+				return $decodedToken;
+			}
+			else return $response->setStatusCode(401, 'Unauthorized');
+		} else
+			return $response->setStatusCode(401, 'Authorization token not found');
+
+	}
 
 }

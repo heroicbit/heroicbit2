@@ -19,8 +19,7 @@ class PageAction extends MemberPageAction {
         $dbname = $Encrypter->decrypt(hex2bin($kodePesantrenHashed));
 
         // Use database client
-        $db = db_connect();
-        $db->setDatabase($dbname);
+        $db = $this->initDBPesantren();
 
         // Check login to database directly using $db
         $found = $db->query('SELECT * FROM mein_users where email = :username: OR phone = :username:', ['username' => $username])->getRow();
@@ -36,7 +35,7 @@ class PageAction extends MemberPageAction {
                     'email' => $found->email,
                     'timestamp' => time()
                 ];
-                $key = service('settings')->get('Encryption.key');
+                $key = config('AuthJWT')->keys['default'][0]['secret'];
                 $jwt = JWT::encode($userSession, $key, 'HS256');
             }
         }

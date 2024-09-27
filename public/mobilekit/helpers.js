@@ -1,12 +1,67 @@
 // Heroicbit2 Helper functions
-window.fetchPageData = function(page){ 
+window.fetchPageData = function(page, headers = {}){ 
+    // Memastikan base_url diakhiri dengan '/'
+    if (!base_url.endsWith('/')) {
+        base_url += '/';
+    }
+
+    // Menggabungkan base_url dan page
+    let fullUrl = base_url + page;
+
+    // Menentukan separator berdasarkan ada atau tidaknya '?'
+    let separator = fullUrl.includes('?') ? '&' : '?';
+
+    // Menambahkan parameter 'dataonly=1'
+    fullUrl += separator + 'dataonly=1';
+
     return axios
-        .get(base_url + page + '?dataonly=1')
+        .get(fullUrl, headers)
         .then(response => {
-            return response.data
+            return response.data;
         })
         .catch(error => {
             console.log(error);
+        });
+}
+
+window.postPageData = function(page, data = {}, headers = {}) {
+    if (!base_url.endsWith('/')) {
+        base_url += '/';
+    }
+    let fullUrl = base_url + page;
+
+    // Membuat objek FormData
+    const formData = new FormData();
+
+    // Menambahkan data yang dipassing dari parameter ke FormData
+    for (const key in data) {
+        if (data.hasOwnProperty(key)) {
+            const value = data[key];
+
+            if (Array.isArray(value)) {
+                // Jika nilai adalah array, tambahkan setiap elemen
+                value.forEach(item => formData.append(`${key}[]`, item));
+            } else if (value instanceof File || value instanceof Blob) {
+                // Jika nilai adalah File atau Blob, tambahkan langsung
+                formData.append(key, value);
+            } else if (typeof value === 'object' && value !== null) {
+                // Jika nilai adalah objek, Anda mungkin perlu serialisasi ke JSON
+                formData.append(key, JSON.stringify(value));
+            } else {
+                // Nilai primitif (string, number, boolean)
+                formData.append(key, value);
+            }
+        }
+    }
+
+    return axios
+        .post(fullUrl, formData, headers)
+        .then(response => {
+            return response.data;
+        })
+        .catch(error => {
+            console.error(error);
+            // Tangani kesalahan sesuai kebutuhan
         });
 }
 

@@ -4,37 +4,84 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
-    public function supply(){
-        $articles = [
-            [
-                "id" => 1,
-                "title" => "suntay aut facere repellat provident occaecati excepturi optio reprehenderit",
-                "body" => "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-            ],
-            [
-                "id" => 2,
-                "title" => "qui est esse",
-                "body" => "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-            ],
-            [
-                "id" => 3,
-                "title" => "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-                "body" => "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
-            ],
-            [
-                "id" => 4,
-                "title" => "eum et est occaecati",
-                "body" => "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
-            ],
-            [
-                "id" => 5,
-                "title" => "nesciunt quas odio",
-                "body" => "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque"
-            ]
-        ];
+    public function supply()
+    {
+        // Handle another get method
+        $request = service('request');
+        $method = $request->getGet('m');
+        if($method && in_array($method, get_class_methods($this))){
+            return $this->$method($request);
+        }
 
-        $output = compact('articles');
+        $user = $this->checkToken();
+        $db = $this->initDBPesantren();
+
+        $santri = $db->query("SELECT su.*, s.*, c.id as class_id, c.class_name
+            FROM md_student_user su
+            JOIN md_santri s ON s.id = su.student_id
+            JOIN md_student_class sc ON sc.student_id = s.id
+            JOIN md_class c ON c.id = sc.class_id AND year_id = (SELECT option_value FROM mein_options WHERE option_group = 'rombel' AND option_name = 'active_year')
+            where user_id = :user_id:
+            AND s.status = 'student'", ['user_id' => $user->user_id])->getResultArray();
+
+        $output = compact('santri');
         return $output;
+    }
+
+    private function checkNIS($request)
+    {
+        $user = $this->checkToken();
+        $db = $this->initDBPesantren();
+        $nis = $request->getGet('nis');
+        $found = $db->query("SELECT s.*, c.id as class_id, c.class_name
+            FROM md_santri s
+            JOIN md_student_class sc ON sc.student_id = s.id
+            JOIN md_class c ON c.id = sc.class_id AND year_id = (SELECT option_value FROM mein_options WHERE option_group = 'rombel' AND option_name = 'active_year')
+            WHERE (nis = :nis: OR nisn = :nis:)
+            AND s.status = 'student'", ['nis' => $nis])->getRow();
+
+        if($found){
+            $Encrypter = service('encrypter');
+            $token = bin2hex($Encrypter->encrypt($found->id));
+
+            return [
+                'found' => 1,
+                'token' => $token,
+                'nama_santri' => $found->nama_santri,
+                'class_name' => $found->class_name
+            ];
+        }
+
+        return ['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif'];
+    }
+
+    public function process()
+    {
+        $user = $this->checkToken();
+        $db = $this->initDBPesantren();
+
+        // Get postdata
+        $request = service('request');
+        $token = $request->getPost('token');
+        $Encrypter = service('encrypter');
+        $id = $Encrypter->decrypt(hex2bin($token));
+
+        // Insert user_id and student_id to database
+        $query = "INSERT INTO md_student_user (user_id, student_id) VALUES (:user_id:, :student_id:)";
+        $inserted = $db->query($query, ['user_id' => $user->user_id, 'student_id' => $id]);
+        if($inserted){
+            // Get data santri
+            $santri = $db->query("SELECT s.*, c.id as class_id, c.class_name
+                FROM md_santri s
+                JOIN md_student_class sc ON sc.student_id = s.id
+                JOIN md_class c ON c.id = sc.class_id AND year_id = (SELECT option_value FROM mein_options WHERE option_group = 'rombel' AND option_name = 'active_year')
+                WHERE s.id = :id:", ['id' => $id])->getRow();
+
+            echo json_encode(['status' => 'success', 'message' => 'Santri berhasil ditambahkan', 'santri' => $santri]);
+        } else {
+            echo json_encode(['status' => 'failed', 'message' => 'Gagal menambahkan data santri.']);
+        }
+        die;
     }
 
 }
