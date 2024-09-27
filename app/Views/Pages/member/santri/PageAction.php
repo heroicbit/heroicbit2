@@ -8,6 +8,7 @@ class PageAction extends MemberPageAction {
     {
         // Handle another get method
         $request = service('request');
+
         $method = $request->getGet('m');
         if($method && in_array($method, get_class_methods($this))){
             return $this->$method($request);

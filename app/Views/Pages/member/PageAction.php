@@ -3,8 +3,11 @@
 use App\Views\Pages\FrontAction;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use CodeIgniter\API\ResponseTrait;
 
 class PageAction extends FrontAction {
+
+	use ResponseTrait;
 
 	public $data;
 
@@ -54,25 +57,32 @@ class PageAction extends FrontAction {
 
 		$token = $headers['Authorization'] ?? $request->getGet('authorization') ?? null;
 
-		if(! $token) throw new \Exception('Unauthorized');
+		if(! $token) {
+			$response->setStatusCode(401, 'Authorization token not found')->send();
+			exit;
+		}
 
 		$jwt = explode(' ', $token)[1] ?? null;
 
-		if ($jwt) {
-			try {
-				$key = config('AuthJWT')->keys['default'][0]['secret'];
-				$decodedToken = JWT::decode($jwt, new Key(config('AuthJWT')->keys['default'][0]['secret'], 'HS256'));
-			} catch (\Exception $e){
-				return $response->setStatusCode(401, 'Unauthorized');
-			}
+		if (! $jwt) {
+			$response->setStatusCode(401, 'Authorization token not found')->send();
+			exit; 
+		}
 			
-			if ($decodedToken) {
-				return $decodedToken;
-			}
-			else return $response->setStatusCode(401, 'Unauthorized');
-		} else
-			return $response->setStatusCode(401, 'Authorization token not found');
+		try {
+			$key = config('AuthJWT')->keys['default'][0]['secret'];
+			$decodedToken = JWT::decode($jwt, new Key(config('AuthJWT')->keys['default'][0]['secret'], 'HS256'));
+		} catch (\Exception $e){
+			$response->setStatusCode(401, 'Authorization token not found')->send();
+			exit;
+		}
+		
+		if (! $decodedToken) {				
+			$response->setStatusCode(401, 'Authorization token not found')->send();
+			exit;
+		}
 
+		return $decodedToken;
 	}
 
 }
