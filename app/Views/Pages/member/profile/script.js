@@ -20,6 +20,10 @@ window.member_profile = function(){
                     this.data = data
                 })
             }
+        },
+        logout(){
+            localStorage.removeItem('heroic_token');
+            window.PineconeRouter.context.navigate('/login');
         }
     }
 }

@@ -94,7 +94,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a onclick="logout()" class="item">
+                                <a href="javascript:void()" x-on:click="logout" class="item">
                                     <i class="bi bi-lock text-danger fs-4 me-2"></i>
                                     <span class="text-danger">Keluar</span>
                                 </a>

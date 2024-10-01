@@ -11,7 +11,7 @@
                 <h3 class="my-3">Silakan masuk untuk melanjutkan</h3>
             </div>
 
-            <div class="section mt-1 mb-5">
+            <div class="section mt-1">
                 <div>
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
@@ -30,15 +30,14 @@
                         </div>
                     </div>
 
-                    <div class="form-links mt-2">
-                        <div>
-                            <a href="/register">Daftar Akun Baru</a>
+                    <div class="text-start mt-2">
+                        <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2">MASUK</button>
+                        <hr>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div><a href="/register">Daftar Akun Baru</a></div>
+                            <div><a href="page-forgot-password.html">Lupa Kata Sandi?</a></div>
                         </div>
-                        <div><a href="page-forgot-password.html" class="text-muted">Lupa Kata Sandi?</a></div>
-                    </div>
-
-                    <div class="form-button-group">
-                        <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg">MASUK</button>
+                        <div><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
                     </div>
                 </div>
             </div>
