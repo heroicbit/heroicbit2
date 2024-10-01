@@ -26,13 +26,13 @@
                     <div class="text-center">
                         <ul class="listview image-listview flush transparent">
                             <li>
-                                <a href="https://masagi.test/profile/edit" class="item">
+                                <a href="/edit-profil" class="item">
                                     <i class="bi bi-person fs-2 text-primary me-2"></i>
                                     <span>Perbaharui Profil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/profile/edit" class="item">
+                                <a href="/invoice" class="item">
                                     <i class="bi bi-receipt fs-2 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>
                                 </a>
@@ -42,19 +42,19 @@
                         <div class="listview-title mt-2">Administrasi</div>
                         <ul class="listview image-listview flush transparent">
                             <li>
-                                <a href="https://masagi.test/anggota/kode_aktivasi" class="item">
+                                <a href="/allsantri" class="item">
                                     <i class="bi bi-people-fill fs-2 text-primary me-2"></i>
                                     <span>Data Santri</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/iuran" class="item">
+                                <a href="/presensi" class="item">
                                     <i class="bi bi-calendar2-check-fill fs-2 text-primary me-2"></i>
                                     <span>Cek Presensi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/iuran" class="item">
+                                <a href="/settings" class="item">
                                     <i class="bi bi-gear-fill fs-2 text-primary me-2"></i>
                                     <span>Pengaturan Aplikasi</span>
                                 </a>
@@ -64,31 +64,31 @@
                         <div class="listview-title mt-2">Aplikasi Tarbiyya</div>
                         <ul class="listview image-listview flush transparent">
                             <li>
-                                <a href="https://masagi.test/pageinfo/about" class="item">
+                                <a href="/about_app" class="item">
                                     <i class="bi bi-info-circle text-primary fs-4 me-2"></i>
                                     <span>Tentang Aplikasi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/pageinfo/contact" class="item">
+                                <a href="/contact_us" class="item">
                                     <i class="bi bi-telephone text-primary fs-4 me-2"></i>
                                     <span>Kontak Kami</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/pageinfo/tnc" class="item">
+                                <a href="/tnc" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4 me-2"></i>
                                     <span>Syarat dan Ketentuan</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/pageinfo/pp" class="item">
+                                <a href="/privacy" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4 me-2"></i>
                                     <span>Kebijakan Privasi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="https://masagi.test/pageinfo/faq" class="item">
+                                <a href="/faq" class="item">
                                     <i class="bi bi-patch-question text-primary fs-4 me-2"></i>
                                     <span>Pertanyaan Umum</span>
                                 </a>
