@@ -19,7 +19,7 @@
                 <template x-for="(article,articleIndex) in feeds">
                     <div class="card border-top mt-md-3">
                         <div class="card-header p-1">
-                            <img :src="article.avatar ?? `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
+                            <img :src="article.avatar ? article.avatar : `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
                             <span x-text="article.author_name"></span>
                         </div>
                         <a href="javascript:void()" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(articleIndex)">
