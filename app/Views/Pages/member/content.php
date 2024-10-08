@@ -9,11 +9,11 @@
         <template x-route="/intro" x-template.preload="/member/intro"></template>
         <template x-route="/kodepesantren" x-template.preload="/member/kodepesantren"></template>
         <template x-route="/login" x-template.preload="/member/login" x-handler="isKodePesantrenSet"></template>
-        <template x-route="/register" x-template.preload="/member/register" x-handler="isKodePesantrenSet"></template>
-        <template x-route="/reset_password" x-template.preload="/member/reset_password" x-handler="isKodePesantrenSet"></template>
+        <template x-route="/register" x-template="/member/register" x-handler="isKodePesantrenSet"></template>
+        <template x-route="/reset_password" x-template="/member/reset_password" x-handler="isKodePesantrenSet"></template>
         <template x-route="/" x-template.preload="/member/home" x-handler="isLoggedIn"></template>
         <template x-route="/feeds" x-template.preload="/member/feeds" x-handler="isLoggedIn"></template>
-        <template x-route="/feed" x-template.preload="/member/feed" x-handler="isLoggedIn"></template>
+        <template x-route="/feed/:id" x-template.preload="/member/feed" x-handler="isLoggedIn"></template>
         <template x-route="/santri" x-template.preload="/member/santri" x-handler="isLoggedIn"></template>
         <template x-route="/profile" x-template.preload="/member/profile" x-handler="isLoggedIn"></template>
         <template x-route="/tagihan" x-template.preload="/member/tagihan" x-handler="isLoggedIn"></template>
@@ -23,19 +23,7 @@
 
     <!-- AppBottomMenu -->
     <?= $this->include('Pages/member/bottommenu') ?>
-</div>
 
-<script>
-    // ALL ALPINEJS STORE INITIALIZATION DEFINED HERE! *// 
-    document.addEventListener('alpine:init', () => {
-        Alpine.store('member', {
-            currentPage: 'home',
-            pageLoaded: false,
-            showBottomMenu: true,
-            sessionToken: null,
-            kodePesantren: null,
-        })
-    })
-</script>
+</div>
 
 <?php $this->endSection() ?>

@@ -1,8 +1,8 @@
-window.member_feed = function(){
+window.member_feed = function(id){
     return {
-        title: "Info Pesantren",
-        id: null,
-        post: {},
+        title: "Detail Info",
+        id: id,
+        feed: {},
         init(){
             if(localStorage.getItem('intro') != 1){
                 window.PineconeRouter.context.navigate('/intro');
@@ -12,20 +12,9 @@ window.member_feed = function(){
             Alpine.store('member').currentPage = 'feed'
             Alpine.store('member').showBottomMenu = true
 
-            this.loadPost()
-        },
-        formatDate(dateString){
-            if(dateString && dateString != '0000-00-00'){
-                const date = new Date(dateString);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                return new Intl.DateTimeFormat('id-ID', options).format(date);
-            }
-            return '';
-        },
-        loadPost() {
-            if(cachePageData[`member/feed`][this.id]){
-                this.data.post = cachePageData[`member/feed`][this.id].post
-            } else {
+            // Get cache if exists
+            this.feed = cachePageData[`member/feeds`]?.feeds.filter(item => item.id == this.id);
+            if(this.feed == undefined){
                 fetchPageData(`member/feed/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
@@ -35,10 +24,18 @@ window.member_feed = function(){
                     if(data.data.post.length == 0){
                         this.empty = true
                     } else {
-                        cachePageData[`member/feed`][this.id] = data.data
+                        this.feed = data.data.post
                     }
                 })
             }
-        }
+        },
+        formatDate(dateString){
+            if(dateString && dateString != '0000-00-00'){
+                const date = new Date(dateString);
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                return new Intl.DateTimeFormat('id-ID', options).format(date);
+            }
+            return '';
+        },
     }
 }

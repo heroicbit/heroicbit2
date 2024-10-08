@@ -4,20 +4,6 @@ window.member_feeds = function(){
         feeds: [],
         nextPage: 1,
         empty: false,
-        detailFeed: {
-            author_id: null,
-            author_name: null,
-            avatar: null,
-            content: null,
-            created_at: null,
-            id: null,
-            medias: null,
-            published_at: null,
-            status: null,
-            title: null,
-            total_comment: null,
-            total_like: null,
-        },
         init(){
             if(localStorage.getItem('intro') != 1){
                 window.PineconeRouter.context.navigate('/intro');
@@ -72,7 +58,16 @@ window.member_feeds = function(){
             })
         },
         showDetail(index){
-            this.detailFeed = this.feeds[index]
+            window.PineconeRouter.context.navigate('/feed/' + this.feeds[index].id);
+        },
+        stripIntro(wordNum, sentence, index) {
+            let words = sentence.split(` `);
+            if(words.length > wordNum){
+                let result = words.slice(0, wordNum).join(` `)
+                return result + `... <a href="javascript:void()" x-on:click="showDetail(${index})">Selengkapnya</a>`
+            } else {
+                return sentence;
+            }
         }
     }
 }

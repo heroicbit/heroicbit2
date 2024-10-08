@@ -2,6 +2,14 @@
 
 // Alpine data function
 document.addEventListener('alpine:init', () => {
+    Alpine.store('member', {
+        currentPage: 'home',
+        pageLoaded: false,
+        showBottomMenu: true,
+        sessionToken: null,
+        kodePesantren: null,
+    })
+    
     Alpine.data('member', () => ({
         title: "Member Dashboard",
         init(){

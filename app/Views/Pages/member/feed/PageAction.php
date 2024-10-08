@@ -8,10 +8,8 @@ class PageAction extends MemberPageAction {
     {
         // Retrieve extension attributes
         $request = service('request');
-		$page = (int)($request->getGet('page') ?? 1);
-		$status = $request->getGet('status') ?? 'publish';
-		$perpage = (int)($request->getGet('perpage') ?? 1);
-		$offset = ($page-1) * $perpage;
+        $uri = $request->getUri();
+        $id = $uri->getSegment(3);
 
         // Get post data
 		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
@@ -21,22 +19,13 @@ class PageAction extends MemberPageAction {
             `mein_microblogs`.`published_at` as `published_at`
             FROM `mein_microblogs`
             JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-            WHERE `mein_microblogs`.`status` = :status:
-            ORDER BY `mein_microblogs`.`published_at` DESC
-            LIMIT :offset:, :perpage:";
+            WHERE `mein_microblogs`.`status` = 'publish'
+            AND `mein_microblogs`.`id` = :id:";
 
         $db = $this->initDBPesantren();
-        $posts = $db->query($query, [
-            'status' => $status,
-            'offset' => $offset,
-            'perpage' => $perpage
-        ])->getResultArray();
-  
-        foreach($posts as $key => $post)
-        {
-        	$posts[$key]['medias'] = json_decode($posts[$key]['medias'], true);
-        }
-        $data['posts'] = $posts;
+        $post = $db->query($query, ['id' => $id])->getResultArray();
+        $post[0]['medias'] = json_decode($post[0]['medias'], true);
+        $data['post'] = $post;
 
 		return [
 			'response_code'    => 200,
