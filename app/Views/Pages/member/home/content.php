@@ -62,7 +62,7 @@
                 </div>
             </div>
 
-            <div class="section mt-3 mb-5">
+            <div class="section mt-3 mb-5" style="max-width:470px;margin:auto">
                 <div class="card mb-3">
                     <div class="card-header p-1">
                         <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">

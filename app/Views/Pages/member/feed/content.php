@@ -20,26 +20,29 @@
                 <h4 class="subtitle mt-0"></h4>
             </div>
 
-            <div class="section mt-0 p-0">
-                <template x-for="(article,articleIndex) in data.articles">
-                    <div class="card border-top">
+            <div class="section mt-0 p-0" style="max-width:470px;margin:auto">
+                <template x-for="(article,articleIndex) in data.posts">
+                    <div class="card border-top mt-md-3">
                         <div class="card-header p-1">
-                            <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
-                            <span>Edward Lindgren</span>
+                            <img :src="article.avatar ?? `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
+                            <span x-text="article.author_name"></span>
                         </div>
-                        <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
-                        <div class="card-body">
-                            <small class="text-muted">19 September 2024</small>
+                        <a href="javascript:void()" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(articleIndex)">
+                            <img :src="article.medias[0].url" class="w-100" alt="image">
+                        </a>
+                        <div class="card-body px-3 pt-2 pb-3">
+                            <small class="text-muted" x-text="formatDate(article.published_at)"></small>
                             <a href="javascript:void()" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(articleIndex)">
                                 <h5 class="card-title fs-5" x-text="article.title"></h5>
                             </a>
-                            <p class="card-text" x-text="article.body"></p>
+                            <p class="card-text" x-text="article.content"></p>
                         </div>
                     </div>
                 </template>
 
                 <div class="text-center">
-                    <button class="btn btn-outline-secondary my-3">Lihat lainnya</button>
+                    <button type="button" class="btn btn-outline-secondary my-3" x-show="!empty" x-on:click="loadMore">Muat lainnya</button>
+                    <p class="my-3 py-3" x-show="empty">Tidak ada post lain.</p>
                 </div>
 
             </div>

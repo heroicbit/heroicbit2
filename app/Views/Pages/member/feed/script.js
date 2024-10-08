@@ -1,8 +1,11 @@
-// Page member/feed
 window.member_feed = function(){
     return {
         title: "Info Pesantren",
-        data: [],
+        data: {
+            posts: []
+        },
+        page: 1,
+        empty: false,
         detailFeed: {
             title: '',
             content: '',
@@ -18,12 +21,41 @@ window.member_feed = function(){
             Alpine.store('member').currentPage = 'feed'
             Alpine.store('member').showBottomMenu = true
 
-            if(cachePageData['member/feed']){
-                this.data = cachePageData['member/feed']
+            this.loadPosts()
+        },
+        formatDate(dateString){
+            if(dateString && dateString != '0000-00-00'){
+                const date = new Date(dateString);
+                const options = { day: 'numeric', month: 'long', year: 'numeric' };
+                return new Intl.DateTimeFormat('id-ID', options).format(date);
+            }
+            return '';
+        },
+        loadMore() {
+            this.loadPosts()
+        },
+        loadPosts() {
+            if(cachePageData[`member/feed?page=${this.page}`]){
+                cachePageData[`member/feed?page=${this.page}`].posts.forEach(item => {
+                    this.data.posts.push(item)
+                })
+                this.page++
             } else {
-                fetchPageData('member/feed').then(data => {
-                    cachePageData['member/feed'] = data
-                    this.data = data
+                fetchPageData(`member/feed?page=${this.page}`, {
+                    headers: {
+                        'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
+                        'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    }
+                }).then(data => {
+                    if(data.data.posts.length == 0){
+                        this.empty = true
+                    } else {
+                        cachePageData[`member/feed?page=${this.page}`] = data.data
+                        data.data.posts.forEach(item => {
+                            this.data.posts.push(item)
+                        })
+                        this.page++
+                    }
                 })
             }
         },

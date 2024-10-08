@@ -4,37 +4,45 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
-    public function supply(){
-        $articles = [
-            [
-                "id" => 1,
-                "title" => "suntay aut facere repellat provident occaecati excepturi optio reprehenderit",
-                "body" => "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-            ],
-            [
-                "id" => 2,
-                "title" => "qui est esse",
-                "body" => "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
-            ],
-            [
-                "id" => 3,
-                "title" => "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-                "body" => "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
-            ],
-            [
-                "id" => 4,
-                "title" => "eum et est occaecati",
-                "body" => "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
-            ],
-            [
-                "id" => 5,
-                "title" => "nesciunt quas odio",
-                "body" => "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque"
-            ]
-        ];
+    public function supply()
+    {
+        // Retrieve extension attributes
+        $request = service('request');
+		$page = (int)($request->getGet('page') ?? 1);
+		$status = $request->getGet('status') ?? 'publish';
+		$perpage = (int)($request->getGet('perpage') ?? 1);
+		$offset = ($page-1) * $perpage;
 
-        $output = compact('articles');
-        return $output;
+        // Get post data
+		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
+            `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
+            `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
+            `mein_microblogs`.`created_at` as `created_at`, 
+            `mein_microblogs`.`published_at` as `published_at`
+            FROM `mein_microblogs`
+            JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
+            WHERE `mein_microblogs`.`status` = :status:
+            ORDER BY `mein_microblogs`.`published_at` DESC
+            LIMIT :offset:, :perpage:";
+
+        $db = $this->initDBPesantren();
+        $posts = $db->query($query, [
+            'status' => $status,
+            'offset' => $offset,
+            'perpage' => $perpage
+        ])->getResultArray();
+  
+        foreach($posts as $key => $post)
+        {
+        	$posts[$key]['medias'] = json_decode($posts[$key]['medias'], true);
+        }
+        $data['posts'] = $posts;
+
+		return [
+			'response_code'    => 200,
+			'response_message' => 'success',
+			'data'			   => $data 
+		];
     }
 
 }
