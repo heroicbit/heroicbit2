@@ -11,7 +11,7 @@
 <link rel="manifest" href="__manifest.json">
 <script>let base_url = `<?= site_url() ?>`;</script>
 
-<link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css">
+<link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
 <style>
 #appCapsule{ min-height: 100vh}
 .appBottomMenu, .appHeader, #appCapsule{ max-width: 768px; margin: 0 auto}

@@ -5,12 +5,12 @@
 <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-element-bundle.min.js"></script>
 
-<script src="<?= $themeURL ?>assets/js/pagescript.js" defer></script>    
+<script src="<?= $themeURL ?>assets/js/pagescript.js?v<?= $version ?>" defer></script>    
 <script src="https://cdn.jsdelivr.net/npm/pinecone-router@4.x.x/dist/router.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
 
-<script src="<?= $themeURL ?>assets/js/helpers.bundle.js"></script>
-<script src="<?= $themeURL ?>assets/js/base.js"></script>
+<script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
+<script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>
 
 <script>
     // Setup Pinecone Router

@@ -1,6 +1,3 @@
-<?php 
-$themeURL = service('settings')->get('Theme.frontendThemeURL'); 
-$themePath = service('settings')->get('Theme.frontendThemePath'); ?>
 <!doctype html>
 <html lang="en">
 <head>
