@@ -12,6 +12,7 @@
         <template x-route="/register" x-template.preload="/member/register" x-handler="isKodePesantrenSet"></template>
         <template x-route="/reset_password" x-template.preload="/member/reset_password" x-handler="isKodePesantrenSet"></template>
         <template x-route="/" x-template.preload="/member/home" x-handler="isLoggedIn"></template>
+        <template x-route="/feeds" x-template.preload="/member/feeds" x-handler="isLoggedIn"></template>
         <template x-route="/feed" x-template.preload="/member/feed" x-handler="isLoggedIn"></template>
         <template x-route="/santri" x-template.preload="/member/santri" x-handler="isLoggedIn"></template>
         <template x-route="/profile" x-template.preload="/member/profile" x-handler="isLoggedIn"></template>

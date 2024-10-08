@@ -1,12 +1,12 @@
-<div id="member_feed" x-data="member_feed()">
-    <div class="appHeader">
-        <div class="left">
-            <a href="javascript:void()" onclick="history.back()" class="headerButton">
-                <ion-icon name="chevron-back-outline"></ion-icon>
-            </a>
+<div id="member_feeds" x-data="member_feeds()">
+    <div class="appHeader bg-brand">
+        <div class="left ps-2">
         </div>
-        <div class="pageTitle text-white">Detail Info</div>
+        <div class="pageTitle text-white">Kabar Pesantren</div>
         <div class="right">
+            <a href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#ModalForm">
+                <ion-icon name="create-outline" role="img" class="md hydrated text-white" aria-label="star outline"></ion-icon>
+            </a>
         </div>
     </div>
 
@@ -15,9 +15,13 @@
 
         <div class="bg-success-2 rounded-bottom-4 pb-5" style="height: 150px; margin-bottom: 100px">
 
-            <div class="section mt-0 p-0">
-                <template x-for="(article,articleIndex) in data.posts">
+            <div class="section mt-0 p-0" style="max-width:470px;margin:auto">
+                <template x-for="(article,articleIndex) in feeds">
                     <div class="card border-top mt-md-3">
+                        <div class="card-header p-1">
+                            <img :src="article.avatar ?? `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
+                            <span x-text="article.author_name"></span>
+                        </div>
                         <a href="javascript:void()" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(articleIndex)">
                             <img :src="article.medias[0].url" class="w-100" alt="image">
                         </a>

@@ -1,17 +1,8 @@
 window.member_feed = function(){
     return {
         title: "Info Pesantren",
-        data: {
-            posts: []
-        },
-        page: 1,
-        empty: false,
-        detailFeed: {
-            title: '',
-            content: '',
-            created_at: '',
-            updated_at: ''
-        },
+        id: null,
+        post: {},
         init(){
             if(localStorage.getItem('intro') != 1){
                 window.PineconeRouter.context.navigate('/intro');
@@ -21,7 +12,7 @@ window.member_feed = function(){
             Alpine.store('member').currentPage = 'feed'
             Alpine.store('member').showBottomMenu = true
 
-            this.loadPosts()
+            this.loadPost()
         },
         formatDate(dateString){
             if(dateString && dateString != '0000-00-00'){
@@ -31,36 +22,23 @@ window.member_feed = function(){
             }
             return '';
         },
-        loadMore() {
-            this.loadPosts()
-        },
-        loadPosts() {
-            if(cachePageData[`member/feed?page=${this.page}`]){
-                cachePageData[`member/feed?page=${this.page}`].posts.forEach(item => {
-                    this.data.posts.push(item)
-                })
-                this.page++
+        loadPost() {
+            if(cachePageData[`member/feed`][this.id]){
+                this.data.post = cachePageData[`member/feed`][this.id].post
             } else {
-                fetchPageData(`member/feed?page=${this.page}`, {
+                fetchPageData(`member/feed/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': localStorage.getItem('kodepesantren')
                     }
                 }).then(data => {
-                    if(data.data.posts.length == 0){
+                    if(data.data.post.length == 0){
                         this.empty = true
                     } else {
-                        cachePageData[`member/feed?page=${this.page}`] = data.data
-                        data.data.posts.forEach(item => {
-                            this.data.posts.push(item)
-                        })
-                        this.page++
+                        cachePageData[`member/feed`][this.id] = data.data
                     }
                 })
             }
-        },
-        showDetail(index){
-            this.detailFeed = this.data.articles[index]
         }
     }
 }
