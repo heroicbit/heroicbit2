@@ -17,7 +17,7 @@
 
             <div class="section mt-0 p-2" style="max-width:470px;margin:auto">
                 <template x-for="(article,articleIndex) in feeds">
-                    <div class="card border-top mb-3">
+                    <div class="card border-top mb-3 shadow-lg">
                         <div class="card-header p-1">
                             <img :src="article.avatar ? article.avatar : `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
                             <span x-text="article.author_name"></span>

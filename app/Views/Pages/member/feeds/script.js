@@ -17,8 +17,8 @@ window.member_feeds = function(){
                 cachePageData[`member/feeds`].feeds.forEach(item => {
                     this.feeds.push(item)
                 })
-                this.nextPage = cachePageData[`member/feeds`].lastPage;
-                this.empty = cachePageData[`member/feeds`].empty;
+                this.nextPage = cachePageData[`member/feeds`].nextPage ?? 1;
+                this.empty = cachePageData[`member/feeds`].empty ?? false;
             } else {
                 cachePageData[`member/feeds`] = {}
                 this.loadFeeds()
