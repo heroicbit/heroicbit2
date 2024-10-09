@@ -13,7 +13,7 @@ class PageAction extends FrontAction {
 
 	public function __construct()
 	{
-		$this->data['version'] = 2;
+		$this->data['version'] = 3;
 		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
 		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
 		$this->data['title'] = service('settings')->get('Site.siteName');
