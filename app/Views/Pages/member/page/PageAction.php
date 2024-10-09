@@ -12,7 +12,7 @@ class PageAction extends MemberPageAction {
         $slug = $uri->getSegment(3);
 
         // Get post data
-		$query = "SELECT * FROM `mein_posts` WHERE `type` = 'page' AND `slug` = :slug:";
+		$query = "SELECT * FROM `mein_posts` WHERE `type` = 'page' AND `slug` = :slug: AND `status` = 'publish'";
 
         $db = $this->initDBPesantren();
         $data['page'] = $db->query($query, ['slug' => $slug])->getRowArray();
