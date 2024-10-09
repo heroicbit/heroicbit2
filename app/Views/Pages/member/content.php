@@ -12,8 +12,9 @@
         <template x-route="/register" x-template="/member/register" x-handler="isKodePesantrenSet"></template>
         <template x-route="/reset_password" x-template="/member/reset_password" x-handler="isKodePesantrenSet"></template>
         <template x-route="/" x-template.preload="/member/home" x-handler="isLoggedIn"></template>
+        <template x-route="/page/:slug" x-template="/member/page"></template>
         <template x-route="/feeds" x-template.preload="/member/feeds" x-handler="isLoggedIn"></template>
-        <template x-route="/feed/:id" x-template.preload="/member/feed" x-handler="isLoggedIn"></template>
+        <template x-route="/feed/:id" x-template="/member/feed" x-handler="isLoggedIn"></template>
         <template x-route="/santri" x-template.preload="/member/santri" x-handler="isLoggedIn"></template>
         <template x-route="/profile" x-template.preload="/member/profile" x-handler="isLoggedIn"></template>
         <template x-route="/tagihan" x-template.preload="/member/tagihan" x-handler="isLoggedIn"></template>

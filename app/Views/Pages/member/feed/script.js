@@ -21,7 +21,8 @@ window.member_feed = function(id){
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': localStorage.getItem('kodepesantren')
                     }
-                }).then(data => {
+                })
+                .then(data => {
                     if(data.data.post.length == 0){
                         this.notFound = true
                     } else {

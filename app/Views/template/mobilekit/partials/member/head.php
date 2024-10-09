@@ -22,4 +22,5 @@
 .smallthin {  font-size: .74em; line-height: 14px !important; font-weight: 500;}
 .text-primary { color: #157CA1 !important}
 dl { margin-bottom: .5rem; }
+.page-content p, .page-content li { font-size: 1.1rem; line-height: 1.6rem; }
 </style>

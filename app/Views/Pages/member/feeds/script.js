@@ -58,9 +58,9 @@ window.member_feeds = function(){
             })
         },
         showDetail(index){
-            window.PineconeRouter.context.navigate('/feed/' + this.feeds[index].id);
+            window.PineconeRouter.context.navigate(`/feed/${this.feeds[index].id}`);
         },
-        stripIntro(wordNum, sentence, index) {
+        stripIntro(wordNum, sentence, index){
             let words = sentence.split(` `);
             if(words.length > wordNum){
                 let result = words.slice(0, wordNum).join(` `)

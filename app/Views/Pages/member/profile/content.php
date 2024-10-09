@@ -64,31 +64,31 @@
                         <div class="listview-title mt-2">Aplikasi Tarbiyya</div>
                         <ul class="listview image-listview flush transparent">
                             <li>
-                                <a href="/about_app" class="item">
+                                <a href="/page/about-app" class="item">
                                     <i class="bi bi-info-circle text-primary fs-4 me-2"></i>
                                     <span>Tentang Aplikasi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/contact_us" class="item">
+                                <a href="/page/contact-us" class="item">
                                     <i class="bi bi-telephone text-primary fs-4 me-2"></i>
                                     <span>Kontak Kami</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/tnc" class="item">
+                                <a href="/page/tnc" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4 me-2"></i>
                                     <span>Syarat dan Ketentuan</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/privacy" class="item">
+                                <a href="/page/privacy" class="item">
                                     <i class="bi bi-file-earmark-text text-primary fs-4 me-2"></i>
                                     <span>Kebijakan Privasi</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/faq" class="item">
+                                <a href="/page/faq" class="item">
                                     <i class="bi bi-patch-question text-primary fs-4 me-2"></i>
                                     <span>Pertanyaan Umum</span>
                                 </a>

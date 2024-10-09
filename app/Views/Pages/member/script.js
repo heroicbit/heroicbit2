@@ -11,7 +11,6 @@ document.addEventListener('alpine:init', () => {
     })
     
     Alpine.data('member', () => ({
-        title: "Member Dashboard",
         init(){
             document.title = this.title;
             Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
