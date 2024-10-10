@@ -2,6 +2,22 @@
 
 // Alpine data function
 document.addEventListener('alpine:init', () => {
+
+    NProgress.configure({ showSpinner: false });
+    
+    // Setup Pinecone Router
+    window.PineconeRouter.settings.basePath = '/member';
+    document.addEventListener('pinecone-start', () => {
+        NProgress.start();
+        Alpine.store('member').pageLoaded = false
+    });
+    document.addEventListener('pinecone-end', () => {
+        NProgress.done();
+        Alpine.store('member').pageLoaded = true;
+    });
+    document.addEventListener('fetch-error', (err) => console.error(err));
+
+    // Global store
     Alpine.store('member', {
         currentPage: 'home',
         pageLoaded: false,

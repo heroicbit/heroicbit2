@@ -1,4 +1,4 @@
-<?php namespace App\Views\Pages\member\component;
+<?php namespace App\Views\Pages\member\test;
 
 use App\Views\Pages\member\PageAction as MemberPageAction;
 

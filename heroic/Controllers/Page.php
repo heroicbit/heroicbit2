@@ -29,11 +29,8 @@ class Page extends BaseController
 
     private function pageDetail($segments, $customdata = [], $return_as_string = false)
     {
-        // pecah segment url
-        $strseg = implode('/', $segments);
-
         // Ambil page, Kalo page 404 pun ga ada juga, show 404 bawaan ci
-        if(! $page = $this->getPage($strseg))
+        if(! $page = $this->getPage($segments))
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
 
         // Run page action class
@@ -59,32 +56,16 @@ class Page extends BaseController
         return $page;
     }
 
-    private function getPage($url = null, $parse = true)
+    private function getPage($segments = null, $parse = true)
     {
         // get page fields
-        if(! $pagedata = $this->pageExists($url)){
+        if(! $pagedata = $this->pageExists($segments)){
             http_response_code(404);
-            if(! $pagedata = $this->pageExists('404'))
+            $notFoundPage = explode('/', 'pages/member/404');
+            if(! $pagedata = $this->pageExists($notFoundPage))
                 return false;
         }
         
-        // get another md or html file as custom fields
-        $files = scandir($pagedata['path']);
-
-        foreach ($files as $file) {
-            if(is_dir($pagedata['path'].'/'.$file)) continue;
-
-            $filepath = pathinfo($pagedata['path'].'/'.$file);
-        }
-
-        $pagedata['url'] = $pagedata['uri'];
-        $file_segment = explode('/', $pagedata['uri']);
-        if(! empty($pagedata['uri'])){
-            $pagedata['slug'] = array_pop($file_segment);
-            if(! empty($pagedata['uri']))
-                $pagedata['parent'] = implode('/', $file_segment);
-        }
-
         return $pagedata;
     }
 
@@ -96,18 +77,29 @@ class Page extends BaseController
      * @param   int     page number
      * @return  array
      */
-    private function pageExists($url = null, $remain_uri = '')
+    private function pageExists($segments = null, $remain_uri = '')
     {
-        if(file_exists(realpath(APPPATH.'Views/Pages/'.$url.'/meta.yml'))){
+        $originalSegments = $segments;
+        $firstSegment = array_shift($segments);
+        
+        // Use segment > 0 if first segment is 'pages' for serving page content
+        if($firstSegment == 'pages') {
+            $url = implode('/', $segments);
+        }
+
+        // Otherwise, use first segment as url to serve main template
+        else {
+            $url = $firstSegment;
+        }
+
+        if(file_exists(APPPATH.'Views/Pages/'.$url.'/meta.yml')){
             $pagePath = realpath(APPPATH.'Views/Pages/'.$url);
             $metaFile = $pagePath.'/meta.yml';
         }
         else {
             if(!empty($url)){
-                $url = explode('/', $url);
-                $remain = array_pop($url);
-                $url = implode('/', $url);
-                return $this->pageExists($url, $remain);
+                $remain = array_pop($originalSegments);
+                return $this->pageExists($originalSegments, $remain);
             }
             return false;
         }

@@ -37,7 +37,7 @@ window.member_feeds = function(){
         },
         loadFeeds() {
             console.log('Fetching data...');
-            fetchPageData(`member/feeds?page=${this.nextPage}`, {
+            fetchPageData(`pages/member/feeds?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')

@@ -9,7 +9,7 @@ class PageAction extends MemberPageAction {
         // Retrieve extension attributes
         $request = service('request');
         $uri = $request->getUri();
-        $slug = $uri->getSegment(3);
+        $slug = $uri->getSegment(4);
 
         // Get post data
 		$query = "SELECT * FROM `mein_posts` WHERE `type` = 'page' AND `slug` = :slug: AND `status` = 'publish'";
