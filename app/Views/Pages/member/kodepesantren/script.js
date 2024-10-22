@@ -13,7 +13,7 @@ window.member_kodepesantren = function(){
             // CHeck Kode Pesantren via ajax using axios
             const formData = new FormData();
             formData.append('kodepesantren', this.kode);
-            axios.post('/member/kodepesantren', formData, {
+            axios.post('/pages/member/kodepesantren', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data'
                 }

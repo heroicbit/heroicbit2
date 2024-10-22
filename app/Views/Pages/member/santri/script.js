@@ -59,7 +59,7 @@ window.member_santri = function(){
             if(cachePageData['member/santri']){
                 this.data = cachePageData['member/santri']
             } else {   
-                fetchPageData('member/santri', 
+                fetchPageData('pages/member/santri', 
                     { headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,
@@ -86,7 +86,7 @@ window.member_santri = function(){
 
         checkNIS(){
             if(this.searchNIS) {
-                fetchPageData('member/santri/?m=checkNIS&nis=' + this.searchNIS, 
+                fetchPageData('pages/member/santri/?m=checkNIS&nis=' + this.searchNIS, 
                     { headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': localStorage.getItem('kodepesantren')} 
@@ -103,7 +103,7 @@ window.member_santri = function(){
         },
 
         addSantri(){
-            postPageData('member/santri', 
+            postPageData('pages/member/santri', 
                 { token: this.NISFound.token },
                 { headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
