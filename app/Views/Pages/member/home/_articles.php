@@ -28,7 +28,7 @@
                         <div class="card card-hover rounded-4">
                             <img :src="article.medias[0].url" :alt="article.title" class="card-img-top swiper-thumbnail-image rounded-top-4"/>
                             <div class="card-body py-3 px-2" style="min-height: 110px;">
-                                <div class="text-truncate-2" style="line-height:1.1rem" x-text="article.title"></div>
+                                <div class="text-elipsis text-elipsis-3" style="line-height:1.1rem" x-text="article.title"></div>
                                 <small style="font-size: 12px" class="card-text" x-text="`Oleh ` + article.author_name"></small>
                             </div>
                         </div>

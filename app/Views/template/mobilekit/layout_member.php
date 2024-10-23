@@ -26,6 +26,8 @@
     dl { margin-bottom: .5rem; }
     .page-content p, .page-content li { font-size: 1.1rem; line-height: 1.6rem; }
     .swiper-thumbnail-image { max-height: 200px;object-fit: cover; }
+    .text-elipsis { display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;max-height: calc(3 * 1.5em);line-height: 1.5em; }
+    .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
     </style>
 </head>
 
