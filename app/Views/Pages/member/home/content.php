@@ -61,25 +61,9 @@
                     </div>
                 </div>
             </div>
-
-            <div class="section mt-3 mb-5" style="max-width:470px;margin:auto">
-                <div class="card mb-3">
-                    <div class="card-header p-1">
-                        <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" alt="image" class="imaged w32 rounded me-1">
-                        <span>Edward Lindgren</span>
-                    </div>
-                    <img src="https://image.web.id/images/sampleaf19727c239ff431.jpg" class="" alt="image">
-                    <div class="card-body">
-                        <small class="text-muted">19 September 2024</small>
-                        <h5 class="card-title fs-5">Card title</h5>
-                        <p class="card-text">Some quick example text to build on the card title and make up the bulk of
-                            the card's content.</p>
-                    </div>
-                </div>
-
-            </div>
-            <hr class="pb-5">
         </div>
+
+        <?= $this->include('Pages/member/home/_articles') ?>
 
     </div>
     <!-- * App Capsule -->
