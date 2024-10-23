@@ -25,7 +25,7 @@
             </div>
         </div>
 
-        <div class="bg-success-2 rounded-bottom-4 pb-5" style="height: 150px; margin-bottom: 100px">
+        <div class="bg-success-2 rounded-bottom-4 pb-5">
 
             <div class="container">
                 <div class="card bg-white rounded-4 py-3 px-4">

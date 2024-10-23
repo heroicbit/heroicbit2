@@ -9,7 +9,7 @@ class PageAction extends MemberPageAction {
         // Retrieve extension attributes
         $request = service('request');
         $uri = $request->getUri();
-        $id = $uri->getSegment(3);
+        $id = $uri->getSegment(4);
 
         // Get post data
 		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 

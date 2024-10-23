@@ -15,7 +15,7 @@ window.member_feed = function(id){
 
             // Get cache if exists
             this.feed = cachePageData[`member/feeds`]?.feeds.filter(item => item.id == this.id) ?? {};
-            if(this.feed.length == 0) {
+            if(Object.keys(this.feed).length == 0) {
                 fetchPageData(`pages/member/feed/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
