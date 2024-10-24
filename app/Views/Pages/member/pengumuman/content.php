@@ -49,7 +49,7 @@
                     </dd>
                 </dl>
 
-                <div class="card p-3 mt-2 shadow-lg">
+                <div class="card p-2 mt-2 shadow-lg">
                     <p class="mt-2" x-html="detailPengumuman.content"></p>
                 </div>
             </div>
