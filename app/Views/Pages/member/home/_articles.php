@@ -24,7 +24,7 @@
         <div class="swiper-wrapper py-2">
             <template x-for="article in data.microblog">
                 <div class="swiper-slide">
-                    <a :href="`feed/${ article.id }`">
+                    <a :href="`/member/feed/${ article.id }`">
                         <div class="card card-hover rounded-4">
                             <img :src="article.medias[0].url" :alt="article.title" class="card-img-top swiper-thumbnail-image rounded-top-4"/>
                             <div class="card-body py-3 px-2" style="min-height: 110px;">

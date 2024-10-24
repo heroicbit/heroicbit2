@@ -4,42 +4,46 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
-    public function supply(){
-        $posts = [
-            [
-                "id" => 1,
-                "title" => "suntay aut facere repellat provident occaecati excepturi optio reprehenderit",
-                "body" => "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto",
-                "date" => "20 September 2019, 10:00 WIB"
-            ],
-            [
-                "id" => 2,
-                "title" => "qui est esse",
-                "body" => "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla",
-                "date" => "20 September 2019, 10:00 WIB"
-            ],
-            [
-                "id" => 3,
-                "title" => "ea molestias quasi exercitationem repellat qui ipsa sit aut",
-                "body" => "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut",
-                "date" => "20 September 2019, 10:00 WIB"
-            ],
-            [
-                "id" => 4,
-                "title" => "eum et est occaecati",
-                "body" => "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit",
-                "date" => "20 September 2019, 10:00 WIB"
-            ],
-            [
-                "id" => 5,
-                "title" => "nesciunt quas odio",
-                "body" => "repudiandae veniam quaerat sunt sed\nalias aut fugiat sit autem sed est\nvoluptatem omnis possimus esse voluptatibus quis\nest aut tenetur dolor neque",
-                "date" => "20 September 2019, 10:00 WIB"
-            ]
+    public function supply()
+    {
+        // Get post data
+		$query = "SELECT *
+            FROM `pengumuman`
+            WHERE status = 'publish'
+            ORDER BY publish_date DESC
+            LIMIT 5";
+
+        $db = $this->initDBPesantren();
+        $posts = $db->query($query)->getResultArray();
+
+        $data['pengumuman'] = $posts;
+        $data['icons'] = $this->getPengumumanIcons();
+
+        return $data;
+    }
+
+    private function getPengumumanIcons()
+    {
+        $icons = [
+            "Undangan" => 'bi bi-envelope-paper',
+            "Pemberitahuan" => 'bi bi-megaphone',
+            "Agenda Sekolah" => 'bi bi-calendar-event',
+            "Jadwal Ujian" => 'bi bi-calendar2-check',
+            "Libur Sekolah" => 'bi bi-calendar',
+            "Perpulangan" => 'bi bi-calendar',
+            "Beasiswa" => 'bi bi-bank',
+            "Penerimaan Siswa Baru" => 'bi bi-person-rolodex',
+            "Pengumuman Darurat" => 'bi bi-exclamation-circle',
+            "Rekrutmen" => 'bi bi-person-lines-fill',
+            "Administrasi" => 'bi bi-display',
+            "Evaluasi" => 'bi bi-clipboard-check',
+            "Ekstrakurikuler" => 'bi bi-person-walking',
+            "Peraturan" => 'bi bi-building-exclamation',
+            "Kehilangan/Temuan" => 'bi bi-archive',
+            "Sosialisasi Program" => 'bi bi-display',
         ];
 
-        $output = compact('posts');
-        return $output;
+        return $icons;
     }
 
 }

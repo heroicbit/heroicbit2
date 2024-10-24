@@ -13,14 +13,15 @@
     <!-- App Capsule -->
     <div id="appCapsule">
             <ul class="listview image-listview media mb-2 ">
-                <template x-for="(post,postIndex) in data.posts">
+                <template x-for="(post,postIndex) in data.pengumuman">
                     <li>
                         <a href="javascript:void()" class="item" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(postIndex)">
-                            
-                            <i class="bi bi-megaphone-fill fs-2 text-primary me-2"></i>
+                            <i :class="data.icons[post.category]" class="fs-2 text-primary me-2"></i>
                             <div class="in">
-                                <div class="title"><span  x-text="post.title"></span>
-                                    <div class="text-muted" x-text="post.date"></div>
+                                <div class="title">
+                                    <small class="text-black-50 fw-bold d-block" x-text="post.category"></small>
+                                    <span x-text="post.title"></span>
+                                    <div class="text-muted" x-text="formatDate(post.publish_date)"></div>
                                 </div>
                             </div>
                         </a>
@@ -32,13 +33,25 @@
         <!-- Offcanvas detail -->
         <div class="offcanvas offcanvas-fullwidth offcanvas-end" tabindex="-1" id="detailCanvas" aria-labelledby="detailCanvasLabel">
             <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="detailCanvasLabel">Detail Pengumunan</h5>
+                <i :class="data.icons[detailPengumuman.category]" class="fs-2 text-primary me-2"></i>
+                <h5 class="offcanvas-title" id="detailCanvasLabel" x-text="detailPengumuman.category"></h5>
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <h2 x-text="detailFeed.title"></h2>
-                <small x-text="detailFeed.date"></small>
-                <p class="mt-2" x-text="detailFeed.body"></p>
+                <dl>
+                    <dt class="text-black-50">Tanggal</dt>
+                    <dd>
+                        <small x-text="formatDate(detailPengumuman.publish_date)"></small>
+                    </dd>
+                    <dt class="text-black-50">Perihal</dt>
+                    <dd>
+                        <h3 x-text="detailPengumuman.title"></h3>
+                    </dd>
+                </dl>
+
+                <div class="card p-3 mt-2 shadow-lg">
+                    <p class="mt-2" x-html="detailPengumuman.content"></p>
+                </div>
             </div>
         </div>
 
