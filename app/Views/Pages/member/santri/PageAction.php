@@ -17,15 +17,21 @@ class PageAction extends MemberPageAction {
         $user = $this->checkToken();
         $db = $this->initDBPesantren();
 
-        $santri = $db->query("SELECT su.*, s.*, c.id as class_id, c.class_name
+        $santri = $db->query("SELECT su.*, s.*, c.id as class_id, c.class_name, 
+            a.present as presensi_hadir, a.ill as presensi_sakit, a.permit as presensi_izin, a.noinfo as presensi_alpa
             FROM md_student_user su
             JOIN md_santri s ON s.id = su.student_id
             JOIN md_student_class sc ON sc.student_id = s.id
             JOIN md_class c ON c.id = sc.class_id AND year_id = (SELECT option_value FROM mein_options WHERE option_group = 'rombel' AND option_name = 'active_year')
+            LEFT JOIN md_attendance a ON a.student_id = s.id AND date = :date:
             where user_id = :user_id:
-            AND s.status = 'student'", ['user_id' => $user->user_id])->getResultArray();
+            AND s.status = 'student'", ['user_id' => $user->user_id, 'date' => date('Y-m-d')])->getResultArray();
 
-        $output = compact('santri');
+        $settingLibur = $db->query("SELECT option_value FROM mein_options WHERE option_group = 'presensi' AND option_name = 'hari_libur'")->getRowArray();
+        $libur = $settingLibur ? json_decode($settingLibur['option_value'], true) : ['5' => 'Jumat'];
+        $isLibur = in_array(date('N'), array_keys($libur)) ? $libur[date('N')] : false;
+
+        $output = compact('santri', 'libur', 'isLibur');
         return $output;
     }
 

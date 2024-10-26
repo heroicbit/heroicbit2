@@ -71,6 +71,20 @@ window.member_santri = function(){
             }
         },
 
+        getTodayPresensi(santriIndex) {
+            let santri = this.data.santri[santriIndex]
+            let presensi = '<span class="text-secondary">Presensi hari ini belum dicek</span>';
+            if(this.data.isLibur) 
+                presensi =`<span class="text-secondary">${this.data.isLibur} libur</span>`;
+            else {
+                if(santri.presensi_hadir == '1') presensi = '<span class="text-secondary">Presensi hari ini: </span><span class="text-success">Hadir</span>'
+                else if(santri.presensi_sakit == '1') presensi = '<span class="text-secondary">Presensi hari ini: </span><span class="text-warning">Sakit</span>'
+                else if(santri.presensi_izin == '1') presensi = '<span class="text-secondary">Presensi hari ini: </span><span class="text-info">Izin</span>'
+                else if(santri.presensi_alpa == '1') presensi = '<span class="text-secondary">Presensi hari ini: </span><span class="text-danger">Alpa</span>'
+            }
+            return presensi
+        },
+
         showDetail(index){
             this.detailSantri = this.data.santri[index]
         },

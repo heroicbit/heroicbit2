@@ -24,7 +24,7 @@
                                 <div>
                                     <span x-text="santri.nama_santri"></span>
                                     <div class="text-secondary" x-text="`Kelas ` + santri.class_name"></div>
-                                    <span class="text-muted text-end">Presensi belum dicek</span>
+                                    <small class="text-end" x-html="getTodayPresensi(santriIndex)"></small>
                                 </div>
                             </div>
                         </a>
