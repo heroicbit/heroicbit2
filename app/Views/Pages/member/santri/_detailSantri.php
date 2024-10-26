@@ -68,13 +68,18 @@
                 </div>
                 <div class="tab-pane fade" id="presensi" role="tabpanel">
                     <div id="calendar" style="width:100%"></div>
-                    <div class="section-title mt-2 justify-content-start" x-text="`Presensi ` + (selectedDate ? formatDate(selectedDate) : 'hari ini')">Presensi hari ini</div>
-                    <p><span class="text-success">Hadir</span></p>
+
+                    <div x-transition x-show="Object.keys(selectedPresensi).length > 0" class="presensi-status-container p-1 rounded" :class="selectedPresensi.status">
+                        <div class="section-title justify-content-start p-0" x-text="`Presensi ` + formatDate(selectedDate)"></div>
+                        <p class="m-0"><strong x-html="selectedPresensi.caption"></strong></p>
+                        <p class="m-0 text-muted small" x-show="selectedPresensi.description" x-text="selectedPresensi.description"></p>
+                    </div>
+
                     <div class="section-title mt-2">Rekap presensi semester ini</div>
                     <div class="wide-block p-1">
-                        <span class="text-info fs-4">&bull;</span> Total sakit: 30<br>
-                        <span class="text-warning fs-4">&bull;</span> Total izin: 30<br>
-                        <span class="text-danger fs-4">&bull;</span> Total tanpa keterangan: 30
+                        <span class="text-info fs-4">&bull;</span> Total sakit: <span x-text="detailSantri.total_sakit"></span><br>
+                        <span class="text-warning fs-4">&bull;</span> Total izin: <span x-text="detailSantri.total_izin"></span><br>
+                        <span class="text-danger fs-4">&bull;</span> Total tanpa keterangan: <span x-text="detailSantri.total_alpa"></span>
                     </div>
                 </div>
             </div>

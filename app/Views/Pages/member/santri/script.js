@@ -10,6 +10,7 @@ window.member_santri = function(){
             nama_santri: null,
             class_name: null
         },
+        detailSantriIndex: null,
         detailSantri: {
             nama_santri: null,
             nis: null,
@@ -49,10 +50,14 @@ window.member_santri = function(){
             kodepos: null,
             tahun_masuk: null,
             iuran_bulanan: null,
+            presensi: {},
+            total_sakit: 0,
+            total_izin: 0,
+            total_alpa: 0
         },
-        detailPresensi: {},
         calendar: null,
         selectedDate: null,
+        selectedPresensi: {},
 
         init(){
             document.title = this.title;
@@ -88,37 +93,124 @@ window.member_santri = function(){
             return presensi
         },
 
-        loadDetailPresensi() {
-            this.calendar = new VanillaCalendar("#calendar", {
-              settings: {
-                visibility: {
-                  theme: "light",
-                  weekend: false,
-                },
-                lang: 'id',
-              },
-              actions: {
-                clickDay: (e, self) => {
-                    this.selectedDate = self.selectedDates[0];
-                },
-              },
-              popups: {
-                '2024-10-20': {
-                  modifier: 'izin',
-                },
-                '2024-10-21': {
-                  modifier: 'sakit',
-                },
-                '2024-10-22': {
-                  modifier: 'alpa',
-                },
-              }
-            });
-            this.calendar.init();
+        showDetail(index){
+            this.detailSantriIndex = index
+            this.detailSantri = this.data.santri[index]
         },
 
-        showDetail(index){
-            this.detailSantri = this.data.santri[index]
+        loadDetailPresensi() {
+            // Reset calendar object
+            this.calendar = null
+
+            // Define calendar options
+            const options = {
+                settings: {
+                  visibility: {
+                    theme: "light",
+                    weekend: false,
+                  },
+                  lang: "id",
+                },
+                actions: {
+                  clickDay: (e, self) => {
+                    this.getSelectedPresensi(self.selectedDates[0])
+                  },
+                },
+                popups: {
+                    '2024-10-28': {
+                      modifier: 'bg-danger',
+                    },
+                }
+            };
+
+            // Load data presensi
+            if(cachePageData[`member/santri/${this.detailSantriIndex}/presensi`]){
+                this.detailSantri.presensi = cachePageData[`member/santri/${this.detailSantriIndex}/presensi`]
+                options.popups = this.setCalendarPopups(this.detailSantri.presensi)
+
+                // Init calendar
+                this.calendar = new VanillaCalendar("#calendar", options);
+                this.calendar.init();
+            } else {   
+                fetchPageData('pages/member/santri?m=detailPresensi&student_id=' + this.detailSantri.id, 
+                    { headers: {
+                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                    } })
+                .then(data => {
+                    cachePageData[`member/santri/${this.detailSantriIndex}/presensi`] = data.presensi
+                    this.detailSantri.presensi = data.presensi
+                    options.popups = this.setCalendarPopups(this.detailSantri.presensi)
+
+                    // Init calendar
+                    this.calendar = new VanillaCalendar("#calendar", options);
+                    this.calendar.init();
+                })
+            }
+        },
+
+        setCalendarPopups(presensi) {
+            const calendarPopups = {};
+            let illCount = 0;
+            let permitCount = 0;
+            let noinfoCount = 0;
+
+            if(!presensi) return calendarPopups;
+
+            Object.keys(presensi).forEach(date => {
+                const entry = presensi[date];
+            
+                // Cek modifier berdasarkan nilai 'ill', 'permit', atau 'noinfo'
+                let modifier = null;
+                if (entry.ill === "1") {
+                    modifier = 'sakit';
+                    illCount++
+                } else if (entry.permit === "1") {
+                    modifier = 'izin';
+                    permitCount++
+                } else if (entry.noinfo === "1") {
+                    modifier = 'alpa';
+                    noinfoCount++
+                }
+            
+                // Jika ada modifier, masukkan ke calendarPopups
+                if (modifier) {
+                    calendarPopups[date] = { modifier };
+                }
+            });
+
+            this.detailSantri.total_sakit = illCount;
+            this.detailSantri.total_izin = permitCount;
+            this.detailSantri.total_alpa = noinfoCount;
+
+            return calendarPopups;
+        },
+
+        getSelectedPresensi(date) {
+            this.selectedDate = date;
+            let presensi = this.detailSantri.presensi[this.selectedDate];
+            let caption, status = null;
+
+            if (presensi) {
+                if (presensi.ill === "1") {
+                    status = 'sakit';
+                    caption = 'Sakit';
+                } else if (presensi.permit === "1") {
+                    status = 'izin';
+                    caption = 'Izin';
+                } else if (presensi.noinfo === "1") {
+                    status = 'alpa';
+                    caption = 'Alpa';
+                }
+
+                this.selectedPresensi.date = currentDate;
+                this.selectedPresensi.status = status;
+                this.selectedPresensi.caption = caption;
+                this.selectedPresensi.description = presensi?.description;
+            } else {
+                this.selectedPresensi = {};
+            }
+
         },
 
         checkNIS(){

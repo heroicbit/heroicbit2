@@ -30,9 +30,9 @@
     .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
     [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected:hover, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected:hover { background-color: rgb(6 182 212 / var(--tw-bg-opacity)); color: white; }
     [data-calendar-theme=light] .vanilla-calendar-week__day_weekend { color: #64748b; }
-    button.vanilla-calendar-day__btn.izin { background: #ffe7c2; }
-    button.vanilla-calendar-day__btn.sakit { background: #d8c2ff; }
-    button.vanilla-calendar-day__btn.alpa { background: #f7adad; }
+    button.vanilla-calendar-day__btn.izin, .presensi-status-container.izin { background: #ffe7c2; }
+    button.vanilla-calendar-day__btn.sakit, .presensi-status-container.sakit { background: #d8c2ff; }
+    button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { background: #f7adad; }
     [data-calendar-theme=light] .vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_selected:hover { background-color: transparent; color: #222; border: 2px solid #2196F3; }
     </style>
 </head>

@@ -62,6 +62,29 @@ class PageAction extends MemberPageAction {
         return ['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif'];
     }
 
+    public function detailPresensi($request)
+    {
+        $user = $this->checkToken();
+        $db = $this->initDBPesantren();
+        $student_id = $request->getGet('student_id');
+
+        $found = $db->query("SELECT * FROM `md_attendance` 
+            WHERE `student_id` = :student_id: AND `present` IS NULL
+            ORDER BY date DESC", 
+            ['student_id' => $student_id])->getResultArray();
+
+        if($found){
+            $presensi = array_combine(array_column($found, 'date'), $found);
+            return [
+                'found' => count($found),
+                'presensi' => $presensi
+            ];
+        }
+
+        return ['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif'];   
+
+    }
+
     public function process()
     {
         $user = $this->checkToken();
