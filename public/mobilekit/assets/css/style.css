@@ -5,6 +5,7 @@
 @import url("https://fonts.googleapis.com/css?family=Inter:400,500,700&display=swap");
 @import url("https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css");
 @import url("//cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css");
+@import url("//cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.css");
 body {
   font-family: "Inter", sans-serif;
   font-size: 15px;

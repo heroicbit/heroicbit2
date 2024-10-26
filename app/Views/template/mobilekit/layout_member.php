@@ -28,6 +28,12 @@
     .swiper-thumbnail-image { max-height: 200px;object-fit: cover; }
     .text-elipsis { display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;max-height: calc(3 * 1.5em);line-height: 1.5em; }
     .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
+    [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected:hover, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected:hover { background-color: rgb(6 182 212 / var(--tw-bg-opacity)); color: white; }
+    [data-calendar-theme=light] .vanilla-calendar-week__day_weekend { color: #64748b; }
+    button.vanilla-calendar-day__btn.izin { background: #ffe7c2; }
+    button.vanilla-calendar-day__btn.sakit { background: #d8c2ff; }
+    button.vanilla-calendar-day__btn.alpa { background: #f7adad; }
+    [data-calendar-theme=light] .vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_selected:hover { background-color: transparent; color: #222; border: 2px solid #2196F3; }
     </style>
 </head>
 
@@ -42,6 +48,7 @@
     <script src="https://cdn.jsdelivr.net/npm/nprogress@0.2.0/nprogress.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
 
     <script src="<?= $themeURL ?>assets/js/pagescript.js?v<?= $version ?>" defer></script>    
     <script src="https://cdn.jsdelivr.net/npm/pinecone-router@4.x.x/dist/router.min.js"></script>

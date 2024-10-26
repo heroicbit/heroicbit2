@@ -50,6 +50,9 @@ window.member_santri = function(){
             tahun_masuk: null,
             iuran_bulanan: null,
         },
+        detailPresensi: {},
+        calendar: null,
+        selectedDate: null,
 
         init(){
             document.title = this.title;
@@ -73,7 +76,7 @@ window.member_santri = function(){
 
         getTodayPresensi(santriIndex) {
             let santri = this.data.santri[santriIndex]
-            let presensi = '<span class="text-secondary">Presensi hari ini belum dicek</span>';
+            let presensi = '<span class="text-secondary">Presensi belum dicek</span>';
             if(this.data.isLibur) 
                 presensi =`<span class="text-secondary">${this.data.isLibur} libur</span>`;
             else {
@@ -85,17 +88,37 @@ window.member_santri = function(){
             return presensi
         },
 
-        showDetail(index){
-            this.detailSantri = this.data.santri[index]
+        loadDetailPresensi() {
+            this.calendar = new VanillaCalendar("#calendar", {
+              settings: {
+                visibility: {
+                  theme: "light",
+                  weekend: false,
+                },
+                lang: 'id',
+              },
+              actions: {
+                clickDay: (e, self) => {
+                    this.selectedDate = self.selectedDates[0];
+                },
+              },
+              popups: {
+                '2024-10-20': {
+                  modifier: 'izin',
+                },
+                '2024-10-21': {
+                  modifier: 'sakit',
+                },
+                '2024-10-22': {
+                  modifier: 'alpa',
+                },
+              }
+            });
+            this.calendar.init();
         },
 
-        formatDate(dateString){
-            if(dateString && dateString != '0000-00-00'){
-                const date = new Date(dateString);
-                const options = { day: 'numeric', month: 'long', year: 'numeric' };
-                return new Intl.DateTimeFormat('id-ID', options).format(date);
-            }
-            return '';
+        showDetail(index){
+            this.detailSantri = this.data.santri[index]
         },
 
         checkNIS(){
