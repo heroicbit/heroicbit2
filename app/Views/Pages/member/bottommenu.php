@@ -11,12 +11,18 @@
             <strong>Kabar</strong>
         </div>
     </a>
-    <a href="/tagihan" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+    <a href="/videos" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
+        <div class="col">
+        <img src="<?= $themeURL ?>assets/img/icon/videos.png" style="width:28px">
+            <strong>Video</strong>
+        </div>
+    </a>
+    <!-- <a href="/tagihan" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
         <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="width:28px">
             <strong>Tagihan</strong>
         </div>
-    </a>
+    </a> -->
     <a href="/santri" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
         <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="width:28px">

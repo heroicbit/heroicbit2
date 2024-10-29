@@ -1,4 +1,4 @@
-<?php namespace App\Views\Pages\member\feeds;
+<?php namespace App\Views\Pages\member\videos;
 
 use App\Views\Pages\member\PageAction as MemberPageAction;
 
@@ -22,7 +22,7 @@ class PageAction extends MemberPageAction {
             FROM `mein_microblogs`
             JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
             WHERE `mein_microblogs`.`status` = :status:
-            AND (`mein_microblogs`.`youtube_url` IS NULL OR `mein_microblogs`.`youtube_url` = '')
+            AND (`mein_microblogs`.`youtube_url` IS NOT NULL OR `mein_microblogs`.`youtube_url` != '')
             ORDER BY `mein_microblogs`.`published_at` DESC
             LIMIT :offset:, :perpage:";
 
@@ -37,7 +37,7 @@ class PageAction extends MemberPageAction {
         {
         	$posts[$key]['medias'] = json_decode($posts[$key]['medias'], true);
         }
-        $data['posts'] = $posts;
+        $data['videos'] = $posts;
 
 		return [
 			'response_code'    => 200,

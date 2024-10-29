@@ -14,6 +14,8 @@
     <link rel="manifest" href="__manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+
     <style>
     #appCapsule{ min-height: 100vh}
     .appBottomMenu, .appHeader, #appCapsule{ max-width: 768px; margin: 0 auto}
@@ -25,7 +27,7 @@
     .text-primary { color: #157CA1 !important}
     dl { margin-bottom: .5rem; }
     .page-content p, .page-content li { font-size: 1.1rem; line-height: 1.6rem; }
-    .swiper-thumbnail-image { max-height: 200px;object-fit: cover; }
+    .swiper-thumbnail-image { height: 200px; object-fit: cover; }
     .text-elipsis { display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;max-height: calc(3 * 1.5em);line-height: 1.5em; }
     .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
     [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected:hover, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected:hover { background-color: rgb(6 182 212 / var(--tw-bg-opacity)); color: white; }
@@ -34,6 +36,8 @@
     button.vanilla-calendar-day__btn.sakit, .presensi-status-container.sakit { background: #d8c2ff; }
     button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { background: #f7adad; }
     [data-calendar-theme=light] .vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_selected:hover { background-color: transparent; color: #222; border: 2px solid #2196F3; }
+    .icon-video{ width: 35px; position: absolute; bottom: 5px; left: 8px; z-index: 10; }
+    .thumbnail-image::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; border-radius: 0 0 1rem 1rem; }
     </style>
 </head>
 
@@ -49,6 +53,7 @@
     <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
     <script src="<?= $themeURL ?>assets/js/pagescript.js?v<?= $version ?>" defer></script>    
     <script src="https://cdn.jsdelivr.net/npm/pinecone-router@4.x.x/dist/router.min.js"></script>

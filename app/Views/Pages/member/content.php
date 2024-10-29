@@ -16,6 +16,8 @@
             <template x-route="/page/:slug" x-template="/pages/member/page"></template>
             <template x-route="/feeds" x-template.preload="/pages/member/feeds" x-handler="isLoggedIn"></template>
             <template x-route="/feed/:id" x-template="/pages/member/feed" x-handler="isLoggedIn"></template>
+            <template x-route="/videos" x-template.preload="/pages/member/videos" x-handler="isLoggedIn"></template>
+            <template x-route="/video/:id" x-template="/pages/member/video" x-handler="isLoggedIn"></template>
             <template x-route="/santri" x-template.preload="/pages/member/santri" x-handler="isLoggedIn"></template>
             <template x-route="/profile" x-template.preload="/pages/member/profile" x-handler="isLoggedIn"></template>
             <template x-route="/tagihan" x-template.preload="/pages/member/tagihan" x-handler="isLoggedIn"></template>
