@@ -3,6 +3,7 @@ window.member_home = function(){
   return {
     title: "Beranda",
     data: [],
+    showAllIcons: false,
     swiperArticle: null,
     swiperVideo: null,
     unreadPengumuman: 3,
@@ -37,7 +38,7 @@ window.member_home = function(){
         slidesOffsetBefore: 15,
         slidesOffsetAfter: 20,
         autoplay: {
-          delay: 50000,
+          delay: 60000,
           pauseOnMouseEnter: true,
         },
         breakpoints: {
@@ -50,7 +51,7 @@ window.member_home = function(){
       }
 
       if(this.data.posts.length > 2){
-        config.autoplay.delay = 5000;
+        config.autoplay.delay = 60000;
       }
 
       this.swiperArticle = new Swiper(".swiper-article", config);
@@ -63,7 +64,7 @@ window.member_home = function(){
         slidesOffsetBefore: 15,
         slidesOffsetAfter: 20,
         autoplay: {
-          delay: 50000,
+          delay: 120000,
           pauseOnMouseEnter: true,
         },
         breakpoints: {
@@ -76,7 +77,7 @@ window.member_home = function(){
       };
       
       if(this.data.videos.length > 2){
-        config.autoplay.delay = 5000;
+        config.autoplay.delay = 60000;
       }
 
       this.swiperVideo = new Swiper(".swiper-video", config);
