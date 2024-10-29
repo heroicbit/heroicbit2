@@ -20,23 +20,26 @@
             </template>
         </div>
     </div>
-    <div class="swiper swiper-article" x-init="initSwiperArticles">
-        <div class="swiper-wrapper py-2">
-            <template x-for="article in data.posts">
-                <div class="swiper-slide">
-                    <a :href="`/member/feed/${ article.id }`">
-                        <div class="card card-hover rounded-4">
-                            <div class="thumbnail-image position-relative">
-                                <img :src="article.medias[0].url" :alt="article.title" class="card-img-top swiper-thumbnail-image rounded-top-4"/>
+
+    <template x-if="data.posts">
+        <div class="swiper swiper-article" x-init="initSwiperArticles">
+            <div class="swiper-wrapper py-2">
+                <template x-for="article in data.posts">
+                    <div class="swiper-slide">
+                        <a :href="`/member/feed/${ article.id }`">
+                            <div class="card card-hover rounded-4">
+                                <div class="thumbnail-image position-relative">
+                                    <img :src="article.medias[0].url" :alt="article.title" class="card-img-top swiper-thumbnail-image rounded-top-4"/>
+                                </div>
+                                <div class="card-body py-3 px-2" style="min-height: 110px;">
+                                    <div class="text-elipsis text-elipsis-3" style="line-height:1.1rem" x-text="article.title"></div>
+                                    <small style="font-size: 12px" class="card-text" x-text="`Oleh ` + article.author_name"></small>
+                                </div>
                             </div>
-                            <div class="card-body py-3 px-2" style="min-height: 110px;">
-                                <div class="text-elipsis text-elipsis-3" style="line-height:1.1rem" x-text="article.title"></div>
-                                <small style="font-size: 12px" class="card-text" x-text="`Oleh ` + article.author_name"></small>
-                            </div>
-                        </div>
-                    </a>
-                </div>
-            </template>
+                        </a>
+                    </div>
+                </template>
+            </div>
         </div>
-    </div>
+    </template>
 </section>
