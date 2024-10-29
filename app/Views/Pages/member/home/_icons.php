@@ -42,6 +42,13 @@
                     </a>
                 </div>
                 <div style="width: 85px">
+                    <a href="/pengumuman">
+                        <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block"
+                            style="line-height: 18px">Tagihan</small>
+                    </a>
+                </div>
+                <div style="width: 85px">
                     <a href="/santri">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
@@ -49,17 +56,10 @@
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/pengumuman">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Video</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
                     <a href="/presensi" x-show="showAllIcons">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Kabar</small>
+                            style="line-height: 18px">Santri</small>
                     </a>
                     <a href="javascript:void()" x-show="!showAllIcons" x-on:click="showAllIcons = true">
                         <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="max-width:48px">
@@ -72,6 +72,20 @@
             <!-- Other Menus -->
             <div x-show="showAllIcons" x-transition>
             <div class="d-flex justify-content-center text-center mt-2">
+            <div style="width: 85px">
+                    <a href="/pengumuman">
+                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block"
+                            style="line-height: 18px">Kabar</small>
+                    </a>
+                </div>
+                <div style="width: 85px">
+                    <a href="/presensi">
+                        <img src="<?= $themeURL ?>assets/img/icon/videos.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block"
+                            style="line-height: 18px">Video</small>
+                    </a>
+                </div>
                 <div style="width: 85px">
                     <a href="/page/profil-pesantren">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
@@ -84,20 +98,6 @@
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
                             style="line-height: 18px">Fatwa PERSIS</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
-                    <a href="/pengumuman">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Doa & Zikir</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
-                    <a href="/presensi">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Hadits Arba'in</small>
                     </a>
                 </div>
             </div>
@@ -121,14 +121,14 @@
                     <a href="/pengumuman">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Arah Qiblat</small>
+                            style="line-height: 18px">Hadits Arba'in</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a href="/presensi">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Majalah Risalah</small>
+                            style="line-height: 18px">Doa & Zikir</small>
                     </a>
                 </div>
             </div>
