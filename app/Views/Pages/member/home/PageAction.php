@@ -19,7 +19,7 @@ class PageAction extends MemberPageAction {
         FROM `mein_microblogs`
         JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
         WHERE `mein_microblogs`.`status` = 'publish' 
-        AND (`mein_microblogs`.`youtube_url` IS NOT NULL OR `mein_microblogs`.`youtube_url` != '')
+        AND (`mein_microblogs`.`youtube_url` IS NOT NULL AND `mein_microblogs`.`youtube_url` != '')
         ORDER BY `mein_microblogs`.`published_at` DESC
         LIMIT 5";
 
