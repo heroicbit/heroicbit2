@@ -31,6 +31,10 @@
                 <div class="form-button-group">
                     <button type="button" x-on:click="checkKodePesantren" :disabled="buttonDisabled" x-on:click="checkKodePesantren" class="btn btn-primary btn-block btn-lg">CEK KODE PESANTREN</button>
                 </div>
+
+                <?php if($pesantrenID): ?>
+                    <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
+                <?php endif; ?>
             </div>
         </div>
     </div>

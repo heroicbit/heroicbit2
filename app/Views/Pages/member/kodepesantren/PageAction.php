@@ -4,6 +4,28 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
+    public function render()
+    {
+        // TODO: check if servername is available in writable/custom_domain
+        // dd($_SERVER['SERVER_NAME']);
+
+        // TODO: get database name from writable/custom_domain/[domain]
+        $kode = '67benda';
+        // $kode = null;
+
+        if($kode){
+            $Pesantren = model('Pesantren');
+            $found = $Pesantren->where('kode_pesantren', $kode)->first();
+            if($found) {
+                $Encrypter = service('encrypter');
+                $pesantren = bin2hex($Encrypter->encrypt($found['database']));
+                return ['found' => 1, 'kode' => $kode, 'pesantrenID' => $pesantren];
+            }
+        }
+
+        return [];
+    }
+    
     public function process()
     {
         $request = service('request');

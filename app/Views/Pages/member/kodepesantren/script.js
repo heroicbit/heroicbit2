@@ -33,6 +33,13 @@ window.member_kodepesantren = function(){
                 }
             })
         },
+        
+        forceKodePesantren(pesantrenID){
+            localStorage.setItem('kodepesantren', pesantrenID)
+            Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+            window.PineconeRouter.context.navigate('/login')
+        },
+
         enableButton(){
             if(this.kode.trim() != '')
                 this.buttonDisabled = false
