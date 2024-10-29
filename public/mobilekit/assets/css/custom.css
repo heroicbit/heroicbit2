@@ -18,4 +18,5 @@ button.vanilla-calendar-day__btn.sakit, .presensi-status-container.sakit { backg
 button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { background: #f7adad; }
 [data-calendar-theme=light] .vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_selected:hover { background-color: transparent; color: #222; border: 2px solid #2196F3; }
 .icon-video{ width: 35px; position: absolute; bottom: 5px; left: 8px; z-index: 10; }
-.thumbnail-image::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; border-radius: 0 0 1rem 1rem; }
+.thumbnail-image::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; }
+.thumbnail-image-rounded::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; border-radius: 0 0 1rem 1rem; }
