@@ -5,18 +5,30 @@ use Firebase\JWT\JWT;
 
 class PageAction extends MemberPageAction {
 
+    public function supply()
+    {
+        $db = $this->initDBPesantren();
+
+        $logoSetting = $db->table('mein_options')
+                          ->where('option_name', 'auth_logo')
+                          ->where('option_group', 'app')
+                          ->get()->getRowArray();
+        $data['logo'] = $logoSetting['option_value'] ?? null; 
+
+        $sitenameSetting = $db->table('mein_options')
+                          ->where('option_name', 'site_title')
+                          ->where('option_group', 'site')
+                          ->get()->getRowArray();
+        $data['sitename'] = $sitenameSetting['option_value'] ?? null; 
+
+        return $data;
+    }
+
     public function process()
     {
         $request = service('request');
         $username = strtolower($request->getPost('username'));
         $password = $request->getPost('password');
-        
-        // Get header kodepesantren
-        $headers = getallheaders();
-        $kodePesantrenHashed = $headers['Pesantrenku-Id'];
-
-        $Encrypter = service('encrypter');
-        $dbname = $Encrypter->decrypt(hex2bin($kodePesantrenHashed));
 
         // Use database client
         $db = $this->initDBPesantren();

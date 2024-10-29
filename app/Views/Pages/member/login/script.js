@@ -8,7 +8,21 @@ window.member_login = function(){
             document.title = this.title
             Alpine.store('member').currentPage = 'login'
             Alpine.store('member').showBottomMenu = false
+
+            if(cachePageData['member/login']){
+                this.data = cachePageData['member/login']
+              } else {   
+                fetchPageData('pages/member/login', {
+                  headers: {
+                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                  }
+                }).then(data => {
+                  cachePageData['member/login'] = data
+                  this.data = data
+                })
+              }
         },
+
         login(){
             // Check login using axios post
             const formData = new FormData();

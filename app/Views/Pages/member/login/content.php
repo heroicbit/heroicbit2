@@ -4,10 +4,10 @@
     <div id="appCapsule" class="shadow pt-5">
         <div class="login-form mt-1">
             <div class="section">
-                <img src="<?= $themeURL ?>assets/img/walisantri/thumbnail-notif.png" alt="image" class="form-image">
+                <img :src="data.logo" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <h2>Pesantren Persis 67 Benda Tasikmalaya</h2>
+                <h2 class="mb-5" x-text="`Aplikasi ` + data.sitename"></h2>
                 <h3 class="my-3">Silakan masuk untuk melanjutkan</h3>
             </div>
 
