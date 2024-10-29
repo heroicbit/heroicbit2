@@ -7,6 +7,12 @@ class PageAction extends MemberPageAction {
     public function supply()
     {
         $db = $this->initDBPesantren();
+
+        $logoSetting = $db->table('mein_options')
+                          ->where('option_name', 'navbar_logo')
+                          ->where('option_group', 'app')
+                          ->get()->getRowArray();
+        $data['logo'] = $logoSetting['option_value'] ?? null; 
         
         /**
          * Get video data

@@ -12,9 +12,9 @@
                 </div>
                 <div style="width: 85px">
                     <a href="/presensi">
-                        <img src="<?= $themeURL ?>assets/img/icon/presensi-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/program.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Program</small>
+                            style="line-height: 18px">Program Pesantren</small>
                     </a>
                 </div>
                 <div style="width: 85px">

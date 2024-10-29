@@ -2,8 +2,8 @@
     <div class="appHeader bg-brand">
         <div class="left ps-2">
         </div>
-        <div class="pageTitle">
-            <img src="<?= $themeURL ?>assets/img/logo.png" alt="" style="height: 36px">
+        <div class="pageTitle" x-show="data.logo">
+            <img :src="data.logo ? data.logo : `<?= $themeURL ?>assets/img/logo.png`" alt="" style="height: 36px">
         </div>
         <div class="right">
             <!-- <a href="#" class="headerButton toggle-searchbox text-white">

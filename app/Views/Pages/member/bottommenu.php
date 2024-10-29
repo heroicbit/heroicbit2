@@ -31,7 +31,7 @@
     </a>
     <a href="/profile" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
-        <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="width:28px">
+        <img src="<?= $themeURL ?>assets/img/icon/user.png" style="width:28px">
             <strong>Akun</strong>
         </div>
     </a>
