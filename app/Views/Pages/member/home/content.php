@@ -63,6 +63,8 @@
             </div>
         </div>
 
+        <?= $this->include('Pages/member/home/_pengumuman') ?>
+
         <?= $this->include('Pages/member/home/_videos') ?>
 
         <?= $this->include('Pages/member/home/_articles') ?>

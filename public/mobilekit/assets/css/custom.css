@@ -1,7 +1,8 @@
 #appCapsule{ min-height: 100vh}
 .appBottomMenu, .appHeader, #appCapsule{ max-width: 768px; margin: 0 auto}
 .appHeader.bg-brand { box-shadow: none !important}
-.bg-brand{ background-color: #3BC0CF !important}
+.bg-brand { background-color: #3BC0CF !important}
+.bg-brand-2 { background-color: #157CA1 !important}
 .backlayer { width: 100%; height: 150px; position: absolute; z-index: -10; border-radius: 0 0 25px 25px}
 .glassmorph { backdrop-filter: blur(5px); -webkit-backdrop-filter: blur(5px); border: 1px solid rgba(255, 255, 255, 0.3)}
 .smallthin {  font-size: .74em; line-height: 14px !important; font-weight: 500;}
@@ -9,6 +10,7 @@
 dl { margin-bottom: .5rem; }
 .page-content p, .page-content li { font-size: 1.1rem; line-height: 1.6rem; }
 .swiper-thumbnail-image { height: 200px; object-fit: cover; }
+.scroll-thumbnail-video { height: 235px; object-fit: cover; }
 .text-elipsis { display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;max-height: calc(3 * 1.5em);line-height: 1.5em; }
 .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
 [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected, [data-calendar-theme=light] .vanilla-calendar-day__btn_weekend.vanilla-calendar-day__btn_selected:hover, [data-calendar-theme=light] .vanilla-calendar-day__btn_holiday.vanilla-calendar-day__btn_selected:hover { background-color: rgb(6 182 212 / var(--tw-bg-opacity)); color: white; }

@@ -1,8 +1,8 @@
 <section id="latest-videos" class="pb-1">
     <div class="d-flex px-3 mb-1 justify-content-between">
-        <h4 class="m-0 me-auto text-dark">
+        <h3 class="m-0 me-auto text-dark">
             Video Terbaru
-        </h4>
+        </h3>
         <a href="/member/videos">
             <small class="text-primary fw-bold" style="font-size: 12px">
                 Lihat Semua

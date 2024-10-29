@@ -6,7 +6,11 @@ class PageAction extends MemberPageAction {
 
     public function supply()
     {
-        // Get post data
+        $db = $this->initDBPesantren();
+        
+        /**
+         * Get video data
+         **/
 		$videoQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
         `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
         `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
@@ -18,8 +22,17 @@ class PageAction extends MemberPageAction {
         AND (`mein_microblogs`.`youtube_url` IS NOT NULL OR `mein_microblogs`.`youtube_url` != '')
         ORDER BY `mein_microblogs`.`published_at` DESC
         LIMIT 5";
+
+        $videos = $db->query($videoQuery)->getResultArray();
+        foreach($videos as $key => $post)
+        {
+            $videos[$key]['medias'] = json_decode($videos[$key]['medias'], true);
+        }
+        $data['videos'] = $videos;
         
-        // Get post data
+        /**
+         * Get post data
+         **/
 		$postQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
         `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
         `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
@@ -32,21 +45,22 @@ class PageAction extends MemberPageAction {
         ORDER BY `mein_microblogs`.`published_at` DESC
         LIMIT 5";
 
-        $db = $this->initDBPesantren();
-
-        $videos = $db->query($videoQuery)->getResultArray();
-        foreach($videos as $key => $post)
-        {
-            $videos[$key]['medias'] = json_decode($videos[$key]['medias'], true);
-        }
-        $data['videos'] = $videos;
-
         $posts = $db->query($postQuery)->getResultArray();
         foreach($posts as $key => $post)
         {
             $posts[$key]['medias'] = json_decode($posts[$key]['medias'], true);
         }
         $data['posts'] = $posts;
+
+        /**
+         * Get pengumuman data
+         **/
+        $newestPengumumanQuery =  "SELECT id, title, publish_date 
+        FROM `pengumuman`
+        WHERE status = 'publish'
+        ORDER BY publish_date DESC 
+        LIMIT 1";
+        $data['pengumuman'] = $db->query($newestPengumumanQuery)->getRowArray();
 
         return $data;
     }
