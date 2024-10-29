@@ -37,7 +37,7 @@
                             <div><a href="/register">Daftar Akun Baru</a></div>
                             <div><a href="page-forgot-password.html">Lupa Kata Sandi?</a></div>
                         </div>
-                        <div><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
+                        <div x-show="!forceKodePesantren"><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
                     </div>
                 </div>
             </div>

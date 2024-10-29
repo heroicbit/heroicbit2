@@ -6,12 +6,12 @@ class PageAction extends MemberPageAction {
 
     public function render()
     {
-        // TODO: check if servername is available in writable/custom_domain
-        // dd($_SERVER['SERVER_NAME']);
-
-        // TODO: get database name from writable/custom_domain/[domain]
-        $kode = '67benda';
-        // $kode = null;
+        // check if servername is available in writable/custom_domain
+        $domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+        $kode = null;
+        if(file_exists('../writable/custom_domain/'.$domain)){
+            $kode = file_get_contents('../writable/custom_domain/'.$domain);
+        }
 
         if($kode){
             $Pesantren = model('Pesantren');

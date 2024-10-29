@@ -3,11 +3,13 @@ window.member_login = function(){
     return {
         title: "Login",
         showPwd: false,
+        forceKodePesantren: false,
         data: [],
         init(){
             document.title = this.title
             Alpine.store('member').currentPage = 'login'
             Alpine.store('member').showBottomMenu = false
+            this.forceKodePesantren = localStorage.getItem('forcekodepesantren')
 
             if(cachePageData['member/login']){
                 this.data = cachePageData['member/login']
