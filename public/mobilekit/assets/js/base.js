@@ -470,41 +470,46 @@ notificationTaptoClose.forEach(function (el) {
 // trigger toast
 var toastCloseButton = document.querySelectorAll(".toast-box .close-button");
 var toastTaptoClose = document.querySelectorAll(".toast-box.tap-to-close");
-var toastBoxes = document.querySelectorAll(".toast-box");
-var autoCloseToast;
 
 function closeToastBox() {
-    toastBoxes.forEach(function (el) {
-        el.classList.remove("show")
-        clearTimeout(autoCloseToast)
-    })
+    document.querySelectorAll(".toast-box").forEach(function (el) {
+        el.classList.remove("show");
+    });
 }
+
 function toastbox(target, time) {
     var a = document.getElementById(target);
-    closeToastBox()
+    
+    // Pastikan semua toast tertutup sebelum membuka yang baru
+    closeToastBox();
+
+    // Tampilkan toast yang ditargetkan setelah penundaan kecil untuk animasi
     setTimeout(() => {
-        a.classList.add("show")
+        a.classList.add("show");
     }, 100);
+
+    // Atur auto close jika waktu disediakan
     if (time) {
-        time = time + 100;
-        autoCloseToast = setTimeout(() => {
-            closeToastBox()
-        }, time);
+        setTimeout(() => {
+            closeToastBox();
+        }, time + 100);
     }
+
+    // Close button pada toast
+    console.log(document.querySelector(target + " .close-button"))
+
+    // .addEventListener("click", function (e) {
+    //     e.preventDefault();
+    //     closeToastBox();
+    // });
 }
-// close button toast
-toastCloseButton.forEach(function (el) {
-    el.addEventListener("click", function (e) {
-        e.preventDefault();
-        closeToastBox();
-    })
-})
-// tap to close toast
+
+// Tap to close pada toast
 toastTaptoClose.forEach(function (el) {
-    el.addEventListener("click", function (e) {
+    el.addEventListener("click", function () {
         closeToastBox();
-    })
-})
+    });
+});
 //-----------------------------------------------------------------------
 
 

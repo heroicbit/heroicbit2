@@ -3,10 +3,12 @@ window.member_home = function(){
   return {
     title: "Beranda",
     data: [],
+    comingsoon: false,
     showAllIcons: false,
     swiperArticle: null,
     swiperVideo: null,
     unreadPengumuman: 3,
+
     init(){
       if(localStorage.getItem('intro') != 1){
         window.PineconeRouter.context.navigate('/intro');

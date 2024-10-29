@@ -6,65 +6,56 @@
                 <div style="width: 85px">
                     <a href="/page/profil-pesantren">
                         <img src="<?= $themeURL ?>assets/img/icon/profil-pesantren-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" 
-                            style="line-height: 18px">Profil Pesantren</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Profil Pesantren</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a href="/presensi">
                         <img src="<?= $themeURL ?>assets/img/icon/program.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Program Pesantren</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Program Pesantren</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/santri">
+                    <a href="/page/profil-pesantren">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Agenda</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">PSB</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a href="/pengumuman">
                         <img src="<?= $themeURL ?>assets/img/icon/pengumuman-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Pengumuman</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Pengumuman</small>
                     </a>
                 </div>
             </div>
 
             <div class="d-flex justify-content-center text-center">
                 <div style="width: 85px">
-                    <a href="/page/profil-pesantren">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" 
-                            style="line-height: 18px">PSB</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
                     <a href="/pengumuman">
-                        <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Tagihan</small>
+                        <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kabar</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/santri">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Rapor Digital</small>
+                    <a href="/presensi">
+                        <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Video</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/presensi" x-show="showAllIcons">
+                    <a href="/presensi">
                         <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Santri</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Santri</small>
                     </a>
-                    <a href="javascript:void()" x-show="!showAllIcons" x-on:click="showAllIcons = true">
+                </div>
+                <div style="width: 85px">
+                    <a class="opacity-50" x-show="showAllIcons" x-on:click="comingsoon = true">
+                        <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Tagihan</small>
+                    </a>
+                    <a x-show="!showAllIcons" x-on:click="showAllIcons = true">
                         <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Lainnya</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Lainnya</small>
                     </a>
                 </div>
             </div>
@@ -72,63 +63,55 @@
             <!-- Other Menus -->
             <div x-show="showAllIcons" x-transition>
             <div class="d-flex justify-content-center text-center mt-2">
-            <div style="width: 85px">
-                    <a href="/pengumuman">
-                        <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Kabar</small>
-                    </a>
-                </div>
                 <div style="width: 85px">
-                    <a href="/presensi">
-                        <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Video</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
-                    <a href="/page/profil-pesantren">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" 
-                            style="line-height: 18px">Kajian</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Agenda</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/santri">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Fatwa PERSIS</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Rapor Digital</small>
+                    </a>
+                </div>
+                <div style="width: 85px">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
+                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kajian</small>
+                    </a>
+                </div>
+                <div style="width: 85px">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
+                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Fatwa PERSIS</small>
                     </a>
                 </div>
             </div>
             
             <div class="d-flex justify-content-center text-center mt-2">
                 <div style="width: 85px">
-                    <a href="/page/profil-pesantren">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" 
-                            style="line-height: 18px">Risalah Sholat</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Risalah Sholat</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/santri">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Jadwal Sholat</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Jadwal Sholat</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/pengumuman">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Hadits Arba'in</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Hadits Arba'in</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/presensi">
+                    <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block"
-                            style="line-height: 18px">Doa & Zikir</small>
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Doa & Zikir</small>
                     </a>
                 </div>
             </div>
@@ -139,4 +122,14 @@
         </div>
 
     </div>
+</div>
+
+<div id="toast-comingsoon" 
+    class="toast-box toast-bottom" 
+    :class="comingsoon ? 'show' : ''"
+    x-init="$watch('comingsoon', v => v ? setTimeout(() => comingsoon = false, 3000) : null)">
+    <div class="in">
+        <div class="text">Fitur ini masih dalam proses pengembangan.</div>
+    </div>
+    <button type="button" class="btn btn-sm btn-text-light" x-on:click="comingsoon = false">OK</button>
 </div>
