@@ -23,6 +23,7 @@
                             allowfullscreen
                             allowtransparency
                             allow="autoplay"
+                            autoplay=1
                             x-init="initPlyr()"
                             ></iframe>
                         </div>
