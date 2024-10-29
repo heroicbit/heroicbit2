@@ -1,7 +1,9 @@
 <div id="template-container" x-data="member_home()">
     <div class="appHeader bg-brand">
         <div class="left ps-2">
-            <img src="<?= $themeURL ?>assets/img/logo.png" alt="" style="height: 70%">
+        </div>
+        <div class="pageTitle">
+            <img src="<?= $themeURL ?>assets/img/logo.png" alt="" style="height: 36px">
         </div>
         <div class="right">
             <!-- <a href="#" class="headerButton toggle-searchbox text-white">
