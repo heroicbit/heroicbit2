@@ -18,11 +18,13 @@
         <div class="bg-brand backlayer"></div>
         <div class="header-large-title my-3 ms-1">
             <div class="d-flex align-items-center justify-content-start gap-3">
-                <div><img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" class="rounded-circle"
-                        alt="Toni Haryanto" style="width:56px"></div>
+                <!-- <div>
+                    <img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" class="rounded-circle"
+                        alt="Toni Haryanto" style="width:56px">
+                </div> -->
                 <div class="use text-white">
+                    <div>Ahlan wa sahlan,</div>
                     <div class="h5 m-0">Toni Haryanto</div>
-                    <div>Wali santri</div>
                 </div>
             </div>
         </div>
