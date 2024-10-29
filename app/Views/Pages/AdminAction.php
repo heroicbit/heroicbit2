@@ -8,8 +8,10 @@ use Psr\Log\LoggerInterface;
 
 class AdminAction extends FrontAction 
 {
-    public function __construct()
-    {        
+    public function __construct($pagedata = [])
+    {
+        parent::__construct($pagedata);
+        
         // Redirect if not logged in
         if(! user_id()) {
             response()->redirect('login');

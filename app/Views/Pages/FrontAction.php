@@ -15,8 +15,10 @@ abstract class FrontAction
     /**
      * Initiate global data here
      */
-    public function __construct()
+    public function __construct($pagedata = [])
     {
+        $this->data = $pagedata;
+           
         // Load module helper
         helper('Heroic\Helpers\module');
     }

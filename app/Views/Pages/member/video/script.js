@@ -1,6 +1,6 @@
 window.member_video = function(id){
     return {
-        title: "Detail Info",
+        title: "Detail Video",
         id: id,
         notFound: false,
         video: {},

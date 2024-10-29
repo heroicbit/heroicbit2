@@ -9,11 +9,10 @@ class PageAction extends FrontAction {
 
 	use ResponseTrait;
 
-	public $data;
-
-	public function __construct()
+	public function __construct($pagedata = [])
 	{
-		$this->data['version'] = 8;
+		parent::__construct($pagedata);
+		
 		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
 		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
 		$this->data['title'] = service('settings')->get('Site.siteName');

@@ -32,13 +32,13 @@ class Page extends BaseController
         // Ambil page, Kalo page 404 pun ga ada juga, show 404 bawaan ci
         if(! $page = $this->getPage($segments))
             throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
-
+        
         // Run page action class
         $pagedata = [];
         if(file_exists($page['path'].'/PageAction.php')){
             $actionPath = str_replace('/', '\\', $page['uri']);
             $ActionClassName = "App\Views\Pages\\{$actionPath}\PageAction";
-            $Action = new $ActionClassName;
+            $Action = new $ActionClassName($page);
 
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $Action->process();

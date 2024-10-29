@@ -5,7 +5,7 @@
                 <ion-icon name="chevron-back-outline"></ion-icon>
             </a>
         </div>
-        <div class="pageTitle">Detail Kabar</div>
+        <div class="pageTitle" x-text="title"></div>
         <div class="right">
         </div>
     </div>
