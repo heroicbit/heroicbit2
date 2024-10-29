@@ -74,14 +74,14 @@
             <div class="d-flex justify-content-center text-center mt-2">
             <div style="width: 85px">
                     <a href="/pengumuman">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
                             style="line-height: 18px">Kabar</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a href="/presensi">
-                        <img src="<?= $themeURL ?>assets/img/icon/videos.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block"
                             style="line-height: 18px">Video</small>
                     </a>

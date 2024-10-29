@@ -13,7 +13,7 @@
     </a>
     <a href="/videos" id="bottommenu-member" class="item" x-on:click.self="updateActiveBottomMenu()">
         <div class="col">
-        <img src="<?= $themeURL ?>assets/img/icon/videos.png" style="width:28px">
+        <img src="<?= $themeURL ?>assets/img/icon/video.png" style="width:28px">
             <strong>Video</strong>
         </div>
     </a>
