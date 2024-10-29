@@ -16,7 +16,17 @@
         <div class="bg-success-2 rounded-bottom-4">
             <div class="section mt-0 p-0" x-show="video.length > 0">
                 <div class="card border-top pb-3">
-                    <div id="player" data-plyr-provider="youtube" :data-plyr-embed-id="video[0]?.youtube_id"></div>
+                    <template x-if="video[0]?.youtube_id">
+                        <div class="plyr__video-embed" id="player">
+                            <iframe
+                            :src="`https://www.youtube.com/embed/${video[0]?.youtube_id}`"
+                            allowfullscreen
+                            allowtransparency
+                            allow="autoplay"
+                            x-init="initPlyr()"
+                            ></iframe>
+                        </div>
+                    </template>
                    
                     <div class="card-body px-3 pt-2 pb-3">
                         <h2 class="h5" x-text="video[0]?.title"></h2>

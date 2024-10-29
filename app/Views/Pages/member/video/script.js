@@ -29,7 +29,6 @@ window.member_video = function(id){
                         this.notFound = true
                     } else {
                         this.video = data.data.video
-                        this.initPlyr() 
                     }
                 })
             }

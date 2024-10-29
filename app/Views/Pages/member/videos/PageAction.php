@@ -14,7 +14,7 @@ class PageAction extends MemberPageAction {
 		$offset = ($page-1) * $perpage;
 
         // Get post data
-		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
+		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
             `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
             `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
             `mein_microblogs`.`created_at` as `created_at`, 
@@ -36,6 +36,8 @@ class PageAction extends MemberPageAction {
         foreach($posts as $key => $post)
         {
         	$posts[$key]['medias'] = json_decode($posts[$key]['medias'], true);
+            parse_str(parse_url($posts[$key]['youtube_url'], PHP_URL_QUERY), $queryParams);
+            $posts[$key]['youtube_id'] = isset($queryParams['v']) ? $queryParams['v'] : null;
         }
         $data['videos'] = $posts;
 
