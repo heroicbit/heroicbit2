@@ -4,9 +4,6 @@
         </div>
         <div class="pageTitle text-white">Video Pesantren</div>
         <div class="right">
-            <a href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#ModalForm">
-                <ion-icon name="create-outline" role="img" class="md hydrated text-white" aria-label="star outline"></ion-icon>
-            </a>
         </div>
     </div>
 
@@ -17,7 +14,7 @@
 
             <div class="section mt-0 p-0" style="max-width:470px;margin:auto">
                 <template x-for="(article,articleIndex) in videos">
-                    <div class="border-top">
+                    <div>
                         <a href="javascript:void()" x-on:click="showDetail(articleIndex)">
                             <div class="thumbnail-image position-relative">
                                 <div class="icon-video">

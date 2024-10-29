@@ -4,9 +4,6 @@
         </div>
         <div class="pageTitle text-white">Kabar Pesantren</div>
         <div class="right">
-            <a href="#" class="headerButton" data-bs-toggle="modal" data-bs-target="#ModalForm">
-                <ion-icon name="create-outline" role="img" class="md hydrated text-white" aria-label="star outline"></ion-icon>
-            </a>
         </div>
     </div>
 

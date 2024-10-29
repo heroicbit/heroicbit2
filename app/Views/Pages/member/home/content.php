@@ -4,9 +4,9 @@
             <img src="<?= $themeURL ?>assets/img/logo.png" alt="" style="height: 70%">
         </div>
         <div class="right">
-            <a href="#" class="headerButton toggle-searchbox text-white">
+            <!-- <a href="#" class="headerButton toggle-searchbox text-white">
                 <ion-icon name="notifications"></ion-icon>
-            </a>
+            </a> -->
         </div>
     </div>
 
