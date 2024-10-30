@@ -33,11 +33,11 @@
                     <div class="text-start mt-2">
                         <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2">MASUK</button>
                         <hr>
+                        <a href="/register" class="btn btn-outline-primary btn-block btn-lg mb-2">REGISTRASI</a>
                         <div class="d-flex justify-content-between mb-2">
-                            <div><a href="/register">Daftar Akun Baru</a></div>
+                            <div x-show="!forceKodePesantren"><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
                             <div><a href="page-forgot-password.html">Lupa Kata Sandi?</a></div>
                         </div>
-                        <div x-show="!forceKodePesantren"><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
                     </div>
                 </div>
             </div>

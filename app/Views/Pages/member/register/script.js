@@ -8,12 +8,26 @@ window.member_register = function(){
             email: '',
             whatsapp: '',
             password: '',
-            repeat_password: ''
+            repeat_password: '',
+            otp: '',
         },
         init(){
             document.title = this.title
             Alpine.store('member').currentPage = 'register'
             Alpine.store('member').showBottomMenu = false
+
+            if(cachePageData['member/login']){
+                this.data = cachePageData['member/login']
+              } else {   
+                fetchPageData('pages/member/login', {
+                  headers: {
+                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                  }
+                }).then(data => {
+                  cachePageData['member/login'] = data
+                  this.data = data
+                })
+              }
         },
         register(){
             // Gain javascript form validation
