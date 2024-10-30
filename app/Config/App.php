@@ -178,12 +178,15 @@ class App extends BaseConfig
     public function __construct()
     {
         // check SERVER_NAME in writable/custom_domain
-        $domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
-        if(file_exists('../writable/custom_domain/'.$domain)){
-            // Set base URL with SERVER_NAME if found
-            $this->baseURL = 'https://'.$domain.'/';
-        } else {
-            exit("Domain not found.");
+        if($_SERVER['HTTP_HOST'] ?? $_SERVER['SERVER_NAME'] ?? null)
+        {
+            $domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];
+            if(file_exists('../writable/custom_domain/'.$domain)){
+                // Set base URL with SERVER_NAME if found
+                $this->baseURL = 'https://'.$domain.'/';
+            } else {
+                exit("Domain not found.");
+            }
         }
     }
 }
