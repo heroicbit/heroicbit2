@@ -9,7 +9,7 @@ window.member_home = function(){
     swiperVideo: null,
     unreadPengumuman: 3,
 
-    init(){
+    init() {
       if(localStorage.getItem('intro') != 1){
         window.PineconeRouter.context.navigate('/intro');
       }

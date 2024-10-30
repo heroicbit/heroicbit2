@@ -5,10 +5,6 @@ window.member_videos = function(){
         nextPage: 1,
         empty: false,
         init(){
-            if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro');
-            }
-
             document.title = this.title;
             Alpine.store('member').currentPage = 'videos'
             Alpine.store('member').showBottomMenu = true

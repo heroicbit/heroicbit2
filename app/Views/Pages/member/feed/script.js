@@ -5,10 +5,6 @@ window.member_feed = function(id){
         notFound: false,
         feed: {},
         init(){
-            if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro');
-            }
-
             document.title = this.title;
             Alpine.store('member').currentPage = 'feed'
             Alpine.store('member').showBottomMenu = true

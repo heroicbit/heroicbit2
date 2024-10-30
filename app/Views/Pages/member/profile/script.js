@@ -4,10 +4,6 @@ window.member_profile = function(){
         title: "Profile",
         data: [],
         init(){
-            if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro');
-            }
-
             document.title = this.title;
             Alpine.store('member').currentPage = 'info'
             Alpine.store('member').showBottomMenu = true

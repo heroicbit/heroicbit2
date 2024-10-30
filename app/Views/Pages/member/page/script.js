@@ -5,10 +5,6 @@ window.member_page = function(slug) {
         notFound: false,
         page: {},
         init(){
-            if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro');
-            }
-
             document.title = this.title;
             Alpine.store('member').currentPage = 'page'
             Alpine.store('member').showBottomMenu = true

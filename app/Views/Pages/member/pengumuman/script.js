@@ -5,10 +5,6 @@ window.member_pengumuman = function(){
         data: [],
         detailPengumuman: null,
         init(){
-            if(localStorage.getItem('intro') != 1){
-                window.PineconeRouter.context.navigate('/intro');
-            }
-
             document.title = this.title;
             Alpine.store('member').currentPage = 'pengumuman'
             Alpine.store('member').showBottomMenu = true

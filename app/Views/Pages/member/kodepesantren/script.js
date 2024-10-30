@@ -5,6 +5,10 @@ window.member_kodepesantren = function(){
         buttonDisabled: true,
         kode: null,
         init(){
+            if(localStorage.getItem('intro') != 1){
+                window.PineconeRouter.context.navigate('/intro');
+            }
+
             document.title = this.title
             Alpine.store('member').currentPage = 'kodepesantren'
             Alpine.store('member').showBottomMenu = false

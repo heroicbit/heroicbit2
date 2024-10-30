@@ -6,9 +6,14 @@ window.member_login = function(){
         forceKodePesantren: false,
         data: [],
         init(){
+            if(localStorage.getItem('intro') != 1){
+              window.PineconeRouter.context.navigate('/intro');
+            }
+
             document.title = this.title
             Alpine.store('member').currentPage = 'login'
-            Alpine.store('member').showBottomMenu = false
+            Alpine.store('member').showBottomMenu = false            
+
             this.forceKodePesantren = localStorage.getItem('forcekodepesantren')
 
             if(cachePageData['member/login']){
