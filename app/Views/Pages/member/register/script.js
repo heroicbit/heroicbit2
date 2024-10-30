@@ -4,56 +4,64 @@ window.member_register = function(){
         title: "Register",
         showPwd: false,
         data: {
-            name: '',
+            fullname: '',
             email: '',
             whatsapp: '',
             password: '',
             repeat_password: '',
-            otp: '',
+        },
+        errors: {
+            fullname: '',
+            email: '',
+            whatsapp: '',
+            password: '',
+            repeat_password: '',
         },
         init(){
             document.title = this.title
             Alpine.store('member').currentPage = 'register'
             Alpine.store('member').showBottomMenu = false
 
-            if(cachePageData['member/login']){
-                this.data = cachePageData['member/login']
+            if(cachePageData['member/register']){
+                this.data = cachePageData['member/register']
               } else {   
-                fetchPageData('pages/member/login', {
+                fetchPageData('pages/member/register', {
                   headers: {
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')
                   }
                 }).then(data => {
-                  cachePageData['member/login'] = data
+                  cachePageData['member/register'] = data
                   this.data = data
                 })
               }
         },
-        register(){
-            // Gain javascript form validation
-            // if(this.data.name == '' || this.data.email == '' || this.data.whatsapp == '' || this.data.password == '' || this.data.repeat_password == ''){
-            //     toastr.warning('Form harus diisi semua')
-            //     return;
-            // }
+        register() {
+            this.errors = {
+                fullname: '',
+                email: '',
+                whatsapp: '',
+                password: '',
+                repeat_password: '',
+            };
 
             // Check login using axios post
             const formData = new FormData();
-            formData.append('fullname', this.data.name);
-            formData.append('email', this.data.email);
-            formData.append('whatsapp', this.data.whatsapp);
-            formData.append('password', this.data.password);
-            formData.append('repeat_password', this.data.repeat_password);
-            axios.post('/member/register', formData, {
+            formData.append('fullname', this.data.fullname ?? '');
+            formData.append('email', this.data.email ?? '');
+            formData.append('whatsapp', this.data.whatsapp ?? '');
+            formData.append('password', this.data.password ?? '');
+            formData.append('repeat_password', this.data.repeat_password ?? '');
+            axios.post('/pages/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')
                 }
             }).then(response => {
                 if(response.data.success == 1){
-                    localStorage.setItem('token', response.data.jwt)
-                    window.PineconeRouter.context.navigate('/')
+                    let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
+                    window.PineconeRouter.context.navigate('/member/register_confirm/' + token)
                 } else {
-                    toastr.warning(response.data.message)
+                    this.errors = response.data.errors
                 }
             })
         }

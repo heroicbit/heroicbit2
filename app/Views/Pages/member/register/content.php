@@ -26,7 +26,8 @@
                     <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
                             <label class="fw-bold" for="name">Nama Lengkap</label>
-                            <input type="text" class="form-control" id="name" x-model="data.name" required>
+                            <input type="text" class="form-control" id="name" x-model="data.fullname" required>
+                            <small class="text-danger" x-show="errors.fullname" x-text="errors.fullname"></small>
                         </div>
                     </div>
 
@@ -34,6 +35,7 @@
                         <div class="text-start input-wrapper">
                             <label class="fw-bold" for="email">Email</label>
                             <input type="email" class="form-control" id="email" x-model="data.email" required>
+                            <small class="text-danger" x-show="errors.email" x-text="errors.email"></small>
                         </div>
                     </div>
                     
@@ -42,10 +44,11 @@
                             <label class="fw-bold" for="whatsapp">No. Whatsapp</label>
                             <small>&bull; Awali dengan 62, mis. 6289xxxxxx</small>
                             <input type="text" class="form-control" id="whatsapp" x-model="data.whatsapp" required>
+                            <small class="text-danger" x-show="errors.whatsapp" x-text="errors.whatsapp"></small>
                         </div>
                     </div>
 
-                    <div class="form-group px-3 boxed">
+                    <div class="form-group px-3 boxed text-start">
                         <div class="text-start input-wrapper">
                             <label class="fw-bold" for="identity">Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="new-password" x-model="data.password" required>
@@ -53,9 +56,10 @@
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                             </i>
                         </div>
+                        <small class="text-danger" x-show="errors.password" x-text="errors.password"></small>
                     </div>
                     
-                    <div class="form-group px-3 boxed pb-3">
+                    <div class="form-group px-3 boxed pb-3 text-start">
                         <div class="text-start input-wrapper">
                             <label class="fw-bold" for="identity">Ulangi Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="repeat-pwd" autocomplete="new-password" x-model="data.repeat_password" required>
@@ -63,26 +67,7 @@
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                             </i>
                         </div>
-                    </div>
-                    
-                    <div class="border-top border-bottom py-3 bg-success bg-opacity-25">
-                        <div class="form-group px-3 text-start">
-                            <div class="d-flex justify-content-between">
-                                <label class="fw-bold mb-1">Dapatkan Kode Registrasi</label>
-                                <small>Kirim ulang dalam 01:00</small>
-                            </div>
-                            <div class="d-flex">
-                                <button type="button" x-on:click="sendOTPToEmail" class="btn btn-suscess bg-success text-light btn-sm me-1"><span class="bi bi-envelope me-1"></span> Kirim Kode ke Email</button>
-                                <button type="button" x-on:click="sendOTPToWA" class="btn btn-suscess bg-success text-light btn-sm"><span class="bi bi-whatsapp me-1"></span> Kirim Kode ke WhatsApp</button>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group px-3 boxed">
-                            <div class="text-start input-wrapper">
-                                <label for="identity">Masukkan kode registrasi di sini</label>
-                                <input :type="number" class="form-control" placeholder="_ _ _ _ _ _" autocomplete="new-password" x-model="data.otp" required>
-                            </div>
-                        </div>
+                        <small class="text-danger" x-show="errors.repeat_password" x-text="errors.repeat_password"></small>
                     </div>
 
                     <div class="form-group px-3 mt-3">
@@ -94,4 +79,13 @@
     </div>
     <!-- * App Capsule -->
 
+    <div id="toast-register-error" 
+        class="toast-box toast-bottom bg-danger" 
+        :class="error_message ? 'show' : ''"
+        x-init="$watch('error_message', v => v ? setTimeout(() => error_message = false, 3000) : null)">
+        <div class="in">
+            <div class="text" x-text="error_message"></div>
+        </div>
+        <button type="button" class="btn btn-sm btn-text-light" x-on:click="error_message = false">OK</button>
+    </div>
 </div>

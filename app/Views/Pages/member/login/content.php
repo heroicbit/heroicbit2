@@ -15,7 +15,7 @@
                 <div>
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
-                            <label for="identity">Email atau no.WhatsApp, mis. 6289xxxx</label>
+                            <label for="identity">Email/WhatsApp</label>
                             <input type="text" class="form-control" id="identity" x-model="data.username">
                         </div>
                     </div>
@@ -23,7 +23,7 @@
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
                             <label for="identity">Kata Sandi</label>
-                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" placeholder="Kata sandi" autocomplete="off" x-model="data.password">
+                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="off" x-model="data.password">
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
                             </i>
