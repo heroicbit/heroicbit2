@@ -16,7 +16,7 @@
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/psb">
+                    <a :href="data.psb_url" target="_blank">
                         <img src="<?= $themeURL ?>assets/img/icon/psb-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">PSB</small>
                     </a>

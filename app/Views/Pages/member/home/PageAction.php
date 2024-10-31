@@ -9,10 +9,16 @@ class PageAction extends MemberPageAction {
         $db = $this->initDBPesantren();
 
         $logoSetting = $db->table('mein_options')
-                          ->where('option_name', 'navbar_logo')
                           ->where('option_group', 'app')
+                          ->where('option_name', 'navbar_logo')
                           ->get()->getRowArray();
         $data['logo'] = $logoSetting['option_value'] ?? null; 
+
+        $psbURLSetting = $db->table('mein_options')
+                            ->where('option_group', 'pendaftaran')
+                            ->where('option_name', 'pendaftaran_form_url')
+                            ->get()->getRowArray();
+        $data['psb_url'] = $psbURLSetting['option_value'] ?? null; 
         
         /**
          * Get video data
