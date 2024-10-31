@@ -59,3 +59,6 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
 .offcanvas-body img {
     max-width: 100%;
 }
+.page-content li {
+    margin-top: 10px;
+}
