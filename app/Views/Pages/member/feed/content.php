@@ -15,8 +15,21 @@
 
         <div class="bg-success-2 rounded-bottom-4">
             <div class="section mt-0 p-0" x-show="feed.length > 0">
-                <div class="card border-top pb-3">
-                    <img :src="feed[0]?.medias[0]?.url" class="w-100" alt="image">
+                <div class="border-top pb-3">
+                    <template x-if="feed[0]">
+                    <div class="swiper feed-carousel" x-init="initFeedSwiper()">
+                        <div class="swiper-wrapper">
+                            <template x-for="(media,mediaIndex) in feed[0].medias">
+                            <div class="swiper-slide">
+                                <img :src="media.url" class="vw-100" alt="image">
+                            </div>
+                            </template>
+                        </div>
+                        <div class="swiper-pagination shadow-sm"></div>
+                        <div class="swiper-button-next"></div>
+                        <div class="swiper-button-prev"></div>
+                    </div>
+                    </template>
                     <div class="card-header p-1">
                         <img :src="feed[0]?.avatar ? feed[0]?.avatar : `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
                         <span x-text="feed[0]?.author_name"></span>

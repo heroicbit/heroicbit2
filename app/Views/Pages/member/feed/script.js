@@ -4,6 +4,7 @@ window.member_feed = function(id){
         id: id,
         notFound: false,
         feed: {},
+        swiper: null,
         init(){
             document.title = this.title;
             Alpine.store('member').currentPage = 'feed'
@@ -27,6 +28,20 @@ window.member_feed = function(id){
                 })
             }
         },
+        
+        initFeedSwiper() {
+            this.swiper = new Swiper(".feed-carousel", {
+                pagination: {
+                  el: ".swiper-pagination",
+                  type: "fraction",
+                },
+                navigation: {
+                    nextEl: ".swiper-button-next",
+                    prevEl: ".swiper-button-prev",
+                },
+            });
+        },
+
         formatDate(dateString){
             if(dateString && dateString != '0000-00-00') {
                 const date = new Date(dateString);

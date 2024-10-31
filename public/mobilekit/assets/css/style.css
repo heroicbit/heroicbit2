@@ -5257,6 +5257,10 @@ textarea,
   width: 100%;
 }
 
+.vw-100 {
+  width: 100vw !important;
+}
+
 .login-form {
   max-width: 500px;
   margin: auto;

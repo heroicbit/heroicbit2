@@ -1,3 +1,4 @@
+a { color: #076b89; }
 #appCapsule{ min-height: 100vh}
 .appBottomMenu, .appHeader, #appCapsule{ max-width: 768px; margin: 0 auto}
 .appHeader.bg-brand { box-shadow: none !important}
@@ -22,3 +23,33 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
 .icon-video{ width: 35px; position: absolute; bottom: 5px; left: 8px; z-index: 10; }
 .thumbnail-image::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; }
 .thumbnail-image-rounded::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 50%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.6) 100%); pointer-events: none; border-radius: 0 0 1rem 1rem; }
+.swiper-horizontal>.swiper-pagination-bullets.swiper-pagination-bullets-dynamic, .swiper-pagination-horizontal.swiper-pagination-bullets.swiper-pagination-bullets-dynamic { z-index: 100; }
+.swiper-pagination-fraction {
+    background: #3b3e41cc;
+    color: #e1e1e1;
+    z-index: 100;
+    width: 51px;
+    border-radius: 10px;
+    font-size: .8rem;
+    margin: 8px;
+    font-weight: 500;
+    top: 0;
+    bottom: auto;
+    right: 0;
+    left: auto;
+    letter-spacing: -1px;
+}
+.swiper-pagination-bullet { background: #ffffff; opacity: .8; }
+.swiper-pagination-bullet-active { background: #ffffff; opacity: 1; }
+.feed-carousel::after{ content: ""; position: absolute; bottom: 0; left: 0; width: 100%; height: 20%; background: linear-gradient(to bottom, rgba(0, 0, 0, 0) 0%, rgba(0, 0, 0, 0.4) 100%); pointer-events: none; z-index: 10; }
+.swiper-button-next, .swiper-button-prev {
+    width: 30px;
+    height: 30px;
+    color: #666;
+    background: #eee;
+    border-radius: 50%;
+    box-shadow: var(--bs-box-shadow-sm) !important;
+}
+.swiper-button-next:after, .swiper-button-prev:after {
+    font-size: 14px; font-weight: bold;
+}
