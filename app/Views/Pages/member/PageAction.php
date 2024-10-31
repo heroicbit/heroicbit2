@@ -25,7 +25,20 @@ class PageAction extends FrontAction {
 	}
 
 	// This method handle GET request via AJAX
-	public function supply(){}
+	public function supply()
+	{
+		$db = $this->initDBPesantren();
+
+		$settingQuery = $db->table('mein_options')
+							->where('option_group', 'tarbiyya')
+							->get()
+							->getResultArray();
+		
+		if($settingQuery)
+			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
+
+		return ['tarbiyyaSetting' => $settingQuery];
+	}
 
 	// This method handle POST request
 	public function process(){}

@@ -56,3 +56,6 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
 .swiper-wrapper {
     align-items: center;
 }
+.offcanvas-body img {
+    max-width: 100%;
+}

@@ -30,14 +30,14 @@
                         <div class="swiper-button-prev"></div>
                     </div>
                     </template>
-                    <div class="card-header p-1">
+                    <div class="card-header px-3 pt-2 pb-1">
                         <img :src="feed[0]?.avatar ? feed[0]?.avatar : `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
                         <span x-text="feed[0]?.author_name"></span>
                     </div>
-                    <div class="card-body px-3 pt-2 pb-3">
-                        <h1 class="h2 card-title" x-text="feed[0]?.title"></h1>
+                    <div class="card-body px-3 pb-3">
+                        <h1 class="h2 card-title mb-1" x-text="feed[0]?.title"></h1>
+                        <div class="text-muted mb-3" x-text="formatDate(feed[0]?.published_at)"></div>
                         <p class="card-text" x-html="nl2br(feed[0]?.content)"></p>
-                        <small class="text-muted" x-text="formatDate(feed[0]?.published_at)"></small>
                     </div>
                 </div>
             </div>

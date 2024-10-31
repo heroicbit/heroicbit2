@@ -22,6 +22,7 @@
             <template x-route="/profile" x-template.preload="/pages/member/profile" x-handler="isLoggedIn"></template>
             <template x-route="/tagihan" x-template.preload="/pages/member/tagihan" x-handler="isLoggedIn"></template>
             <template x-route="/pengumuman" x-template.preload="/pages/member/pengumuman" x-handler="isLoggedIn"></template>
+            <template x-route="/program_pesantren" x-template.preload="/pages/member/program_pesantren" x-handler="isLoggedIn"></template>
         </div>
 
         <?= $this->include('Pages/member/bottommenu') ?>

@@ -25,6 +25,7 @@ document.addEventListener('alpine:init', () => {
         showBottomMenu: true,
         sessionToken: null,
         kodePesantren: null,
+        tarbiyyaSetting: {}
     })
     
     Alpine.data('member', () => ({
@@ -32,6 +33,19 @@ document.addEventListener('alpine:init', () => {
             document.title = this.title;
             Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
             Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
+
+            if(Alpine.store('member').kodePesantren && Alpine.store('member').sessionToken) {
+                if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
+                    fetchPageData('pages/member', {
+                        headers: {
+                            'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
+                            'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                        }
+                    }).then(data => {
+                        Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting
+                    })
+                }
+            }
         },
         
         // Check kode pesantren

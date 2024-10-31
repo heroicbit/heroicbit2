@@ -1,6 +1,6 @@
 <section id="latest-articles" class="pb-4">
     <div class="d-flex px-3 mb-1 justify-content-between">
-        <h3 class="m-0 me-auto text-dark">Kabar Terbaru</h3>
+        <h4 class="m-0 me-auto text-dark">Kabar Terbaru</h4>
         <a href="/member/feeds">
             <small class="text-primary fw-bold" style="font-size: 12px">
                 Lihat Semua
