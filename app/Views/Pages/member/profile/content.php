@@ -87,12 +87,12 @@
                                     <span>Kebijakan Privasi</span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="/page/faq" class="item">
                                     <i class="bi bi-patch-question text-primary fs-4 me-2"></i>
                                     <span>Pertanyaan Umum</span>
                                 </a>
-                            </li>
+                            </li> -->
                             <li>
                                 <a href="javascript:void()" x-on:click="logout" class="item">
                                     <i class="bi bi-lock text-danger fs-4 me-2"></i>
