@@ -10,13 +10,13 @@
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/presensi">
+                    <a href="/page/program">
                         <img src="<?= $themeURL ?>assets/img/icon/program.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Program Pesantren</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/page/profil-pesantren">
+                    <a href="/psb">
                         <img src="<?= $themeURL ?>assets/img/icon/psb-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">PSB</small>
                     </a>
@@ -31,19 +31,19 @@
 
             <div class="d-flex justify-content-center text-center">
                 <div style="width: 85px">
-                    <a href="/pengumuman">
+                    <a href="/feeds">
                         <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kabar</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/presensi">
+                    <a href="/videos">
                         <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Video</small>
                     </a>
                 </div>
                 <div style="width: 85px">
-                    <a href="/presensi">
+                    <a href="/santri">
                         <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Santri</small>
                     </a>
