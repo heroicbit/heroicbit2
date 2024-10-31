@@ -10,7 +10,7 @@ class PageAction extends MemberPageAction {
         $request = service('request');
 		$page = (int)($request->getGet('page') ?? 1);
 		$status = $request->getGet('status') ?? 'publish';
-		$perpage = (int)($request->getGet('perpage') ?? 5);
+		$perpage = (int)($request->getGet('perpage') ?? 15);
 		$offset = ($page-1) * $perpage;
 
         // Get post data
