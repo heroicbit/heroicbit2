@@ -1265,7 +1265,7 @@ h4,
 h5,
 h6 {
   color: #141515;
-  margin: 0 0 10px 0;
+  margin: 0 0 15px 0;
   letter-spacing: -0.02em;
   line-height: 1.3em;
 }
@@ -1294,27 +1294,27 @@ h6 .badge {
 }
 
 h1 {
-  font-size: 34px;
+  font-size: 1.8rem;
   font-weight: 700;
 }
 
 h2 {
-  font-size: 24px;
+  font-size: 1.6rem;
   font-weight: 700;
 }
 
 h3 {
-  font-size: 17px;
+  font-size: 1.4rem;
   font-weight: 700;
 }
 
 h4 {
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 1.2rem;
+  font-weight: 700;
 }
 
 h5 {
-  font-size: 13px;
+  font-size: 1.1rem;
   font-weight: 500;
 }
 
