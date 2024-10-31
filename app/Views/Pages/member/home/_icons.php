@@ -17,7 +17,7 @@
                 </div>
                 <div style="width: 85px">
                     <a href="/page/profil-pesantren">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/psb-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">PSB</small>
                     </a>
                 </div>
@@ -71,19 +71,19 @@
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/rapor-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Rapor Digital</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/kajian-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kajian</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/fatwa-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Fatwa PERSIS</small>
                     </a>
                 </div>
@@ -92,25 +92,25 @@
             <div class="d-flex justify-content-center text-center mt-2">
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/risalah-sholat-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Risalah Sholat</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/jadwal-sholat-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Jadwal Sholat</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/hadits-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Hadits Arba'in</small>
                     </a>
                 </div>
                 <div style="width: 85px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/doa-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Doa & Zikir</small>
                     </a>
                 </div>
