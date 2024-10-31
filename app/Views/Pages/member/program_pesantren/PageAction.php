@@ -30,6 +30,7 @@ class PageAction extends MemberPageAction {
         {
             $index = array_search($pageSlug, array_column($pages, 'slug'));
             $data['pages'][$pageSlug] = $pages[$index];
+            $data['pages'][$pageSlug]['menu_title'] = $pagelist[$pageSlug];
         }
 
         return $data;

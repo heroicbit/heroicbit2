@@ -18,7 +18,7 @@
                         <a href="javascript:void()" class="item" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(post.slug)">
                             <div class="in">
                                 <div class="title">
-                                    <span x-text="post.title"></span>
+                                    <span x-text="post.menu_title"></span>
                                 </div>
                             </div>
                         </a>
