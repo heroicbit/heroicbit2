@@ -17,7 +17,7 @@
             <div class="section mt-0 p-0" x-show="feed.length > 0">
                 <div class="border-top pb-3">
                     <template x-if="feed[0]">
-                    <div class="swiper feed-carousel" x-init="initFeedSwiper()">
+                    <div class="swiper bg-dark feed-carousel" x-init="initFeedSwiper()">
                         <div class="swiper-wrapper">
                             <template x-for="(media,mediaIndex) in feed[0].medias">
                             <div class="swiper-slide">

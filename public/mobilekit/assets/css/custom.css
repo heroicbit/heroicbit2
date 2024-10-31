@@ -53,3 +53,6 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
 .swiper-button-next:after, .swiper-button-prev:after {
     font-size: 14px; font-weight: bold;
 }
+.swiper-wrapper {
+    align-items: center;
+}
