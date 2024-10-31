@@ -31,15 +31,15 @@
                                     <span>Perbaharui Profil</span>
                                 </a>
                             </li>
-                            <li>
+                            <!-- <li>
                                 <a href="/invoice" class="item">
                                     <i class="bi bi-receipt fs-2 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>
                                 </a>
-                            </li>
+                            </li> -->
                         </ul>
 
-                        <div class="listview-title mt-2">Administrasi</div>
+                        <!-- <div class="listview-title mt-2">Administrasi</div>
                         <ul class="listview image-listview flush transparent">
                             <li>
                                 <a href="/allsantri" class="item">
@@ -59,7 +59,7 @@
                                     <span>Pengaturan Aplikasi</span>
                                 </a>
                             </li>
-                        </ul>
+                        </ul> -->
 
                         <div class="listview-title mt-2">Aplikasi Tarbiyya</div>
                         <ul class="listview image-listview flush transparent">
