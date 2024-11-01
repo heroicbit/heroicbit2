@@ -5,14 +5,19 @@ window.member_profile = function(){
         data: [],
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'info'
+            Alpine.store('member').currentPage = 'profile'
             Alpine.store('member').showBottomMenu = true
 
-            if(cachePageData['member/info']){
-                this.data = cachePageData['member/info']
+            if(cachePageData['member/profile']){
+                this.data = cachePageData['member/profile']
             } else {   
-                fetchPageData('member/info').then(data => {
-                    cachePageData['member/info'] = data
+                fetchPageData('/pages/member/profile', {
+                    headers: {
+                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                    }
+                }).then(data => {
+                    cachePageData['member/profile'] = data
                     this.data = data
                 })
             }

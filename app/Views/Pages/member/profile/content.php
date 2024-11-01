@@ -15,10 +15,15 @@
                     <div class="p-2 text-center position-relative bg-brand" style="height:100px;"></div>
                     <div class="card ps-3 shadow-none bg-light text-dark container-fluid rounded-top-5 pt-3 pb-3" style="margin-top:-95px">
                         <div class="d-flex align-items-center justify-content-start gap-3">
-                            <div><img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" class="rounded-circle" alt="Toni Haryanto" style="width:56px"></div>
+                            <div>
+                                <img :src="data.profile.avatar ? data.profile.avatar : `<?= $themeURL ?>assets/img/icon/default-avatar-user.webp`" 
+                                class="rounded-circle" 
+                                :alt="data.profile.name" 
+                                style="width:56px">
+                            </div>
                             <div class="use text-whiter">
-                                <div class="h5 m-0">Toni Haryanto</div>
-                                <span>toha.samba@gmail.com</span>
+                                <div class="h5 m-0" x-text="data.profile.name"></div>
+                                <span x-text="data.profile.email"></span>
                             </div>
                         </div>
                     </div>
