@@ -27,5 +27,31 @@
       "type": "image/png",
       "purpose": "maskable"
     }
+  ],
+  "screenshots" : [
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-1.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-2.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-3.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-4.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    }
   ]
 }
