@@ -13,12 +13,12 @@
             <section class="section-top full mb-5 pb-5">
                 <div class="">
                     <div class="p-2 text-center position-relative bg-brand" style="height:100px;"></div>
-                    <div class="card shadow-none bg-light bg-opacity-50 glassmorph text-dark container-fluid rounded-5 py-3 rounded-4 pt-4 pb-5" style="margin-top:-95px">
+                    <div class="card ps-3 shadow-none bg-light text-dark container-fluid rounded-top-5 pt-3 pb-3" style="margin-top:-95px">
                         <div class="d-flex align-items-center justify-content-start gap-3">
                             <div><img src="https://masagiapp.com/uploads/masagi/entry_files/le-me.jpg" class="rounded-circle" alt="Toni Haryanto" style="width:56px"></div>
                             <div class="use text-whiter">
                                 <div class="h5 m-0">Toni Haryanto</div>
-                                <div>17.5383 | Super</div>
+                                <span>toha.samba@gmail.com</span>
                             </div>
                         </div>
                     </div>
@@ -26,9 +26,15 @@
                     <div class="text-center">
                         <ul class="listview image-listview flush transparent">
                             <li>
-                                <a href="/edit-profil" class="item">
-                                    <i class="bi bi-person fs-2 text-primary me-2"></i>
-                                    <span>Perbaharui Profil</span>
+                                <a href="/profile_edit" class="item">
+                                    <i class="fs-2 me-2 bi bi-pencil text-primary"></i>
+                                    <span>Edit Profil</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="/profile_edit" class="item">
+                                    <i class="fs-2 me-2 bi bi-asterisk text-primary"></i>
+                                    <span>Ganti Password</span>
                                 </a>
                             </li>
                             <!-- <li>
@@ -93,6 +99,10 @@
                                     <span>Pertanyaan Umum</span>
                                 </a>
                             </li> -->
+                        </ul>
+
+                        <div class="listview-title mt-2"></div>
+                        <ul class="listview image-listview flush transparent border-top">
                             <li>
                                 <a href="javascript:void()" x-on:click="logout" class="item">
                                     <i class="bi bi-lock text-danger fs-4 me-2"></i>
@@ -100,8 +110,8 @@
                                 </a>
                             </li>
                         </ul>
-
                     </div>
+
 
                 </div>
             </section>
