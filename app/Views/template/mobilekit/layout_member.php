@@ -7,17 +7,15 @@
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="theme-color" content="#05b2c5">
-    <meta name="description" content="Mobilekit HTML Mobile UI Kit">
-    <meta name="keywords" content="bootstrap 5, mobile template, cordova, phonegap, mobile, html" />
-    <link rel="icon" type="image/png" href="<?= $themeURL ?>assets/img/favicon.png" sizes="32x32">
-    <link rel="apple-touch-icon" sizes="180x180" href="<?= $themeURL ?>assets/img/icon/192x192.png">
-    <link rel="manifest" href="__manifest.json">
+    <meta name="description" content="Tarbiyya adalah aplikasi managemen informasi pesantren dan menjadi kanal informasi bagi wali santri.">
+    <meta name="keywords" content="tarbiyya, aplikasi pesantren, aplikasi wali santri, aplikasi pesantren persis, persatuan islam" />
+    <link rel="icon" type="image/png" href="<?= $themeURL ?>assets/img/icon/72x72.png" sizes="72x72">
+    <link rel="apple-touch-icon" sizes="192x192" href="<?= $themeURL ?>assets/img/icon/192x192.png">
+    <link rel="manifest" href="/tarbiyya_manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
     <link rel="stylesheet" href="<?= $themeURL ?>assets/css/custom.css?v<?= $version ?>">
-
-    <script src="https://cdn.jsdelivr.net/npm/toastr@2.1.4/toastr.min.js"></script>
 </head>
 
 <body>
