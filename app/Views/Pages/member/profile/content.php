@@ -32,19 +32,19 @@
                         <ul class="listview image-listview flush transparent">
                             <li>
                                 <a href="/profile_edit" class="item">
-                                    <i class="fs-2 me-2 bi bi-pencil text-primary"></i>
+                                    <i class="fs-4 me-2 bi bi-pencil text-primary"></i>
                                     <span>Edit Profil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/profile_edit" class="item">
-                                    <i class="fs-2 me-2 bi bi-asterisk text-primary"></i>
+                                <a href="/change_password" class="item">
+                                    <i class="fs-4 me-2 bi bi-asterisk text-primary"></i>
                                     <span>Ganti Password</span>
                                 </a>
                             </li>
                             <!-- <li>
                                 <a href="/invoice" class="item">
-                                    <i class="bi bi-receipt fs-2 text-primary me-2"></i>
+                                    <i class="bi bi-receipt fs-4 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>
                                 </a>
                             </li> -->
@@ -54,19 +54,19 @@
                         <ul class="listview image-listview flush transparent">
                             <li>
                                 <a href="/allsantri" class="item">
-                                    <i class="bi bi-people-fill fs-2 text-primary me-2"></i>
+                                    <i class="bi bi-people-fill fs-4 text-primary me-2"></i>
                                     <span>Data Santri</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="/presensi" class="item">
-                                    <i class="bi bi-calendar2-check-fill fs-2 text-primary me-2"></i>
+                                    <i class="bi bi-calendar2-check-fill fs-4 text-primary me-2"></i>
                                     <span>Cek Presensi</span>
                                 </a>
                             </li>
                             <li>
                                 <a href="/settings" class="item">
-                                    <i class="bi bi-gear-fill fs-2 text-primary me-2"></i>
+                                    <i class="bi bi-gear-fill fs-4 text-primary me-2"></i>
                                     <span>Pengaturan Aplikasi</span>
                                 </a>
                             </li>

@@ -20,6 +20,7 @@
             <template x-route="/video/:id" x-template.preload="/pages/member/video" x-handler="isLoggedIn"></template>
             <template x-route="/santri" x-template.preload="/pages/member/santri" x-handler="isLoggedIn"></template>
             <template x-route="/profile" x-template.preload="/pages/member/profile" x-handler="isLoggedIn"></template>
+            <template x-route="/profile_edit" x-template.preload="/pages/member/profile_edit" x-handler="isLoggedIn"></template>
             <template x-route="/tagihan" x-template.preload="/pages/member/tagihan" x-handler="isLoggedIn"></template>
             <template x-route="/pengumuman" x-template.preload="/pages/member/pengumuman" x-handler="isLoggedIn"></template>
             <template x-route="/program_pesantren" x-template.preload="/pages/member/program_pesantren" x-handler="isLoggedIn"></template>
