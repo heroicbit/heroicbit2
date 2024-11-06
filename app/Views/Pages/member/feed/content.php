@@ -15,7 +15,7 @@
 
         <div class="bg-success-2 rounded-bottom-4">
             <div class="section mt-0 p-0" x-show="feed.length > 0">
-                <div class="border-top pb-3">
+                <div class="border-top pb-3" style="max-width: 480px; margin: 0 auto;">
                     <template x-if="feed[0]">
                     <div class="swiper bg-dark feed-carousel" x-init="initFeedSwiper()">
                         <div class="swiper-wrapper">
@@ -35,7 +35,7 @@
                         <span x-text="feed[0]?.author_name"></span>
                     </div>
                     <div class="card-body px-3 pb-3">
-                        <h1 class="h2 card-title mb-1" x-text="feed[0]?.title"></h1>
+                        <h3 class="card-title mb-1" x-text="feed[0]?.title"></h3>
                         <div class="text-muted mb-3" x-text="formatDate(feed[0]?.published_at)"></div>
                         <p class="card-text" x-html="nl2br(feed[0]?.content)"></p>
                     </div>
