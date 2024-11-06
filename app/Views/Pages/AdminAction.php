@@ -2,10 +2,6 @@
 
 namespace App\Views\Pages;
 
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
-
 class AdminAction extends FrontAction 
 {
     public function __construct($pagedata = [])

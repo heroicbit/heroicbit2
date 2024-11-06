@@ -26,9 +26,8 @@ class PageAction extends MemberPageAction {
 
     public function process()
     {
-        $request = service('request');
-        $username = strtolower($request->getPost('username'));
-        $password = $request->getPost('password');
+        $username = strtolower($this->request->getPost('username'));
+        $password = $this->request->getPost('password');
 
         // Use database client
         $db = $this->initDBPesantren();

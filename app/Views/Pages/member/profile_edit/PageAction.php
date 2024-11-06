@@ -4,7 +4,7 @@ use App\Views\Pages\member\PageAction as MemberPageAction;
 
 class PageAction extends MemberPageAction {
 
-    public function supply()
+    public function supply(): array
     {
         $db = $this->initDBPesantren();
 
@@ -19,7 +19,6 @@ class PageAction extends MemberPageAction {
 
     public function process()
     {
-        $request = service('request');
         $validation = service('validation');
 
         $validation->setRules([
@@ -30,7 +29,7 @@ class PageAction extends MemberPageAction {
             'repeat_password' => 'required|matches[password]',
         ]);
 
-        if (! $validation->run($request->getPost())) {
+        if (! $validation->run($this->request->getPost())) {
             $errors = $validation->getErrors();
             echo json_encode([
                 'success' => 0, 'errors' => $errors

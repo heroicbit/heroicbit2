@@ -7,8 +7,7 @@ class PageAction extends MemberPageAction {
     public function supply()
     {
         // Retrieve extension attributes
-        $request = service('request');
-        $uri = $request->getUri();
+        $uri = $this->request->getUri();
         $slug = $uri->getSegment(4);
 
         // Get post data

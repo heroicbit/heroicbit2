@@ -7,10 +7,9 @@ class PageAction extends MemberPageAction {
     public function supply()
     {
         // Retrieve extension attributes
-        $request = service('request');
-		$page = (int)($request->getGet('page') ?? 1);
-		$status = $request->getGet('status') ?? 'publish';
-		$perpage = (int)($request->getGet('perpage') ?? 15);
+		$page = (int)($this->request->getGet('page') ?? 1);
+		$status = $this->request->getGet('status') ?? 'publish';
+		$perpage = (int)($this->request->getGet('perpage') ?? 15);
 		$offset = ($page-1) * $perpage;
 
         // Get post data

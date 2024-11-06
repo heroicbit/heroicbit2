@@ -4,14 +4,17 @@ use App\Views\Pages\FrontAction;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 use CodeIgniter\API\ResponseTrait;
+use CodeIgniter\HTTP\RequestInterface;
+use CodeIgniter\HTTP\ResponseInterface;
+use Psr\Log\LoggerInterface;
 
 class PageAction extends FrontAction {
 
 	use ResponseTrait;
 
-	public function __construct($pagedata = [])
+	public function __construct($pagedata = [], RequestInterface $request = null, ResponseInterface $response = null, LoggerInterface $logger = null)
 	{
-		parent::__construct($pagedata);
+		parent::__construct($pagedata, $request, $response, $logger);
 		
 		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
 		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
@@ -65,20 +68,18 @@ class PageAction extends FrontAction {
 	public function checkToken()
 	{
 		$headers = getallheaders();
-		$request = service('request');
-		$response = service('response');
 
-		$token = $headers['Authorization'] ?? $request->getGet('authorization') ?? null;
+		$token = $headers['Authorization'] ?? $this->request->getGet('authorization') ?? null;
 
 		if(! $token) {
-			$response->setStatusCode(401, 'Authorization token not found')->send();
+			$this->response->setStatusCode(401, 'Authorization token not found')->send();
 			exit;
 		}
 
 		$jwt = explode(' ', $token)[1] ?? null;
 
 		if (! $jwt) {
-			$response->setStatusCode(401, 'Authorization token not found')->send();
+			$this->response->setStatusCode(401, 'Authorization token not found')->send();
 			exit; 
 		}
 			
@@ -86,12 +87,12 @@ class PageAction extends FrontAction {
 			$key = config('AuthJWT')->keys['default'][0]['secret'];
 			$decodedToken = JWT::decode($jwt, new Key(config('AuthJWT')->keys['default'][0]['secret'], 'HS256'));
 		} catch (\Exception $e){
-			$response->setStatusCode(401, 'Authorization token not found')->send();
+			$this->response->setStatusCode(401, 'Authorization token not found')->send();
 			exit;
 		}
 		
 		if (! $decodedToken) {				
-			$response->setStatusCode(401, 'Authorization token not found')->send();
+			$this->response->setStatusCode(401, 'Authorization token not found')->send();
 			exit;
 		}
 

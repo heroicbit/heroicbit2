@@ -28,8 +28,7 @@ class PageAction extends MemberPageAction {
     
     public function process()
     {
-        $request = service('request');
-        $kode = strtolower($request->getPost('kodepesantren'));
+        $kode = strtolower($this->request->getPost('kodepesantren'));
 
         $Pesantren = model('Pesantren');
         $found = $Pesantren->where('kode_pesantren', $kode)->first();

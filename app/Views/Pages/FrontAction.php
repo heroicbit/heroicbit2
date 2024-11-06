@@ -7,17 +7,36 @@ use CodeIgniter\HTTP\ResponseInterface;
 use Psr\Log\LoggerInterface;
 
 
-abstract class FrontAction
+class FrontAction
 {
     // Global data
     public $data = [];
 
     /**
+     * @property RequestInterface $request;
+     */
+    protected $request;
+
+    /**
+     * @property ResponseInterface $response
+     */
+    protected $response;
+
+    /**
+     * @property LoggerInterface $logger;
+     */
+    protected $logger;
+
+    /**
      * Initiate global data here
      */
-    public function __construct($pagedata = [])
+    public function __construct($pagedata = [], RequestInterface $request = null, ResponseInterface $response = null, LoggerInterface $logger = null)
     {
         $this->data = $pagedata;
+
+        $this->request = $request;
+        $this->response = $response;
+        $this->logger = $logger;
            
         // Load module helper
         helper('Heroic\Helpers\module');
