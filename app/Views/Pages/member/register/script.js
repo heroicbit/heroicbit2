@@ -3,16 +3,15 @@ window.member_register = function(){
     return {
         title: "Register",
         showPwd: false,
+        registering: false,
         data: {
             fullname: '',
-            email: '',
             whatsapp: '',
             password: '',
             repeat_password: '',
         },
         errors: {
             fullname: '',
-            email: '',
             whatsapp: '',
             password: '',
             repeat_password: '',
@@ -36,9 +35,10 @@ window.member_register = function(){
               }
         },
         register() {
+            this.registering = true;
+
             this.errors = {
                 fullname: '',
-                email: '',
                 whatsapp: '',
                 password: '',
                 repeat_password: '',
@@ -47,7 +47,6 @@ window.member_register = function(){
             // Check login using axios post
             const formData = new FormData();
             formData.append('fullname', this.data.fullname ?? '');
-            formData.append('email', this.data.email ?? '');
             formData.append('whatsapp', this.data.whatsapp ?? '');
             formData.append('password', this.data.password ?? '');
             formData.append('repeat_password', this.data.repeat_password ?? '');
@@ -62,6 +61,7 @@ window.member_register = function(){
                     window.PineconeRouter.context.navigate('/member/register_confirm/' + token)
                 } else {
                     this.errors = response.data.errors
+                    this.registering = false;
                 }
             })
         }

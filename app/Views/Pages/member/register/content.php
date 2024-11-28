@@ -31,13 +31,13 @@
                         </div>
                     </div>
 
-                    <div class="form-group px-3 boxed">
+                    <!-- <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
                             <label class="fw-bold" for="email">Email</label>
                             <input type="email" class="form-control" id="email" x-model="data.email" required>
                             <small class="text-danger" x-show="errors.email" x-text="errors.email"></small>
                         </div>
-                    </div>
+                    </div> -->
                     
                     <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
@@ -71,7 +71,14 @@
                     </div>
 
                     <div class="form-group px-3 mt-3">
-                        <button type="button" x-on:click="register" class="btn btn-primary btn-block btn-lg">Daftar Akun</button>
+                        <button 
+                            type="button" 
+                            x-on:click="register" 
+                            :disabled="registering"
+                            class="btn btn-primary btn-block btn-lg">
+                            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" x-show="registering"></span>
+                            <span x-text="registering ? 'Mendaftarkan...' : 'Daftar Akun'"></span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -79,13 +86,4 @@
     </div>
     <!-- * App Capsule -->
 
-    <div id="toast-register-error" 
-        class="toast-box toast-bottom bg-danger" 
-        :class="error_message ? 'show' : ''"
-        x-init="$watch('error_message', v => v ? setTimeout(() => error_message = false, 3000) : null)">
-        <div class="in">
-            <div class="text" x-text="error_message"></div>
-        </div>
-        <button type="button" class="btn btn-sm btn-text-light" x-on:click="error_message = false">OK</button>
-    </div>
 </div>
