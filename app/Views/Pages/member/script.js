@@ -34,7 +34,7 @@ document.addEventListener('alpine:init', () => {
             Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
             Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
 
-            if(Alpine.store('member').kodePesantren && Alpine.store('member').sessionToken) {
+            if(Alpine.store('member').kodePesantren) {
                 if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
                     fetchPageData('pages/member', {
                         headers: {

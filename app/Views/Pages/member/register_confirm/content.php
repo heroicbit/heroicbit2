@@ -1,4 +1,4 @@
-<div id="member-register-confirm" x-data="member_register_confirm($router.params.token)">
+<div id="member-register-confirm" x-data="member_register_confirm($router.params.token ?? '')">
 
     <div class="appHeader">
         <div class="left">
@@ -15,20 +15,19 @@
                 <img :src="data.logo" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <p>Masukkan kode registrasi untuk melanjutkan pendaftaran. Kode registrasi akan dikirimkan oleh aplikasi ke alamat email atau nomor WhatsApp Anda.</p>
+                <p>Untuk melanjutkan pendaftaran, masukkan kode registrasi yang telah kami kirimkan ke nomor WhatsApp Anda.</p>
             </div>
             <div class="section mt-1 mb-5 px-0">
                 <div>                    
                     <div class="py-3">
-                        <div class="form-group px-3 text-start">
+                        <div class="form-group px-3 py-3 text-start bg-secondary bg-opacity-25"> 
                             <div class="d-flex justify-content-between">
-                                <label class="fw-bold mb-1">Dapatkan Kode Registrasi</label>
+                                <label class="fw-bold mb-1">Tidak menerima Kode Registrasi?</label>
                             </div>
+                            <small x-show="remainingTime > 0">Kirim ulang dalam <span x-text="formattedTime"></span></small>
                             <div class="d-flex">
-                                <button type="button" x-on:click="sendOTPToEmail" class="btn bg-success text-white btn-sm me-1"><span class="bi bi-envelope me-1"></span> Kirim Kode ke Email</button>
-                                <button type="button" x-on:click="sendOTPToWA" class="btn bg-success text-white btn-sm"><span class="bi bi-whatsapp me-1"></span> Kirim Kode ke WhatsApp</button>
+                                <button type="button" x-on:click="resendOTP" class="btn bg-success text-white btn-sm" :disabled="remainingTime > 0 || resending"><span class="bi bi-whatsapp me-1"></span> <span x-text="resending ? 'Mengirim ulang...' : 'Kirim Ulang Kode ke WhatsApp'"></span></button>
                             </div>
-                            <small>Kirim ulang dalam 01:00</small>
                         </div>
                         
                         <div class="form-group px-3 boxed mt-3 text-start">

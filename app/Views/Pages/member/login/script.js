@@ -48,8 +48,7 @@ window.member_login = function () {
         .then((response) => {
           if (response.data.found == 1) {
             localStorage.setItem("heroic_token", response.data.jwt);
-            Alpine.store("member").sessionToken =
-              localStorage.getItem("heroic_token");
+            Alpine.store("member").sessionToken = localStorage.getItem("heroic_token");
             window.PineconeRouter.context.navigate("/");
           } else {
             this.errorMessage = "Password tidak cocok atau akun belum terdaftar";

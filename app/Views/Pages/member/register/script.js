@@ -58,7 +58,7 @@ window.member_register = function(){
             }).then(response => {
                 if(response.data.success == 1){
                     let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
-                    window.PineconeRouter.context.navigate('/member/register_confirm/' + token)
+                    window.PineconeRouter.context.navigate('/member/register/' + token)
                 } else {
                     this.errors = response.data.errors
                     this.registering = false;
