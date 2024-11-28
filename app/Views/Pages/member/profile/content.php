@@ -98,6 +98,12 @@
                                     <span>Kebijakan Privasi</span>
                                 </a>
                             </li>
+                            <li>
+                                <a href="/delete" class="item">
+                                    <i class="bi bi-file-earmark-text text-danger fs-4 me-2"></i>
+                                    <span>Hapus Akun</span>
+                                </a>
+                            </li>
                             <!-- <li>
                                 <a href="/page/faq" class="item">
                                     <i class="bi bi-patch-question text-primary fs-4 me-2"></i>

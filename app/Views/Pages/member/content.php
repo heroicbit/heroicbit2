@@ -12,6 +12,7 @@
             <template x-route="/kodepesantren" x-template.preload="/pages/member/kodepesantren"></template>
             <template x-route="/login" x-template.preload="/pages/member/login" x-handler="isKodePesantrenSet"></template>
             <template x-route="/register" x-template="/pages/member/register" x-handler="isKodePesantrenSet"></template>
+            <template x-route="/delete" x-template="/pages/member/profile_delete" x-handler="[isKodePesantrenSet,isLoggedIn]"></template>
             <template x-route="/register/:token" x-template="/pages/member/register_confirm" x-handler="isKodePesantrenSet"></template>
             <template x-route="/reset_password" x-template="/pages/member/reset_password" x-handler="isKodePesantrenSet"></template>
             <template x-route="/page/:slug" x-template="/pages/member/page"></template>

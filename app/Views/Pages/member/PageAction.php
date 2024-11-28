@@ -40,7 +40,6 @@ class PageAction extends FrontAction {
 		if($settingQuery)
 			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
 
-		dd($settingQuery);
 		return ['tarbiyyaSetting' => $settingQuery];
 	}
 
