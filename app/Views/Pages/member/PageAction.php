@@ -40,6 +40,7 @@ class PageAction extends FrontAction {
 		if($settingQuery)
 			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
 
+		dd($settingQuery);
 		return ['tarbiyyaSetting' => $settingQuery];
 	}
 
@@ -84,8 +85,8 @@ class PageAction extends FrontAction {
 		}
 			
 		try {
-			$key = config('AuthJWT')->keys['default'][0]['secret'];
-			$decodedToken = JWT::decode($jwt, new Key(config('AuthJWT')->keys['default'][0]['secret'], 'HS256'));
+			$key = config('App')->jwtKey['secret'];
+			$decodedToken = JWT::decode($jwt, new Key($key, 'HS256'));
 		} catch (\Exception $e){
 			$this->response->setStatusCode(401, 'Authorization token not found')->send();
 			exit;

@@ -7,6 +7,7 @@
     <div id="app" x-data="member()">
         <div class="page-content">
             <template x-route="/" x-template.preload="/pages/member/home" x-handler="isLoggedIn"></template>
+            <template x-route="/offline" x-template.preload="/pages/member/offline"></template>
             <template x-route="/intro" x-template.preload="/pages/member/intro"></template>
             <template x-route="/kodepesantren" x-template.preload="/pages/member/kodepesantren"></template>
             <template x-route="/login" x-template.preload="/pages/member/login" x-handler="isKodePesantrenSet"></template>
