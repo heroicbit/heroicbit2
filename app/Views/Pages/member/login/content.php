@@ -1,4 +1,4 @@
-<div id="template-container" x-data="member_login()">
+<div id="member-login" x-data="member_login()">
 
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
@@ -15,7 +15,7 @@
                 <div>
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
-                            <label for="identity">Email/WhatsApp</label>
+                            <label for="identity">WhatsApp/Email</label>
                             <input type="text" class="form-control" id="identity" x-model="data.username">
                         </div>
                     </div>
@@ -33,7 +33,7 @@
                     <div class="text-start mt-2">
                         <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2">MASUK</button>
                         <hr>
-                        <a href="/register" class="btn btn-outline-primary btn-block btn-lg mb-2">REGISTRASI</a>
+                        <a href="/register" class="btn btn-outline-primary btn-block btn-lg mb-2">DAFTAR</a>
                         <div class="d-flex justify-content-between mb-2">
                             <div x-show="!forceKodePesantren"><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
                             <div><a href="page-forgot-password.html">Lupa Kata Sandi?</a></div>
@@ -45,4 +45,12 @@
     </div>
     <!-- * App Capsule -->
 
+    <div id="toast-login-error" 
+        class="toast-box toast-bottom bg-danger" 
+        :class="errorMessage ? 'show' : ''">
+        <div class="in">
+            <div class="text" x-text="errorMessage"></div>
+        </div>
+        <button type="button" class="btn btn-sm btn-text-light" x-on:click="errorMessage = false">OK</button>
+    </div>
 </div>
