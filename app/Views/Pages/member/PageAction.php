@@ -33,7 +33,7 @@ class PageAction extends FrontAction {
 		$db = $this->initDBPesantren();
 
 		$settingQuery = $db->table('mein_options')
-							->where('option_group', 'tarbiyya')
+							->whereIn('option_group', ['site','tarbiyya'])
 							->get()
 							->getResultArray();
 		
