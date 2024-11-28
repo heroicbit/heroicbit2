@@ -193,6 +193,7 @@ class App extends BaseConfig
             if(file_exists('../writable/custom_domain/'.$domain)){
                 // Set base URL with SERVER_NAME if found
                 $this->baseURL = 'https://'.$domain.'/';
+                $_SERVER['SITENAME'] = file_get_contents('../writable/custom_domain/'.$domain);
             } else {
                 exit("Domain not found.");
             }

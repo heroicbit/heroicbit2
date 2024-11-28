@@ -9,9 +9,9 @@
     <meta name="theme-color" content="#05b2c5">
     <meta name="description" content="Tarbiyya adalah aplikasi managemen informasi pesantren dan menjadi kanal informasi bagi wali santri.">
     <meta name="keywords" content="tarbiyya, aplikasi pesantren, aplikasi wali santri, aplikasi pesantren persis, persatuan islam" />
-    <link rel="icon" type="image/png" href="<?= $themeURL ?>assets/img/icon/72x72.png" sizes="72x72">
-    <link rel="apple-touch-icon" sizes="192x192" href="<?= $themeURL ?>assets/img/icon/192x192.png">
-    <link rel="manifest" href="/tarbiyya_manifest.json">
+    <link rel="icon" type="image/png" sizes="72x72" href="<?= $themeURL ?>assets/img/icon/logo-<?= $_SERVER['SITENAME'] ?? 'tarbiyya' ?>/72x72.png">
+    <link rel="apple-touch-icon" sizes="192x192" href="<?= $themeURL ?>assets/img/icon/logo-<?= $_SERVER['SITENAME'] ?? 'tarbiyya' ?>/192x192.png">
+    <link rel="manifest" href="/<?= $_SERVER['SITENAME'] ?? 'tarbiyya' ?>_manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
     <link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
