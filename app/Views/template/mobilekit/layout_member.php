@@ -36,5 +36,18 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
     <script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
     <script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>
+
+	<script>
+		// Check that service workers are supported
+		if ('serviceWorker' in navigator) {
+			// Use the window load event to keep the page load performant
+			window.addEventListener('load', () => {
+				let serviceWorkerName = document.querySelector('#serviceWorkerName').dataset.name;
+				navigator.serviceWorker.register(`/sw.js`);
+			});
+		} else {
+			console.debug('Service-worker not supported');
+		}
+	</script>
 </body>
 </html>
