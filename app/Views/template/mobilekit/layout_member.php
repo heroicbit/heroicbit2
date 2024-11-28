@@ -42,11 +42,11 @@
 		if ('serviceWorker' in navigator) {
 			// Use the window load event to keep the page load performant
 			window.addEventListener('load', () => {
-				let serviceWorkerName = document.querySelector('#serviceWorkerName').dataset.name;
 				navigator.serviceWorker.register(`/sw.js`);
+                window.console.log('Service-worker registered');
 			});
 		} else {
-			console.debug('Service-worker not supported');
+			window.console.debug('Service-worker not supported');
 		}
 	</script>
 </body>
