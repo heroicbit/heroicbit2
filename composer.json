@@ -16,7 +16,6 @@
         "ext-mbstring": "*",
         "codeigniter4/framework": "^4.5",
         "codeigniter4/settings": "^2.2",
-        "codeigniter4/shield": "^1.0",
         "firebase/php-jwt": "^6.10",
         "laminas/laminas-escaper": "^2.9",
         "symfony/yaml": "^6.4"

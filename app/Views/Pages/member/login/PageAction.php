@@ -53,7 +53,7 @@ class PageAction extends MemberPageAction {
                     'email' => $found->email,
                     'timestamp' => time()
                 ];
-                $key = config('AuthJWT')->keys['default'][0]['secret'];
+                $key = config('App')->jwtKey['secret'];
                 $jwt = JWT::encode($userSession, $key, 'HS256');
             }
         }

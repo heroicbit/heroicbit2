@@ -1,0 +1,57 @@
+{
+  "name": "Tarbiyya",
+  "theme_color": "#05b2c5",
+  "background_color": "#05b2c5",
+  "short_name": "Tarbiyya",
+  "id": "https://app.tarbiyya.id",
+  "start_url": "https://app.tarbiyya.id",
+  "scope": "https://app.tarbiyya.id",
+  "display": "standalone",
+  "orientation": "portrait",
+  "dir": "ltr",
+  "lang": "id",
+  "description": "Tarbiyya adalah aplikasi manajemen informasi yang dirancang khusus untuk pesantren, menghadirkan kemudahan dalam mengelola dan menyampaikan informasi penting secara langsung kepada wali santri. Dengan Tarbiyya, pesantren dan wali santri dapat terhubung dengan lebih baik, transparan, dan efisien, menciptakan pengalaman pendidikan yang lebih kolaboratif dan modern.",
+  "categories": [
+    "education"
+  ],
+  "icons": [
+    {
+      "src": "/mobilekit/assets/img/icon/192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/mobilekit/assets/img/icon/512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ],
+  "screenshots" : [
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-1.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-2.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-3.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    },
+    {
+      "src":  "/mobilekit/assets/img/screenshots/scr-4.png",
+      "sizes": "425x855",
+      "type": "image/png",
+      "platform": "narrow"
+    }
+  ]
+}

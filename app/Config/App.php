@@ -175,6 +175,15 @@ class App extends BaseConfig
      */
     public bool $CSPEnabled = false;
 
+    // JWT Keys
+    public array $jwtKey = [
+        'kid' => '',      // Key ID. Optional if you have only one key.
+        'alg' => 'HS256', // algorithm.
+        // Set secret random string. Needs at least 256 bits for HS256 algorithm.
+        // E.g., $ php -r 'echo base64_encode(random_bytes(32));'
+        'secret' => 'A8xl9FX2/M77KUnLlrt7mWt4gLFM+6ZbPzG6takiSTU=',
+    ];
+
     public function __construct()
     {
         // check SERVER_NAME in writable/custom_domain
