@@ -5,30 +5,34 @@ window.member_login = function () {
     showPwd: false,
     forceKodePesantren: false,
     errorMessage: null,
-    data: [],
+    data: {
+      username: "",
+      password: "",
+      logo: "",
+      sitename: "",
+    },
+    sanboxLogin: {},
     init() {
       if (localStorage.getItem("intro") != 1) {
         window.PineconeRouter.context.navigate("/intro");
       }
 
+      // Place sandbox login if set
+      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login);
+      window.console.log(this.sandboxLogin);
+      if(Object.keys(this.sandboxLogin).length > 0){
+        this.data.username = this.sandboxLogin.username;
+        this.data.password = this.sandboxLogin.password;
+      }
+      
       document.title = this.title;
       Alpine.store("member").currentPage = "login";
       Alpine.store("member").showBottomMenu = false;
 
-      this.forceKodePesantren = localStorage.getItem("forcekodepesantren");
+      this.data.logo = Alpine.store("member").tarbiyyaSetting.auth_logo;
+      this.data.sitename = Alpine.store("member").tarbiyyaSetting.site_title;
 
-      if (cachePageData["member/login"]) {
-        this.data = cachePageData["member/login"];
-      } else {
-        fetchPageData("pages/member/login", {
-          headers: {
-            "Pesantrenku-ID": localStorage.getItem("kodepesantren"),
-          },
-        }).then((data) => {
-          cachePageData["member/login"] = data;
-          this.data = data;
-        });
-      }
+      this.forceKodePesantren = localStorage.getItem("forcekodepesantren");
     },
 
     login() {
