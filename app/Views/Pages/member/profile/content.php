@@ -30,7 +30,7 @@
 
                     <div class="text-center">
                         <ul class="listview image-listview flush transparent">
-                            <li>
+                            <!-- <li>
                                 <a href="/profile_edit" class="item">
                                     <i class="fs-4 me-2 bi bi-pencil text-primary"></i>
                                     <span>Edit Profil</span>
@@ -42,7 +42,7 @@
                                     <span>Ganti Password</span>
                                 </a>
                             </li>
-                            <!-- <li>
+                            <li>
                                 <a href="/invoice" class="item">
                                     <i class="bi bi-receipt fs-4 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>
