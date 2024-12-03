@@ -21,7 +21,7 @@ window.member_intro = function(){
         },
         gotoLogin(){
             localStorage.setItem('intro', 1)
-            window.PineconeRouter.context.navigate('/login')
+            window.location.href = '/member/kodepesantren'
         }
     }
 }

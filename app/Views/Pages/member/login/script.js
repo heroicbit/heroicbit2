@@ -12,13 +12,14 @@ window.member_login = function () {
       sitename: "",
     },
     sanboxLogin: {},
+    
     init() {
       if (localStorage.getItem("intro") != 1) {
         window.PineconeRouter.context.navigate("/intro");
       }
 
       // Place sandbox login if set
-      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login);
+      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ?? "{}");
       window.console.log(this.sandboxLogin);
       if(Object.keys(this.sandboxLogin).length > 0){
         this.data.username = this.sandboxLogin.username;

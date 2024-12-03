@@ -28,54 +28,39 @@ document.addEventListener('alpine:init', () => {
         tarbiyyaSetting: {}
     })
     
-    Alpine.data('member', () => ({
-        init(){
-            document.title = this.title;
-            Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
-            Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
+    window.member = function(){
+        return {
+            init(){
+                document.title = this.title;
+                Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+                Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
 
-            if(Alpine.store('member').kodePesantren) {
-                if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
-                    fetchPageData('pages/member', {
-                        headers: {
-                            'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                            'Pesantrenku-ID': localStorage.getItem('kodepesantren')
-                        }
-                    }).then(data => {
-                        Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting
-                    })
+                if(Alpine.store('member').kodePesantren) {
+                    if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
+                        fetchPageData('pages/member', {
+                            headers: {
+                                'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
+                                'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                            }
+                        }).then(data => {
+                            Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting
+                        })
+                    }
                 }
+            },
+            
+            // Check kode pesantren
+            isKodePesantrenSet(context){
+                if(Alpine.store('member').kodePesantren == null) return context.redirect('/kodepesantren')
+            },
+
+            // Check login session, dipanggil oleh x-handler template yang meemerlukan session
+            isLoggedIn(context){
+                if(Alpine.store('member').sessionToken == null) return context.redirect('/login')
             }
-        },
-        
-        // Check kode pesantren
-        isKodePesantrenSet(context){
-            if(Alpine.store('member').kodePesantren == null) return context.redirect('/kodepesantren')
-        },
-
-        // Check login session, dipanggil oleh x-handler template yang meemerlukan session
-        isLoggedIn(context){
-            if(Alpine.store('member').sessionToken == null) return context.redirect('/login')
         }
-    }))
+    }
 })
-
-// Fungsi untuk set aktif current bottommenu 
-// window.updateActiveBottomMenu = function() {
-//     let hash = window.location.hash;
-//     let segment = hash.replace(/^#\/?/, '');
-
-//     // Menghapus class 'active' dari semua menu
-//     let menus = document.querySelectorAll('[id^="bottommenu-"]');
-//     menus.forEach(menu => menu.classList.remove('active'));
-
-//     // Menambahkan class 'active' ke menu yang sesuai dengan segmen
-//     if(segment == '') segment = 'member';
-//     let activeMenu = document.getElementById('bottommenu-' + segment);
-//     if (activeMenu) {
-//         activeMenu.classList.add('active');
-//     }
-// }
 
 //****************************************************************** */
 // Animated header style on scroll
@@ -97,7 +82,6 @@ window.openModal = null;
 window.historyStateAdded = false;
 
 document.addEventListener('pinecone-end', () => {
-    updateActiveBottomMenu();
     var appHeader = document.querySelector(".appHeader.scrolled");
     if (document.body.contains(appHeader)) {
         animatedScroll();
