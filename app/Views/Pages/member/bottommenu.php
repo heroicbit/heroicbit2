@@ -11,12 +11,12 @@
             <strong>Kabar</strong>
         </div>
     </a>
-    <a href="/videos" id="bottommenu-member" class="item">
+    <!-- <a href="/videos" id="bottommenu-member" class="item">
         <div class="col">
         <img src="<?= $themeURL ?>assets/img/icon/video.png" style="width:28px">
             <strong>Video</strong>
         </div>
-    </a>
+    </a> -->
     <!-- <a href="/tagihan" id="bottommenu-member" class="item">
         <div class="col">
         <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="width:28px">
