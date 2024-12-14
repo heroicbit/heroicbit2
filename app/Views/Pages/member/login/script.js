@@ -20,7 +20,6 @@ window.member_login = function () {
 
       // Place sandbox login if set
       this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ?? "{}");
-      window.console.log(this.sandboxLogin);
       if(Object.keys(this.sandboxLogin).length > 0){
         this.data.username = this.sandboxLogin.username;
         this.data.password = this.sandboxLogin.password;

@@ -25,7 +25,7 @@ document.addEventListener('alpine:init', () => {
         showBottomMenu: true,
         sessionToken: null,
         kodePesantren: null,
-        tarbiyyaSetting: {}
+        tarbiyyaSetting: { }
     })
     
     window.member = function(){
