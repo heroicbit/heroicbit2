@@ -4,7 +4,7 @@
     <div id="appCapsule" class="shadow pt-5">
         <div class="login-form mt-1">
             <div class="section">
-                <img src="<?= $themeURL ?>assets/img/icon/384x384.png" alt="image" class="form-image">
+                <img src="<?= $themeURL ?>assets/img/icon/192x192.png" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
                 <h1>Selamat Datang</h1>
