@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1, maximum-scale=1, viewport-fit=cover" />
     <meta name="mobile-web-app-capable" content="yes" />
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <meta name="theme-color" content="#05b2c5">
+    <meta name="theme-color" content="#3BC0CF">
     <meta name="description" content="Tarbiyya adalah aplikasi managemen informasi pesantren dan menjadi kanal informasi bagi wali santri.">
     <meta name="keywords" content="tarbiyya, aplikasi pesantren, aplikasi wali santri, aplikasi pesantren persis, persatuan islam" />
     <link rel="icon" type="image/png" sizes="72x72" href="<?= $themeURL ?>assets/img/icon/logo-<?= $_SERVER['SITENAME'] ?? 'tarbiyya' ?>/72x72.png">
