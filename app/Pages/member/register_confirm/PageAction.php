@@ -1,0 +1,123 @@
+<?php namespace App\Views\Pages\member\register_confirm;
+
+use App\Views\Pages\member\PageAction as MemberPageAction;
+use Firebase\JWT\JWT;
+
+class PageAction extends MemberPageAction {
+
+    public function supply()
+    {
+        
+    }
+    
+    public function process()
+    {
+        $request = service('request');
+
+        $token = $request->getPost('token');
+        $otp = $request->getPost('otp');
+        $id = $request->getPost('id');
+
+        if($request->getGet('m') == 'resend') {
+            $this->resendOTP($id, $token);
+        }
+
+        // Get database pesantren
+        $db = $this->initDBPesantren();
+
+        // Get user
+        $query = "SELECT otp, token, email FROM mein_users WHERE id = :id:";
+        $user = $db->query($query, ['id' => $id])->getRow();
+        if($user?->otp != $otp || $user?->token != $token) {
+            echo json_encode([
+                'success' => 0, 'message' => 'Kode OTP yang anda masukkan salah.'
+            ]);
+            die;
+        } else {
+            // Activate user status
+            $query = "UPDATE mein_users SET status = 'active' WHERE id = :id:";
+            $db->query($query, ['id' => $id]);
+
+            // Create JWT
+            $userSession = [
+                'logged_in' => true,
+                'user_id' => $id,
+                'email' => $user->email,
+                'timestamp' => time()
+            ];
+            $key = config('App')->jwtKey['secret'];
+            $jwt = JWT::encode($userSession, $key, 'HS256');
+
+            echo json_encode([
+                'success' => 1, 'jwt' => $jwt
+            ]);
+            die;
+        }
+    }
+
+    private function resendOTP($id, $token) 
+    {
+        $db = $this->initDBPesantren();
+        $query = "SELECT name, phone, token FROM mein_users WHERE id = :id:";
+        $user = $db->query($query, ['id' => $id])->getRow();
+        if(strcmp($user?->token, $token) !== 0) {
+            header('Content-Type', 'application/json');
+            echo json_encode([
+                'success' => 0, 'message' => 'Token invalid.'
+            ]);
+            die;
+        }
+        
+        // Generate new OTP and token
+        helper('text');
+        $otp = random_string('numeric', 6);
+        $token = sha1($otp);
+
+        // Update new otp and token to database
+        $query = "UPDATE mein_users SET otp = :otp:, token = :token: WHERE id = :id:";
+        $db->query($query, ['otp' => $otp, 'token' => $token, 'id' => $id]);
+
+        // Send OTP
+        $appSetting = $db->table('mein_options')
+                          ->where('option_name', 'app_title')
+                          ->where('option_group', 'tarbiyya')
+                          ->get()->getRowArray();
+        $namaAplikasi = $appSetting['option_value'] ?? null; 
+
+        $message = "Halo {$user->name},\n            
+Terima kasih telah mendaftar di aplikasi {$namaAplikasi}
+Untuk melanjutkan proses pendaftaran, silahkan masukan kode registrasi berikut ini ke dalam aplikasi:\n
+*{$otp}*\n
+Salam,";
+
+        $curl = curl_init();
+
+        curl_setopt_array($curl, [
+            CURLOPT_URL => 'https://app.saungwa.com/api/create-message',
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_ENCODING => '',
+            CURLOPT_MAXREDIRS => 10,
+            CURLOPT_TIMEOUT => 0,
+            CURLOPT_FOLLOWLOCATION => true,
+            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST => 'POST',
+            CURLOPT_POSTFIELDS => array(
+            'appkey' => '1e946b6b-e8ab-4c6a-ac7b-b2ae4204f095',
+            'authkey' => 'Bl25APBU3Tcahyo9Rd0ZcCbloR4Gj1i6Ll5lRq6Y3J4DikKUS4',
+            'to' => $user->phone,
+            'message' => $message,
+            'sandbox' => 'false'
+            ),
+        ]);
+
+        $response = curl_exec($curl);
+
+        curl_close($curl);
+
+        header('Content-Type', 'application/json');
+        echo json_encode([
+            'success' => 1, 'message' => 'Kode OTP berhasil dikirim ulang.', 'token' => $token, 'id' => $id
+        ]);
+        die;
+    }
+}
