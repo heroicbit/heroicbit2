@@ -19,16 +19,16 @@
                 <div id="appCapsule">
 
                     <div class="section mt-2">
-                        <div class="page-content p-0 pb-5">
+                        <div class="page-content p-0 pb-5 text-center">
                             <img src="<?= $themeURL ?>assets/img/icon/offline.png" alt="offline-robot" class="w-100">
+
+                            <a class="btn btn-sm btn-primary" href="<?= site_url(); ?>"><span class="bi bi-arrow-clockwise me-1"></span> Muat Ulang</a>
                         </div>
                     </div>
                 </div>
                 <!-- * App Capsule -->
             </div>
         </div>
-
-        <?= $this->include('member/bottommenu') ?>
     </div>
 
 <?php $this->endSection() ?>
