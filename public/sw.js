@@ -28,15 +28,15 @@ workbox.routing.registerRoute(
 // dan punya penampilan data dinamis yang sudah menggunakan ajax secara penuh
 // Ketika pun ada update, tinggal raise revision number
 workbox.precaching.precacheAndRoute([
-  {url: '/member/offline', revision: '1' },
-  {url: '/mobilekit/assets/img/icon/offline.png', revision: '1' },
+  {url: '/member/offline', revision: '2' },
+  {url: '/mobilekit/assets/img/icon/offline.png', revision: '2' },
 ]);
 
 // Handle request yang ga ada cachenya dengan halaman offline mode
 workbox.routing.setCatchHandler(async ({event}) => {
   switch (event.request.destination) {
     case 'document':
-      return workbox.precaching.matchPrecache('/offline');
+      return workbox.precaching.matchPrecache('/member/offline');
     break;
 
     default:
