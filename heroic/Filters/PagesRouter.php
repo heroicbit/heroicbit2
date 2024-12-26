@@ -13,7 +13,15 @@ class PagesRouter implements FilterInterface
     {
         // Ambil URI dari request
         $uri = strtolower($request->getPath());
-        $uri = trim($uri, '/');
+        $uriRoute = $uri = trim($uri, '/');
+        
+        // Set default page for root uri
+        if(empty($uri))
+        {
+            $uri = config('App')->defaultPage;
+            $uriRoute = '/';
+        }
+
         $uriSegments = explode('/', $uri);
 
         // Cek apakah segment pertama adalah /api
@@ -41,7 +49,7 @@ class PagesRouter implements FilterInterface
             }
             array_pop($uriSegments);
         }
-
+        
         // Jika tidak ada yang cocok, kembalikan 404
         if(! $found) throw \CodeIgniter\Exceptions\PageNotFoundException::forPageNotFound();
         
@@ -56,22 +64,21 @@ class PagesRouter implements FilterInterface
                 
                 // Add route resource for the controller
                 $routeCollection = service('routes');
-
+                
                 // HACK, inject new property to route collection
                 $metaFile = APPPATH . 'Pages/' . $uri . '/meta.yml';
                 $routeCollection->pageData = Yaml::parseFile($metaFile); 
                 $routeCollection->currentURI = $uri;
-
+                
                 if($isApi) {
                     // Route to resource controller
-                    $routeCollection->resource('api/' . $uri, ['controller' => $controllerNamespace]);
+                    $routeCollection->resource('api/' . $uriRoute, ['controller' => $controllerNamespace]);
                 } else {
                     // Route to base controller
-                    $routeCollection->get($uri, $controllerNamespace . '::index');
-                    $routeCollection->get($uri . '/(:any)', $controllerNamespace . '::detail/$1');
-                    $routeCollection->post($uri, $controllerNamespace . '::process');
+                    $routeCollection->get($uriRoute, $controllerNamespace . '::index');
+                    $routeCollection->get($uriRoute . '/(:any)', $controllerNamespace . '::detail/$1');
+                    $routeCollection->post($uriRoute, $controllerNamespace . '::process');
                 }
-                // dd($routeCollection->getRoutes());
 
                 return $routeCollection;
             }

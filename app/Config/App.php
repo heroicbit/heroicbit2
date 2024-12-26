@@ -200,6 +200,9 @@ class App extends BaseConfig
      */
     public bool $CSPEnabled = false;
 
+    // Default Page for root
+    public string $defaultPage = 'member';
+    
     // JWT Keys
     public array $jwtKey = [
         'kid' => '',      // Key ID. Optional if you have only one key.
@@ -209,6 +212,7 @@ class App extends BaseConfig
         'secret' => 'A8xl9FX2/M77KUnLlrt7mWt4gLFM+6ZbPzG6takiSTU=',
     ];
 
+    // Set up Base URL for multisite
     public function __construct()
     {
         // check SERVER_NAME in writable/custom_domain
