@@ -12,7 +12,7 @@ if (!function_exists('pageView')) {
         
         // Create new view instance with custom view path
         $renderer = new \CodeIgniter\View\View($config, $pageViewPath, AppServices::get('locator'), CI_DEBUG, AppServices::get('logger'));
-
+        
         if (array_key_exists('saveData', $options)) {
             $saveData = (bool) $options['saveData'];
             unset($options['saveData']);

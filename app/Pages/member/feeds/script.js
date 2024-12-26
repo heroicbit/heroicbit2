@@ -33,7 +33,7 @@ window.member_feeds = function(){
         },
         loadFeeds() {
             console.log('Fetching data...');
-            fetchPageData(`pages/member/feeds?page=${this.nextPage}`, {
+            fetchPageData(`api/member/feeds?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')
@@ -54,7 +54,7 @@ window.member_feeds = function(){
             })
         },
         showDetail(index){
-            window.PineconeRouter.context.navigate(`/feed/${this.feeds[index].id}`);
+            window.PineconeRouter.context.navigate(`/feeds/${this.feeds[index].id}`);
         },
         stripIntro(wordNum, sentence, index){
             let words = sentence.split(` `);

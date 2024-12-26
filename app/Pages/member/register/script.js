@@ -9,6 +9,8 @@ window.member_register = function(){
             whatsapp: '',
             password: '',
             repeat_password: '',
+            logo: '',
+            sitename: '',
         },
         errors: {
             fullname: '',
@@ -21,18 +23,8 @@ window.member_register = function(){
             Alpine.store('member').currentPage = 'register'
             Alpine.store('member').showBottomMenu = false
 
-            if(cachePageData['member/register']){
-                this.data = cachePageData['member/register']
-              } else {   
-                fetchPageData('pages/member/register', {
-                  headers: {
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
-                  }
-                }).then(data => {
-                  cachePageData['member/register'] = data
-                  this.data = data
-                })
-              }
+            this.data.logo = Alpine.store("member").tarbiyyaSetting.auth_logo;
+            this.data.sitename = Alpine.store("member").tarbiyyaSetting.site_title;
         },
         register() {
             this.registering = true;
@@ -50,7 +42,7 @@ window.member_register = function(){
             formData.append('whatsapp', this.data.whatsapp ?? '');
             formData.append('password', this.data.password ?? '');
             formData.append('repeat_password', this.data.repeat_password ?? '');
-            axios.post('/pages/member/register', formData, {
+            axios.post('/api/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')

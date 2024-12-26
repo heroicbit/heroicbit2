@@ -25,7 +25,7 @@ window.member_profile_edit = function(){
             if(cachePageData['member/register']){
                 this.data = cachePageData['member/register']
               } else {   
-                fetchPageData('pages/member/register', {
+                fetchPageData('api/member/register', {
                   headers: {
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')
                   }

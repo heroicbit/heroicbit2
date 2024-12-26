@@ -13,21 +13,27 @@ class PagesRouter implements FilterInterface
     {
         // Ambil URI dari request
         $uri = strtolower($request->getPath());
-        $uriRoute = $uri = trim($uri, '/');
+        $uriPage = $uri = trim($uri, '/');
         
         // Set default page for root uri
         if(empty($uri))
         {
-            $uri = config('App')->defaultPage;
-            $uriRoute = '/';
+            $uriPage = config('App')->defaultPage;
+            $uri = '/';
         }
 
-        $uriSegments = explode('/', $uri);
+        $uriSegments = explode('/', $uriPage);
 
         // Cek apakah segment pertama adalah /api
         $isApi = false;
+        $isAjax = false;
         $controllerName = 'PageController';
-        if ($uriSegments[0] === 'api') 
+        if ($uriSegments[0] === 'ajax') 
+        {
+            array_shift($uriSegments);
+            $isAjax = true;
+        }
+        else if ($uriSegments[0] === 'api') 
         {
             array_shift($uriSegments);
             $controllerName = 'APIController';
@@ -44,7 +50,7 @@ class PagesRouter implements FilterInterface
             $folderPath = $basePath . '/' . str_replace('/', DIRECTORY_SEPARATOR, implode('/', $uriSegments));
             if (is_dir($folderPath)) {
                 $found = true;
-                $uri = implode('/', $uriSegments);
+                $uriPage = implode('/', $uriSegments);
                 break;
             }
             array_pop($uriSegments);
@@ -57,27 +63,35 @@ class PagesRouter implements FilterInterface
         if (is_dir($folderPath)) {
             // Pastikan ada file controller 
             
-            $controllerPath = $folderPath . '/' . $controllerName . '.php';
-            if (file_exists($controllerPath)) {
+            if (file_exists($folderPath . '/' . $controllerName . '.php')) {
                 // Ubah namespace dan jalankan controller
-                $controllerNamespace = '\\App\\Pages\\' . str_replace('/', '\\', $uri) . '\\' . $controllerName;
+                $controllerNamespace = '\\App\\Pages\\' . str_replace('/', '\\', $uriPage) . '\\' . $controllerName;
                 
                 // Add route resource for the controller
                 $routeCollection = service('routes');
                 
                 // HACK, inject new property to route collection
-                $metaFile = APPPATH . 'Pages/' . $uri . '/meta.yml';
-                $routeCollection->pageData = Yaml::parseFile($metaFile); 
-                $routeCollection->currentURI = $uri;
+                $routeCollection->currentURI = $uriPage;
                 
-                if($isApi) {
-                    // Route to resource controller
-                    $routeCollection->resource('api/' . $uriRoute, ['controller' => $controllerNamespace]);
+                // dd($uriSegments, $uri, $isApi, $isAjax, $uriPage, $controllerNamespace);
+                // Set route for default page
+                if($uri == '/')
+                    $routeCollection->get('/', $controllerNamespace . '::index');
+                
+                // Route to resource controller
+                else if($isApi) {
+                    $routeCollection->resource('api/' . $uriPage, ['controller' => $controllerNamespace]);
+                    
+                    // Route for uri with prefix ajax/
+                } else if($isAjax) {
+                    $routeCollection->get('ajax/' . $uriPage, $controllerNamespace . '::supply');
+                    // dd($uriSegments, $uri, $isApi, $isAjax, $uriPage, $controllerNamespace);
+
+                // Route to base controller
                 } else {
-                    // Route to base controller
-                    $routeCollection->get($uriRoute, $controllerNamespace . '::index');
-                    $routeCollection->get($uriRoute . '/(:any)', $controllerNamespace . '::detail/$1');
-                    $routeCollection->post($uriRoute, $controllerNamespace . '::process');
+                    $routeCollection->get($uriPage . '(:any)', $controllerNamespace . '::index$1');
+                    $routeCollection->post($uriPage, $controllerNamespace . '::process');
+                    // dd($uriSegments, $uri, $isApi, $isAjax, $uriPage);
                 }
 
                 return $routeCollection;

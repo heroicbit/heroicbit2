@@ -12,7 +12,7 @@ window.member_pengumuman = function(){
             if(cachePageData['member/pengumuman']){
                 this.data = cachePageData['member/pengumuman']
             } else {
-                fetchPageData('pages/member/pengumuman', {
+                fetchPageData('api/member/pengumuman', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,

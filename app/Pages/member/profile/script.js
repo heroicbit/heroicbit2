@@ -4,6 +4,8 @@ window.member_profile = function(){
         title: "Profile",
         data: [],
         init(){
+            window.scrollTo({top:0, behavior:'auto'});
+            
             document.title = this.title;
             Alpine.store('member').currentPage = 'profile'
             Alpine.store('member').showBottomMenu = true
@@ -11,7 +13,7 @@ window.member_profile = function(){
             if(cachePageData['member/profile']){
                 this.data = cachePageData['member/profile']
             } else {   
-                fetchPageData('/pages/member/profile', {
+                fetchPageData('/api/member/profile', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,

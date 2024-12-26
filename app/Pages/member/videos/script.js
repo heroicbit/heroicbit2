@@ -33,7 +33,7 @@ window.member_videos = function(){
         },
         loadVideos() {
             console.log('Fetching data...');
-            fetchPageData(`pages/member/videos?page=${this.nextPage}`, {
+            fetchPageData(`api/member/videos?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                     'Pesantrenku-ID': localStorage.getItem('kodepesantren')
@@ -54,7 +54,7 @@ window.member_videos = function(){
             })
         },
         showDetail(index){
-            window.PineconeRouter.context.navigate(`/video/${this.videos[index].id}`);
+            window.PineconeRouter.context.navigate(`/videos/${this.videos[index].id}`);
         },
         stripIntro(wordNum, sentence, index){
             let words = sentence.split(` `);

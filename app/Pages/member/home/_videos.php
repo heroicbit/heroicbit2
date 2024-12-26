@@ -27,7 +27,7 @@
             <div class="swiper-wrapper py-2">
                 <template x-for="article in data.videos">
                     <div class="swiper-slide" >
-                        <a :href="`/member/video/${ article.id }`">
+                        <a :href="`/member/videos/${ article.id }`">
                             <div>
                                 <div class="thumbnail-image thumbnail-image-rounded position-relative">
                                     <div class="icon-video">

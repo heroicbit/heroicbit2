@@ -4,7 +4,7 @@ const TerserPlugin = require('terser-webpack-plugin');
 
 // Mencari semua script.js di dalam Pages/
 function getAllScripts() {
-  const baseDir = path.resolve(__dirname, '../../app/Views/Pages');
+  const baseDir = path.resolve(__dirname, '../../app/Pages');
   const scripts = [];
 
   function readDirRecursive(directory) {

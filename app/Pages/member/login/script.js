@@ -43,7 +43,7 @@ window.member_login = function () {
       formData.append("username", this.data.username);
       formData.append("password", this.data.password);
       axios
-        .post("/pages/member/login", formData, {
+        .post("/member/login", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
             "Pesantrenku-ID": localStorage.getItem("kodepesantren"),

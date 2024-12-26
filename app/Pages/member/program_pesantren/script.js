@@ -12,7 +12,7 @@ window.member_program_pesantren = function(){
             if(cachePageData['member/program_pesantren']){
                 this.data = cachePageData['member/program_pesantren']
             } else {
-                fetchPageData('pages/member/program_pesantren', {
+                fetchPageData('api/member/program_pesantren', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,

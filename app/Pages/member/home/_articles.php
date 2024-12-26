@@ -26,7 +26,7 @@
             <div class="swiper-wrapper py-2">
                 <template x-for="article in data.posts">
                     <div class="swiper-slide">
-                        <a :href="`/member/feed/${ article.id }`">
+                        <a :href="`/member/feeds/${ article.id }`">
                             <div class="card card-hover rounded-4">
                                 <div class="thumbnail-image position-relative">
                                     <img :src="article.medias[0].url" :alt="article.title" class="card-img-top swiper-thumbnail-image rounded-top-4"/>
