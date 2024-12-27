@@ -72,7 +72,10 @@
                             </li>
                         </ul> -->
 
-                        <div class="listview-title mt-2">Aplikasi Tarbiyya</div>
+                        <div class="listview-title mt-2">
+                            Aplikasi Tarbiyya
+                            <span>v<?= $version; ?></span>
+                        </div>
                         <ul class="listview image-listview flush transparent">
                             <li>
                                 <a href="/page/about-app" class="item">
