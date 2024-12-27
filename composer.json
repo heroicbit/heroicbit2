@@ -54,7 +54,7 @@
     "autoload": {
         "psr-4": {
             "CodeIgniter\\": "system/",
-            "Heroic\\": "heroic/src/"
+            "Yllumi\\Ci4Pages\\": "heroic/src/"
         },
         "exclude-from-classmap": [
             "**/Database/Migrations/**"

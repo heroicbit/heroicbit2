@@ -2,7 +2,6 @@
 
 namespace Config;
 
-use Heroic\Filters\PagesRouter;
 use CodeIgniter\Config\Filters as BaseFilters;
 use CodeIgniter\Filters\Cors;
 use CodeIgniter\Filters\CSRF;
@@ -13,6 +12,7 @@ use CodeIgniter\Filters\InvalidChars;
 use CodeIgniter\Filters\PageCache;
 use CodeIgniter\Filters\PerformanceMetrics;
 use CodeIgniter\Filters\SecureHeaders;
+use Yllumi\Ci4Pages\Filters\PagesRouter;
 
 class Filters extends BaseFilters
 {

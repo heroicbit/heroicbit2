@@ -2,7 +2,7 @@
 
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Heroic\Controllers\BasePageController;
+use Yllumi\Ci4Pages\Controllers\BasePageController;
 use Psr\Log\LoggerInterface;
 
 class PageController extends BasePageController 
