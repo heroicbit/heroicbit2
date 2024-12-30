@@ -5,7 +5,7 @@ use Symfony\Component\Yaml\Yaml;
 
 class PageController extends MemberPageController {
 
-    public function supply()
+    public function get_ajax()
     {
         return pageView('member/program_pesantren/index', $this->data);
     }
