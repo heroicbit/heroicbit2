@@ -4,7 +4,7 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function supply()
+    public function get_ajax()
     {
         // check if servername is available in writable/custom_domain
         $domain = isset($_SERVER['HTTP_HOST']) ? $_SERVER['HTTP_HOST'] : $_SERVER['SERVER_NAME'];

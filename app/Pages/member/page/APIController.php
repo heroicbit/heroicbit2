@@ -4,7 +4,7 @@ use CodeIgniter\RESTful\ResourceController;
 
 class APIController extends ResourceController {
 
-    public function supply()
+    public function get_ajax()
     {
         return pageView('member/page/index', $this->data);
     }
