@@ -29,39 +29,4 @@ class PageController extends MemberPageController {
         return pageView('member/kodepesantren/index', $this->data);
     }
 
-    // This method handle GET request via AJAX
-	public function supplyx()
-	{
-		// Get database pesantren
-        $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = $Tarbiyya->initDBPesantren();
-
-		$settingQuery = $db->table('mein_options')
-							->whereIn('option_group', ['site','tarbiyya'])
-							->get()
-							->getResultArray();
-		
-		if($settingQuery)
-			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
-
-		return ['tarbiyyaSetting' => $settingQuery];
-	}
-    
-    public function process()
-    {
-        $kode = strtolower($this->request->getPost('kodepesantren'));
-
-        $Pesantren = model('Pesantren');
-        $found = $Pesantren->where('kode_pesantren', $kode)->first();
-        if($found) {
-            $Encrypter = service('encrypter');
-            $pesantren = bin2hex($Encrypter->encrypt($found['database']));
-
-            echo json_encode(['found' => 1, 'kode' => $kode, 'pesantrenID' => $pesantren, 'tarbiyyaSetting' => $settingQuery]);
-            die;
-        } else {
-            echo json_encode(['found' => 0]);
-            die;
-        }
-    }
 }

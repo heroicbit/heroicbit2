@@ -8,7 +8,7 @@
             </div>
             <div class="section mt-1">
                 <h2 class="mb-5" x-text="`Aplikasi ` + data.sitename"></h2>
-                <h3 class="my-3">Silakan masuk untuk melanjutkan</h3>
+                <p class="lead my-3">Silakan masuk untuk melanjutkan</p>
             </div>
 
             <div class="section mt-1">
