@@ -34,14 +34,21 @@ class PageController extends BasePageController
 		// Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
-		$bottommenu = $db->table('menus')
-						->where('slug', 'tarbiyya-bottommenu')
-						->where('status', 1)
-						->get()
-						->getRowArray();
-		$this->data['bottommenu'] = Yaml::parse($bottommenu['schema']);
+		if($db) {
+			$bottommenu = $db->table('menus')
+							->where('slug', 'tarbiyya-bottommenu')
+							->where('status', 1)
+							->get()
+							->getRowArray();
+			$this->data['bottommenu'] = Yaml::parse($bottommenu['schema']);
+		}
 
 		return pageView('member/index', $this->data);
+	}
+
+	public function get_logout()
+	{
+		$_SESSION = [];
 	}
 
 }

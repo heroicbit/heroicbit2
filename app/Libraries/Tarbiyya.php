@@ -16,8 +16,9 @@ class Tarbiyya {
         $headers = getallheaders();
         $kodePesantrenHashed = $headers['Pesantrenku-Id'] ?? $_SESSION['kodepesantren'] ?? $_GET['kodepesantren'] ?? null;
 
-		if(! $kodePesantrenHashed)
-			throw new \Exception('Pesantrenku-ID not set');
+		if(! $kodePesantrenHashed){
+			return false;
+		}
 
 		$Encrypter = service('encrypter');
 		$dbname = $Encrypter->decrypt(hex2bin($kodePesantrenHashed));
