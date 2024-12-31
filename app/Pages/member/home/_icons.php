@@ -140,6 +140,15 @@
                     </a>
                 </div>
                 <?php endif; ?>
+
+                <?php if(($settings['fitur_profile'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
+                    <a href="/profile">
+                        <img src="<?= $themeURL ?>assets/img/icon/user.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Profil</small>
+                    </a>
+                </div>
+                <?php endif; ?>
             </div>
 
             <div class="text-center mt-2">

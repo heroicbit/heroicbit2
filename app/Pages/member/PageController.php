@@ -4,6 +4,7 @@ use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
 use Yllumi\Ci4Pages\Controllers\BasePageController;
 use Psr\Log\LoggerInterface;
+use Symfony\Component\Yaml\Yaml;
 
 class PageController extends BasePageController 
 {
@@ -28,6 +29,17 @@ class PageController extends BasePageController
 	public function index()
 	{
 		$this->data['page_title'] = 'Beranda';
+
+		// Get bottom menu
+		// Get database pesantren
+        $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $db = $Tarbiyya->initDBPesantren();
+		$bottommenu = $db->table('menus')
+						->where('slug', 'tarbiyya-bottommenu')
+						->where('status', 1)
+						->get()
+						->getRowArray();
+		$this->data['bottommenu'] = Yaml::parse($bottommenu['schema']);
 
 		return pageView('member/index', $this->data);
 	}
