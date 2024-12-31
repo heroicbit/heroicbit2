@@ -18,9 +18,11 @@ window.member_login = function () {
         window.PineconeRouter.context.navigate("/intro");
       }
 
+      window.console.log(Alpine.store("member"));
+
       // Place sandbox login if set
-      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ?? "{}");
-      if(Object.keys(this.sandboxLogin).length > 0){
+      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ? Alpine.store("member").tarbiyyaSetting.sandbox_login : "{}");
+      if(this.sandboxLogin && Object.keys(this.sandboxLogin).length > 0){
         this.data.username = this.sandboxLogin.username;
         this.data.password = this.sandboxLogin.password;
       }

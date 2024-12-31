@@ -13,11 +13,11 @@ class PageController extends MemberPageController {
         $db = $Tarbiyya->initDBPesantren();
 
         // Get setting
-        $this->data['settings'] = $db->table('mein_options')
+        $settings = $db->table('mein_options')
             ->whereIn('option_group', ['site','tarbiyya'])
             ->get()->getResultArray();
 
-        dd($this->data['settings']);
+        $this->data['settings'] = array_combine(array_column($settings, 'option_name'), array_column($settings, 'option_value'));
             
         return pageView('member/home/index', $this->data);
     }

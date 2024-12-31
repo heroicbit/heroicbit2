@@ -7,6 +7,7 @@ use Psr\Log\LoggerInterface;
 
 class PageController extends BasePageController 
 {
+	public $session;
 	/**
      * @return void
      */
@@ -19,6 +20,8 @@ class PageController extends BasePageController
 		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
 		$this->data['title'] = service('settings')->get('Site.siteName');
 		$this->data['version'] = 1.21;
+
+		$this->session = service('session');
     }
 
 	// This method handle GET request

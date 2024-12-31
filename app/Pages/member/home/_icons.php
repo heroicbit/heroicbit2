@@ -1,119 +1,143 @@
 <div class="bg-success-2 rounded-bottom-4 pb-5">
-    <div class="container">
-        
-        <div class="card bg-white rounded-4 py-3 px-4 mb-4">
-            <div class="d-flex justify-content-center text-center mb-2">
-                <div style="width: 85px">
+    <style>
+        .shrink { height: 195px }
+    </style>
+
+    <div class="container">    
+        <div class="card bg-white rounded-4 py-3 px-4 mb-4 overflow-hidden" :class="showAllIcons ? '' : 'shrink'">
+            <div class="text-center mb-2 mx-auto" style="width:340px">
+                <?php if(($settings['fitur_profil_pesantren'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/page/profil-pesantren">
                         <img src="<?= $themeURL ?>assets/img/icon/profil-pesantren-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Profil Pesantren</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_program_pesantren'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/member/program_pesantren">
                         <img src="<?= $themeURL ?>assets/img/icon/program.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Program Pesantren</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_psb'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a :href="data.psb_url" target="_blank">
                         <img src="<?= $themeURL ?>assets/img/icon/psb-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">PSB</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_pengumuman'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/pengumuman">
                         <img src="<?= $themeURL ?>assets/img/icon/pengumuman-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Pengumuman</small>
                     </a>
                 </div>
-            </div>
+                <?php endif; ?>
 
-            <div class="d-flex justify-content-center text-center">
-                <div style="width: 85px">
+                <?php if(($settings['fitur_kabar'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/feeds">
                         <img src="<?= $themeURL ?>assets/img/icon/info-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kabar</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_video'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/videos">
                         <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Video</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_santri'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a href="/santri">
                         <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Santri</small>
                     </a>
                 </div>
-                <div style="width: 85px">
-                    <a class="opacity-50" x-show="showAllIcons" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Tagihan</small>
-                    </a>
-                    <a x-show="!showAllIcons" x-on:click="showAllIcons = true">
+                <?php endif; ?>
+
+                <div class="float-start" style="width:85px;height:90px" x-show="!showAllIcons" x-on:click="showAllIcons = true">
+                    <a>
                         <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Lainnya</small>
                     </a>
                 </div>
-            </div>
-            
-            <!-- Other Menus -->
-            <div x-show="showAllIcons" x-transition>
-            <div class="d-flex justify-content-center text-center mt-2">
-                <div style="width: 85px">
+
+                <?php if(($settings['fitur_tagihan'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
+                    <a class="opacity-50">
+                        <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Tagihan</small>
+                    </a>
+                </div>
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_agenda'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/agenda-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Agenda</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_rapor'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/rapor-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Rapor Digital</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_kajian'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/kajian-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kajian</small>
                     </a>
                 </div>
-                <div style="width: 85px">
-                    <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/fatwa-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Fatwa PERSIS</small>
-                    </a>
-                </div>
-            </div>
-            
-            <div class="d-flex justify-content-center text-center mt-2">
-                <div style="width: 85px">
-                    <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/risalah-sholat-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Risalah Sholat</small>
-                    </a>
-                </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_jadwal_sholat'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/jadwal-sholat-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Jadwal Sholat</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_hadits_arbain'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/hadits-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Hadits Arba'in</small>
                     </a>
                 </div>
-                <div style="width: 85px">
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_doa_zikir'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/doa-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Doa & Zikir</small>
                     </a>
                 </div>
+                <?php endif; ?>
             </div>
 
             <div class="text-center mt-2">

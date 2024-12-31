@@ -23,6 +23,9 @@ class PageController extends MemberPageController {
                 $this->data['found'] = 1;
                 $this->data['kode'] = $kode;
                 $this->data['pesantrenID'] = $pesantren;
+
+                // Save kodepesantren to session
+                $_SESSION['kodepesantren'] = $pesantren;
             }
         }
 
