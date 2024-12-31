@@ -31,7 +31,7 @@ window.member_profile_delete = function(){
             axios.post('/pages/member/profile_delete', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren'),
+                    'Pesantrenku-ID': getCookie("kodepesantren"),
                     'Authorization': 'Bearer ' + localStorage.getItem('heroic_token')
                 }
             }).then(response => {

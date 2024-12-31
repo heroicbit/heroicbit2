@@ -45,7 +45,7 @@ window.member_register = function(){
             axios.post('/api/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                 }
             }).then(response => {
                 if(response.data.success == 1){

@@ -14,7 +14,7 @@ class Tarbiyya {
 	{
 		// Get header kodepesantren
         $headers = getallheaders();
-        $kodePesantrenHashed = $headers['Pesantrenku-Id'] ?? $_SESSION['kodepesantren'] ?? $_GET['kodepesantren'] ?? null;
+        $kodePesantrenHashed = $headers['Pesantrenku-Id'] ?? $_SESSION['pesantrenID'] ?? $_GET['pesantrenID'] ?? null;
 
 		if(! $kodePesantrenHashed){
 			return false;

@@ -16,7 +16,7 @@ window.member_page = function(slug) {
                 fetchPageData(url, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                        'Pesantrenku-ID': getCookie("kodepesantren")
                     }
                 })
                 .then(data => {

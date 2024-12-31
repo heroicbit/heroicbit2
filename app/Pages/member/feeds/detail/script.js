@@ -16,7 +16,7 @@ window.member_feeds_detail = function(id){
                 fetchPageData(`api/member/feeds/detail/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                        'Pesantrenku-ID': getCookie("kodepesantren")
                     }
                 })
                 .then(data => {

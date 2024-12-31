@@ -36,7 +36,7 @@ window.member_videos = function(){
             fetchPageData(`api/member/videos?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                 }
             }).then(data => {
                 if(data.data.videos.length == 0){

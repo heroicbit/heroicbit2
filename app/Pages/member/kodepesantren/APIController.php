@@ -25,6 +25,9 @@ class APIController extends ResourceController {
             $Encrypter = service('encrypter');
             $pesantren = bin2hex($Encrypter->encrypt($found['database']));
 
+            // Save kodepesantren to session
+            $_SESSION['kodepesantren'] = $pesantren;
+
             return $this->respond(['found' => 1, 'kode' => $kode, 'pesantrenID' => $pesantren]);
         } else {
             return $this->respond(['found' => 0]);

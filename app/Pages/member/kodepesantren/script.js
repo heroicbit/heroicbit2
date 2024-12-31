@@ -36,7 +36,7 @@ window.member_kodepesantren = function(){
                 if(response.data.found == 1){
                     // Save kodepesantren to localstorage
                     localStorage.setItem('kodepesantren', response.data.pesantrenID)
-                    Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+                    Alpine.store('member').kodePesantren = getCookie("kodepesantren")
 
                     // Save kodepesantren to cookie without cookie expire
                     setCookie('kodepesantren', response.data.pesantrenID, 1000);
@@ -51,8 +51,11 @@ window.member_kodepesantren = function(){
 
         forceKodePesantren(pesantrenID){
             localStorage.setItem('forcekodepesantren', 1)
-            localStorage.setItem('kodepesantren', pesantrenID)
-            Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+            this.registerKodePesantren(pesantrenID)
+        },
+        
+        registerKodePesantren(pesantrenID){
+            Alpine.store('member').kodePesantren = getCookie("kodepesantren")
             window.PineconeRouter.context.navigate('/login')
         },
 

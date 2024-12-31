@@ -65,7 +65,7 @@ window.member_register_confirm = function(){
             axios.post('/member/register/confirm', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                 }
             }).then(response => {
                 if(response.data.success == 1){
@@ -90,7 +90,7 @@ window.member_register_confirm = function(){
             axios.post('/pages/member/register_confirm?m=resend', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                 }
             }).then(response => {
                 if(response.data.success == 1){

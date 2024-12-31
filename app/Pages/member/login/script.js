@@ -13,12 +13,13 @@ window.member_login = function () {
     },
     sanboxLogin: {},
     
+
     init() {
       if (localStorage.getItem("intro") != 1) {
         window.PineconeRouter.context.navigate("/intro");
+      } else if(Object.keys(Alpine.store("member").tarbiyyaSetting).length < 1){
+        window.PineconeRouter.context.navigate("/kodepesantren");
       }
-
-      window.console.log(Alpine.store("member"));
 
       // Place sandbox login if set
       this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ? Alpine.store("member").tarbiyyaSetting.sandbox_login : "{}");
@@ -48,7 +49,7 @@ window.member_login = function () {
         .post("/member/login", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Pesantrenku-ID": localStorage.getItem("kodepesantren"),
+            "Pesantrenku-ID": getCookie("kodepesantren"),
           },
         })
         .then((response) => {
@@ -62,5 +63,6 @@ window.member_login = function () {
           }
         });
     },
+
   };
 };

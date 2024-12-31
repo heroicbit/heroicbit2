@@ -32,7 +32,7 @@ document.addEventListener('alpine:init', () => {
         return {
             init(){
                 document.title = this.title;
-                Alpine.store('member').kodePesantren = localStorage.getItem('kodepesantren')
+                Alpine.store('member').kodePesantren = getCookie("kodepesantren")
                 Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
 
                 if(Alpine.store('member').kodePesantren) {
@@ -40,7 +40,7 @@ document.addEventListener('alpine:init', () => {
                         fetchPageData('api/member', {
                             headers: {
                                 'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                                'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                                'Pesantrenku-ID': getCookie("kodepesantren")
                             }
                         }).then(data => {
                             Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting

@@ -11,7 +11,7 @@ window.member_home = function(){
 
     init() {
       if(localStorage.getItem('intro') != 1){
-        window.PineconeRouter.context.navigate('/intro');
+        window.PineconeRouter.context.redirect('/intro');
       }
       
       document.title = this.title;
@@ -24,7 +24,7 @@ window.member_home = function(){
         fetchPageData('api/member/home', {
           headers: {
             'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-            'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+            'Pesantrenku-ID': getCookie("kodepesantren")
           }
         }).then(data => {
           cachePageData['member/home'] = data

@@ -27,7 +27,7 @@ window.member_profile_edit = function(){
               } else {   
                 fetchPageData('api/member/register', {
                   headers: {
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                   }
                 }).then(data => {
                   cachePageData['member/register'] = data
@@ -54,7 +54,7 @@ window.member_profile_edit = function(){
             axios.post('/pages/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': localStorage.getItem('kodepesantren')
+                    'Pesantrenku-ID': getCookie("kodepesantren")
                 }
             }).then(response => {
                 if(response.data.success == 1){
