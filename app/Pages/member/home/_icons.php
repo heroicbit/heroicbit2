@@ -69,12 +69,14 @@
                 </div>
                 <?php endif; ?>
 
+                <?php if(($settings['show_button_lainnya'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px" x-show="!showAllIcons" x-on:click="showAllIcons = true">
                     <a>
                         <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Lainnya</small>
                     </a>
                 </div>
+                <?php endif; ?>
 
                 <?php if(($settings['fitur_tagihan'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
