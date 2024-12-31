@@ -20,7 +20,7 @@ class PageController extends BasePageController
 		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
 		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
 		$this->data['title'] = service('settings')->get('Site.siteName');
-		$this->data['version'] = 1.22;
+		$this->data['version'] = 1.23;
 
 		$this->session = service('session');
     }
