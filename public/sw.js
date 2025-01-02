@@ -78,11 +78,11 @@ workbox.routing.registerRoute(
 // tapi updatenya tidak terlalu krusial untuk segera ditampilkan
 // sehingga bisa pakai cache terakhir untuk mempercepat tampil
 // Versi updatenya ditampilkan di request selanjutnya
-workbox.routing.registerRoute(
-  new RegExp('\\.js$'),
-  new workbox.strategies.StaleWhileRevalidate()
-);
-workbox.routing.registerRoute(
-  new RegExp('\\.css$'),
-  new workbox.strategies.StaleWhileRevalidate()
-);
+// workbox.routing.registerRoute(
+//   new RegExp('\\.js$'),
+//   new workbox.strategies.StaleWhileRevalidate()
+// );
+// workbox.routing.registerRoute(
+//   new RegExp('\\.css$'),
+//   new workbox.strategies.StaleWhileRevalidate()
+// );
