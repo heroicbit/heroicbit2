@@ -63,9 +63,9 @@ class MyRouter extends Router
         }
 
         // HACK: Check for page based routes
-        $this->pageBasedRoute($uri);
-        return $this->controllerName();
-        dd($this->controllerName());
+        if($this->pageBasedRoute($uri)) {
+            return $this->controllerName();
+        }
 
         // Still here? Then we can try to match the URI against
         // Controllers/directories, but the application may not
@@ -79,18 +79,16 @@ class MyRouter extends Router
         // Checks auto routes
         $this->autoRoute($uri);
 
-        dd($this->controllerName());
-
         return $this->controllerName();
     }
 
     /**
-     * Checks Auto Routes.
+     * Checks Auto Routes
      *
      * Attempts to match a URI path against Controllers and directories
-     * found in APPPATH/Controllers, to find a matching route.
+     * found in APPPATH/Pages, to find a matching page route.
      *
-     * @return void
+     * @return boolean
      */
     public function pageBasedRoute(string $uri)
     {
@@ -104,37 +102,31 @@ class MyRouter extends Router
         }
         
         // Set default variables
+        $pagesPath = config('App')->pagesPath ?? APPPATH . 'Pages';
         $controllerName = 'PageController';
-        $defaultMethod = $httpVerb . ucfirst($this->collection->getDefaultMethod());
-        $this->method  = $defaultMethod;
+        $this->method  = $httpVerb . ucfirst($this->collection->getDefaultMethod());
         $this->params = [];
         
         $uriSegments = explode('/', $uri);
-        if ($uriSegments[0] === 'api') 
-        {
-            array_shift($uriSegments);
-            $controllerName = 'APIController';
-            $isApi = true;
-        }
-
-        // Path ke folder Pages
-        $pagesPath = config('App')->pagesPath ?? APPPATH . 'Pages';
-        
         while (count($uriSegments) > 0) {
             $folderPath = $pagesPath . '/' . str_replace('/', DIRECTORY_SEPARATOR, implode('/', $uriSegments));
-            if (is_dir($folderPath)) 
+            if (is_dir($folderPath) && file_exists($folderPath . '/' . $controllerName . '.php')) 
             {
-                if (file_exists($folderPath . '/' . $controllerName . '.php')) 
-                {
-                    $uri = implode('/', $uriSegments);
-                    $controllerNamespace = '\\App\\Pages\\' . str_replace('/', '\\', $uri) . '\\' . $controllerName;
-                    $this->controller = $controllerNamespace;                    
-                    $this->params = array_reverse($this->params);
-                    $pageFound = true;
-                    break;
+                $uri = implode('/', $uriSegments);
+                $controllerNamespace = '\\App\\Pages\\' . str_replace('/', '\\', $uri) . '\\' . $controllerName;
+                $this->controller = $controllerNamespace;                    
+                $this->params = array_reverse($this->params);
+
+                // Check if method exists in class
+                if(method_exists($controllerNamespace,  $httpVerb . ucfirst($this->params[0]) )) {
+                    $this->method = $httpVerb . ucfirst($this->params[0]);
+                    array_shift($this->params);
                 }
-                
+
+                $pageFound = true;
+                break;  
             }
+
             $this->params[] = array_pop($uriSegments);
         }
         

@@ -2,13 +2,13 @@
 
 namespace App\Pages\dashboard;
 
-use Yllumi\Ci4Pages\Controllers\BasePageController;
+use App\Controllers\BaseController;
 
-class PageController extends BasePageController
+class PageController extends BaseController
 {
     public function getIndex($id = null, $nim = null): string
     {
-        $data['name'] = 'Detail ' . $id  . ' dengan ' . $nim;
+        $data['name'] = 'Dashboard ' . $id  . ' dengan ' . $nim;
 
         return pageView('dashboard/index', $data);
     }
