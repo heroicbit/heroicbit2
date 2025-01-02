@@ -29,12 +29,11 @@
 
         <!-- Offcanvas detail -->
         <div class="offcanvas offcanvas-fullwidth offcanvas-end" tabindex="-1" id="detailCanvas" aria-labelledby="detailCanvasLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="detailCanvasLabel" x-text="detail.title"></h5>
+            <div class="offcanvas-header text-truncate">
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <p class="mt-2" x-html="detail.content"></p>
+                <p class="" x-html="detail.content"></p>
             </div>
         </div>
 

@@ -1,4 +1,5 @@
 <div id="member-login" x-data="member_login()">
+    <div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
 
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
@@ -7,22 +8,22 @@
                 <img :src="data.logo" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <h2 class="mb-5" x-text="`Aplikasi ` + data.sitename"></h2>
-                <p class="lead my-3">Silakan masuk untuk melanjutkan</p>
+                <h2 class="mb-5" x-text="`Aplikasi ` + data.sitename" style="color: white;text-shadow: 1px 1px 2px #666;"></h2>
+                <p class="fs-5 my-3 text-white">Silakan masuk untuk melanjutkan</p>
             </div>
 
             <div class="section mt-1">
                 <div>
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
-                            <label for="identity">WhatsApp/Email</label>
+                            <label class="text-white fs-6" for="identity">WhatsApp/Email</label>
                             <input type="text" class="form-control" id="identity" x-model="data.username">
                         </div>
                     </div>
 
                     <div class="form-group boxed">
                         <div class="text-start input-wrapper">
-                            <label for="identity">Kata Sandi</label>
+                            <label class="text-white fs-6" for="identity">Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="off" x-model="data.password">
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
@@ -33,10 +34,14 @@
                     <div class="text-start mt-2">
                         <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2">MASUK</button>
                         <hr>
-                        <a href="/register" class="btn btn-outline-primary btn-block btn-lg mb-2">DAFTAR</a>
+                        <a href="/register" class="btn btn-outline-secondary bg-white btn-block btn-lg mb-2">DAFTAR</a>
                         <div class="d-flex justify-content-between mb-2">
-                            <div x-show="!forceKodePesantren"><a class="mb-1 text-info" href="/kodepesantren">Ganti Kode Pesantren</a></div>
-                            <div><a href="page-forgot-password.html">Lupa Kata Sandi?</a></div>
+                            <div x-show="!forceKodePesantren">
+                                <a class="mb-1" href="/kodepesantren" style="font-size: 1.1rem;font-weight: 500;color: #005e55;">Ganti Pesantren</a>
+                            </div>
+                            <div>
+                                <a href="page-forgot-password.html" style="font-size:1.1rem;color:white;text-shadow:1px 1px 2px #666">Lupa Kata Sandi?</a>
+                            </div>
                         </div>
                     </div>
                 </div>

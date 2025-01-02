@@ -1,4 +1,6 @@
 <div id="template-container" x-data="member_intro()">
+<div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
+
 <style>
 .swiper-pagination-bullet {
     width: 30px !important;
@@ -47,8 +49,8 @@
                         <div class="swiper-pagination"></div>
                     </div>
 
-                    <div class="form-button-group">
-                        <button type="button" x-on:click="gotoLogin" class="btn btn-primary btn-block btn-lg">MULAI</button>
+                    <div class="form-button-group" style="background-color:transparent;">
+                        <button type="button" x-on:click="gotoLogin" class="btn btn-outline-primary bg-white btn-block btn-lg">MULAI</button>
                     </div>
                 </div>
             </section>

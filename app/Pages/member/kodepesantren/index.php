@@ -1,10 +1,13 @@
 <div id="member-kodepesantren" x-data="member_kodepesantren()">
+<div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
+
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
+
         <form action="<?= site_url('member/kodepesantren') ?>" method="post">
         <div class="login-form mt-1">
             <div class="section">
-                <img src="<?= $themeURL ?>assets/img/logo-md-192x192.png" alt="image" class="form-image">
+                <img src="<?= $themeURL ?>assets/img/logo-white-min.png" alt="image" class="form-image">
             </div>
             <div class="section mt-3">
                 <h1>Selamat Datang</h1>
@@ -28,11 +31,11 @@
                     </div>
                 </div>
 
-                <div class="form-button-group">
+                <div class="form-button-group" style="background-color:transparent;">
                     <button 
                      type="submit"
                      :disabled="buttonDisabled"
-                     class="btn btn-primary btn-block btn-lg">
+                     class="btn btn-outline-secondary bg-white btn-block btn-lg">
                         BUKA APLIKASI
                     </button>
                 </div>

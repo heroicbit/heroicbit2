@@ -1,10 +1,10 @@
-<div class="bg-success-2 rounded-bottom-4 pb-5">
+<div class="bg-success-2 rounded-bottom-4 pb-2">
     <style>
-        .shrink { height: 195px }
+        .shrink { height: 195px !important }
     </style>
 
     <div class="container">    
-        <div class="card bg-white rounded-4 py-3 px-4 mb-4 overflow-hidden" :class="showAllIcons ? '' : 'shrink'">
+        <div class="card bg-white rounded-4 py-3 px-0 mb-4 overflow-hidden" :class="showAllIcons ? '' : 'shrink'" style="height:450px;transition:.5s ease">
             <div class="text-center mb-2 mx-auto" style="width:340px">
                 <?php if(($settings['fitur_profil_pesantren'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
@@ -70,8 +70,8 @@
                 <?php endif; ?>
 
                 <?php if(($settings['show_button_lainnya'] ?? null) == 1): ?>
-                <div class="float-start" style="width:85px;height:90px" x-show="!showAllIcons" x-on:click="showAllIcons = true">
-                    <a>
+                <div class="float-start" style="width:85px;height:90px" x-on:click="showAllIcons = true">
+                    <a x-show="!showAllIcons" x-transition.duration.300ms>
                         <img src="<?= $themeURL ?>assets/img/icon/lainnya-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Lainnya</small>
                     </a>

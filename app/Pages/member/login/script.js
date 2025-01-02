@@ -33,7 +33,7 @@ window.member_login = function () {
       Alpine.store("member").showBottomMenu = false;
 
       this.data.logo = Alpine.store("member").tarbiyyaSetting.auth_logo;
-      this.data.sitename = Alpine.store("member").tarbiyyaSetting.site_title;
+      this.data.sitename = Alpine.store("member").tarbiyyaSetting.app_title;
 
       this.forceKodePesantren = localStorage.getItem("forcekodepesantren");
     },
