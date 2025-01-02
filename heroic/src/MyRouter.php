@@ -118,7 +118,7 @@ class MyRouter extends Router
                 $this->params = array_reverse($this->params);
 
                 // Check if method exists in class
-                if(method_exists($controllerNamespace,  $httpVerb . ucfirst($this->params[0]) )) {
+                if(isset($this->params[0]) && method_exists($controllerNamespace,  $httpVerb . ucfirst($this->params[0]) )) {
                     $this->method = $httpVerb . ucfirst($this->params[0]);
                     array_shift($this->params);
                 }
