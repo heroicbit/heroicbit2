@@ -2,11 +2,11 @@
 
 namespace App\Pages\dashboard;
 
-use Heroic\Controllers\BasePageController;
+use Yllumi\Ci4Pages\Controllers\BasePageController;
 
 class PageController extends BasePageController
 {
-    public function index($id = null, $nim = null): string
+    public function getIndex($id = null, $nim = null): string
     {
         $data['name'] = 'Detail ' . $id  . ' dengan ' . $nim;
 

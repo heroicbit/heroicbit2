@@ -26,7 +26,7 @@ class PageController extends BasePageController
     }
 
 	// This method handle GET request
-	public function index()
+	public function getIndex()
 	{
 		$this->data['page_title'] = 'Beranda';
 

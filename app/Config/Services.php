@@ -3,6 +3,10 @@
 namespace Config;
 
 use CodeIgniter\Config\BaseService;
+use CodeIgniter\HTTP\Request;
+use CodeIgniter\Router\RouteCollectionInterface;
+use Config\Services as AppServices;
+use Yllumi\Ci4Pages\MyRouter;
 
 /**
  * Services Configuration file.
@@ -29,4 +33,22 @@ class Services extends BaseService
      *     return new \CodeIgniter\Example();
      * }
      */
+
+    /**
+     * The Router class uses a RouteCollection's array of routes, and determines
+     * the correct Controller and Method to execute.
+     *
+     * @return Router
+     */
+    public static function router(?RouteCollectionInterface $routes = null, ?Request $request = null, bool $getShared = true)
+    {
+        if ($getShared) {
+            return static::getSharedInstance('router', $routes, $request);
+        }
+
+        $routes ??= AppServices::get('routes');
+        $request ??= AppServices::get('request');
+
+        return new MyRouter($routes, $request);
+    }
 }
