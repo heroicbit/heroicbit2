@@ -25,8 +25,7 @@ window.member_profile = function(){
             }
         },
         logout(){
-            localStorage.removeItem('heroic_token');
-            window.PineconeRouter.context.navigate('/login');
+            window.location.href = '/logout'
         }
     }
 }
