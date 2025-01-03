@@ -137,4 +137,4 @@ window.getCookie = function(cname) {
       }
     }
     return "";
-  }
+}

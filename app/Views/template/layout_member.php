@@ -31,11 +31,11 @@
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
 
+    <script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
+    <script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>
     <script src="<?= $themeURL ?>assets/js/pagescript.js?v<?= $version ?>" defer></script>    
     <script src="https://cdn.jsdelivr.net/npm/pinecone-router@4.x.x/dist/router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
-    <script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
-    <script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>
 
 	<script>
 		// Check that service workers are supported
