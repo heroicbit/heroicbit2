@@ -28,7 +28,7 @@ window.member_profile_delete = function(){
             const formData = new FormData();
             formData.append('whatsapp', this.data.whatsapp ?? '');
             formData.append('password', this.data.password ?? '');
-            axios.post('/pages/member/profile_delete', formData, {
+            axios.post('/member/profile_delete', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': getCookie("kodepesantren"),

@@ -13,7 +13,7 @@ window.member_profile = function(){
             if(cachePageData['member/profile']){
                 this.data = cachePageData['member/profile']
             } else {   
-                fetchPageData('/api/member/profile', {
+                fetchPageData('member/profile/supply', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,

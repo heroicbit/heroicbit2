@@ -2,13 +2,13 @@
 
 namespace App\Pages\dashboard;
 
-use Heroic\Controllers\BasePageController;
+use App\Controllers\BaseController;
 
-class PageController extends BasePageController
+class PageController extends BaseController
 {
-    public function index($id = null, $nim = null): string
+    public function getIndex($id = null, $nim = null): string
     {
-        $data['name'] = 'Detail ' . $id  . ' dengan ' . $nim;
+        $data['name'] = 'Dashboard ' . $id  . ' dengan ' . $nim;
 
         return pageView('dashboard/index', $data);
     }

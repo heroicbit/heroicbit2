@@ -21,6 +21,9 @@ use Psr\Log\LoggerInterface;
  */
 abstract class BaseController extends Controller
 {
+    public $data;
+    public $session;
+
     /**
      * Instance of the main Request object.
      *
@@ -35,7 +38,7 @@ abstract class BaseController extends Controller
      *
      * @var list<string>
      */
-    protected $helpers = [];
+    protected $helpers = ['Yllumi\Ci4Pages\Helpers\pageview'];
 
     /**
      * Be sure to declare properties for any property fetch you initialized.
@@ -52,7 +55,11 @@ abstract class BaseController extends Controller
         parent::initController($request, $response, $logger);
 
         // Preload any models, libraries, etc, here.
+        $this->data['themeURL'] = base_url('mobilekit') .'/'; 
+		$this->data['themePath'] = 'mobilekit/'; 
+		$this->data['title'] = 'Tarbiyya';
+		$this->data['version'] = 1.23;
 
-        // E.g.: $this->session = \Config\Services::session();
+		$this->session = service('session');
     }
 }

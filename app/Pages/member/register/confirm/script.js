@@ -72,7 +72,7 @@ window.member_register_confirm = function(){
                     localStorage.setItem('heroic_token', response.data.jwt)
                     setTimeout(() => {
                         Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
-                        window.PineconeRouter.context.navigate('/')
+                        window.PineconeRouter.context.redirect('/')
                     })
                 } else {
                     this.error = response.data.message
@@ -87,7 +87,7 @@ window.member_register_confirm = function(){
             const formData = new FormData();
             formData.append('id', this.data.id ?? '');
             formData.append('token', this.data.token ?? '');
-            axios.post('/pages/member/register_confirm?m=resend', formData, {
+            axios.post('/member/register/confirm/resend', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': getCookie("kodepesantren")
@@ -95,7 +95,7 @@ window.member_register_confirm = function(){
             }).then(response => {
                 if(response.data.success == 1){
                     let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
-                    window.PineconeRouter.context.navigate('/member/register/' + token)
+                    window.PineconeRouter.context.navigate('/member/register/confirm/?token=' + token)
                 } else {
                     this.error = response.data.message
                     this.resending = false

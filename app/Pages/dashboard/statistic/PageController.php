@@ -2,13 +2,24 @@
 
 namespace App\Pages\dashboard\statistic;
 
-use Heroic\Controllers\BasePageController;
+use App\Controllers\BaseController;
 
-class PageController extends BasePageController
+class PageController extends BaseController
 {
-    public function index($name = null): string
+    use \CodeIgniter\API\ResponseTrait;
+    
+    public function getIndex($name = null, $code = null): string
     {
-        $data['name'] = 'in Statistic ' . $name;
+        $data['name'] = 'in Statistic ' . $name . ', code ' . $code;
         return pageView('dashboard/statistic/index', $data);
+    }
+
+    public function getShow($id = null, $nim = null)
+    {
+        $data['name'] = 'Toni Haryanto';
+        $data['id'] = $id;
+        $data['nim'] = $nim;
+        
+        return $this->respond($data);
     }
 }

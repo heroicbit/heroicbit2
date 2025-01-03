@@ -33,7 +33,7 @@ window.member_feeds = function(){
         },
         loadFeeds() {
             console.log('Fetching data...');
-            fetchPageData(`api/member/feeds?page=${this.nextPage}`, {
+            fetchPageData(`member/feeds/supply?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                     'Pesantrenku-ID': getCookie("kodepesantren")

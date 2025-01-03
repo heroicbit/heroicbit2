@@ -1,16 +1,19 @@
 <?php namespace App\Pages\member\login;
 
 use App\Pages\member\PageController as MemberPageController;
+use CodeIgniter\API\ResponseTrait;
 use Firebase\JWT\JWT;
 
-class PageController extends MemberPageController {
+class PageController extends MemberPageController 
+{
+    use ResponseTrait;
     
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/login/index', $this->data);
     }
 
-    public function process()
+    public function postIndex()
     {
         $username = strtolower($this->request->getPost('username'));
         $password = $this->request->getPost('password');
@@ -46,11 +49,10 @@ class PageController extends MemberPageController {
             }
         }
 
-        echo json_encode([
+        return $this->respond([
             'found' => $jwt ? 1 : 0,
             'jwt' => $jwt
         ]);
-        die;
     }
 
 }

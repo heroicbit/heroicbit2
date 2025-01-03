@@ -13,7 +13,7 @@ window.member_feeds_detail = function(id){
             // Get cache if exists
             this.feed = cachePageData[`member/feeds`]?.feeds.filter(item => item.id == this.id) ?? {};
             if(Object.keys(this.feed).length == 0) {
-                fetchPageData(`api/member/feeds/detail/${this.id}`, {
+                fetchPageData(`member/feeds/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': getCookie("kodepesantren")
