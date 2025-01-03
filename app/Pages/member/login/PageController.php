@@ -5,12 +5,12 @@ use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController {
     
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/login/index', $this->data);
     }
 
-    public function process()
+    public function postIndex()
     {
         $username = strtolower($this->request->getPost('username'));
         $password = $this->request->getPost('password');

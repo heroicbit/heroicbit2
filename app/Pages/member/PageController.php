@@ -1,29 +1,15 @@
 <?php namespace App\Pages\member;
 
+use App\Controllers\BaseController;
+use CodeIgniter\API\ResponseTrait;
 use CodeIgniter\HTTP\RequestInterface;
 use CodeIgniter\HTTP\ResponseInterface;
-use Yllumi\Ci4Pages\Controllers\BasePageController;
 use Psr\Log\LoggerInterface;
 use Symfony\Component\Yaml\Yaml;
 
-class PageController extends BasePageController 
+class PageController extends BaseController 
 {
-	public $session;
-	/**
-     * @return void
-     */
-    public function initController(RequestInterface $request, ResponseInterface $response, LoggerInterface $logger)
-    {
-        // Do Not Edit This Line
-        parent::initController($request, $response, $logger);
-
-		$this->data['themeURL'] = service('settings')->get('Theme.frontendThemeURL'); 
-		$this->data['themePath'] = service('settings')->get('Theme.frontendThemePath'); 
-		$this->data['title'] = service('settings')->get('Site.siteName');
-		$this->data['version'] = 1.23;
-
-		$this->session = service('session');
-    }
+	use ResponseTrait;
 
 	// This method handle GET request
 	public function getIndex()
@@ -46,7 +32,25 @@ class PageController extends BasePageController
 		return pageView('member/index', $this->data);
 	}
 
-	public function get_logout()
+	// This method handle GET request via AJAX
+	public function getSupply()
+	{
+		// Get database pesantren
+        $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $db = $Tarbiyya->initDBPesantren();
+
+		$settingQuery = $db->table('mein_options')
+							->whereIn('option_group', ['site','tarbiyya'])
+							->get()
+							->getResultArray();
+		
+		if($settingQuery)
+			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
+
+		return $this->respond(['tarbiyyaSetting' => $settingQuery]);
+	}
+
+	public function getLogout()
 	{
 		$_SESSION = [];
 	}
