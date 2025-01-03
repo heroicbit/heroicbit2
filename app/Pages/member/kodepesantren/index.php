@@ -3,6 +3,13 @@
 
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
+        <?php if($pesantrenID ?? null): // Dari force kode pesantren by url ?>
+            <h2>AUTO</h2>
+            <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
+        <?php elseif($_SESSION['kodepesantren'] ?? null): // Dari form pilih kode pesantren ?>
+            <h2>SESSION</h2>
+            <input type="hidden" x-init="registerKodePesantren(`<?= $_SESSION['pesantrenID'] ?? '' ?>`)">
+        <?php endif; ?>
 
         <form action="<?= site_url('member/kodepesantren') ?>" method="post">
         <div class="login-form mt-1">
@@ -38,12 +45,6 @@
                         BUKA APLIKASI
                     </button>
                 </div>
-
-                <?php if($pesantrenID ?? null): // Dari force kode pesantren by url ?>
-                    <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
-                <?php elseif($_SESSION['kodepesantren'] ?? null): // Dari form pilih kode pesantren ?>
-                    <input type="hidden" x-init="registerKodePesantren(`<?= $_SESSION['pesantrenID'] ?? '' ?>`)">
-                <?php endif; ?>
             </div>
         </div>
         </form>

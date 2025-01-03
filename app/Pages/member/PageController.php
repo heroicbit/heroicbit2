@@ -50,9 +50,9 @@ class PageController extends BaseController
 		return $this->respond(['tarbiyyaSetting' => $settingQuery]);
 	}
 
-	public function getLogout()
+	public function getSession()
 	{
-		$_SESSION = [];
+		dd($_SESSION);
 	}
 
 }

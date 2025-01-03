@@ -69,12 +69,4 @@ class PageController extends MemberPageController
         header('Location: /member/login');
     }
 
-    public function getReset()
-    {
-        $_SESSION = [];
-        setcookie("kodepesantren", "", time()-3600);
-
-        header('Location: /member/kodepesantren');
-    }
-
 }

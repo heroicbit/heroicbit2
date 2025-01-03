@@ -25,15 +25,15 @@ window.member_kodepesantren = function(){
             })
         },
 
-        forceKodePesantren(pesantrenID){
-            localStorage.setItem('forcekodepesantren', 1)
-            this.registerKodePesantren(pesantrenID)
-        },
+        // forceKodePesantren(pesantrenID){
+        //     localStorage.setItem('forcekodepesantren', 1)
+        //     this.registerKodePesantren(pesantrenID)
+        // },
         
-        registerKodePesantren(pesantrenID){
-            Alpine.store('member').kodePesantren = getCookie("kodepesantren")
-            window.PineconeRouter.context.navigate('/login')
-        },
+        // registerKodePesantren(pesantrenID){
+        //     Alpine.store('member').kodePesantren = getCookie("kodepesantren")
+        //     window.PineconeRouter.context.navigate('/login')
+        // },
 
         enableButton(){
             if(this.kode.trim() != '')
