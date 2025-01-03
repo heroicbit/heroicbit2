@@ -4,10 +4,8 @@
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
         <?php if($pesantrenID ?? null): // Dari force kode pesantren by url ?>
-            <h2>AUTO</h2>
             <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
         <?php elseif($_SESSION['kodepesantren'] ?? null): // Dari form pilih kode pesantren ?>
-            <h2>SESSION</h2>
             <input type="hidden" x-init="registerKodePesantren(`<?= $_SESSION['pesantrenID'] ?? '' ?>`)">
         <?php endif; ?>
 
