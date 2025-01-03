@@ -4,12 +4,12 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/pengumuman/index', $this->data);
     }
 
-    public function supplyx()
+    public function getSupply()
     {
         // Get post data
 		$query = "SELECT *
@@ -26,7 +26,7 @@ class PageController extends MemberPageController {
         $data['pengumuman'] = $posts;
         $data['icons'] = $this->getPengumumanIcons();
 
-        return $data;
+        return $this->respond($data);
     }
 
     private function getPengumumanIcons()

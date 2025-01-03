@@ -4,17 +4,16 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/videos/detail/index', $this->data);
     }
 
-    public function supplys()
+    public function getSupply($id = null)
     {
         // Retrieve extension attributes
         $request = service('request');
         $uri = $request->getUri();
-        $id = $uri->getSegment(4);
 
         // Get post data
 		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
@@ -39,11 +38,11 @@ class PageController extends MemberPageController {
         parse_str(parse_url($data['video'][0]['youtube_url'], PHP_URL_QUERY), $queryParams);
         $data['video'][0]['youtube_id'] = isset($queryParams['v']) ? $queryParams['v'] : null;
 
-		return [
+		return $this->respond([
 			'response_code'    => 200,
 			'response_message' => 'success',
 			'data'			   => $data 
-		];
+		]);
     }
 
 }

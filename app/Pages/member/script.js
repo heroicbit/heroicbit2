@@ -37,7 +37,7 @@ document.addEventListener('alpine:init', () => {
 
                 if(Alpine.store('member').kodePesantren) {
                     if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
-                        fetchPageData('api/member/supply', {
+                        fetchPageData('member/supply', {
                             headers: {
                                 'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                                 'Pesantrenku-ID': getCookie("kodepesantren")

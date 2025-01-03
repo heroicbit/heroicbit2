@@ -21,7 +21,7 @@ window.member_home = function(){
       if(cachePageData['member/home']){
         this.data = cachePageData['member/home']
       } else {   
-        fetchPageData('api/member/home', {
+        fetchPageData('member/home/supply', {
           headers: {
             'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
             'Pesantrenku-ID': getCookie("kodepesantren")

@@ -4,24 +4,20 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/santri/index', $this->data);
     }
 
-    public function supplyx()
+    public function getSupply()
     {
         // Handle another get method
         $request = service('request');
 
-        $method = $request->getGet('m');
-        if($method && in_array($method, get_class_methods($this))){
-            return $this->$method($request);
-        }
-
-        $user = $this->checkToken();
-        // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $user = $Tarbiyya->checkToken();
+        
+        // Get database pesantren
         $db = $Tarbiyya->initDBPesantren();
 
         $santri = $db->query("SELECT su.*, s.*, c.id as class_id, c.class_name, 
@@ -39,16 +35,16 @@ class PageController extends MemberPageController {
         $isLibur = in_array(date('N'), array_keys($libur)) ? $libur[date('N')] : false;
 
         $output = compact('santri', 'libur', 'isLibur');
-        return $output;
+        return $this->respond($output);
     }
 
-    private function checkNIS($request)
+    public function getCheckNIS($nis)
     {
-        $user = $this->checkToken();
-        // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $user = $Tarbiyya->checkToken();
+        
+        // Get database pesantren
         $db = $Tarbiyya->initDBPesantren();
-        $nis = $request->getGet('nis');
         $found = $db->query("SELECT s.*, c.id as class_id, c.class_name
             FROM md_santri s
             JOIN md_student_class sc ON sc.student_id = s.id
@@ -60,24 +56,24 @@ class PageController extends MemberPageController {
             $Encrypter = service('encrypter');
             $token = bin2hex($Encrypter->encrypt($found->id));
 
-            return [
+            return $this->respond([
                 'found' => 1,
                 'token' => $token,
                 'nama_santri' => $found->nama_santri,
                 'class_name' => $found->class_name
-            ];
+            ]);
         }
 
-        return ['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif'];
+        return $this->respond(['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif']);
     }
 
-    public function detailPresensi($request)
+    public function getDetailPresensi($student_id)
     {
-        $user = $this->checkToken();
-        // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $user = $Tarbiyya->checkToken();
+        
+        // Get database pesantren
         $db = $Tarbiyya->initDBPesantren();
-        $student_id = $request->getGet('student_id');
 
         $found = $db->query("SELECT * FROM `md_attendance` 
             WHERE `student_id` = :student_id: AND `present` IS NULL
@@ -86,21 +82,22 @@ class PageController extends MemberPageController {
 
         if($found){
             $presensi = array_combine(array_column($found, 'date'), $found);
-            return [
+            return $this->respond([
                 'found' => count($found),
                 'presensi' => $presensi
-            ];
+            ]);
         }
 
-        return ['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif'];   
+        return $this->respond(['found' => 0, 'message' => 'NIS/NISN tidak ditemukan atau sudah tidak aktif']);
 
     }
 
-    public function process()
+    public function postIndex()
     {
-        $user = $this->checkToken();
-        // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $user = $Tarbiyya->checkToken();
+        
+        // Get database pesantren
         $db = $Tarbiyya->initDBPesantren();
 
         // Get postdata
@@ -120,9 +117,9 @@ class PageController extends MemberPageController {
                 JOIN md_class c ON c.id = sc.class_id AND year_id = (SELECT option_value FROM mein_options WHERE option_group = 'rombel' AND option_name = 'active_year')
                 WHERE s.id = :id:", ['id' => $id])->getRow();
 
-            echo json_encode(['status' => 'success', 'message' => 'Santri berhasil ditambahkan', 'santri' => $santri]);
+            return $this->respond(['status' => 'success', 'message' => 'Santri berhasil ditambahkan', 'santri' => $santri]);
         } else {
-            echo json_encode(['status' => 'failed', 'message' => 'Gagal menambahkan data santri.']);
+            return $this->respond(['status' => 'failed', 'message' => 'Gagal menambahkan data santri.']);
         }
         die;
     }

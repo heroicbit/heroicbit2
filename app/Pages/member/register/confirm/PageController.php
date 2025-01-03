@@ -5,22 +5,18 @@ use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/register/confirm/index', $this->data);
     }
     
-    public function process()
+    public function postIndex()
     {
         $request = service('request');
 
         $token = $request->getPost('token');
         $otp = $request->getPost('otp');
         $id = $request->getPost('id');
-
-        if($request->getGet('m') == 'resend') {
-            $this->resendOTP($id, $token);
-        }
 
         // Get database pesantren
         // Get database pesantren
@@ -31,10 +27,9 @@ class PageController extends MemberPageController {
         $query = "SELECT otp, token, email FROM mein_users WHERE id = :id:";
         $user = $db->query($query, ['id' => $id])->getRow();
         if($user?->otp != $otp || $user?->token != $token) {
-            echo json_encode([
+            return $this->respond([
                 'success' => 0, 'message' => 'Kode OTP yang anda masukkan salah.'
             ]);
-            die;
         } else {
             // Activate user status
             $query = "UPDATE mein_users SET status = 'active' WHERE id = :id:";
@@ -50,15 +45,17 @@ class PageController extends MemberPageController {
             $key = config('App')->jwtKey['secret'];
             $jwt = JWT::encode($userSession, $key, 'HS256');
 
-            echo json_encode([
+            return $this->respond([
                 'success' => 1, 'jwt' => $jwt
             ]);
-            die;
         }
     }
 
-    private function resendOTP($id, $token) 
+    public function postResend() 
     {
+        $id = $this->request->getPost('id');
+        $token = $this->request->getPost('token');
+
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
@@ -66,10 +63,9 @@ class PageController extends MemberPageController {
         $user = $db->query($query, ['id' => $id])->getRow();
         if(strcmp($user?->token, $token) !== 0) {
             header('Content-Type', 'application/json');
-            echo json_encode([
+            return $this->respond([
                 'success' => 0, 'message' => 'Token invalid.'
             ]);
-            die;
         }
         
         // Generate new OTP and token
@@ -118,10 +114,8 @@ Salam,";
 
         curl_close($curl);
 
-        header('Content-Type', 'application/json');
-        echo json_encode([
+        return $this->respond([
             'success' => 1, 'message' => 'Kode OTP berhasil dikirim ulang.', 'token' => $token, 'id' => $id
         ]);
-        die;
     }
 }

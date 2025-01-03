@@ -1,9 +1,12 @@
 <?php namespace App\Pages\member\login;
 
 use App\Pages\member\PageController as MemberPageController;
+use CodeIgniter\API\ResponseTrait;
 use Firebase\JWT\JWT;
 
-class PageController extends MemberPageController {
+class PageController extends MemberPageController 
+{
+    use ResponseTrait;
     
     public function getContent()
     {
@@ -46,11 +49,10 @@ class PageController extends MemberPageController {
             }
         }
 
-        echo json_encode([
+        return $this->respond([
             'found' => $jwt ? 1 : 0,
             'jwt' => $jwt
         ]);
-        die;
     }
 
 }

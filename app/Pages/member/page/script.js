@@ -10,7 +10,7 @@ window.member_page = function(slug) {
             Alpine.store('member').showBottomMenu = true
 
             // Get cache if exists
-            let url = `api/member/page/${this.slug}`;
+            let url = `member/page/supply/${this.slug}`;
             this.page = cachePageData[url] ?? {};
             if(Object.keys(this.page).length === 0) {
                 fetchPageData(url, {

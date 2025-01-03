@@ -67,7 +67,7 @@ window.member_santri = function(){
             if(cachePageData['member/santri']){
                 this.data = cachePageData['member/santri']
             } else {   
-                fetchPageData('api/member/santri', 
+                fetchPageData('member/santri/supply', 
                     { headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,
@@ -132,7 +132,7 @@ window.member_santri = function(){
                 this.calendar = new VanillaCalendar("#calendar", options);
                 this.calendar.init();
             } else {   
-                fetchPageData('api/member/santri?m=detailPresensi&student_id=' + this.detailSantri.id, 
+                fetchPageData('member/santri/detailPresensi/' + this.detailSantri.id, 
                     { headers: {
                         'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
                         'Pesantrenku-ID': Alpine.store('member').kodePesantren,
@@ -215,7 +215,7 @@ window.member_santri = function(){
 
         checkNIS(){
             if(this.searchNIS) {
-                fetchPageData('api/member/santri/?m=checkNIS&nis=' + this.searchNIS, 
+                fetchPageData('member/santri/checkNIS/' + this.searchNIS, 
                     { headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': getCookie("kodepesantren")} 
@@ -232,7 +232,7 @@ window.member_santri = function(){
         },
 
         addSantri(){
-            postPageData('api/member/santri', 
+            postPageData('member/santri', 
                 { token: this.NISFound.token },
                 { headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),

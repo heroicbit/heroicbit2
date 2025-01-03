@@ -4,9 +4,26 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/profile/index', $this->data);
+    }
+
+    public function getSupply()
+    {
+        // Get database pesantren
+        $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $db = $Tarbiyya->initDBPesantren();
+        $user = $Tarbiyya->checkToken();
+        $data = [];
+
+        $data['profile'] = $db->table('mein_users')
+            ->select('mein_users.id, mein_users.name, 
+                mein_users.email, mein_users.avatar, mein_users.phone')
+            // ->where('id', $user->id)
+            ->get()->getRowArray();
+
+        return $this->respond($data);
     }
 
 }

@@ -42,7 +42,7 @@ window.member_register = function(){
             formData.append('whatsapp', this.data.whatsapp ?? '');
             formData.append('password', this.data.password ?? '');
             formData.append('repeat_password', this.data.repeat_password ?? '');
-            axios.post('/api/member/register', formData, {
+            axios.post('/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': getCookie("kodepesantren")
@@ -50,7 +50,7 @@ window.member_register = function(){
             }).then(response => {
                 if(response.data.success == 1){
                     let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
-                    window.PineconeRouter.context.navigate('/member/register/' + token)
+                    window.PineconeRouter.context.navigate('/member/register/confirm/?token=' + token)
                 } else {
                     this.errors = response.data.errors
                     this.registering = false;

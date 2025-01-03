@@ -16,7 +16,7 @@ window.member_videos_detail = function(id){
             // Get cache if exists
             this.video = cachePageData[`member/videos`]?.videos.filter(item => item.id == this.id) ?? {};
             if(Object.keys(this.video).length == 0) {
-                fetchPageData(`api/member/videos/detail/${this.id}`, {
+                fetchPageData(`member/videos/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
                         'Pesantrenku-ID': getCookie("kodepesantren")

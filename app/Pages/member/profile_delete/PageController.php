@@ -4,18 +4,18 @@ use App\Pages\member\PageController as MemberPageController;
 
 class PageController extends MemberPageController {
 
-    public function get_ajax()
+    public function getContent()
     {
         return pageView('member/profile_delete/index', $this->data);
     }
 
-    public function process()
+    public function postIndex()
     {
         // Get database pesantren
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
-        $user = $this->checkToken();
+        $user = $Tarbiyya->checkToken();
 
         $phone = $this->request->getPost('whatsapp');
         $password = $this->request->getPost('password');

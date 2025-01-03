@@ -20,8 +20,7 @@
                          name="kodepesantren"
                          class="form-select" 
                          id="kodepesantren"
-                         x-on:change="enableButton" 
-                         x-on:keyup.enter="checkKodePesantren"
+                         x-on:change="enableButton"
                          x-model="kode">
                             <option value="">- Pilih pesantren -</option>
                             <template x-for="pesantren in allcodes">
