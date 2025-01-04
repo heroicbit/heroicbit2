@@ -27,9 +27,12 @@ class PageController extends BaseController
 							->get()
 							->getRowArray();
 			$this->data['bottommenu'] = Yaml::parse($bottommenu['schema']);
+			
+			return pageView('member/index', $this->data);
+		} else {
+			header('Location: /member/kodepesantren');
 		}
 
-		return pageView('member/index', $this->data);
 	}
 
 	// This method handle GET request via AJAX

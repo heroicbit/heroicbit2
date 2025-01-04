@@ -1,4 +1,5 @@
 <div id="member_register" x-data="member_register()">
+    <div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
 
     <div class="appHeader">
         <div class="left">
@@ -18,14 +19,14 @@
                 <img :src="data.logo" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <p>Silahkan isi formulir pendaftaran di bawah ini</p>
+                <p class="text-white">Silahkan isi formulir pendaftaran di bawah ini</p>
             </div>
 
             <div class="section mt-1 mb-5 px-0">
                 <div>
                     <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
-                            <label class="fw-bold" for="name">Nama Lengkap</label>
+                            <label class="text-white fs-6" for="name">Nama Lengkap</label>
                             <input type="text" class="form-control" id="name" x-model="data.fullname" required>
                             <small class="text-danger" x-show="errors.fullname" x-text="errors.fullname"></small>
                         </div>
@@ -41,8 +42,8 @@
                     
                     <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
-                            <label class="fw-bold" for="whatsapp">No. Whatsapp</label>
-                            <small>&bull; Awali dengan 62, mis. 6289xxxxxx</small>
+                            <label class="text-white fs-6" for="whatsapp">No. Whatsapp</label>
+                            <small class="text-white">&bull; Awali dengan 62, mis. 6289xxxxxx</small>
                             <input type="text" class="form-control" id="whatsapp" x-model="data.whatsapp" required>
                             <small class="text-danger" x-show="errors.whatsapp" x-text="errors.whatsapp"></small>
                         </div>
@@ -50,7 +51,7 @@
 
                     <div class="form-group px-3 boxed text-start">
                         <div class="text-start input-wrapper">
-                            <label class="fw-bold" for="identity">Kata Sandi</label>
+                            <label class="text-white fs-6" for="identity">Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="new-password" x-model="data.password" required>
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
@@ -61,7 +62,7 @@
                     
                     <div class="form-group px-3 boxed pb-3 text-start">
                         <div class="text-start input-wrapper">
-                            <label class="fw-bold" for="identity">Ulangi Kata Sandi</label>
+                            <label class="text-white fs-6" for="identity">Ulangi Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="repeat-pwd" autocomplete="new-password" x-model="data.repeat_password" required>
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
                                 <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>

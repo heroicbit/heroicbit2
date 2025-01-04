@@ -7,6 +7,14 @@ class PageController extends MemberPageController
 {
     use ResponseTrait;
 
+    // Load member layout
+	public function getIndex()
+	{
+		$this->data['page_title'] = 'Kode Pesantren';
+
+		return pageView('member/index', $this->data);
+	}
+
     public function getContent()
     {
         // check if domain is available in writable/custom_domain

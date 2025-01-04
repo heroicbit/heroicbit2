@@ -5,6 +5,14 @@ use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController {
 
+    // Load member layout
+	public function getIndex()
+	{
+		$this->data['page_title'] = 'Login';
+
+		return pageView('member/index', $this->data);
+	}
+    
     public function getContent()
     {
         return pageView('member/register/confirm/index', $this->data);

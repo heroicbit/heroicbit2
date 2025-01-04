@@ -29,6 +29,8 @@ window.member_home = function(){
         }).then(data => {
           cachePageData['member/home'] = data
           this.data = data
+        }).catch(err => {
+          console.error(err)
         })
       }
     },
