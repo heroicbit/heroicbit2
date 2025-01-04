@@ -27,12 +27,16 @@ class PageController extends MemberPageController
         $Pesantren = model('Pesantren');
         if($kode) {
             $found = $Pesantren->where('kode_pesantren', $kode)->first();
+
+            // If found, berarti ini site khusus bukan dari aplikasi umum   
             if($found) {
                 $Encrypter = service('encrypter');
                 $kodeHash = bin2hex($Encrypter->encrypt($found['database']));
                 
                 $this->data['found'] = 1;
                 $this->data['kode'] = $kode;
+
+                // Untuk dipasang di view yang kemudian di-assign ke localstorage
                 $this->data['pesantrenID'] = $kodeHash;
             }
         }

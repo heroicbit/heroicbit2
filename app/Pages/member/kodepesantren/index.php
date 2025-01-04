@@ -4,7 +4,7 @@
     <!-- App Capsule -->
     <div id="appCapsule" class="shadow pt-5">
         <?php if($pesantrenID ?? null): // Dari force kode pesantren by url ?>
-            <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
+            <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?>`)">
         <?php endif; ?>
 
         <div class="login-form mt-1">
