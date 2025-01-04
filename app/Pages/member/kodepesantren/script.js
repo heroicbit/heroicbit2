@@ -26,13 +26,14 @@ window.member_kodepesantren = function(){
         },
 
         forceKodePesantren(pesantrenID){
-            setTimeout(() => {
-                localStorage.setItem('forcekodepesantren', 1)
-                localStorage.setItem('pesantrenID', pesantrenID)
-            }, 1000);
+            localStorage.setItem('forcekodepesantren', 1)
+            localStorage.setItem('pesantrenID', pesantrenID)
 
             // Set pesantrenID to session
-            window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
+            setTimeout(() => {
+                window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
+            }, 1000);
+
         },
 
         enableButton(){
