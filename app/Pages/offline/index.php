@@ -4,7 +4,7 @@
 <?php $this->section('content') ?>
 
     <!-- Alpinejs Routers -->
-    <div id="app">
+    <div id="app" x-data="{loading:false}">
         <div class="page-content">
             <div id="member_offline">
                 <div class="appHeader">
@@ -22,7 +22,10 @@
                         <div class="page-content p-0 pb-5 text-center">
                             <img src="<?= $themeURL ?>assets/img/icon/offline.png" alt="offline-robot" class="w-100">
 
-                            <a class="btn btn-sm btn-primary" href="<?= site_url(); ?>"><span class="bi bi-arrow-clockwise me-1"></span> Muat Ulang</a>
+                            <a class="btn btn-sm btn-primary" href="<?= site_url(); ?>" x-on:click="loading = true">
+                                <span class="spinner-border spinner-border-sm me-1" aria-hidden="true" x-show="loading"></span>
+                                Muat Ulang
+                            </a>
                         </div>
                     </div>
                 </div>
