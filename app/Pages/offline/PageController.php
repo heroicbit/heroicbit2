@@ -1,10 +1,10 @@
 <?php namespace App\Pages\offline;
 
-use App\Pages\member\PageController as MemberPageController;
+use App\Controllers\BaseController;
 
-class PageController extends MemberPageController {
+class PageController extends BaseController {
 
-    public function index()
+    public function getIndex()
     {
         $this->data['page_title'] = 'You are Offline';
         return pageView('offline/index', $this->data);

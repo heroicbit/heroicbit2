@@ -28,7 +28,7 @@ workbox.routing.registerRoute(
 // dan punya penampilan data dinamis yang sudah menggunakan ajax secara penuh
 // Ketika pun ada update, tinggal raise revision number
 workbox.precaching.precacheAndRoute([
-  {url: '/offline', revision: '3' },
+  {url: '/offline', revision: '4' },
   {url: '/mobilekit/assets/img/icon/offline.png', revision: '2' },
 ]);
 

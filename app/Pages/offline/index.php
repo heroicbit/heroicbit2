@@ -1,16 +1,16 @@
-<?= $this->extend('template/layout_member') ?>
+<?= $this->extend('template/layout_offline') ?>
 
 <!-- START Content Section -->
 <?php $this->section('content') ?>
 
     <!-- Alpinejs Routers -->
-    <div id="app" x-data="member()">
+    <div id="app">
         <div class="page-content">
-            <div id="member_offline" x-data="member_offline()">
+            <div id="member_offline">
                 <div class="appHeader">
                     <div class="left">
                     </div>
-                    <div class="pageTitle" x-text="title"></div>
+                    <div class="pageTitle">Koneksi terputus</div>
                     <div class="right">
                     </div>
                 </div>
