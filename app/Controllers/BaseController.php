@@ -58,7 +58,7 @@ abstract class BaseController extends Controller
         $this->data['themeURL'] = base_url('mobilekit') .'/'; 
 		$this->data['themePath'] = 'mobilekit/'; 
 		$this->data['title'] = 'Tarbiyya';
-		$this->data['version'] = 1.30;
+		$this->data['version'] = '1.3.1';
 
 		$this->session = service('session');
     }
