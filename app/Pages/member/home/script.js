@@ -15,8 +15,8 @@ window.member_home = function(){
       }
       
       document.title = this.title;
-      Alpine.store('member').currentPage = 'home'
-      Alpine.store('member').showBottomMenu = true
+      Alpine.store('tarbiyya').currentPage = 'home'
+      Alpine.store('tarbiyya').showBottomMenu = true
       
       if(cachePageData['member/home']){
         this.data = cachePageData['member/home']
@@ -24,7 +24,7 @@ window.member_home = function(){
         fetchPageData('member/home/supply', {
           headers: {
             'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-            'Pesantrenku-ID': Alpine.store('member').pesantrenID
+            'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
           }
         }).then(data => {
           cachePageData['member/home'] = data

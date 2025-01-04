@@ -35,7 +35,7 @@ class PageController extends BaseController
 
 	}
 
-	// This method handle GET request via AJAX
+	// Supply site setting and current user
 	public function getSupply()
 	{
 		// Get database pesantren
@@ -50,7 +50,21 @@ class PageController extends BaseController
 		if($settingQuery)
 			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
 
-		return $this->respond(['tarbiyyaSetting' => $settingQuery]);
+		$userToken = $Tarbiyya->getUserToken();
+		if($userToken) {
+			$userQuery = $db->table('mein_users')
+							->where('id', $userToken->user_id)
+							->get()
+							->getRowArray();
+			$user = [
+				'name' => $userQuery['name'],
+				'email' => $userQuery['email'],
+				'phone' => $userQuery['phone'],
+				'avatar' => $userQuery['avatar'],
+			];
+		}
+
+		return $this->respond(['tarbiyyaSetting' => $settingQuery, 'user' => $user ?? []]);
 	}
 
 	public function getSession()

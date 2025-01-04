@@ -5,8 +5,8 @@ window.member_intro = function(){
         swiper: null,
         init(){
             document.title = this.title
-            Alpine.store('member').currentPage = 'intro'
-            Alpine.store('member').showBottomMenu = false
+            Alpine.store('tarbiyya').currentPage = 'intro'
+            Alpine.store('tarbiyya').showBottomMenu = false
             this.swiper = new Swiper(".swiper-intro", {
                 slidesPerView: 1,
                 spaceBetween: 20,
@@ -21,7 +21,7 @@ window.member_intro = function(){
         },
         gotoLogin(){
             localStorage.setItem('intro', 1)
-            if(Alpine.store('member').pesantrenID == null) 
+            if(Alpine.store('tarbiyya').pesantrenID == null) 
                 return window.PineconeRouter.context.navigate("/kodepesantren");
             else
                 return window.PineconeRouter.context.navigate("/login");

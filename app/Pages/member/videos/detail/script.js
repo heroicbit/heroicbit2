@@ -10,8 +10,8 @@ window.member_videos_detail = function(id){
             window.scrollTo({top:0, behavior:'auto'});
 
             document.title = this.title;
-            Alpine.store('member').currentPage = 'video'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'video'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             // Get cache if exists
             this.video = cachePageData[`member/videos`]?.videos.filter(item => item.id == this.id) ?? {};
@@ -19,7 +19,7 @@ window.member_videos_detail = function(id){
                 fetchPageData(`member/videos/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                     }
                 })
                 .then(data => {

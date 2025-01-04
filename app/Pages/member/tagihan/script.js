@@ -5,8 +5,8 @@ window.member_tagihan = function(){
         data: [],
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'info'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'info'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData['member/info']){
                 this.data = cachePageData['member/info']

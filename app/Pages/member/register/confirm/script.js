@@ -31,9 +31,9 @@ window.member_register_confirm = function(){
         
         init(){
             document.title = this.title
-            Alpine.store('member').currentPage = 'register_confirm'
-            Alpine.store('member').showBottomMenu = false
-            this.data.logo = Alpine.store('member').tarbiyyaSetting.auth_logo
+            Alpine.store('tarbiyya').currentPage = 'register_confirm'
+            Alpine.store('tarbiyya').showBottomMenu = false
+            this.data.logo = Alpine.store('tarbiyya').tarbiyyaSetting.auth_logo
 
             const tokenRegex = /^[a-f0-9]+_[0-9]+X.+$/;
             const urlParams = new URLSearchParams(window.location.search);
@@ -65,13 +65,13 @@ window.member_register_confirm = function(){
             axios.post('/member/register/confirm', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){
                     localStorage.setItem('heroic_token', response.data.jwt)
                     setTimeout(() => {
-                        Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
+                        Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
                         window.PineconeRouter.context.redirect('/')
                     })
                 } else {
@@ -90,7 +90,7 @@ window.member_register_confirm = function(){
             axios.post('/member/register/confirm/resend', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){

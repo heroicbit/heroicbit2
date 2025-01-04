@@ -12,8 +12,8 @@ window.member_profile_delete = function(){
 
         init(){
             document.title = this.title
-            Alpine.store('member').currentPage = 'profile_delete'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'profile_delete'
+            Alpine.store('tarbiyya').showBottomMenu = true
         },
 
         removeAccount() {
@@ -31,7 +31,7 @@ window.member_profile_delete = function(){
             axios.post('/member/profile_delete', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID,
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
                     'Authorization': 'Bearer ' + localStorage.getItem('heroic_token')
                 }
             }).then(response => {

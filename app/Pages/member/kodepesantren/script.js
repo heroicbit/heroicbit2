@@ -12,8 +12,8 @@ window.member_kodepesantren = function(){
             }
 
             document.title = this.title
-            Alpine.store('member').currentPage = 'kodepesantren'
-            Alpine.store('member').showBottomMenu = false
+            Alpine.store('tarbiyya').currentPage = 'kodepesantren'
+            Alpine.store('tarbiyya').showBottomMenu = false
 
             axios.get('/member/kodepesantren/supply')
             .then(response => {
@@ -53,7 +53,7 @@ window.member_kodepesantren = function(){
               .then((response) => {
                 if (response.data.found == 1) {
                   localStorage.setItem("pesantrenID", response.data.pesantrenID);
-                  Alpine.store("member").pesantrenID = response.data.pesantrenID;
+                  Alpine.store('tarbiyya').pesantrenID = response.data.pesantrenID;
                   window.location.replace("/member/kodepesantren/setPesantrenID/" + response.data.pesantrenID);
                 }
               });

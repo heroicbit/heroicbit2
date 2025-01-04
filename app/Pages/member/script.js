@@ -10,40 +10,42 @@ document.addEventListener('alpine:init', () => {
     
     document.addEventListener('pinecone-start', () => {
         NProgress.start();
-        Alpine.store('member').pageLoaded = false
+        Alpine.store('tarbiyya').pageLoaded = false
     });
     document.addEventListener('pinecone-end', () => {
         NProgress.done();
-        Alpine.store('member').pageLoaded = true;
+        Alpine.store('tarbiyya').pageLoaded = true;
     });
     document.addEventListener('fetch-error', (err) => console.error(err));
 
     // Global store
-    Alpine.store('member', {
+    Alpine.store('tarbiyya', {
         currentPage: 'home',
         pageLoaded: false,
         showBottomMenu: true,
         sessionToken: null,
         pesantrenID: null,
-        tarbiyyaSetting: { }
+        tarbiyyaSetting: { },
+        user: { }
     })
     
     window.member = function(){
         return {
             init(){
                 document.title = this.title;
-                Alpine.store('member').pesantrenID = localStorage.getItem("pesantrenID")
-                Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
+                Alpine.store('tarbiyya').pesantrenID = localStorage.getItem("pesantrenID")
+                Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
 
-                if(Alpine.store('member').pesantrenID) {
-                    if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
+                if(Alpine.store('tarbiyya').pesantrenID) {
+                    if(Object.keys(Alpine.store('tarbiyya').tarbiyyaSetting).length < 1){
                         fetchPageData('member/supply', {
                             headers: {
                                 'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                                'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                                'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                             }
                         }).then(data => {
-                            Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting
+                            Alpine.store('tarbiyya').tarbiyyaSetting = data.tarbiyyaSetting
+                            Alpine.store('tarbiyya').user = data.user
                         })
                     }
                 }
@@ -51,13 +53,13 @@ document.addEventListener('alpine:init', () => {
             
             // Check kode pesantren
             isKodePesantrenSet(context){
-                if(Alpine.store('member').pesantrenID == null) return context.redirect('/kodepesantren')
+                if(Alpine.store('tarbiyya').pesantrenID == null) return context.redirect('/kodepesantren')
             },
 
             // Check login session, dipanggil oleh x-handler template yang meemerlukan session
             isLoggedIn(context){
                 if(localStorage.getItem('intro') != 1) return context.redirect('/intro')
-                if(Alpine.store('member').sessionToken == null) return context.redirect('/login')
+                if(Alpine.store('tarbiyya').sessionToken == null) return context.redirect('/login')
             }
         }
     }

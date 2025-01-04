@@ -6,8 +6,8 @@ window.member_videos = function(){
         empty: false,
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'videos'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'videos'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData[`member/videos`]?.videos.length > 0){
                 cachePageData[`member/videos`].videos.forEach(item => {
@@ -36,7 +36,7 @@ window.member_videos = function(){
             fetchPageData(`member/videos/supply?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(data => {
                 if(data.data.videos.length == 0){

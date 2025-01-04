@@ -18,23 +18,23 @@ window.member_login = function () {
     init() {
       if (localStorage.getItem("intro") != 1) {
         window.PineconeRouter.context.navigate("/intro");
-      } else if(Object.keys(Alpine.store("member").tarbiyyaSetting).length < 1){
+      } else if(Object.keys(Alpine.store('tarbiyya').tarbiyyaSetting).length < 1){
         window.PineconeRouter.context.navigate("/kodepesantren");
       }
 
       // Place sandbox login if set
-      this.sandboxLogin = JSON.parse(Alpine.store("member").tarbiyyaSetting.sandbox_login ? Alpine.store("member").tarbiyyaSetting.sandbox_login : "{}");
+      this.sandboxLogin = JSON.parse(Alpine.store('tarbiyya').tarbiyyaSetting.sandbox_login ? Alpine.store('tarbiyya').tarbiyyaSetting.sandbox_login : "{}");
       if(this.sandboxLogin && Object.keys(this.sandboxLogin).length > 0){
         this.data.username = this.sandboxLogin.username;
         this.data.password = this.sandboxLogin.password;
       }
       
       document.title = this.title;
-      Alpine.store("member").currentPage = "login";
-      Alpine.store("member").showBottomMenu = false;
+      Alpine.store('tarbiyya').currentPage = "login";
+      Alpine.store('tarbiyya').showBottomMenu = false;
 
-      this.data.logo = Alpine.store("member").tarbiyyaSetting.auth_logo;
-      this.data.sitename = Alpine.store("member").tarbiyyaSetting.app_title;
+      this.data.logo = Alpine.store('tarbiyya').tarbiyyaSetting.auth_logo;
+      this.data.sitename = Alpine.store('tarbiyya').tarbiyyaSetting.app_title;
 
       this.forceKodePesantren = localStorage.getItem("forcekodepesantren");
     },
@@ -51,13 +51,13 @@ window.member_login = function () {
         .post("/member/login", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Pesantrenku-ID": Alpine.store("member").pesantrenID,
+            "Pesantrenku-ID": Alpine.store('tarbiyya').pesantrenID,
           },
         })
         .then((response) => {
           if (response.data.found == 1) {
             localStorage.setItem("heroic_token", response.data.jwt);
-            Alpine.store("member").sessionToken = localStorage.getItem("heroic_token");
+            Alpine.store('tarbiyya').sessionToken = localStorage.getItem("heroic_token");
 
             setTimeout(() => {
               window.location.replace("/");

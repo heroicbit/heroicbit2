@@ -6,8 +6,8 @@ window.member_page = function(slug) {
         page: {},
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'page'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'page'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             // Get cache if exists
             let url = `member/page/supply/${this.slug}`;
@@ -16,7 +16,7 @@ window.member_page = function(slug) {
                 fetchPageData(url, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                     }
                 })
                 .then(data => {

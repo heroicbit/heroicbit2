@@ -19,15 +19,15 @@ window.member_profile_edit = function(){
         },
         init(){
             document.title = this.title
-            Alpine.store('member').currentPage = 'register'
-            Alpine.store('member').showBottomMenu = false
+            Alpine.store('tarbiyya').currentPage = 'register'
+            Alpine.store('tarbiyya').showBottomMenu = false
 
             if(cachePageData['member/register']){
                 this.data = cachePageData['member/register']
               } else {   
                 fetchPageData('api/member/register', {
                   headers: {
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                   }
                 }).then(data => {
                   cachePageData['member/register'] = data
@@ -54,7 +54,7 @@ window.member_profile_edit = function(){
             axios.post('/pages/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){

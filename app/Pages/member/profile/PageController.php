@@ -20,7 +20,7 @@ class PageController extends MemberPageController {
         $data['profile'] = $db->table('mein_users')
             ->select('mein_users.id, mein_users.name, 
                 mein_users.email, mein_users.avatar, mein_users.phone')
-            // ->where('id', $user->id)
+            ->where('id', $user->user_id)
             ->get()->getRowArray();
 
         return $this->respond($data);

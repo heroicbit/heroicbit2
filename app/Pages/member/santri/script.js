@@ -61,16 +61,16 @@ window.member_santri = function(){
 
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'santri'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'santri'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData['member/santri']){
                 this.data = cachePageData['member/santri']
             } else {   
                 fetchPageData('member/santri/supply', 
                     { headers: {
-                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                        'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
                     } })
                 .then(data => {
                     cachePageData['member/santri'] = data
@@ -134,8 +134,8 @@ window.member_santri = function(){
             } else {   
                 fetchPageData('member/santri/detailPresensi/' + this.detailSantri.id, 
                     { headers: {
-                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                        'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
                     } })
                 .then(data => {
                     cachePageData[`member/santri/${this.detailSantriIndex}/presensi`] = data.presensi
@@ -218,7 +218,7 @@ window.member_santri = function(){
                 fetchPageData('member/santri/checkNIS/' + this.searchNIS, 
                     { headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': Alpine.store('member').pesantrenID} 
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID} 
                     })
                 .then(data => {
                     if(data.found != 1){
@@ -236,7 +236,7 @@ window.member_santri = function(){
                 { token: this.NISFound.token },
                 { headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID} 
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID} 
                 })
             .then(data => {
                 if(data.status == 'success'){

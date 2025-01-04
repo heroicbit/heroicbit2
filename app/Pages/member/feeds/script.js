@@ -6,8 +6,8 @@ window.member_feeds = function(){
         empty: false,
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'feeds'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'feeds'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData[`member/feeds`]?.feeds.length > 0){
                 cachePageData[`member/feeds`].feeds.forEach(item => {
@@ -36,7 +36,7 @@ window.member_feeds = function(){
             fetchPageData(`member/feeds/supply?page=${this.nextPage}`, {
                 headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(data => {
                 if(data.data.posts.length == 0){

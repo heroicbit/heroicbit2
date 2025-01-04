@@ -23,7 +23,9 @@
                             </div>
                             <div class="use text-whiter">
                                 <div class="h5 m-0" x-text="data.profile.name"></div>
-                                <span x-text="data.profile.email"></span>
+                                <small>
+                                    <!-- <a href="/profile/edit"><span class="bi bi-pencil"></span> Edit Profil</a> -->
+                                </small>
                             </div>
                         </div>
                     </div>

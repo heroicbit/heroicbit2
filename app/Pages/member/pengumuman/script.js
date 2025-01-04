@@ -6,16 +6,16 @@ window.member_pengumuman = function(){
         detailPengumuman: null,
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'pengumuman'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'pengumuman'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData['member/pengumuman']){
                 this.data = cachePageData['member/pengumuman']
             } else {
                 fetchPageData('member/pengumuman/supply', {
                     headers: {
-                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                        'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
                     }
                 }).then(data => {
                     cachePageData['member/pengumuman'] = data

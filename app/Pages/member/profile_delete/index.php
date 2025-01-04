@@ -15,7 +15,7 @@
     <div id="appCapsule" class="shadow pt-5 mt-5 pb-2">
         <div class="delete-form text-start mt-1">
             <div class="section mt-1">
-                <h4>Aksi ini akan menghapus akun Anda di aplikasi <span x-text="Alpine.store('member').tarbiyyaSetting.site_title"></span></h4>
+                <h4>Aksi ini akan menghapus akun Anda di aplikasi <span x-text="Alpine.store('tarbiyya').tarbiyyaSetting.site_title"></span></h4>
                 <p>Kami menyediakan fasilitas penghapusan akun ini dalam rangka memenuhi kebijakan privasi aplikasi dan demi kenyamanan Anda sebagai pengguna.
                     Anda dapat melakukan penghapusan akun bilamana dirasa sudah tidak memerlukan lagi akun pada aplikasi ini.
                 </p>

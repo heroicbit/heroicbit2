@@ -7,16 +7,16 @@ window.member_profile = function(){
             window.scrollTo({top:0, behavior:'auto'});
             
             document.title = this.title;
-            Alpine.store('member').currentPage = 'profile'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'profile'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData['member/profile']){
                 this.data = cachePageData['member/profile']
             } else {   
                 fetchPageData('member/profile/supply', {
                     headers: {
-                        'Authorization': `Bearer ` + Alpine.store('member').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('member').kodePesantren,
+                        'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
                     }
                 }).then(data => {
                     cachePageData['member/profile'] = data

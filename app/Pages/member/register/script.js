@@ -20,11 +20,11 @@ window.member_register = function(){
         },
         init(){
             document.title = this.title
-            Alpine.store('member').currentPage = 'register'
-            Alpine.store('member').showBottomMenu = false
+            Alpine.store('tarbiyya').currentPage = 'register'
+            Alpine.store('tarbiyya').showBottomMenu = false
 
-            this.data.logo = Alpine.store("member").tarbiyyaSetting.auth_logo;
-            this.data.sitename = Alpine.store("member").tarbiyyaSetting.site_title;
+            this.data.logo = Alpine.store('tarbiyya').tarbiyyaSetting.auth_logo;
+            this.data.sitename = Alpine.store('tarbiyya').tarbiyyaSetting.site_title;
         },
         register() {
             this.registering = true;
@@ -45,7 +45,7 @@ window.member_register = function(){
             axios.post('/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){

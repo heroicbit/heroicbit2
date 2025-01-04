@@ -69,4 +69,34 @@ class Tarbiyya {
 		return $decodedToken;
 	}
 
+	public function getUserToken()
+	{
+		$headers = getallheaders();
+		$request = service('request');
+		$response = service('response');
+
+		$token = $headers['Authorization'] ?? $request->getGet('authorization') ?? null;
+
+		if(! $token) {
+			return [];
+		}
+
+		$jwt = explode(' ', $token)[1] ?? null;
+		if (! $jwt) {
+			return [];
+		}
+			
+		try {
+			$key = config('App')->jwtKey['secret'];
+			$decodedToken = JWT::decode($jwt, new Key($key, 'HS256'));
+			if (! $decodedToken) {				
+				return [];
+			}
+		} catch (\Exception $e){
+			return [];
+		}
+
+		return $decodedToken;
+	}
+
 }

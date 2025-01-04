@@ -7,8 +7,8 @@ window.member_feeds_detail = function(id){
         swiper: null,
         init(){
             document.title = this.title;
-            Alpine.store('member').currentPage = 'feed'
-            Alpine.store('member').showBottomMenu = true
+            Alpine.store('tarbiyya').currentPage = 'feed'
+            Alpine.store('tarbiyya').showBottomMenu = true
 
             // Get cache if exists
             this.feed = cachePageData[`member/feeds`]?.feeds.filter(item => item.id == this.id) ?? {};
@@ -16,7 +16,7 @@ window.member_feeds_detail = function(id){
                 fetchPageData(`member/feeds/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                     }
                 })
                 .then(data => {
