@@ -1,4 +1,4 @@
-<?php namespace App\Pages\member\profile_delete;
+<?php namespace App\Pages\member\profile\delete;
 
 use App\Pages\member\PageController as MemberPageController;
 
@@ -6,7 +6,7 @@ class PageController extends MemberPageController {
 
     public function getContent()
     {
-        return pageView('member/profile_delete/index', $this->data);
+        return pageView('member/profile/delete/index', $this->data);
     }
 
     public function postIndex()

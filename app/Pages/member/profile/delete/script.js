@@ -21,14 +21,14 @@ window.member_profile_delete = function(){
 
             if(this.data.whatsapp == '' || this.data.password == '') {
                 this.errorMessage = 'Mohon lengkapi semua kolom'
-                return
+                return;
             }
 
             // Check login using axios post
             const formData = new FormData();
             formData.append('whatsapp', this.data.whatsapp ?? '');
             formData.append('password', this.data.password ?? '');
-            axios.post('/member/profile_delete', formData, {
+            axios.post('/member/profile/delete', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
                     'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
