@@ -7,7 +7,6 @@
             <input type="hidden" x-init="forceKodePesantren(`<?= $pesantrenID ?? '' ?>`)">
         <?php endif; ?>
 
-        <form action="<?= site_url('member/kodepesantren') ?>" method="post">
         <div class="login-form mt-1">
             <div class="section">
                 <img src="<?= $themeURL ?>assets/img/logo-white-min.png" alt="image" class="form-image">
@@ -39,7 +38,9 @@
                         <button 
                         type="submit"
                         :disabled="buttonDisabled"
+                        x-on:click="choosePesantren"
                         class="btn btn-outline-secondary bg-white btn-block btn-lg">
+                            <span class="spinner-border spinner-border-sm me-1" x-show="buttonSubmitting" aria-hidden="true"></span>
                             BUKA APLIKASI
                         </button>
                     </div>
@@ -47,7 +48,6 @@
             <?php endif; ?>
 
         </div>
-        </form>
     </div>
     <!-- * App Capsule -->
 

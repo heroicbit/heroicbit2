@@ -3,6 +3,7 @@ window.member_kodepesantren = function(){
     return {
         title: "Kode Pesantren",
         buttonDisabled: true,
+        buttonSubmitting: false,
         allcodes: [],
         kode: null,
         init(){
@@ -25,6 +26,7 @@ window.member_kodepesantren = function(){
             })
         },
 
+        // Called when domain bring kodepesantren itself
         forceKodePesantren(pesantrenID){
             localStorage.setItem('forcekodepesantren', 1)
             localStorage.setItem('pesantrenID', pesantrenID)
@@ -32,9 +34,30 @@ window.member_kodepesantren = function(){
             // Set pesantrenID to session
             setTimeout(() => {
                 window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
-            }, 1000);
-
+            }, 500);
         },
+
+        choosePesantren() {
+            this.buttonSubmitting = true
+            this.buttonDisabled = true
+            
+            // Check login using axios post
+            const formData = new FormData();
+            formData.append("kodepesantren", this.kode);
+            axios
+              .post("/member/kodepesantren", formData, {
+                headers: {
+                  "Content-Type": "multipart/form-data",
+                },
+              })
+              .then((response) => {
+                if (response.data.found == 1) {
+                  localStorage.setItem("pesantrenID", response.data.pesantrenID);
+                  Alpine.store("member").pesantrenID = response.data.pesantrenID;
+                  window.location.replace("/member/kodepesantren/setPesantrenID/" + response.data.pesantrenID);
+                }
+              });
+          },
 
         enableButton(){
             if(this.kode.trim() != '')

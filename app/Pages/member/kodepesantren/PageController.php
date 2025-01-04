@@ -63,14 +63,16 @@ class PageController extends MemberPageController
             $Encrypter = service('encrypter');
             $kodeHash = bin2hex($Encrypter->encrypt($found['database']));
 
-            // Save kodepesantren to session
-            $_SESSION['kodepesantren'] = $kode;
-            $_SESSION['pesantrenID'] = $kodeHash;
+            return $this->respond([
+                'found' => 1,
+                'pesantrenID' => $kodeHash
+            ]);
         }
 
-        header('Location: /member/login');
+        return $this->respond(['found' => 0, 'message' => 'Kode Pesantren tidak ditemukan']);
     }
 
+    // Set pesantrenID to session
     public function getSetPesantrenID($pesantrenID)
     {
         $_SESSION['pesantrenID'] = $pesantrenID;
