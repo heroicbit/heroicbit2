@@ -29,7 +29,7 @@ window.member_kodepesantren = function(){
             setTimeout(() => {
                 localStorage.setItem('forcekodepesantren', 1)
                 localStorage.setItem('pesantrenID', pesantrenID)
-            }, 500);
+            }, 1000);
 
             // Set pesantrenID to session
             window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
