@@ -5,6 +5,7 @@ window.member_login = function () {
     showPwd: false,
     forceKodePesantren: false,
     errorMessage: null,
+    buttonSubmitting: false,
     data: {
       username: "",
       password: "",
@@ -40,6 +41,7 @@ window.member_login = function () {
 
     login() {
       this.errorMessage = "";
+      this.buttonSubmitting = true;
 
       // Check login using axios post
       const formData = new FormData();
@@ -56,8 +58,12 @@ window.member_login = function () {
           if (response.data.found == 1) {
             localStorage.setItem("heroic_token", response.data.jwt);
             Alpine.store("member").sessionToken = localStorage.getItem("heroic_token");
-            window.PineconeRouter.context.navigate("/");
+
+            setTimeout(() => {
+              window.location.replace("/");
+            }, 500);
           } else {
+            this.buttonSubmitting = false;
             this.errorMessage = "Password tidak cocok atau akun belum terdaftar";
             setTimeout(() => (this.errorMessage = ""), 10000);
           }

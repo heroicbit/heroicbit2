@@ -32,7 +32,10 @@
                     </div>
 
                     <div class="text-start mt-2">
-                        <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2">MASUK</button>
+                        <button type="button" x-on:click="login" class="btn btn-primary btn-block btn-lg mb-2" :disabled="buttonSubmitting">
+                            <span class="spinner-border spinner-border-sm me-1" x-show="buttonSubmitting" aria-hidden="true"></span>
+                            MASUK
+                        </button>
                         <hr>
                         <a href="/register" class="btn btn-outline-secondary bg-white btn-block btn-lg mb-2">DAFTAR</a>
                         <div class="d-flex justify-content-between mb-2">
