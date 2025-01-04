@@ -31,7 +31,7 @@ window.member_profile_delete = function(){
             axios.post('/member/profile_delete', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': getCookie("kodepesantren"),
+                    'Pesantrenku-ID': Alpine.store('member').pesantrenID,
                     'Authorization': 'Bearer ' + localStorage.getItem('heroic_token')
                 }
             }).then(response => {

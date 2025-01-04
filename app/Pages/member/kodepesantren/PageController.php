@@ -26,10 +26,6 @@ class PageController extends MemberPageController
                 $this->data['found'] = 1;
                 $this->data['kode'] = $kode;
                 $this->data['pesantrenID'] = $kodeHash;
-
-                // Save kodepesantren to session
-                $_SESSION['pesantrenID'] = $kodeHash;
-                setcookie('kodepesantren', $kodeHash);
             }
         }
 
@@ -62,9 +58,14 @@ class PageController extends MemberPageController
             // Save kodepesantren to session
             $_SESSION['kodepesantren'] = $kode;
             $_SESSION['pesantrenID'] = $kodeHash;
-
-            setcookie('kodepesantren', $kodeHash);
         }
+
+        header('Location: /member/login');
+    }
+
+    public function getSetPesantrenID($pesantrenID)
+    {
+        $_SESSION['pesantrenID'] = $pesantrenID;
 
         header('Location: /member/login');
     }

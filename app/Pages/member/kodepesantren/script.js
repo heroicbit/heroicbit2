@@ -26,13 +26,13 @@ window.member_kodepesantren = function(){
         },
 
         forceKodePesantren(pesantrenID){
-            localStorage.setItem('forcekodepesantren', 1)
-            this.registerKodePesantren(pesantrenID)
-        },
-        
-        registerKodePesantren(pesantrenID){
-            Alpine.store('member').kodePesantren = getCookie("kodepesantren")
-            window.PineconeRouter.context.navigate('/login')
+            setTimeout(() => {
+                localStorage.setItem('forcekodepesantren', 1)
+                localStorage.setItem('pesantrenID', pesantrenID)
+            }, 500);
+
+            // Set pesantrenID to session
+            window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
         },
 
         enableButton(){

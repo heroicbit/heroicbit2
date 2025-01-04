@@ -30,6 +30,7 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prompts-js"></script>
 
     <script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
     <script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>

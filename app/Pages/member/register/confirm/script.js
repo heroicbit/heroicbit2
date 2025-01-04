@@ -65,7 +65,7 @@ window.member_register_confirm = function(){
             axios.post('/member/register/confirm', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': getCookie("kodepesantren")
+                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){
@@ -90,7 +90,7 @@ window.member_register_confirm = function(){
             axios.post('/member/register/confirm/resend', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': getCookie("kodepesantren")
+                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){

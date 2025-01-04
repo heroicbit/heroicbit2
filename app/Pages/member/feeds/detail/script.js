@@ -16,7 +16,7 @@ window.member_feeds_detail = function(id){
                 fetchPageData(`member/feeds/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': getCookie("kodepesantren")
+                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
                     }
                 })
                 .then(data => {

@@ -16,7 +16,7 @@ window.member_page = function(slug) {
                 fetchPageData(url, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': getCookie("kodepesantren")
+                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
                     }
                 })
                 .then(data => {

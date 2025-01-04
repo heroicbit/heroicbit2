@@ -24,8 +24,12 @@ window.member_profile = function(){
                 })
             }
         },
-        logout(){
-            window.location.href = '/logout'
+        async logout(){
+            // Confirm
+            const confirmed = await Prompts.confirm("Anda yakin akan keluar dari aplikasi?");
+            if (confirmed) {
+                window.location.href = '/logout'
+            }
         }
     }
 }

@@ -24,7 +24,7 @@ window.member_home = function(){
         fetchPageData('member/home/supply', {
           headers: {
             'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-            'Pesantrenku-ID': getCookie("kodepesantren")
+            'Pesantrenku-ID': Alpine.store('member').pesantrenID
           }
         }).then(data => {
           cachePageData['member/home'] = data

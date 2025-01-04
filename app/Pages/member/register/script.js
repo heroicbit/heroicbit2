@@ -45,7 +45,7 @@ window.member_register = function(){
             axios.post('/member/register', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': getCookie("kodepesantren")
+                    'Pesantrenku-ID': Alpine.store('member').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){

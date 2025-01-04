@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
         pageLoaded: false,
         showBottomMenu: true,
         sessionToken: null,
-        kodePesantren: null,
+        pesantrenID: null,
         tarbiyyaSetting: { }
     })
     
@@ -32,15 +32,15 @@ document.addEventListener('alpine:init', () => {
         return {
             init(){
                 document.title = this.title;
-                Alpine.store('member').kodePesantren = getCookie("kodepesantren")
+                Alpine.store('member').pesantrenID = localStorage.getItem("pesantrenID")
                 Alpine.store('member').sessionToken = localStorage.getItem('heroic_token')
 
-                if(Alpine.store('member').kodePesantren) {
+                if(Alpine.store('member').pesantrenID) {
                     if(Object.keys(Alpine.store('member').tarbiyyaSetting).length < 1){
                         fetchPageData('member/supply', {
                             headers: {
                                 'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                                'Pesantrenku-ID': getCookie("kodepesantren")
+                                'Pesantrenku-ID': Alpine.store('member').pesantrenID
                             }
                         }).then(data => {
                             Alpine.store('member').tarbiyyaSetting = data.tarbiyyaSetting
@@ -51,11 +51,12 @@ document.addEventListener('alpine:init', () => {
             
             // Check kode pesantren
             isKodePesantrenSet(context){
-                if(Alpine.store('member').kodePesantren == null) return context.redirect('/kodepesantren')
+                if(Alpine.store('member').pesantrenID == null) return context.redirect('/kodepesantren')
             },
 
             // Check login session, dipanggil oleh x-handler template yang meemerlukan session
             isLoggedIn(context){
+                if(localStorage.getItem('intro') != 1) return context.redirect('/intro')
                 if(Alpine.store('member').sessionToken == null) return context.redirect('/login')
             }
         }

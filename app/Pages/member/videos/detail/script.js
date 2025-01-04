@@ -19,7 +19,7 @@ window.member_videos_detail = function(id){
                 fetchPageData(`member/videos/detail/supply/${this.id}`, {
                     headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': getCookie("kodepesantren")
+                        'Pesantrenku-ID': Alpine.store('member').pesantrenID
                     }
                 })
                 .then(data => {

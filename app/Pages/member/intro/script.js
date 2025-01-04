@@ -21,7 +21,10 @@ window.member_intro = function(){
         },
         gotoLogin(){
             localStorage.setItem('intro', 1)
-            window.location.href = '/member/kodepesantren'
+            if(Alpine.store('member').pesantrenID == null) 
+                return window.PineconeRouter.context.navigate("/kodepesantren");
+            else
+                return window.PineconeRouter.context.navigate("/login");
         }
     }
 }

@@ -218,7 +218,7 @@ window.member_santri = function(){
                 fetchPageData('member/santri/checkNIS/' + this.searchNIS, 
                     { headers: {
                         'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                        'Pesantrenku-ID': getCookie("kodepesantren")} 
+                        'Pesantrenku-ID': Alpine.store('member').pesantrenID} 
                     })
                 .then(data => {
                     if(data.found != 1){
@@ -236,7 +236,7 @@ window.member_santri = function(){
                 { token: this.NISFound.token },
                 { headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                    'Pesantrenku-ID': getCookie("kodepesantren")} 
+                    'Pesantrenku-ID': Alpine.store('member').pesantrenID} 
                 })
             .then(data => {
                 if(data.status == 'success'){

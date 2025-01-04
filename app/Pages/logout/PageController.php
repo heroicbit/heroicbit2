@@ -9,9 +9,6 @@ class PageController extends MemberPageController
     
     public function getIndex()
     {
-        $_SESSION = [];
-        setcookie("kodepesantren", "", time()-3600);
-
         return pageView('logout/index', $this->data);
     }
 

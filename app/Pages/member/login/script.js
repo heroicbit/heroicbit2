@@ -49,7 +49,7 @@ window.member_login = function () {
         .post("/member/login", formData, {
           headers: {
             "Content-Type": "multipart/form-data",
-            "Pesantrenku-ID": getCookie("kodepesantren"),
+            "Pesantrenku-ID": Alpine.store("member").pesantrenID,
           },
         })
         .then((response) => {
