@@ -54,12 +54,19 @@ class PageController extends MemberPageController
                 ];
                 $key = config('App')->jwtKey['secret'];
                 $jwt = JWT::encode($userSession, $key, 'HS256');
+
+                $user = [
+                    'name' => $found->name,
+                    'email' => $found->email,
+                    'phone' => $found->phone
+                ];
             }
         }
 
         return $this->respond([
             'found' => $jwt ? 1 : 0,
-            'jwt' => $jwt
+            'jwt' => $jwt,
+            'user' => $user ?? []
         ]);
     }
 
