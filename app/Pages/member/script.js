@@ -29,7 +29,7 @@ document.addEventListener('alpine:init', () => {
         user: { }
     })
     
-    window.member = function(){
+    window.router = function(){
         return {
             init(){
                 document.title = this.title;
