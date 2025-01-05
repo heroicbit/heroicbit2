@@ -2,10 +2,6 @@
 
 use App\Controllers\BaseController;
 use CodeIgniter\API\ResponseTrait;
-use CodeIgniter\HTTP\RequestInterface;
-use CodeIgniter\HTTP\ResponseInterface;
-use Psr\Log\LoggerInterface;
-use Symfony\Component\Yaml\Yaml;
 
 class PageController extends BaseController 
 {
@@ -21,13 +17,6 @@ class PageController extends BaseController
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
 		if($db) {
-			$bottommenu = $db->table('menus')
-							->where('slug', 'tarbiyya-bottommenu')
-							->where('status', 1)
-							->get()
-							->getRowArray();
-			$this->data['bottommenu'] = Yaml::parse($bottommenu['schema']);
-			
 			return pageView('member/index', $this->data);
 		} else {
 			header('Location: /member/kodepesantren');
@@ -57,10 +46,10 @@ class PageController extends BaseController
 							->get()
 							->getRowArray();
 			$user = [
-				'name' => $userQuery['name'],
-				'email' => $userQuery['email'],
-				'phone' => $userQuery['phone'],
-				'avatar' => $userQuery['avatar'],
+				'name' => $userQuery['name'] ?? '',
+				'email' => $userQuery['email'] ?? '',
+				'phone' => $userQuery['phone'] ?? '',
+				'avatar' => $userQuery['avatar'] ?? '',
 			];
 		}
 

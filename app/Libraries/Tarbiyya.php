@@ -57,7 +57,7 @@ class Tarbiyya {
 			$key = config('App')->jwtKey['secret'];
 			$decodedToken = JWT::decode($jwt, new Key($key, 'HS256'));
 		} catch (\Exception $e){
-			$response->setStatusCode(401, 'Authorization token not found')->send();
+			$response->setStatusCode(401, 'Invalid token')->send();
 			exit;
 		}
 		

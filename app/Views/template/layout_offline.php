@@ -14,8 +14,8 @@
     <link rel="manifest" href="/<?= ($_SERVER['SITENAME'] ?? null) ? $_SERVER['SITENAME'] : 'tarbiyya' ?>_manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
-    <link rel="stylesheet" href="<?= $themeURL ?>assets/css/custom.css?v<?= $version ?>">
+    <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/custom.css') ?>">
 </head>
 
 <body>

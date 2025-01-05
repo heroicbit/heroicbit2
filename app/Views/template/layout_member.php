@@ -14,8 +14,8 @@
     <link rel="manifest" href="/<?= ($_SERVER['SITENAME'] ?? null) ? $_SERVER['SITENAME'] : 'tarbiyya' ?>_manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
-    <link rel="stylesheet" href="<?= $themeURL ?>assets/css/style.css?v<?= $version ?>">
-    <link rel="stylesheet" href="<?= $themeURL ?>assets/css/custom.css?v<?= $version ?>">
+    <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/style.css') ?>">
+    <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/custom.css') ?>">
 </head>
 
 <body>
@@ -32,9 +32,9 @@
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prompts-js"></script>
 
-    <script src="<?= $themeURL ?>assets/js/helpers.bundle.js?v<?= $version ?>"></script>
-    <script src="<?= $themeURL ?>assets/js/base.js?v<?= $version ?>"></script>
-    <script src="<?= $themeURL ?>assets/js/pagescript.js?v<?= $version ?>" defer></script>    
+    <script src="<?= asset_url('mobilekit/assets/js/helpers.bundle.js') ?>"></script>
+    <script src="<?= asset_url('mobilekit/assets/js/base.js') ?>"></script>
+    <script src="<?= asset_url('mobilekit/assets/js/pagescript.js') ?>" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/pinecone-router@5.x.x/dist/router.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
 
