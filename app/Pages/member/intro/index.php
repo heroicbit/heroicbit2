@@ -2,26 +2,11 @@
 <div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
 
 <style>
-.swiper-pagination-bullet {
-    width: 30px !important;
-    height: 5px !important;
-    border-radius: 0 !important;
-}
-.swiper-intro {
-    height: 80vh;
-}
-.swiper-intro .swiper-pagination {
-    position: fixed;
-    bottom: 90px;
-}
-.img-banner {
-    width: 100%;
-}
-@media only screen and (min-width: 992px) {
-    .img-banner {
-    width: 75%;
-    }
-}
+.swiper-pagination-bullet{ width: 30px !important; height: 5px !important; border-radius: 0 !important}
+.swiper-intro{ height: 80vh}
+.swiper-intro .swiper-pagination{ position: fixed; bottom: 90px}
+.img-banner{ width: 100%}
+@media only screen and (min-width: 992px){ .img-banner{ width: 75%;}}
 </style>
 
     <div id="appCapsule" class="shadow">
