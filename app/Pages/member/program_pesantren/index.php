@@ -33,7 +33,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
             </div>
             <div class="offcanvas-body">
-                <p class="" x-html="detail.content"></p>
+                <p class="" x-html="detail?.content"></p>
             </div>
         </div>
 

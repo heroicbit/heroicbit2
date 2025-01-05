@@ -8,7 +8,7 @@
                 <a href="/member/pengumuman" class="item rounded-top-5 bg-brand-2 d-flex">
                     <div class="text-light">
                         <h3 class="text-white m-0" style="font-size: 1rem;">Pengumuman Baru</h3>
-                        <div style="font-size: 15px; line-height: 1.3rem;" x-text="data.pengumuman.title">Penggalangan Dana Pembanguan Gedung Perpustakaan Baru</div>
+                        <div style="font-size: 15px; line-height: 1.3rem;" x-text="data.pengumuman?.title"></div>
                         <div class="d-flex">
                             <small class="text-white-50" style="font-size: 13px;" x-show="unreadPengumuman > 1">+<span x-text="unreadPengumuman-1">2</span> pengumuman lainnya</small>
                         </div>

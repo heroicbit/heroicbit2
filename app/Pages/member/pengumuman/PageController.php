@@ -11,17 +11,26 @@ class PageController extends MemberPageController {
 
     public function getSupply()
     {
+        $page = (int)($this->request->getGet('page') ?? 1);
+		$status = $this->request->getGet('status') ?? 'publish';
+		$perpage = (int)($this->request->getGet('perpage') ?? 7);
+		$offset = ($page-1) * $perpage;
+
         // Get post data
 		$query = "SELECT *
             FROM `pengumuman`
-            WHERE status = 'publish'
+            WHERE status = :status:
             ORDER BY publish_date DESC
-            LIMIT 5";
+            LIMIT :offset:, :perpage:";
 
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
-        $posts = $db->query($query)->getResultArray();
+        $posts = $db->query($query, [
+            'status' => $status,
+            'offset' => $offset,
+            'perpage' => $perpage
+        ])->getResultArray();
 
         $data['pengumuman'] = $posts;
         $data['icons'] = $this->getPengumumanIcons();
