@@ -50,6 +50,7 @@ class PageController extends BaseController
 				'email' => $userQuery['email'] ?? '',
 				'phone' => $userQuery['phone'] ?? '',
 				'avatar' => $userQuery['avatar'] ?? '',
+				'date_join' => $userQuery['created_at'] ?? '',
 			];
 		}
 

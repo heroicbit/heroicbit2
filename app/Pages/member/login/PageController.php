@@ -21,6 +21,7 @@ class PageController extends MemberPageController
         return pageView('member/login/index', $this->data);
     }
 
+    // Check login
     public function postIndex()
     {
         $username = strtolower($this->request->getPost('username'));
@@ -39,7 +40,7 @@ class PageController extends MemberPageController
         $db = $Tarbiyya->initDBPesantren();
 
         // Check login to database directly using $db
-        $found = $db->query('SELECT * FROM mein_users where email = :username: OR phone = :username:', ['username' => $username])->getRow();
+        $found = $db->query('SELECT * FROM mein_users where (email = :username: OR phone = :username:) AND status = "active"', ['username' => $username])->getRow();
         $jwt = null;
         if($found) {
             $Phpass = new \App\Libraries\Phpass();

@@ -17,6 +17,7 @@ class PageController extends MemberPageController {
         return pageView('member/register/index', $this->data);
     }
 
+    // Submit new user
     public function postIndex()
     {
         $request = service('request');
@@ -71,7 +72,8 @@ class PageController extends MemberPageController {
             'username' => $phone,
             'password' => $password,
             'token' => $token,
-            'otp' => $otp
+            'otp' => $otp,
+            'ceated_at' => date('Y-m-d H:i:s'),
         ];
         $db->table('mein_users')->insert($userData);
         $id = $db->insertID();
