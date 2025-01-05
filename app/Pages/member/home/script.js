@@ -7,7 +7,7 @@ window.member_home = function(){
     showAllIcons: false,
     swiperArticle: null,
     swiperVideo: null,
-    unreadPengumuman: 3,
+    pengumumanRead: [],
 
     init() {
       if(localStorage.getItem('intro') != 1){
@@ -17,6 +17,8 @@ window.member_home = function(){
       document.title = this.title;
       Alpine.store('tarbiyya').currentPage = 'home'
       Alpine.store('tarbiyya').showBottomMenu = true
+
+      this.pengumumanRead = JSON.parse(localStorage.getItem('pengumumanRead') ?? '[]')
       
       if(cachePageData['member/home']){
         this.data = cachePageData['member/home']

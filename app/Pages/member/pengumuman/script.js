@@ -3,6 +3,7 @@ window.member_pengumuman = function(){
     return {
         title: "Pengumuman Pesantren",
         pengumuman: [],
+        pengumumanRead: [],
         icons: [],
         nextPage: 1,
         detailPengumuman: null,
@@ -13,6 +14,8 @@ window.member_pengumuman = function(){
             document.title = this.title;
             Alpine.store('tarbiyya').currentPage = 'pengumuman'
             Alpine.store('tarbiyya').showBottomMenu = true
+
+            this.pengumumanRead = JSON.parse(localStorage.getItem('pengumumanRead') ?? '[]')
 
             if(cachePageData[`member/pengumuman`]?.pengumuman.length > 0){
                 cachePageData[`member/pengumuman`].pengumuman.forEach(item => {
@@ -55,6 +58,13 @@ window.member_pengumuman = function(){
         },
         showDetail(index){
             this.detailPengumuman = this.pengumuman[index]
+
+            // Record unread penumuman already read if not recorded
+            if(Alpine.store('tarbiyya').user.date_join < this.pengumuman[index].publish_date
+                && this.pengumumanRead.includes(this.pengumuman[index].id) == false) {
+                this.pengumumanRead.push(this.pengumuman[index].id)
+                localStorage.setItem('pengumumanRead', JSON.stringify(this.pengumumanRead))
+            }
         },
     }
 }

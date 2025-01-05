@@ -25,6 +25,9 @@
                                 <span x-text="post.title"></span>
                                 <div class="text-muted" x-text="formatDate(post.publish_date)"></div>
                             </div>
+                            <span 
+                             class="badge badge-primary" 
+                             x-show="Alpine.store('tarbiyya').user.date_join < post.publish_date && pengumumanRead.includes(post.id) == false">&nbsp;</span>
                         </div>
                     </a>
                 </li>
