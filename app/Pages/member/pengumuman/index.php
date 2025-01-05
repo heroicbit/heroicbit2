@@ -20,8 +20,9 @@
                     <a href="javascript:void()" class="item" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas" x-on:click="showDetail(postIndex)">
                         <i :class="icons[post.category]" class="fs-2 text-primary me-2"></i>
                         <div class="in">
-                            <div class="title">
-                                <small class="text-black-50 fw-bold d-block" x-text="post.category"></small>
+                            <div class="title"
+                            :class="Alpine.store('tarbiyya').user.date_join < post.publish_date && pengumumanRead.includes(post.id) == false ? '' : 'text-secondary'">
+                                <small class="fw-bold d-block" x-text="post.category"></small>
                                 <span x-text="post.title"></span>
                                 <div class="text-muted" x-text="formatDate(post.publish_date)"></div>
                             </div>
