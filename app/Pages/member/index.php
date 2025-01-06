@@ -46,6 +46,12 @@
                 x-template="['/member/reset_password/content']" 
                 x-handler="isKodePesantrenSet"
                 ></template>
+            <!-- Change Password -->
+            <template 
+                x-route="/reset_password/confirm/:token" 
+                x-template="['/member/reset_password/content']" 
+                x-handler="isKodePesantrenSet"
+                ></template>
             <!-- Page -->
             <template 
                 x-route="/page/:slug" 

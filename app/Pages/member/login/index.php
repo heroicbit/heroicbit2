@@ -43,7 +43,7 @@
                                 <a class="mb-1" href="/kodepesantren" style="font-size: 1.1rem;font-weight: 500;color: #005e55;">Ganti Pesantren</a>
                             </div>
                             <div>
-                                <a href="page-forgot-password.html" style="font-size:1.1rem;color:white;text-shadow:1px 1px 2px #666">Lupa Kata Sandi?</a>
+                                <a href="/reset_password" style="font-size:1.1rem;color:white;text-shadow:1px 1px 2px #666">Lupa Kata Sandi?</a>
                             </div>
                         </div>
                     </div>

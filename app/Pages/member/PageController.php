@@ -37,7 +37,10 @@ class PageController extends BaseController
 							->getResultArray();
 		
 		if($settingQuery)
+		{
 			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
+			unset($settingQuery['recaptcha_secret_key']);
+		}
 
 		$userToken = $Tarbiyya->getUserToken();
 		if($userToken) {

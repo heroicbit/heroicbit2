@@ -1,4 +1,4 @@
-<?php namespace App\Pages\member\register\confirm;
+<?php namespace App\Pages\member\reset_password\confirm;
 
 use App\Pages\member\PageController as MemberPageController;
 use Firebase\JWT\JWT;
@@ -6,9 +6,9 @@ use Firebase\JWT\JWT;
 class PageController extends MemberPageController {
 
     // Load member layout
-	public function getIndex()
+	public function getIndex($token = null)
 	{
-		$this->data['page_title'] = 'Konfirmasi Pendaftaran';
+		$this->data['page_title'] = 'Ganti Kata Sandi';
 
 		return pageView('member/index', $this->data);
 	}
