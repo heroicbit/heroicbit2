@@ -50,14 +50,24 @@ class PageController extends MemberPageController {
 			$phone = '62'.$phone;
 
         // Get user
-        $query = "SELECT name, phone FROM mein_users WHERE phone = :phone:";
+        $query = "SELECT id, name, phone FROM mein_users WHERE phone = :phone:";
         $user = $db->query($query, ['phone' => $phone])->getRowArray();
-        if($user['phone'] ?? null) 
+        if($user) 
         {
-            [$otp, $token, $response] = $this->sendOTP($user['name'], $user['phone']);
+            // Update token and otp
+            helper('text');
+            $otp = random_string('numeric', 6);
+            $token = sha1($otp);
+            $db->table('mein_users')->where('id', $user['id'])->update([
+                'token' => $token,
+                'otp' => $otp
+            ]);
+
+            // Send otp to whatsapp
+            $response = $this->sendOTP($user['name'], $user['phone'], $otp);
 
             return $this->respond([
-                'success' => 1, 'token' => $token
+                'success' => 1, 'token' => $token, 'id' => $user['id']
             ]);
         } else {
             
@@ -67,12 +77,8 @@ class PageController extends MemberPageController {
         }
     }
 
-    public function sendOTP($name, $phone) 
+    public function sendOTP($name, $phone, $otp) 
     {
-        helper('text');
-        $otp = random_string('numeric', 6);
-        $token = sha1($otp);
-
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
@@ -84,11 +90,11 @@ class PageController extends MemberPageController {
                 ->get()->getRowArray();
         $namaAplikasi = $appSetting['option_value'] ?? null; 
 
-        $message = "Halo {$name},\n            
-        Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi {$namaAplikasi}
-        Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:\n
-        *{$otp}*\n
-        Salam,";
+        $message = "Halo {$name},\n\n";
+        $message .= "Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi {$namaAplikasi}\n";
+        $message .= "Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:\n\n";
+        $message .= "*{$otp}*\n\n";
+        $message .= "Salam,";
 
         $curl = curl_init();
         curl_setopt_array($curl, [
@@ -110,6 +116,6 @@ class PageController extends MemberPageController {
         ]);
         $response = curl_exec($curl);
         curl_close($curl);
-        return [$otp, $token, $response];
+        return $response;
     }
 }

@@ -54,7 +54,7 @@
                             <label class="text-white fs-6" for="identity">Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="new-password" x-model="data.password" required>
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
-                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
                             </i>
                         </div>
                         <small class="text-danger" x-show="errors.password" x-text="errors.password"></small>
@@ -65,7 +65,7 @@
                             <label class="text-white fs-6" for="identity">Ulangi Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="repeat-pwd" autocomplete="new-password" x-model="data.repeat_password" required>
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
-                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
                             </i>
                         </div>
                         <small class="text-danger" x-show="errors.repeat_password" x-text="errors.repeat_password"></small>

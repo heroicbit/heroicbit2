@@ -40,7 +40,7 @@ class PageController extends MemberPageController {
             ]);
         } else {
             // Activate user status
-            $query = "UPDATE mein_users SET status = 'active' WHERE id = :id:";
+            $query = "UPDATE mein_users SET status = 'active', token = NULL, otp = NULL WHERE id = :id:";
             $db->query($query, ['id' => $id]);
 
             // Create JWT

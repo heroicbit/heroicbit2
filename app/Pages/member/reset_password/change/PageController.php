@@ -1,4 +1,4 @@
-<?php namespace App\Pages\member\reset_password\confirm;
+<?php namespace App\Pages\member\reset_password\change;
 
 use App\Pages\member\PageController as MemberPageController;
 use Firebase\JWT\JWT;
@@ -15,7 +15,7 @@ class PageController extends MemberPageController {
     
     public function getContent()
     {
-        return pageView('member/register/confirm/index', $this->data);
+        return pageView('member/reset_password/change/index', $this->data);
     }
     
     public function postIndex()
@@ -23,10 +23,10 @@ class PageController extends MemberPageController {
         $request = service('request');
 
         $token = $request->getPost('token');
-        $otp = $request->getPost('otp');
+        $otp = trim($request->getPost('otp'));
         $id = $request->getPost('id');
+        $password = trim($request->getPost('password'));
 
-        // Get database pesantren
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
@@ -36,12 +36,14 @@ class PageController extends MemberPageController {
         $user = $db->query($query, ['id' => $id])->getRow();
         if($user?->otp != $otp || $user?->token != $token) {
             return $this->respond([
-                'success' => 0, 'message' => 'Kode OTP yang anda masukkan salah.'
+                'success' => 0, 'message' => 'Kode Reset yang anda masukkan salah.'
             ]);
         } else {
-            // Activate user status
-            $query = "UPDATE mein_users SET status = 'active' WHERE id = :id:";
-            $db->query($query, ['id' => $id]);
+            // Update password
+            $Phpass = new \App\Libraries\Phpass();
+            $password = $Phpass->HashPassword($password);
+            $query = "UPDATE mein_users SET status = 'active', token = NULL, otp = NULL, password = :password: WHERE id = :id:";
+            $db->query($query, ['id' => $id, 'password' => 'password']);
 
             // Create JWT
             $userSession = [

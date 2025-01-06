@@ -19,6 +19,8 @@ window.member_reset_password = function(){
             this.recaptchaWidget = grecaptcha.render('grecaptcha', {
                 'sitekey' : Alpine.store('tarbiyya').tarbiyyaSetting.recaptcha_site_key,
             });
+            if(this.recaptchaWidget === null)
+                window.location.href = '/member/reset_password'
         },
 
         confirm(){
@@ -50,7 +52,8 @@ window.member_reset_password = function(){
             }).then(response => {
                 window.console.log(response)
                 if(response.data.success == 1){
-                    window.PineconeRouter.context.redirect('/reset_password/confirm/' + response.data.token)
+                    let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
+                    window.PineconeRouter.context.redirect('/reset_password/change/' + token)
                 } else {
                     this.error = response.data.message
                     grecaptcha.reset(this.recaptchaWidget)

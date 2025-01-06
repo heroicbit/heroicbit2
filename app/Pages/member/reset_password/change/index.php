@@ -1,4 +1,4 @@
-<div id="member-reset-password-confirm" x-data="member_reset_password_confirm()">
+<div id="member-reset-password-confirm" x-data="member_reset_password_confirm($router.params.token)">
 <div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
 
     <div class="appHeader">
@@ -16,32 +16,31 @@
                 <img :src="data.logo" alt="image" class="form-image">
             </div>
             <div class="section mt-1">
-                <p class="text-white">Untuk melanjutkan pendaftaran, masukkan kode registrasi yang telah kami kirimkan ke nomor WhatsApp Anda.</p>
+                <p class="text-white">Masukkan kode reset yang telah kami kirimkan ke nomor WhatsApp Anda, lalu masukkan kata sandi yang baru untuk Anda masuk ke aplikasi.</p>
             </div>
             <div class="section mt-1 mb-5 px-0">
                 <div>                    
                     <div class="py-3">
-                        <div class="form-group px-3 py-3 text-start bg-secondary bg-opacity-25"> 
-                            <div class="d-flex justify-content-between">
-                                <label class="fw-bold mb-1">Tidak menerima Kode Registrasi?</label>
-                            </div>
-                            <small x-show="remainingTime > 0">Kirim ulang dalam <span x-text="formattedTime"></span></small>
-                            <div class="d-flex">
-                                <button type="button" x-on:click="resendOTP" class="btn bg-success text-white btn-sm" :disabled="remainingTime > 0 || resending"><span class="bi bi-whatsapp me-1"></span> <span x-text="resending ? 'Mengirim ulang...' : 'Kirim Ulang Kode ke WhatsApp'"></span></button>
-                            </div>
-                        </div>
-                        
-                        <div class="form-group px-3 boxed mt-3 text-start">
+                        <div class="form-group px-3 boxed text-start">
                             <div class="text-start input-wrapper">
-                                <label class="fw-bold">Masukkan kode registrasi di sini</label>
+                                <label class="fw-bold text-white">Kode Reset</label>
                                 <input type="text" maxlength="6" class="form-control" placeholder="_ _ _ _ _ _" autocomplete="new-password" x-model="data.otp" required>
                             </div>
                             <small class="text-danger" x-show="error" x-text="error"></small>
                         </div>
                     </div>
+                    <div class="form-group boxed px-3">
+                        <div class="text-start input-wrapper">
+                            <label class="text-white fs-6" for="identity">Kata Sandi Baru</label>
+                            <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="new-password" x-model="data.password" required>
+                            <i x-on:click="showPwd = !showPwd" class="input-icon-append">
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
+                            </i>
+                        </div>
+                    </div>
 
                     <div class="form-group px-3 mt-3">
-                        <button type="button" x-on:click="confirm" class="btn btn-primary btn-block btn-lg">Konfirmasi</button>
+                        <button type="button" x-on:click="confirm" class="btn btn-primary btn-block btn-lg">Ganti Kata Sandi</button>
                     </div>
                 </div>
             </div>

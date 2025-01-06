@@ -26,7 +26,7 @@
                             <label class="text-white fs-6" for="identity">Kata Sandi</label>
                             <input :type="showPwd ? 'text' : 'password'" class="form-control" id="pwd" autocomplete="off" x-model="data.password">
                             <i x-on:click="showPwd = !showPwd" class="input-icon-append">
-                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-off-outline' : 'eye-outline'"></ion-icon>
+                                <ion-icon id="pw-icon" :name="showPwd ? 'eye-outline' : 'eye-off-outline'"></ion-icon>
                             </i>
                         </div>
                     </div>

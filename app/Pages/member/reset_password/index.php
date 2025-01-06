@@ -38,6 +38,7 @@
 
                     <div class="form-group px-3 mt-3">
                         <button type="button" x-on:click="confirm" class="btn btn-primary btn-block btn-lg" :disabled="sending || phone.length < 10">
+                            <span class="spinner-border spinner-border-sm me-1" role="status" aria-hidden="true" x-show="sending"></span>
                             <span x-text="sending ? `Memverifikasi..` : `Atur Ulang Kata Sandi`"></span>
                         </button>
                     </div>
