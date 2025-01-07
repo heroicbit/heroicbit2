@@ -35,6 +35,8 @@ class PageController extends MemberPageController {
             ->where('option_group', 'tarbiyya')
             ->where('option_name', 'recaptcha_secret_key')
             ->get()->getRowArray();
+        if(empty($recaptchaSetting['option_value']))
+            $recaptchaSetting['option_value'] = config('App')->recaptcha_secret_key;
         $Recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSetting['option_value']);
         $resp = $Recaptcha->setExpectedHostname($_SERVER['HTTP_HOST'])
                         ->verify($recaptchaResponse, $_SERVER['REMOTE_ADDR']);
@@ -91,7 +93,7 @@ class PageController extends MemberPageController {
         $namaAplikasi = $appSetting['option_value'] ?? null; 
 
         $message = "Halo {$name},\n\n";
-        $message .= "Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi {$namaAplikasi}\n";
+        $message .= "Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi *{$namaAplikasi}*.\n";
         $message .= "Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:\n\n";
         $message .= "*{$otp}*\n\n";
         $message .= "Salam,";

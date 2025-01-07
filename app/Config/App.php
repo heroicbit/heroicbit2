@@ -212,6 +212,9 @@ class App extends BaseConfig
         'secret' => 'A8xl9FX2/M77KUnLlrt7mWt4gLFM+6ZbPzG6takiSTU=',
     ];
 
+    public $recaptcha_site_key = "6LcDLbAqAAAAAMgwHkDRBfDU6NMPC2Kmt6dKw1g5";
+    public $recaptcha_secret_key = "6LcDLbAqAAAAAJQpyWXfTvXJXJctF3F6wBijnAjX";
+
     // Set up Base URL for multisite
     public function __construct()
     {

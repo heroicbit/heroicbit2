@@ -40,6 +40,10 @@ class PageController extends BaseController
 		{
 			$settingQuery = array_combine(array_column($settingQuery, 'option_name'), array_column($settingQuery, 'option_value'));
 			unset($settingQuery['recaptcha_secret_key']);
+
+			// Use Tarbiyya recaptcha if site not provide
+			if(empty($settingQuery['recaptcha_site_key']))
+				$settingQuery['recaptcha_site_key'] = config('App')->recaptcha_site_key; 
 		}
 
 		$userToken = $Tarbiyya->getUserToken();
