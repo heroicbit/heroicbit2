@@ -40,7 +40,17 @@
                         <a href="/register" class="btn btn-outline-secondary bg-white btn-block btn-lg mb-2">DAFTAR</a>
                         <div class="d-flex justify-content-between mb-2">
                             <div x-show="!forceKodePesantren">
-                                <a class="mb-1" href="/kodepesantren" style="font-size: 1.1rem;font-weight: 500;color: #005e55;">Ganti Pesantren</a>
+                                <div x-data="{clicked:false}">
+                                    <a class="mb-1" 
+                                    native 
+                                    href="/member/kodepesantren" 
+                                    style="font-size: 1.1rem;font-weight: 500;color: #005e55;"
+                                    @click="clicked = true"
+                                    :class="clicked ? 'disabled' : ''">
+                                    <span>Ganti Pesantren</span>
+                                    <span x-show="clicked" class="spinner-border spinner-border-sm ms-1" aria-hidden="true"></span>
+                                    </a>
+                                </div>
                             </div>
                             <div>
                                 <a href="/reset_password" style="font-size:1.1rem;color:white;text-shadow:1px 1px 2px #666">Lupa Kata Sandi?</a>

@@ -76,12 +76,4 @@ class PageController extends MemberPageController
         return $this->respond(['found' => 0, 'message' => 'Kode Pesantren tidak ditemukan']);
     }
 
-    // Set pesantrenID to session
-    public function getSetPesantrenID($pesantrenID)
-    {
-        $_SESSION['pesantrenID'] = $pesantrenID;
-
-        header('Location: /member/login');
-    }
-
 }

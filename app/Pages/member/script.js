@@ -25,30 +25,43 @@ document.addEventListener('alpine:init', () => {
         showBottomMenu: true,
         sessionToken: null,
         pesantrenID: null,
-        tarbiyyaSetting: { },
-        user: { }
+        tarbiyyaSetting: {},
+        user: {},
+        async getSiteSettings(pesantrenID) {
+            if(pesantrenID) {
+                if(Object.keys(Alpine.store('tarbiyya').tarbiyyaSetting).length < 1){
+                    try{
+                        await axios.get('/member/settings/' + pesantrenID, {
+                            headers: {
+                                'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
+                                'Pesantrenku-ID': pesantrenID,
+                            }
+                        })
+                        .then(response => {
+                            Alpine.store('tarbiyya').tarbiyyaSetting = response.data.tarbiyyaSetting
+                            Alpine.store('tarbiyya').user = response.data.user
+                        })
+                        .catch(error => {
+                            console.log(error);
+                        });
+                    } catch (error) {
+                        // Tangani error jika terjadi masalah pada saat fetching data
+                        console.error('Error fetching site settings:', error);
+                    }
+                }
+            }
+        }
     })
     
     window.router = function(){
         return {
-            init(){
+            pesantrenID: localStorage.getItem('pesantrenID'),
+
+            async init(){
                 document.title = this.title;
                 Alpine.store('tarbiyya').pesantrenID = localStorage.getItem("pesantrenID")
                 Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
-
-                if(Alpine.store('tarbiyya').pesantrenID) {
-                    if(Object.keys(Alpine.store('tarbiyya').tarbiyyaSetting).length < 1){
-                        fetchPageData('member/supply', {
-                            headers: {
-                                'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                                'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
-                            }
-                        }).then(data => {
-                            Alpine.store('tarbiyya').tarbiyyaSetting = data.tarbiyyaSetting
-                            Alpine.store('tarbiyya').user = data.user
-                        })
-                    }
-                }
+                await Alpine.store('tarbiyya').getSiteSettings()
             },
             
             // Check kode pesantren

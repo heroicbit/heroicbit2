@@ -12,20 +12,11 @@ class PageController extends BaseController
 	{
 		$this->data['page_title'] = 'Beranda';
 
-		// Get bottom menu
-		// Get database pesantren
-        $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = $Tarbiyya->initDBPesantren();
-		if($db) {
-			return pageView('member/index', $this->data);
-		} else {
-			header('Location: /member/kodepesantren');
-		}
-
+		return pageView('member/index', $this->data);
 	}
 
 	// Supply site setting and current user
-	public function getSupply()
+	public function getSettings($pesantrenID = null)
 	{
 		// Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();

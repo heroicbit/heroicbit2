@@ -80,7 +80,7 @@
 
                 <?php if(($settings['fitur_tagihan'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
-                    <a class="opacity-50">
+                    <a href="/tagihan">
                         <img src="<?= $themeURL ?>assets/img/icon/tagihan-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Tagihan</small>
                     </a>

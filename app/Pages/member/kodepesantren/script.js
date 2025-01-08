@@ -11,6 +11,9 @@ window.member_kodepesantren = function(){
                 window.PineconeRouter.context.navigate('/intro');
             }
 
+            // Reset site settings
+            Alpine.store('tarbiyya').tarbiyyaSetting = {} 
+
             document.title = this.title
             Alpine.store('tarbiyya').currentPage = 'kodepesantren'
             Alpine.store('tarbiyya').showBottomMenu = false
@@ -27,17 +30,15 @@ window.member_kodepesantren = function(){
         },
 
         // Called when domain bring kodepesantren itself
-        forceKodePesantren(pesantrenID){
+        async forceKodePesantren(pesantrenID){
             localStorage.setItem('forcekodepesantren', 1)
             localStorage.setItem('pesantrenID', pesantrenID)
-
-            // Set pesantrenID to session
-            setTimeout(() => {
-                window.location.replace('/member/kodepesantren/setPesantrenID/' + pesantrenID)
-            }, 500);
+            Alpine.store('tarbiyya').pesantrenID = pesantrenID;
+            await Alpine.store('tarbiyya').getSiteSettings(Alpine.store('tarbiyya').pesantrenID)
+            window.PineconeRouter.context.redirect('/login')
         },
 
-        choosePesantren() {
+        async choosePesantren() {
             this.buttonSubmitting = true
             this.buttonDisabled = true
             
@@ -50,11 +51,14 @@ window.member_kodepesantren = function(){
                   "Content-Type": "multipart/form-data",
                 },
               })
-              .then((response) => {
+              .then(async (response) => {
                 if (response.data.found == 1) {
                   localStorage.setItem("pesantrenID", response.data.pesantrenID);
                   Alpine.store('tarbiyya').pesantrenID = response.data.pesantrenID;
-                  window.location.replace("/member/kodepesantren/setPesantrenID/" + response.data.pesantrenID);
+                  await Alpine.store('tarbiyya').getSiteSettings(localStorage.getItem("pesantrenID"))
+                  window.PineconeRouter.context.redirect('/login')
+                } else {
+                    window.console.log('Kode pesantren tidak ditemukan')
                 }
               });
           },

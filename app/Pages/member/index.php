@@ -9,7 +9,7 @@
             <!-- Beranda -->
             <template 
                 x-route="/" 
-                x-template.preload="['/member/home/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/home/content?pid=' + pesantrenID, '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Intro -->
