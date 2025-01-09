@@ -73,7 +73,11 @@ document.addEventListener('alpine:init', () => {
             isLoggedIn(context){
                 if(localStorage.getItem('intro') != 1) return context.redirect('/intro')
                 if(Alpine.store('tarbiyya').sessionToken == null) return context.redirect('/login')
-            }
+            },
+
+            notfound(context) {
+                document.querySelector('#app').innerHTML = `<h1>Not Found</h1>`
+            },
         }
     }
 })

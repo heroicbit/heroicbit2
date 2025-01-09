@@ -165,15 +165,4 @@
             </div>
         </div>
     </div>
-    <div class="bottomMenuContainer glassmorph shadow-lg">
-        <div class="appBottomMenu d-flex"><a href="https://masagiapp.com/dashboard" class="item iuran ">
-                <div><i class="bi bi-house"></i><strong>Beranda</strong></div>
-            </a><a href="https://masagiapp.com/anggota" class="item iuran ">
-                <div><i class="bi bi-person-vcard"></i><strong>Anggota</strong></div>
-            </a><a href="https://masagiapp.com/iuran" class="item iuran active">
-                <div><i class="bi bi-cash-coin"></i><strong>Iuran</strong></div>
-            </a><a href="https://masagiapp.com/profile" class="item iuran ">
-                <div><i class="bi bi-person-circle"></i><strong>Akun</strong></div>
-            </a></div>
-    </div>
 </div>

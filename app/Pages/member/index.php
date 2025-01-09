@@ -123,6 +123,11 @@
                 x-template.preload="['/member/program_pesantren/content', '/_components/bottommenu']" 
                 x-handler="isLoggedIn"
                 ></template>
+                <!-- 404 Page Not Found -->
+                <template 
+                x-route="notfound"
+                x-template.preload="/member/notfound/content" 
+                ></template>
         </div>
 
     </div>

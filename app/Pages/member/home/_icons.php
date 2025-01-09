@@ -134,7 +134,7 @@
 
                 <?php if(($settings['fitur_doa_zikir'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
-                    <a class="opacity-50" x-on:click="comingsoon = true">
+                    <a href="/doa-zikir" class="opacity-50">
                         <img src="<?= $themeURL ?>assets/img/icon/doa-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Doa & Zikir</small>
                     </a>

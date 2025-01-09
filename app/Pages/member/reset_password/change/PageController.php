@@ -43,7 +43,7 @@ class PageController extends MemberPageController {
             $Phpass = new \App\Libraries\Phpass();
             $password = $Phpass->HashPassword($password);
             $query = "UPDATE mein_users SET status = 'active', token = NULL, otp = NULL, password = :password: WHERE id = :id:";
-            $db->query($query, ['id' => $id, 'password' => 'password']);
+            $db->query($query, ['id' => $id, 'password' => $password]);
 
             // Create JWT
             $userSession = [
