@@ -16,13 +16,13 @@
                     <div class="card ps-3 shadow-none bg-light text-dark container-fluid rounded-top-5 pt-3 pb-3" style="margin-top:-95px">
                         <div class="d-flex align-items-center justify-content-start gap-3">
                             <div>
-                                <img :src="data.profile.avatar ? data.profile.avatar : `<?= $themeURL ?>assets/img/icon/default-avatar-user.webp`" 
+                                <img :src="data?.profile?.avatar ? data?.profile?.avatar : `<?= $themeURL ?>assets/img/icon/default-avatar-user.webp`" 
                                 class="rounded-circle" 
-                                :alt="data.profile.name" 
+                                :alt="data?.profile?.name" 
                                 style="width:56px">
                             </div>
                             <div class="use text-whiter">
-                                <div class="h5 m-0" x-text="data.profile.name"></div>
+                                <div class="h5 m-0" x-text="data?.profile?.name"></div>
                                 <small>
                                     <!-- <a href="/profile/edit"><span class="bi bi-pencil"></span> Edit Profil</a> -->
                                 </small>

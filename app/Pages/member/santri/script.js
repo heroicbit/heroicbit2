@@ -70,7 +70,7 @@ window.member_santri = function(){
                 fetchPageData('member/santri/supply', 
                     { headers: {
                         'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
                     } })
                 .then(data => {
                     cachePageData['member/santri'] = data
@@ -135,7 +135,7 @@ window.member_santri = function(){
                 fetchPageData('member/santri/detailPresensi/' + this.detailSantri.id, 
                     { headers: {
                         'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
                     } })
                 .then(data => {
                     cachePageData[`member/santri/${this.detailSantriIndex}/presensi`] = data.presensi

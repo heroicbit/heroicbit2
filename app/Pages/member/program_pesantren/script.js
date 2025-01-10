@@ -15,7 +15,7 @@ window.member_program_pesantren = function(){
                 fetchPageData('member/program_pesantren/supply', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
                     }
                 }).then(data => {
                     cachePageData['member/program_pesantren'] = data

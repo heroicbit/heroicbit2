@@ -16,7 +16,7 @@ window.member_profile = function(){
                 fetchPageData('member/profile/supply', {
                     headers: {
                         'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
-                        'Pesantrenku-ID': Alpine.store('tarbiyya').kodePesantren,
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
                     }
                 }).then(data => {
                     cachePageData['member/profile'] = data
