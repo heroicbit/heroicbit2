@@ -55,72 +55,72 @@
             <!-- Page -->
             <template 
                 x-route="/page/:slug" 
-                x-template="['/member/page/content', '/_components/bottommenu']"
+                x-template="['/member/page/content', '/_components/bottommenu?pid=' + pesantrenID]"
                 ></template>
             <!-- Feeds -->
             <template 
                 x-route="/feeds" 
-                x-template.preload="['/member/feeds/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/feeds/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Detail feed -->
             <template 
                 x-route="/feeds/:id" 
-                x-template.preload="['/member/feeds/detail/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/feeds/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Videos -->
             <template 
                 x-route="/videos" 
-                x-template.preload="['/member/videos/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/videos/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Detail video -->
             <template 
                 x-route="/videos/:id" 
-                x-template.preload="['/member/videos/detail/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/videos/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Santri -->
             <template 
                 x-route="/santri" 
-                x-template.preload="['/member/santri/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/santri/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Profile -->
             <template 
                 x-route="/profile" 
-                x-template.preload="['/member/profile/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/profile/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Profile Delete -->
             <template 
                 x-route="/profile/delete" 
-                x-template="['/member/profile/delete/content', '/_components/bottommenu']" 
+                x-template="['/member/profile/delete/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="[isKodePesantrenSet,isLoggedIn]"
                 ></template>
             <!-- Profile Edit -->
             <template 
                 x-route="/profile_edit" 
-                x-template.preload="['/member/profile_edit/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/profile_edit/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Tagihan -->
             <template 
                 x-route="/tagihan" 
-                x-template.preload="['/member/tagihan/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/tagihan/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Pengumuman -->
             <template 
                 x-route="/pengumuman" 
-                x-template.preload="['/member/pengumuman/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/pengumuman/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
             <!-- Program Pesantren -->
             <template 
                 x-route="/program_pesantren" 
-                x-template.preload="['/member/program_pesantren/content', '/_components/bottommenu']" 
+                x-template.preload="['/member/program_pesantren/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
                 <!-- 404 Page Not Found -->

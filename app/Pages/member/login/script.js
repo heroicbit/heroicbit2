@@ -17,8 +17,6 @@ window.member_login = function () {
     async init() {
       if (localStorage.getItem("intro") != 1) {
         window.PineconeRouter.context.navigate("/intro");
-      } else if(Object.keys(Alpine.store('tarbiyya').tarbiyyaSetting).length < 1){
-        await Alpine.store('tarbiyya').getSiteSettings(localStorage.getItem('pesantrenID'))
       }
 
       // Place sandbox login if set
