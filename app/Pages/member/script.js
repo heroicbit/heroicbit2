@@ -61,7 +61,7 @@ document.addEventListener('alpine:init', () => {
                 document.title = this.title;
                 Alpine.store('tarbiyya').pesantrenID = localStorage.getItem("pesantrenID")
                 Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
-                await Alpine.store('tarbiyya').getSiteSettings()
+                await Alpine.store('tarbiyya').getSiteSettings(this.pesantrenID)
             },
             
             // Check kode pesantren
