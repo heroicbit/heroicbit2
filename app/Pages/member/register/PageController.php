@@ -73,7 +73,7 @@ class PageController extends MemberPageController {
             'password' => $password,
             'token' => $token,
             'otp' => $otp,
-            'ceated_at' => date('Y-m-d H:i:s'),
+            'created_at' => date('Y-m-d H:i:s'),
         ];
         $db->table('mein_users')->insert($userData);
         $id = $db->insertID();
