@@ -72,7 +72,7 @@ window.member_register_confirm = function(){
                     localStorage.setItem('heroic_token', response.data.jwt)
                     setTimeout(() => {
                         Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
-                        window.PineconeRouter.context.redirect('/')
+                        window.location.replace('/')
                     })
                 } else {
                     this.error = response.data.message
