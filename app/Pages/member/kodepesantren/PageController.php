@@ -26,7 +26,7 @@ class PageController extends MemberPageController
 
         $Pesantren = model('Pesantren');
         if($kode) {
-            $found = $Pesantren->where('kode_pesantren', $kode)->first();
+            $found = $Pesantren->where('sitename', $kode)->first();
 
             // If found, berarti ini site khusus bukan dari aplikasi umum   
             if($found) {
@@ -48,7 +48,7 @@ class PageController extends MemberPageController
     public function getSupply()
     {
         $Pesantren = model('Pesantren');
-        $allPesantren = $Pesantren->select('nama_pesantren,kode_pesantren')
+        $allPesantren = $Pesantren->select('nama_pesantren,sitename')
                                   ->where('status', 'active')
                                   ->orderBy('nama_pesantren', 'ASC')
                                   ->findAll();
@@ -62,7 +62,7 @@ class PageController extends MemberPageController
         $kode = strtolower($this->request->getPost('kodepesantren'));
 
         $Pesantren = model('Pesantren');
-        $found = $Pesantren->where('kode_pesantren', $kode)->first();
+        $found = $Pesantren->where('sitename', $kode)->first();
         if($found) {
             $Encrypter = service('encrypter');
             $kodeHash = bin2hex($Encrypter->encrypt($found['database']));

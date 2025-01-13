@@ -28,7 +28,7 @@
                             x-model="kode">
                                 <option value="">- Pilih pesantren -</option>
                                 <template x-for="pesantren in allcodes">
-                                    <option x-bind:value="pesantren.kode_pesantren" x-text="pesantren.nama_pesantren"></option>
+                                    <option x-bind:value="pesantren.sitename" x-text="pesantren.nama_pesantren"></option>
                                 </template>
                             </select>
                         </div>
