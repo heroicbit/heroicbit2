@@ -32,7 +32,7 @@ class PageController extends MemberPageController
         $db = $Tarbiyya->initDBPesantren();
 
         $logoSetting = $db->table('mein_options')
-                          ->where('option_group', 'app')
+                          ->where('option_group', 'tarbiyya')
                           ->where('option_name', 'navbar_logo')
                           ->get()->getRowArray();
         $data['logo'] = $logoSetting['option_value'] ?? null; 
