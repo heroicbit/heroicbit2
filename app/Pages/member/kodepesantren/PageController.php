@@ -26,7 +26,7 @@ class PageController extends MemberPageController
 
         $Pesantren = model('Pesantren');
         if($kode) {
-            $found = $Pesantren->where('database', $kode)->first();
+            $found = $Pesantren->where('sitename', $kode)->first();
 
             // If found, berarti ini site khusus bukan dari aplikasi umum   
             if($found) {
