@@ -89,12 +89,12 @@ class PageController extends MemberPageController
         ORDER BY `mein_microblogs`.`published_at` DESC
         LIMIT 5";
 
-        $videos = $db->query($kajianQuery)->getResultArray();
-        foreach($videos as $key => $post)
+        $kajian = $db->query($kajianQuery)->getResultArray();
+        foreach($kajian as $key => $post)
         {
-            $videos[$key]['medias'] = json_decode($videos[$key]['medias'], true);
+            $kajian[$key]['medias'] = json_decode($kajian[$key]['medias'], true);
         }
-        $data['videos'] = $videos;
+        $data['kajian'] = $kajian;
 
         return $this->respond($data);
     }

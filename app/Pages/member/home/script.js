@@ -63,7 +63,7 @@ window.member_home = function(){
       this.swiperArticle = new Swiper(".swiper-article", config);
     },
 
-    initSwiperVideos () {
+    initSwiperKajian () {
       let config = {
         slidesPerView: 1.6,
         spaceBetween: 10,
@@ -82,7 +82,7 @@ window.member_home = function(){
         }
       };
       
-      if(this.data.videos.length > 2){
+      if(this.data.kajian.length > 2){
         config.autoplay.delay = 60000;
       }
 

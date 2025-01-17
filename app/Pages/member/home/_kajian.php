@@ -1,31 +1,32 @@
-<section id="latest-videos" class="pb-1">
-    <div class="d-flex px-3 mb-1 justify-content-between">
-        <h4 class="m-0 me-auto text-dark">
-            Kajian Terbaru
-        </h4>
-        <a href="/member/kajian">
-            <small class="text-primary fw-bold" style="font-size: 12px">
-                Lihat Semua
-            </small>
-        </a>
-    </div>
-    <div x-show="data.loading" class="swiper swiper-article">
-        <div class="swiper-wrapper py-2">
-            <template x-for="data in Array(3)">
-                <div class="swiper-slide">
-                    <img
-                    src="https://mobilekit.bragherstudio.com/view29/assets/img/sample/photo/wide0.jpg"
-                    class="w-100 rounded-4"
-                    alt="feed"
-                    />
-                </div>
-            </template>
+<template x-if="data.kajian?.length > 0">
+    <section id="latest-videos" class="pb-1">
+        <div class="d-flex px-3 mb-1 justify-content-between">
+            <h4 class="m-0 me-auto text-dark">
+                Kajian Terbaru
+            </h4>
+            <a href="/member/kajian">
+                <small class="text-primary fw-bold" style="font-size: 12px">
+                    Lihat Semua
+                </small>
+            </a>
         </div>
-    </div>
-    <template x-if="data.videos">
-        <div class="swiper swiper-video" x-init="initSwiperVideos">
+        <div x-show="data.loading" class="swiper swiper-article">
             <div class="swiper-wrapper py-2">
-                <template x-for="article in data.videos">
+                <template x-for="data in Array(3)">
+                    <div class="swiper-slide">
+                        <img
+                        src="https://mobilekit.bragherstudio.com/view29/assets/img/sample/photo/wide0.jpg"
+                        class="w-100 rounded-4"
+                        alt="feed"
+                        />
+                    </div>
+                </template>
+            </div>
+        </div>
+    
+        <div class="swiper swiper-video" x-init="initSwiperKajian">
+            <div class="swiper-wrapper py-2">
+                <template x-for="article in data.kajian">
                     <div class="swiper-slide" >
                         <a :href="`/member/kajian/${ article.id }`">
                             <div>
@@ -45,5 +46,5 @@
                 </template>
             </div>
         </div>
-    </template>
-</section>
+    </section>
+</template>
