@@ -12,7 +12,7 @@ class PageController extends BaseController
 	{
 		$this->data['page_title'] = 'Beranda';
 
-		return pageView('member/index', $this->data);
+		return pageView('member/layout', $this->data);
 	}
 
 	// Supply site setting and current user

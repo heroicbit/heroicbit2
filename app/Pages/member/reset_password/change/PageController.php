@@ -3,16 +3,8 @@
 use App\Pages\member\PageController as MemberPageController;
 use Firebase\JWT\JWT;
 
-class PageController extends MemberPageController {
-
-    // Load member layout
-	public function getIndex($token = null)
-	{
-		$this->data['page_title'] = 'Ganti Kata Sandi';
-
-		return pageView('member/index', $this->data);
-	}
-    
+class PageController extends MemberPageController 
+{
     public function getContent()
     {
         return pageView('member/reset_password/change/index', $this->data);

@@ -4,17 +4,9 @@ use App\Pages\member\PageController as MemberPageController;
 use CodeIgniter\API\ResponseTrait;
 use Firebase\JWT\JWT;
 
-class PageController extends MemberPageController {
-
+class PageController extends MemberPageController 
+{
     use ResponseTrait;
-
-    // Load member layout
-	public function getIndex()
-	{
-		$this->data['page_title'] = 'Reset Password';
-
-		return pageView('member/index', $this->data);
-	}
     
     public function getContent()
     {

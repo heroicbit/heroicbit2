@@ -2,16 +2,8 @@
 
 use App\Pages\member\PageController as MemberPageController;
 
-class PageController extends MemberPageController {
-
-    // Load member layout
-	public function getIndex()
-	{
-		$this->data['page_title'] = 'Login';
-
-		return pageView('member/index', $this->data);
-	}
-    
+class PageController extends MemberPageController 
+{    
     public function getContent()
     {
         return pageView('member/register/index', $this->data);

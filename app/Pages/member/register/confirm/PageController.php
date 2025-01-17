@@ -3,16 +3,8 @@
 use App\Pages\member\PageController as MemberPageController;
 use Firebase\JWT\JWT;
 
-class PageController extends MemberPageController {
-
-    // Load member layout
-	public function getIndex()
-	{
-		$this->data['page_title'] = 'Konfirmasi Pendaftaran';
-
-		return pageView('member/index', $this->data);
-	}
-    
+class PageController extends MemberPageController 
+{
     public function getContent()
     {
         return pageView('member/register/confirm/index', $this->data);
