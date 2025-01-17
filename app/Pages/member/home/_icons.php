@@ -4,7 +4,9 @@
     </style>
 
     <div class="container">    
-        <div class="card bg-white rounded-4 py-3 px-0 mb-4 overflow-hidden" :class="showAllIcons ? '' : 'shrink'" style="height:450px;transition:.5s ease">
+        <div class="card bg-white rounded-4 py-3 px-0 mb-4 overflow-hidden" 
+         :class="showAllIcons ? '' : 'shrink'" 
+         style="height:350px;transition:.5s ease">
             <div class="text-center mb-2 mx-auto" style="width:340px">
                 <?php if(($settings['fitur_profil_pesantren'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
@@ -51,20 +53,20 @@
                 </div>
                 <?php endif; ?>
 
-                <?php if(($settings['fitur_video'] ?? null) == 1): ?>
-                <div class="float-start" style="width:85px;height:90px">
-                    <a href="/videos">
-                        <img src="<?= $themeURL ?>assets/img/icon/video.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Video</small>
-                    </a>
-                </div>
-                <?php endif; ?>
-
                 <?php if(($settings['fitur_santri'] ?? null) == 1): ?>
                 <div class="float-start" style="width:85px;height:90px">
                     <a href="/santri">
                         <img src="<?= $themeURL ?>assets/img/icon/santri-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Santri</small>
+                    </a>
+                </div>
+                <?php endif; ?>
+
+                <?php if(($settings['fitur_kajian'] ?? null) == 1): ?>
+                <div class="float-start" style="width:85px;height:90px">
+                    <a href="/kajian">
+                        <img src="<?= $themeURL ?>assets/img/icon/kajian-min.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kajian</small>
                     </a>
                 </div>
                 <?php endif; ?>
@@ -101,15 +103,6 @@
                     <a class="opacity-50" x-on:click="comingsoon = true">
                         <img src="<?= $themeURL ?>assets/img/icon/rapor-min.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Rapor Digital</small>
-                    </a>
-                </div>
-                <?php endif; ?>
-
-                <?php if(($settings['fitur_kajian'] ?? null) == 1): ?>
-                <div class="float-start" style="width:85px;height:90px">
-                    <a class="opacity-50" x-on:click="comingsoon = true">
-                        <img src="<?= $themeURL ?>assets/img/icon/kajian-min.png" style="max-width:48px">
-                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Kajian</small>
                     </a>
                 </div>
                 <?php endif; ?>
