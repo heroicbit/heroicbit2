@@ -30,7 +30,7 @@
                         </div>
                     </template>
 
-                    <template x-if="video[0].medias && !video[0]?.youtube_id">
+                    <template x-if="video[0]?.medias && !video[0]?.youtube_id">
                     <div class="swiper bg-dark feed-carousel" x-init="initFeedSwiper()">
                         <div class="swiper-wrapper">
                             <template x-for="(media,mediaIndex) in video[0].medias">

@@ -36,7 +36,7 @@
                                 </div>
                                 <div class="card-body py-3 px-2" style="min-height: 110px;">
                                     <div class="text-elipsis text-elipsis-3" style="line-height:1.1rem" x-text="article.title"></div>
-                                    <small style="font-size: 12px" class="card-text" x-text="`Oleh ` + article.author_name"></small>
+                                    <small style="font-size: 12px" class="card-text text-muted" x-text="formatDate(article.published_at)"></small>
                                 </div>
                             </div>
                         </a>
