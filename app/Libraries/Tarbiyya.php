@@ -29,6 +29,17 @@ class Tarbiyya {
 
 		return $db;
 	}
+    
+	/**
+     * Get database name of pesantren by kodepesantren
+     */
+    public function initDBTarbiyya()
+	{
+		$db = db_connect();
+		$db->setDatabase('tarbiyya');
+
+		return $db;
+	}
 
 	/**
 	 * Check user token

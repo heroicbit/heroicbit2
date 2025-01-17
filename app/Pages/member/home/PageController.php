@@ -44,39 +44,16 @@ class PageController extends MemberPageController
         $data['psb_url'] = $psbURLSetting['option_value'] ?? null; 
         
         /**
-         * Get video data
+         * Get post data (articles and videos)
          **/
-		$videoQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
+		$postQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
         `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
         `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
         `mein_microblogs`.`created_at` as `created_at`, 
         `mein_microblogs`.`published_at` as `published_at`
         FROM `mein_microblogs`
         JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-        WHERE `mein_microblogs`.`status` = 'publish' 
-        AND (`mein_microblogs`.`youtube_url` IS NOT NULL AND `mein_microblogs`.`youtube_url` != '')
-        ORDER BY `mein_microblogs`.`published_at` DESC
-        LIMIT 5";
-
-        $videos = $db->query($videoQuery)->getResultArray();
-        foreach($videos as $key => $post)
-        {
-            $videos[$key]['medias'] = json_decode($videos[$key]['medias'], true);
-        }
-        $data['videos'] = $videos;
-        
-        /**
-         * Get post data
-         **/
-		$postQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
-        `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
-        `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
-        `mein_microblogs`.`created_at` as `created_at`, 
-        `mein_microblogs`.`published_at` as `published_at`
-        FROM `mein_microblogs`
-        JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-        WHERE `mein_microblogs`.`status` = 'publish' 
-        AND (`mein_microblogs`.`youtube_url` IS NULL OR `mein_microblogs`.`youtube_url` = '')
+        WHERE `mein_microblogs`.`status` = 'publish'
         ORDER BY `mein_microblogs`.`published_at` DESC
         LIMIT 5";
 
@@ -96,6 +73,28 @@ class PageController extends MemberPageController
         ORDER BY publish_date DESC 
         LIMIT 1";
         $data['pengumuman'] = $db->query($newestPengumumanQuery)->getRowArray();
+
+        /**
+         * Get kajian data
+         **/
+        $coredb = $Tarbiyya->initDBTarbiyya();
+		$kajianQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
+        `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
+        `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
+        `mein_microblogs`.`created_at` as `created_at`, 
+        `mein_microblogs`.`published_at` as `published_at`
+        FROM `mein_microblogs`
+        JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
+        WHERE `mein_microblogs`.`status` = 'publish' 
+        ORDER BY `mein_microblogs`.`published_at` DESC
+        LIMIT 5";
+
+        $videos = $db->query($kajianQuery)->getResultArray();
+        foreach($videos as $key => $post)
+        {
+            $videos[$key]['medias'] = json_decode($videos[$key]['medias'], true);
+        }
+        $data['videos'] = $videos;
 
         return $this->respond($data);
     }

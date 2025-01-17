@@ -29,9 +29,9 @@
 
         <?= $this->include('member/home/_pengumuman') ?>
 
-        <?= $this->include('member/home/_videos') ?>
-
         <?= $this->include('member/home/_articles') ?>
+        
+        <?= $this->include('member/home/_kajian') ?>
 
     </div>
     <!-- * App Capsule -->

@@ -81,6 +81,18 @@
                 x-template.preload="['/member/videos/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
                 x-handler="isLoggedIn"
                 ></template>
+            <!-- Videos -->
+            <template 
+                x-route="/kajian" 
+                x-template.preload="['/member/kajian/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+                x-handler="isLoggedIn"
+                ></template>
+            <!-- Detail video -->
+            <template 
+                x-route="/kajian/:id" 
+                x-template.preload="['/member/kajian/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+                x-handler="isLoggedIn"
+                ></template>
             <!-- Santri -->
             <template 
                 x-route="/santri" 
