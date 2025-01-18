@@ -1,7 +1,7 @@
 {
   "name": "Tarbiyya",
-  "theme_color": "#05b2c5",
-  "background_color": "#05b2c5",
+  "theme_color": "#03989e",
+  "background_color": "#03989e",
   "short_name": "Tarbiyya",
   "id": "tarbiyya",
   "start_url": "/",
@@ -19,13 +19,13 @@
   },
   "icons": [
     {
-      "src": "/mobilekit/assets/img/logo-md-192x192.png",
+      "src": "/mobilekit/assets/img/tarbiyya/icon/192x192.png",
       "sizes": "192x192",
       "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "/mobilekit/assets/img/logo-md-512x512.png",
+      "src": "/mobilekit/assets/img/tarbiyya/icon/512x512.png",
       "sizes": "512x512",
       "type": "image/png",
       "purpose": "maskable"
