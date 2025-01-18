@@ -15,10 +15,10 @@
   }
 },{
   "relation": ["delegate_permission/common.handle_all_urls"],
-    "target": {
+  "target": {
     "namespace": "android_app",
     "package_name": "id.tarbiyya.app.twa",
-    "sha256_cert_fingerprints": ["FB:08:3C:F7:83:3C:50:ED:E9:2C:C9:03:5A:78:54:6D:55:8C:05:9B:F8:5D:94:D5:A1:91:FE:8A:12:48:32:3A"]
+    "sha256_cert_fingerprints": ["EB:72:56:0A:A3:E7:1B:4B:B1:09:20:DA:8B:DA:B7:56:3D:70:B0:4F:01:F2:6A:80:0C:80:CF:E4:66:F7:D7:2E"]
   }
 }
 ]
