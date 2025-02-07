@@ -18,15 +18,6 @@
   "target": {
     "namespace": "android_app",
     "package_name": "id.tarbiyya.app.twa",
-    "sha256_cert_fingerprints": ["EB:72:56:0A:A3:E7:1B:4B:B1:09:20:DA:8B:DA:B7:56:3D:70:B0:4F:01:F2:6A:80:0C:80:CF:E4:66:F7:D7:2E"]
+    "sha256_cert_fingerprints": ["E9:85:6B:14:DB:C3:70:A4:43:48:F9:67:D0:32:04:B4:5F:DE:EF:28:97:D3:91:DF:6B:D1:60:EE:C2:36:C8:0C"]
   }
-},{
-  "relation": ["delegate_permission/common.handle_all_urls"],
-  "target": {
-    "namespace": "android_app",
-    "package_name": "id.tarbiyya.app.twa",
-    "sha256_cert_fingerprints":
-      ["D4:DA:47:DD:CC:09:C5:E5:F3:3A:48:0E:B4:64:F8:12:81:64:09:BB:5B:3A:1B:EE:81:09:7B:CC:1D:9F:CE:33"]
-  }
-}
-]
+}]
