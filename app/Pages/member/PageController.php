@@ -34,7 +34,7 @@ class PageController extends BaseController
 
 			// Use Tarbiyya recaptcha if site not provide
 			if(empty($settingQuery['recaptcha_site_key']))
-				$settingQuery['recaptcha_site_key'] = config('App')->recaptcha_site_key; 
+				$settingQuery['recaptcha_site_key'] = config('App')->recaptcha['siteKey']; 
 		}
 
 		$userToken = $Tarbiyya->getUserToken();

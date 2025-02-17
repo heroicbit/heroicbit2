@@ -18,9 +18,14 @@ class PageController extends MemberPageController {
         $data = [];
 
         $data['profile'] = $db->table('mein_users')
-            ->select('mein_users.id, mein_users.name, 
-                mein_users.email, mein_users.avatar, mein_users.phone')
-            ->where('id', $user->user_id)
+            ->select('mein_users.id, mein_users.name, mein_users.username,
+                mein_users.email, mein_users.avatar, mein_users.phone, 
+                mein_users.short_description,
+                mein_user_profile.birthday, mein_user_profile.jobs,
+                mein_user_profile.gender, role_slug as role')
+            ->join('mein_user_profile', 'mein_user_profile.user_id = mein_users.id', 'left')
+            ->join('mein_roles', 'mein_roles.id = mein_users.role_id')
+            ->where('mein_users.id', $user->user_id)
             ->get()->getRowArray();
 
         return $this->respond($data);

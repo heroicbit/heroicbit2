@@ -1,4 +1,4 @@
-<div id="member-reset-password-confirm" x-data="member_reset_password_confirm($router.params.token)">
+<div id="member-reset-password-confirm" x-data="reset_password_confirm($router.params.token)">
 <div class="bg-image" style="background-image: url('<?=$themeURL ?>assets/img/bg-green-min.jpg'); background-repeat: no-repeat; background-size: cover; width: 100%; background-position: center; background-color: #add7cb; height: 100%; position: fixed;"></div>
 
     <div class="appHeader">

@@ -1,9 +1,13 @@
-// Page member/component
-window.member_reset_password = function(){
-    return {
+// Page component
+document.addEventListener('alpine:init', () => {
+    Alpine.data('reset_password', (recaptchaSiteKey) => ({
         title: "Reset Kata Sandi",
         logo: '',
-        phone: '',
+        model: {
+            sendto: 'email',
+            email: '',
+            phone: '',
+        },
         recaptcha: '',
         recaptchaWidget: null,
         error: '',
@@ -11,56 +15,64 @@ window.member_reset_password = function(){
 
         init(){
             document.title = this.title
-            Alpine.store('tarbiyya').currentPage = 'reset_password'
-            Alpine.store('tarbiyya').showBottomMenu = false
-            this.logo = Alpine.store('tarbiyya').tarbiyyaSetting.auth_logo
+            Alpine.store('masagi').currentPage = 'reset_password'
+            
+            this.logo = Alpine.store('masagi').settings.auth_logo
 
             // Call google recaptcha
             this.recaptchaWidget = grecaptcha.render('grecaptcha', {
-                'sitekey' : Alpine.store('tarbiyya').tarbiyyaSetting.recaptcha_site_key,
+                'sitekey' : recaptchaSiteKey
             });
             if(this.recaptchaWidget === null)
-                window.location.href = '/member/reset_password'
+                window.location.href = '/reset_password'
+        },
+
+        sendTo(to) {
+            this.model.sendto = to
         },
 
         confirm(){
             this.sending = true
 
             // Gain javascript form validation
-            if(this.phone == ''){
-                this.error = 'Nomor WhatsApp tidak boleh kosong.'
+            if(this.model.sendto == 'phone' && this.model.phone == ''){
+                toastr('Nomor WhatsApp tidak boleh kosong.', 'warning')
+                this.sending = false
+                return;
+            }
+            if(this.model.sendto == 'email' && this.model.email == ''){
+                toastr('Nomor WhatsApp tidak boleh kosong.', 'warning')
                 this.sending = false
                 return;
             }
             
             this.recaptcha = grecaptcha.getResponse(this.recaptchaWidget);
             if(this.recaptcha == '') {
-                this.error = 'Ceklis dulu Recaptcha.'
+                toastr('Ceklis dulu Recaptcha.','warning')
                 this.sending = false
                 return;
             }
 
             // Check register_confirm using axios post
             const formData = new FormData();
-            formData.append('phone', this.phone);
-            formData.append('recaptcha', this.recaptcha);
-            axios.post('/member/reset_password', formData, {
-                headers: {
-                    'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
-                }
-            }).then(response => {
+            postPageData('/reset_password', {
+                recaptcha: this.recaptcha,
+                phone: this.model.phone,
+                email: this.model.email,
+                sendto: this.model.sendto,
+            })
+            .then(response => {
                 window.console.log(response)
-                if(response.data.success == 1){
-                    let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
+                if(response.success == 1){
+                    let token = response.token + '_' + response.id + 'X' + Math.random().toString(36).substring(7)
                     window.PineconeRouter.context.redirect('/reset_password/change/' + token)
                 } else {
-                    this.error = response.data.message
+                    toastr(response.message, 'danger')
                     grecaptcha.reset(this.recaptchaWidget)
                     this.sending = false
                 }
             })
         },
-    }
-}
 
+    }))
+})

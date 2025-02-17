@@ -4,6 +4,7 @@ namespace App\Libraries;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
+use PHPMailer\PHPMailer\PHPMailer;
 
 class Tarbiyya {
 
@@ -110,4 +111,71 @@ class Tarbiyya {
 		return $decodedToken;
 	}
 
+	public function normalizePhoneNumber($phone)
+	{
+		$phone = substr($phone, 0, 1)=='0' 
+			? substr_replace($phone, '62', 0, 1) 
+			: $phone;
+		if(substr($phone, 0, 1)=='8') 
+			$phone = '62'.$phone;
+
+		return $phone;
+	}
+
+	public function sendWhatsapp($phone, $message) 
+    {
+		// Make sure the number begin with 62
+		$phone = $this->normalizePhoneNumber($phone);
+		
+        $curl = curl_init();
+        curl_setopt_array($curl, [
+            CURLOPT_URL 			=> 'https://app.saungwa.com/api/create-message',
+            CURLOPT_RETURNTRANSFER 	=> true,
+            CURLOPT_ENCODING 		=> '',
+            CURLOPT_MAXREDIRS 		=> 10,
+            CURLOPT_TIMEOUT 		=> 0,
+            CURLOPT_FOLLOWLOCATION 	=> true,
+            CURLOPT_HTTP_VERSION 	=> CURL_HTTP_VERSION_1_1,
+            CURLOPT_CUSTOMREQUEST 	=> 'POST',
+            CURLOPT_POSTFIELDS 		=> [
+				'sandbox' 	=> 'false',
+            	'appkey'	=> config('App')->saungWA['appKey'],
+            	'authkey'	=> config('App')->saungWA['authKey'],
+            	'to' 		=> $phone,
+            	'message'	=> $message,
+			],
+        ]);
+
+        $response = curl_exec($curl);
+        curl_close($curl);
+        return json_decode($response);
+    }
+
+	public function sendEmail($to, $subject, $message, $debug = 0)
+	{
+		$mail = new PHPMailer($debug ? true : false);
+		$EmailConfig = new \Config\Email;
+		try {
+			$mail->SMTPDebug = $debug;
+			$mail->isSMTP();
+			$mail->Host       = $EmailConfig->SMTPHost;
+			$mail->SMTPAuth   = true;
+			$mail->Username   = $EmailConfig->SMTPUser;
+			$mail->Password   = $EmailConfig->SMTPPass;
+			$mail->SMTPSecure = $EmailConfig->SMTPCrypto;
+			$mail->Port       = $EmailConfig->SMTPPort;
+
+			$mail->setFrom($EmailConfig->fromEmail, $EmailConfig->fromName);
+			$mail->addAddress($to);
+			$mail->isHTML(true);
+
+			$mail->Subject = $subject;
+			$mail->Body    = $message;
+			
+			$mail->send();
+			return ['success' => true];
+		} catch (\PHPMailer\PHPMailer\Exception $e) {
+			return ['success' => false, 'message' => "Message could not be sent. Mailer Error: {$mail->ErrorInfo}"];
+		}
+	}
 }

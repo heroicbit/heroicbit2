@@ -1,8 +1,7 @@
-<?php namespace App\Pages\member\reset_password;
+<?php namespace App\Pages\reset_password;
 
-use App\Pages\member\PageController as MemberPageController;
+use App\Pages\PageController as MemberPageController;
 use CodeIgniter\API\ResponseTrait;
-use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController 
 {
@@ -10,42 +9,56 @@ class PageController extends MemberPageController
     
     public function getContent()
     {
-        return pageView('member/reset_password/index', $this->data);
+        $this->data['recaptcha_site_key'] = config('App')->recaptcha['siteKey'];
+
+        return pageView('reset_password/index', $this->data);
     }
     
     public function postIndex()
     {
+        $sendto = $this->request->getPost('sendto');
+        $email = $this->request->getPost('email', FILTER_VALIDATE_EMAIL);
         $phone = $this->request->getPost('phone');
         $recaptchaResponse = $this->request->getPost('recaptcha');
 
+        if($sendto == 'email' && !$email) {
+            return $this->respond(['success' => 0, 'message' => 'Email tidak valid.']);
+        }
+
+        if($sendto != 'email' && !$phone) {
+            return $this->respond(['success' => 0, 'message' => 'Nomor Whatsapp tidak valid.']);
+        }
+
         // Get database pesantren
-        $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = $Tarbiyya->initDBPesantren();
+        $db = \Config\Database::connect();
 
         // Check google recaptcha response
-        $recaptchaSetting = $db->table('mein_options')
-            ->where('option_group', 'tarbiyya')
-            ->where('option_name', 'recaptcha_secret_key')
-            ->get()->getRowArray();
-        if(empty($recaptchaSetting['option_value']))
-            $recaptchaSetting['option_value'] = config('App')->recaptcha_secret_key;
-        $Recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSetting['option_value']);
+        $recaptchaSecretKey = config('App')->recaptcha['secretKey'];
+        $Recaptcha = new \ReCaptcha\ReCaptcha($recaptchaSecretKey);
         $resp = $Recaptcha->setExpectedHostname($_SERVER['HTTP_HOST'])
                         ->verify($recaptchaResponse, $_SERVER['REMOTE_ADDR']);
         if (! $resp->isSuccess()) {
-            return $this->respond(['found' => 0, 'error' => 'Terjadi kesalahan saat mengecek recaptcha: '. implode(', ', $resp->getErrorCodes())]);
+            return $this->respond(['success' => 0, 'message' => 'Terjadi kesalahan saat mengecek recaptcha: '. implode(', ', $resp->getErrorCodes())]);
         }
 
         // Make sure the number begin with 62
-		$phone = substr($phone, 0, 1)=='0' 
-		? substr_replace($phone, '62', 0, 1) 
-		: $phone;
-		if(substr($phone, 0, 1)=='8') 
-			$phone = '62'.$phone;
+        if($sendto == 'phone') 
+        {
+            $phone = substr($phone, 0, 1)=='0' 
+                ? substr_replace($phone, '62', 0, 1) 
+                : $phone;
+            if(substr($phone, 0, 1)=='8') 
+                $phone = '62'.$phone;
+            
+            // Get user
+            $query = "SELECT id, name, phone FROM mein_users WHERE phone = :phone:";
+            $user = $db->query($query, ['phone' => $phone])->getRowArray();
+        } else {
+            // Get user
+            $query = "SELECT id, name, email FROM mein_users WHERE email = :email:";
+            $user = $db->query($query, ['email' => $email])->getRowArray();
+        }
 
-        // Get user
-        $query = "SELECT id, name, phone FROM mein_users WHERE phone = :phone:";
-        $user = $db->query($query, ['phone' => $phone])->getRowArray();
         if($user) 
         {
             // Update token and otp
@@ -58,7 +71,7 @@ class PageController extends MemberPageController
             ]);
 
             // Send otp to whatsapp
-            $response = $this->sendOTP($user['name'], $user['phone'], $otp);
+            $response = $this->sendOTP($user, $otp);
 
             return $this->respond([
                 'success' => 1, 'token' => $token, 'id' => $user['id']
@@ -66,50 +79,44 @@ class PageController extends MemberPageController
         } else {
             
             return $this->respond([
-                'success' => 0, 'message' => 'Akun dengan nomor ini telepon tidak ditemukan.'
+                'success' => 0, 'message' => 'Akun tidak ditemukan.'
             ]);
         }
     }
 
-    public function sendOTP($name, $phone, $otp) 
+    public function sendOTP($user, $otp) 
     {
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = $Tarbiyya->initDBPesantren();
+        $db = \Config\Database::connect();
 
         // Send OTP
         $appSetting = $db->table('mein_options')
                 ->where('option_name', 'app_title')
-                ->where('option_group', 'tarbiyya')
+                ->where('option_group', 'masagi')
                 ->get()->getRowArray();
         $namaAplikasi = $appSetting['option_value'] ?? null; 
 
-        $message = "Halo {$name},\n\n";
-        $message .= "Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi *{$namaAplikasi}*.\n";
-        $message .= "Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:\n\n";
-        $message .= "*{$otp}*\n\n";
-        $message .= "Salam,";
+        if(isset($user['email']))
+        {
+            $message = "Halo {$user['name']},<br><br>";
+            $message .= "Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi <b>{$namaAplikasi}</b><br>";
+            $message .= "Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:<br><br>";
+            $message .= "<b>{$otp}</b><br><br>";
+            $message .= "Salam,";
+            return $Tarbiyya->sendEmail($user['email'], 'Kode Reset Kata Sandi', $message);
+        } else {
+            $message = <<<EOD
+            Halo {$user['name']},
 
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL => 'https://app.saungwa.com/api/create-message',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-            'appkey' => '1e946b6b-e8ab-4c6a-ac7b-b2ae4204f095',
-            'authkey' => 'Bl25APBU3Tcahyo9Rd0ZcCbloR4Gj1i6Ll5lRq6Y3J4DikKUS4',
-            'to' => $phone,
-            'message' => $message,
-            'sandbox' => 'false'
-            ),
-        ]);
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return $response;
+            Kami menerima permintaan penggantian kata sandi untuk akun Anda di aplikasi *{$namaAplikasi}*.
+            Untuk melanjutkan, silahkan masukan kode reset kata sandi berikut ini ke dalam aplikasi:
+
+            *{$otp}*
+
+            Salam,
+            EOD;
+            return $Tarbiyya->sendWhatsapp($user['phone'], $message);
+        }
     }
 }

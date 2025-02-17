@@ -56,10 +56,10 @@ abstract class BaseController extends Controller
 
         // Preload any models, libraries, etc, here.
         $this->data['themeURL'] = base_url('mobilekit') .'/'; 
-		$this->data['themePath'] = 'mobilekit/'; 
-		$this->data['title'] = 'Tarbiyya';
-		$this->data['version'] = '1.4.1';
+	$this->data['themePath'] = 'mobilekit/'; 
+	$this->data['title'] = 'Tarbiyya';
+	$this->data['version'] = '1.4.1';
 
-		$this->session = service('session');
+	$this->session = service('session');
     }
 }

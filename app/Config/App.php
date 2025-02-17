@@ -81,7 +81,7 @@ class App extends BaseConfig
     | DO NOT CHANGE THIS UNLESS YOU FULLY UNDERSTAND THE REPERCUSSIONS!!
     |
     */
-    public string $permittedURIChars = 'a-z 0-9~%.:_\-';
+    public string $permittedURIChars = 'a-z 0-9~%.:_\-=';
 
     /**
      * --------------------------------------------------------------------------
@@ -212,8 +212,40 @@ class App extends BaseConfig
         'secret' => 'A8xl9FX2/M77KUnLlrt7mWt4gLFM+6ZbPzG6takiSTU=',
     ];
 
-    public $recaptcha_site_key = "6LcDLbAqAAAAAMgwHkDRBfDU6NMPC2Kmt6dKw1g5";
-    public $recaptcha_secret_key = "6LcDLbAqAAAAAJQpyWXfTvXJXJctF3F6wBijnAjX";
+    // SaungWA
+    public $saungWA = [
+        'appKey' => '1e946b6b-e8ab-4c6a-ac7b-b2ae4204f095',
+        'authKey' => 'Bl25APBU3Tcahyo9Rd0ZcCbloR4Gj1i6Ll5lRq6Y3J4DikKUS4'
+    ];
+
+    // ReCAPTCHA
+    public $recaptcha = [
+        'siteKey' => '6LcDLbAqAAAAAMgwHkDRBfDU6NMPC2Kmt6dKw1g5',
+        'secretKey' => '6LcDLbAqAAAAAJQpyWXfTvXJXJctF3F6wBijnAjX'
+    ];
+
+    // Xendit Keys
+    public $xenditSecretKey = 'xnd_development_VhoXvOVbaFJVWsYO8LiBq153MGLHjjqIEM7AlPnggwS3AEVUTCL3bMXyS7MoSfz';
+    public $xenditPublicKey = 'xnd_public_development_StXS_AOkori6nxKP52JTUV5nnx_BVTA1rnteoDhtFIFUPmPVNYEogUyYEAq4xy';
+    public $xenditCallbackToken = 'WaJBJ4O3XUtB2izC5FmyAN2mfgouAWEEmgnoo9XQEgKpQffR';
+
+    public $activePaymentMethods = [
+        'DANA',
+        'OVO',
+        'QRIS',
+        'Shopeepay',
+        'Linkaja',
+        'Jeniuspay',
+        'Astrapay',
+        'BNI',
+        'BSI',
+        'BRI',
+        'Mandiri',
+        'Permata',
+        'CIMB',
+        'BJB',
+        'Sampoerna',
+    ];
 
     // Set up Base URL for multisite
     public function __construct()

@@ -23,8 +23,7 @@
                             </div>
                             <div class="use text-whiter">
                                 <div class="h5 m-0" x-text="data?.profile?.name"></div>
-                                <small>
-                                    <!-- <a href="/profile/edit"><span class="bi bi-pencil"></span> Edit Profil</a> -->
+                                <small x-text="data?.profile?.username" class="text-muted">
                                 </small>
                             </div>
                         </div>
@@ -32,16 +31,16 @@
 
                     <div class="text-center">
                         <ul class="listview image-listview flush transparent">
-                            <!-- <li>
-                                <a href="/profile_edit" class="item">
+                            <li>
+                                <a href="/profile/edit_info" class="item">
                                     <i class="fs-4 me-2 bi bi-pencil text-primary"></i>
                                     <span>Edit Profil</span>
                                 </a>
                             </li>
                             <li>
-                                <a href="/change_password" class="item">
-                                    <i class="fs-4 me-2 bi bi-asterisk text-primary"></i>
-                                    <span>Ganti Password</span>
+                                <a href="/profile/edit_account" class="item">
+                                    <i class="fs-4 me-2 bi bi-person-vcard text-primary"></i>
+                                    <span>Edit Akun</span>
                                 </a>
                             </li>
                             <li>
@@ -49,7 +48,7 @@
                                     <i class="bi bi-receipt fs-4 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>
                                 </a>
-                            </li> -->
+                            </li>
                         </ul>
 
                         <!-- <div class="listview-title mt-2">Administrasi</div>

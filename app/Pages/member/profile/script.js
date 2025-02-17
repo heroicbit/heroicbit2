@@ -8,7 +8,6 @@ window.member_profile = function(){
             
             document.title = this.title;
             Alpine.store('tarbiyya').currentPage = 'profile'
-            Alpine.store('tarbiyya').showBottomMenu = true
 
             if(cachePageData['member/profile']){
                 this.data = cachePageData['member/profile']

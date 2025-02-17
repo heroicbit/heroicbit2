@@ -462,7 +462,7 @@ button:hover, button:active, button:focus {
 .appBottomMenu .item.active i.icon,
 .appBottomMenu .item.active ion-icon,
 .appBottomMenu .item.active strong {
-  color: #1E74FD !important;
+  color: #26a4b3 !important;
   font-weight: 500;
 }
 
@@ -562,8 +562,8 @@ button:hover, button:active, button:focus {
 }
 
 .section-title {
-  font-size: 15px;
-  padding: 6px 0;
+  font-size: 1.1rem;
+  padding: 10px 0;
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -4193,9 +4193,9 @@ textarea,
 }
 
 .form-group .form-label {
-  font-size: 11px;
+  font-size: 1rem;
   font-weight: 500;
-  color: #141515;
+  color: #494949;
   display: block;
   line-height: 1.2em;
   text-align: left;
@@ -4304,7 +4304,7 @@ textarea,
   box-shadow: none;
   height: 42px;
   border-radius: 6px;
-  padding: 0 40px 0 16px;
+  padding: 0 16px;
 }
 
 .form-group.boxed .form-control:focus {
@@ -4531,7 +4531,7 @@ textarea,
 .nav-tabs.lined .nav-item .nav-link {
   color: #4F5050;
   font-weight: 500;
-  font-size: 13px;
+  font-size: .8rem;
   border: 0 !important;
   border-bottom: 2px solid transparent !important;
   line-height: 1.2em;

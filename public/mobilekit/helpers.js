@@ -1,5 +1,5 @@
 // Heroicbit2 Helper functions
-window.fetchPageData = function(page, headers = {}){ 
+window.fetchPageData = function(page){ 
     // Memastikan base_url diakhiri dengan '/'
     if (!base_url.endsWith('/')) {
         base_url += '/';
@@ -15,7 +15,12 @@ window.fetchPageData = function(page, headers = {}){
     fullUrl += separator + 'dataonly=1';
 
     return axios
-        .get(fullUrl, headers)
+        .get(fullUrl, {
+            headers: {
+                Authorization: `Bearer ` + localStorage.getItem('heroic_token'),
+                'Pesantrenku-ID': localStorage.getItem('pesantrenID'),
+            }
+        })
         .then(response => {
             return response.data;
         })
@@ -25,11 +30,6 @@ window.fetchPageData = function(page, headers = {}){
 }
 
 window.postPageData = function(page, data = {}, headers = {}) {
-    if (!base_url.endsWith('/')) {
-        base_url += '/';
-    }
-    let fullUrl = base_url + page;
-
     // Membuat objek FormData
     const formData = new FormData();
 
@@ -55,7 +55,12 @@ window.postPageData = function(page, data = {}, headers = {}) {
     }
 
     return axios
-        .post(fullUrl, formData, headers)
+        .post(page, formData, {
+            headers: {
+                Authorization: `Bearer ` + localStorage.getItem('heroic_token'),
+                'Pesantrenku-ID': localStorage.getItem('pesantrenID'),
+            }
+        })
         .then(response => {
             return response.data;
         })
@@ -137,4 +142,19 @@ window.getCookie = function(cname) {
       }
     }
     return "";
+}
+
+window.toastr = function(message, type = 'success', position = 'top'){
+    Toastify({
+        text: message,
+        close: true,
+        duration: 5000,
+        className: type,
+        gravity: position,
+        offset: {y:40},
+    }).showToast();
+}
+
+window.convertRupiah = function(amount) {
+    return amount.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
 }

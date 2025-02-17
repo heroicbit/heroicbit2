@@ -1,5 +1,5 @@
-window.member_feeds = function(){
-    return {
+document.addEventListener('alpine:init', () => {
+    Alpine.data('member_feeds', () => ({
         title: "Info Pesantren",
         feeds: [],
         nextPage: 1,
@@ -58,5 +58,5 @@ window.member_feeds = function(){
                 return sentence;
             }
         }
-    }
-}
+    }))
+})

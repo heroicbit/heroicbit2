@@ -18,16 +18,7 @@ class PageController extends MemberPageController
     {
         $username = strtolower($this->request->getPost('username'));
         $password = $this->request->getPost('password');
-
-        // Make sure the number begin with 62
-		$username = substr($username, 0, 1)=='0' 
-		? substr_replace($username, '62', 0, 1) 
-		: $username;
-		if(substr($username, 0, 1)=='8') 
-			$username = '62'.$username;
-
-        // Use database client
-        // Get database pesantren
+        
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
 
@@ -45,8 +36,7 @@ class PageController extends MemberPageController
                     'email' => $found->email,
                     'timestamp' => time()
                 ];
-                $key = config('App')->jwtKey['secret'];
-                $jwt = JWT::encode($userSession, $key, 'HS256');
+                $jwt = JWT::encode($userSession, config('App')->jwtKey['secret'], 'HS256');
 
                 $user = [
                     'name' => $found->name,

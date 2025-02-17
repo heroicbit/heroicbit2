@@ -5,8 +5,35 @@ document.addEventListener('alpine:init', () => {
 
     NProgress.configure({ showSpinner: false });
 
+    Alpine.data("router", () => ({
+        pesantrenID: localStorage.getItem('pesantrenID'),
+
+            async init(){
+                document.title = this.title;
+                Alpine.store('tarbiyya').pesantrenID = localStorage.getItem("pesantrenID")
+                Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
+                await Alpine.store('tarbiyya').getSiteSettings(this.pesantrenID)
+            },
+            
+            // Check kode pesantren
+            isKodePesantrenSet(context){
+                if(Alpine.store('tarbiyya').pesantrenID == null) return context.redirect('/kodepesantren')
+            },
+
+            // Check login session, dipanggil oleh x-handler template yang meemerlukan session
+            isLoggedIn(context){
+                if(localStorage.getItem('intro') != 1) return context.redirect('/intro')
+                if(Alpine.store('tarbiyya').sessionToken == null) return context.redirect('/login')
+            },
+
+            notfound(context) {
+                document.querySelector('#app').innerHTML = `<h1>Not Found</h1>`
+            },
+    }))
+
     // Setup Pinecone Router
     window.PineconeRouter.settings.basePath = '/member';
+    window.PineconeRouter.settings.includeQuery = false;
     
     document.addEventListener('pinecone-start', () => {
         NProgress.start();
@@ -52,34 +79,8 @@ document.addEventListener('alpine:init', () => {
             }
         }
     })
-    
-    window.router = function(){
-        return {
-            pesantrenID: localStorage.getItem('pesantrenID'),
 
-            async init(){
-                document.title = this.title;
-                Alpine.store('tarbiyya').pesantrenID = localStorage.getItem("pesantrenID")
-                Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
-                await Alpine.store('tarbiyya').getSiteSettings(this.pesantrenID)
-            },
-            
-            // Check kode pesantren
-            isKodePesantrenSet(context){
-                if(Alpine.store('tarbiyya').pesantrenID == null) return context.redirect('/kodepesantren')
-            },
-
-            // Check login session, dipanggil oleh x-handler template yang meemerlukan session
-            isLoggedIn(context){
-                if(localStorage.getItem('intro') != 1) return context.redirect('/intro')
-                if(Alpine.store('tarbiyya').sessionToken == null) return context.redirect('/login')
-            },
-
-            notfound(context) {
-                document.querySelector('#app').innerHTML = `<h1>Not Found</h1>`
-            },
-        }
-    }
+    Alpine.store('cache', {});
 })
 
 //****************************************************************** */
@@ -106,7 +107,7 @@ document.addEventListener('pinecone-end', () => {
     if (document.body.contains(appHeader)) {
         animatedScroll();
         document.addEventListener("scroll", function () {
-            animatedScroll();
+            animatedScroll()
         })
     }
 

@@ -14,6 +14,10 @@
     <link rel="manifest" href="/<?= ($_SERVER['SITENAME'] ?? null) ? $_SERVER['SITENAME'] : 'tarbiyya' ?>_manifest.json">
     <script>let base_url = `<?= site_url() ?>`;</script>
     <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css" />
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css"/>
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
+
     <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/style.css') ?>">
     <link rel="stylesheet" href="<?= asset_url('mobilekit/assets/css/custom.css') ?>">
 </head>
@@ -30,8 +34,10 @@
     <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vanilla-calendar-pro/build/vanilla-calendar.min.js" defer></script>
     <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/prompts-js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    <!-- https://simonwillison.net/2024/Dec/7/prompts-js/ -->
+    <script src="https://cdn.jsdelivr.net/npm/prompts-js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     
     <script src="<?= asset_url('mobilekit/assets/js/helpers.bundle.js') ?>"></script>
     <script src="<?= asset_url('mobilekit/assets/js/base.js') ?>"></script>
@@ -40,6 +46,7 @@
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.14.1/dist/cdn.min.js" defer></script>
 
 	<script>
+        	Fancybox.bind('[data-fancybox="gallery"]', {});   
 		// Check that service workers are supported
 		if ('serviceWorker' in navigator) {
 			// Use the window load event to keep the page load performant

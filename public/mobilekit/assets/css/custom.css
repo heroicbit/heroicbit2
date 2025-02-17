@@ -1,6 +1,8 @@
+#appCapsule{position:relative;margin-bottom:env(safe-area-inset-bottom);margin-top:env(safe-area-inset-top)}
+.input-icon-append{display:flex;align-items:center;justify-content:center;color:#4F5050;height:38px;font-size:24px;position:absolute;right:7px;bottom:1px;width:32px;opacity:.5}
 a { color: #076b89; }
 #appCapsule{ min-height: 100vh}
-.appBottomMenu, .appHeader, #appCapsule{ max-width: 768px; margin: 0 auto}
+.appBottomMenu, .appHeader, #appCapsule, .extraHeader { max-width: 768px; margin: 0 auto}
 .appHeader.bg-brand { box-shadow: none !important}
 .bg-brand { background-color: #3BC0CF !important}
 .bg-brand-2 { background-color: #157CA1 !important}
@@ -9,8 +11,8 @@ a { color: #076b89; }
 .smallthin {  font-size: .74em; line-height: 14px !important; font-weight: 500;}
 .text-primary { color: #157CA1 !important}
 dl { margin-bottom: .5rem; }
-.page-content p, .page-content li { font-size: 1.1rem; line-height: 1.6rem; }
-.swiper-thumbnail-image { height: 200px; object-fit: cover; }
+.page-content p, .page-content li { font-size: 1rem; line-height: 1.5rem; }
+.swiper-thumbnail-image { height: 150px; object-fit: cover; }
 .scroll-thumbnail-video { height: 235px; object-fit: cover; }
 .text-elipsis { display: -webkit-box;-webkit-box-orient: vertical;overflow: hidden;text-overflow: ellipsis;max-height: calc(3 * 1.5em);line-height: 1.5em; }
 .text-elipsis-3 { -webkit-line-clamp: 3; line-clamp: 3; }
@@ -59,6 +61,75 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
 .offcanvas-body img {
     max-width: 100%;
 }
-.page-content li {
-    margin-top: 10px;
+
+.btn-commit {
+    background-color: #3bc0cf;
+    background-image: linear-gradient(160deg, #3bc0cf 0%, #1e74fd 100%);
+    border: 0;
+    color: #eee;
+}
+
+.btn-progress {
+    box-shadow: none;
+    color: transparent !important;
+    pointer-events: none;
+    background-color: var(--bs-btn-disabled-bg);
+    border-color: var(--bs-btn-disabled-border-color);
+    opacity: var(--bs-btn-disabled-opacity);
+    position: relative;
+}
+.btn-progress:after {
+    content: "";
+    --bs-spinner-width: 1rem;
+    --bs-spinner-height: 1rem;
+    --bs-spinner-border-width: .2em;
+    --bs-spinner-animation-speed: .75s;
+    --bs-spinner-animation-name: spinner-border;
+    border: var(--bs-spinner-border-width) solid currentcolor;
+    border-right-color: transparent;
+
+    display: inline-block;
+    width: var(--bs-spinner-width);
+    height: var(--bs-spinner-height);
+    vertical-align: var(--bs-spinner-vertical-align);
+    border-radius: 50%;
+    animation: var(--bs-spinner-animation-speed) linear infinite var(--bs-spinner-animation-name);
+    color: white;
+    left: calc(50% - .6em);
+    position: absolute;
+    top: calc(50% - .6em);
+}
+.toastify {
+    margin: auto;
+    left: 0;
+    right: 0;
+    max-width: 768px;
+    width: 100%;
+    z-index: 10000;
+    font-size: 1rem;
+    line-height: 1.3rem;
+}
+.toastify.bottom {
+    bottom: 55px !important;
+    top: initial !important;
+}
+.toastify.primary {
+    background: #2196F3;
+}
+.toastify.success {
+    background: #4caf50;
+}
+.toastify.info {
+    background: #03a9f4;
+}
+.toastify.warning {
+    background: #FF9800;
+}
+.toastify.danger {
+    background: #e91e63;
+}
+.toast-close {
+    position: absolute;
+    top: 12px;
+    right: 10px;
 }

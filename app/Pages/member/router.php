@@ -11,6 +11,12 @@
         x-route="/intro" 
         x-template.preload="['/member/intro/content']"
         ></template>
+   
+    <!-- Coba -->
+    <template 
+        x-route="/coba" 
+        x-template.preload="['/member/coba/content', '/_components/bottommenu?pid=' + pesantrenID]"
+        ></template>
     
     <!-- Kode Pesantren -->
     <template 
@@ -122,10 +128,17 @@
         x-handler="[isKodePesantrenSet,isLoggedIn]"
         ></template>
     
-    <!-- Profile Edit -->
+    <!-- Profile Edit Info -->
     <template 
-        x-route="/profile_edit" 
-        x-template.preload="['/member/profile_edit/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-route="/profile/edit_info" 
+        x-template="['/member/profile/edit_info/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-handler="isLoggedIn"
+        ></template>
+
+    <!-- Profile Edit Akun -->
+    <template 
+        x-route="/profile/edit_account" 
+        x-template="['/member/profile/edit_account/content', '/_components/bottommenu?pid=' + pesantrenID]" 
         x-handler="isLoggedIn"
         ></template>
     
