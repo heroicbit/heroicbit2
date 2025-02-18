@@ -19,15 +19,27 @@ use Yllumi\Ci4Pages\PageRouter;
 
 class Services extends BaseService
 {
+    /**
+     * @return PageRouter
+     */
     public static function router(?RouteCollectionInterface $routes = null, ?Request $request = null, bool $getShared = true)
     {
         if ($getShared) {
-            return static::getSharedInstance('router', $routes, $request);
+            /**
+             * @var PageRouter $pageRouter
+             */
+            $pageRouter = static::getSharedInstance('router', $routes, $request);
+
+            return $pageRouter;
         }
 
         $routes ??= AppServices::get('routes');
         $request ??= AppServices::get('request');
 
+        /**
+         * @var RouteCollectionInterface $routes
+         * @var Request                  $request
+         */
         return new PageRouter($routes, $request);
     }
 }

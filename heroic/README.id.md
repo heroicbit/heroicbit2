@@ -1,5 +1,7 @@
 # ci4-pages
 
+![tests build](https://github.com/yllumi/ci4-pages/workflows/tests%20build/badge.svg)
+
 **ci4-pages** adalah package untuk CodeIgniter 4 yang menyediakan mekanisme **routing berbasis page**. Package ini mempermudah Anda mengelola routing dengan pendekatan berbasis file dan struktur folder yang lebih fleksibel, sehingga cocok untuk proyek dengan kebutuhan routing dinamis. Bayangkan seperti Next.js atau Laravel Folio tapi dengan mempertahankan kekhasan dari gaya coding CodeIgniter 4.
 
 ## Instalasi
@@ -123,6 +125,15 @@ Selengkapnya tentang API Response Trait dapat dilihat di dokumentasi CodeIgniter
 #### Kombinasi dengan Manual Route
 
 Kamu tetap dapat menggunakan mekanisme Manual Route dan juga Auto Route (Improved) bawaan CodeIgniter 4, berbarengan dengan page based route ini. Urutan eksekusi routernya adalah [manual route] - [page based route] - [auto route].
+
+#### Page Template Generator
+
+Kamu dapat menggunakan baris perintah `spark` ini di terminal untuk membuat page baru:
+
+```
+php spark page:create pagename
+php spark page:create pagename/subpage
+```
 
 ## Kontribusi
 Kami menerima kontribusi dari komunitas! Jika Anda memiliki ide atau menemukan bug, silakan kirimkan pull request atau buka issue di repository ini.

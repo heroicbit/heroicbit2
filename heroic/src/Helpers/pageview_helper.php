@@ -9,10 +9,16 @@
  * the LICENSE file that was distributed with this source code.
  */
 
+use CodeIgniter\Autoloader\FileLocatorInterface;
 use Config\Services as AppServices;
 use Config\View;
+use Psr\Log\LoggerInterface;
 
 if (! function_exists('pageView')) {
+    /**
+     * @param array<string, mixed> $data
+     * @param array<string, mixed> $options
+     */
     function pageView(string $name, array $data = [], array $options = []): string
     {
         $config       = config(View::class);
@@ -20,7 +26,12 @@ if (! function_exists('pageView')) {
         $pageViewPath = APPPATH . 'Pages/';
 
         // Create new view instance with custom view path
-        $renderer = new CodeIgniter\View\View($config, $pageViewPath, AppServices::get('locator'), CI_DEBUG, AppServices::get('logger'));
+        /** @var FileLocatorInterface $locator */
+        $locator = AppServices::get('locator');
+        /** @var LoggerInterface $logger */
+        $logger = AppServices::get('logger');
+
+        $renderer = new CodeIgniter\View\View($config, $pageViewPath, $locator, CI_DEBUG, $logger);
 
         if (array_key_exists('saveData', $options)) {
             $saveData = (bool) $options['saveData'];
@@ -36,6 +47,7 @@ if (! function_exists('asset_url')) {
      * Generate asset URL with version based on file modification time (filemtime)
      *
      * @param string $filePath Relative path to the asset file
+     *
      * @return string Full URL to the asset with version
      */
     function asset_url(string $filePath): string
@@ -44,13 +56,11 @@ if (! function_exists('asset_url')) {
         $fullFilePath = FCPATH . $filePath;
 
         // Check if file exists
-        if (file_exists($fullFilePath)) {
+        $version = file_exists($fullFilePath)
             // Add file modification time as version
-            $version = filemtime($fullFilePath);
-        } else {
+            ? filemtime($fullFilePath)
             // Fallback version (current timestamp if file doesn't exist)
-            $version = time();
-        }
+            : time();
 
         // Generate full URL with version
         return base_url($filePath) . '?v=' . $version;

@@ -18,6 +18,7 @@ use CodeIgniter\Exceptions\PageNotFoundException;
 use CodeIgniter\HTTP\Exceptions\BadRequestException;
 use CodeIgniter\HTTP\ResponseInterface;
 use CodeIgniter\Router\Router;
+use RuntimeException;
 
 /**
  * Page based router.
@@ -39,46 +40,22 @@ class PageRouter extends Router
      */
     public function handle(?string $uri = null)
     {
-        // If we cannot find a URI to match against, then set it to root (`/`).
-        if ($uri === null || $uri === '') {
-            $uri = '/';
-        }
-
-        // Decode URL-encoded string
-        $uri = urldecode($uri);
-
-        $this->checkDisallowedChars($uri);
-
-        // Restart filterInfo
-        $this->filtersInfo = [];
-
-        // Checks defined routes
-        if ($this->checkRoutes($uri)) {
-            if ($this->collection->isFiltered($this->matchedRoute[0])) {
-                $this->filtersInfo = $this->collection->getFiltersForRoute($this->matchedRoute[0]);
+        try {
+            $handle = parent::handle($uri);
+        } catch (PageNotFoundException $e) {
+            if ($uri === null) {
+                throw $e;
             }
 
-            return $this->controller;
+            // HACK: Check for page based routes
+            if ($this->pageBasedRoute($uri)) {
+                return $this->controllerName();
+            }
+
+            throw $e;
         }
 
-        // HACK: Check for page based routes
-        if ($this->pageBasedRoute($uri)) {
-            return $this->controllerName();
-        }
-
-        // Still here? Then we can try to match the URI against
-        // Controllers/directories, but the application may not
-        // want this, like in the case of API's.
-        if (! $this->collection->shouldAutoRoute()) {
-            throw new PageNotFoundException(
-                "Can't find a route for '{$this->collection->getHTTPVerb()}: {$uri}'."
-            );
-        }
-
-        // Checks auto routes
-        $this->autoRoute($uri);
-
-        return $this->controllerName();
+        return $handle;
     }
 
     /**
@@ -96,8 +73,12 @@ class PageRouter extends Router
         $uri       = trim($uri, '/');
 
         // Set default page for root uri
-        if (empty($uri)) {
+        if ($uri === '') {
             $uri = config('App')->defaultPage ?? 'home';
+
+            if (! is_string($uri)) {
+                throw new RuntimeException('App Config defaultPage must be a string.');
+            }
         }
 
         // Set default variables
@@ -108,7 +89,7 @@ class PageRouter extends Router
 
         $uriSegments = explode('/', $uri);
 
-        while (count($uriSegments) > 0) {
+        while ($uriSegments !== []) {
             $folderPath = $pagesPath . '/' . str_replace('/', DIRECTORY_SEPARATOR, implode('/', $uriSegments));
             if (is_dir($folderPath) && file_exists($folderPath . '/' . $controllerName . '.php')) {
                 $uri                 = implode('/', $uriSegments);
@@ -130,21 +111,5 @@ class PageRouter extends Router
         }
 
         return $pageFound;
-    }
-
-    /**
-     * Checks disallowed characters
-     */
-    private function checkDisallowedChars(string $uri): void
-    {
-        foreach (explode('/', $uri) as $segment) {
-            if ($segment !== '' && $this->permittedURIChars !== ''
-                && preg_match('/\A[' . $this->permittedURIChars . ']+\z/iu', $segment) !== 1
-            ) {
-                throw new BadRequestException(
-                    'The URI you submitted has disallowed characters: "' . $segment . '"'
-                );
-            }
-        }
     }
 }

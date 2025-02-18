@@ -1,6 +1,8 @@
 
 # ci4-pages
 
+![tests build](https://github.com/yllumi/ci4-pages/workflows/tests%20build/badge.svg)
+
 **ci4-pages** is a package for CodeIgniter 4 that provides a **page-based routing mechanism**. This package simplifies routing management with a file-based and folder-structured approach, making it suitable for projects requiring dynamic routing. Think of it as similar to Next.js or Laravel Folio but maintaining the coding style unique to CodeIgniter 4.
 
 ## Installation
@@ -124,6 +126,17 @@ For more information about the API Response Trait, refer to the CodeIgniter docu
 #### Combination with Manual Routes
 
 You can still use the Manual Route mechanism alongside the Auto Route (Improved) provided by CodeIgniter 4 in conjunction with this page-based routing. The execution order of the routers is [manual route] - [page-based route] - [auto route].
+
+#### Page Template Generator
+
+You can run this `spark` command to create a new page folder and files: 
+
+```
+php spark page:create pagename
+php spark page:create pagename/subpage
+```
+
+This command will create a new page folder with its sample controller and view file.
 
 ## Contribution
 We welcome community contributions! If you have ideas or find bugs, feel free to submit a pull request or open an issue in this repository.
