@@ -232,7 +232,7 @@ window.member_santri = function(){
         },
 
         addSantri(){
-            postPageData('member/santri', 
+            postPageData('/member/santri', 
                 { token: this.NISFound.token },
                 { headers: {
                     'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
