@@ -27,7 +27,7 @@
                     <dl><dt>NIK</dt><dd x-text="detailSantri.nik_santri"></dd></dl>
                     <dl><dt>NISN</dt><dd x-text="detailSantri.nisn"></dd></dl>
                     <dl><dt>Tempat/Tanggal Lahir</dt><dd x-text="detailSantri.tempat_lahir_santri + `, ` + formatDate(detailSantri.tanggal_lahir_santri)"></dd></dl>
-                    <dl><dt>Jenis Kelamin</dt><dd x-text="detailSantri.jenis_kelamin == `m` ? `Laki-laki` : `Perempuan`"></dd></dl>
+                    <dl><dt>Jenis Kelamin</dt><dd x-text="detailSantri.jenis_kelamin == `L` ? `Laki-laki` : `Perempuan`"></dd></dl>
                     <dl><dt>Status dalam Keluarga</dt><dd x-text="detailSantri.status_keluarga"></dd></dl>
                     <dl><dt>Anak Ke-</dt><dd x-text="detailSantri.anak_ke"></dd></dl>
                     <dl><dt>Saudara Kandung</dt><dd x-text="detailSantri.jumlah_saudara_kandung > 0 ? detailSantri.jumlah_saudara_kandung + `orang` : `-`"></dd></dl>
