@@ -214,7 +214,7 @@ class App extends BaseConfig
 
     // SaungWA
     public $saungWA = [
-        'appKey' => '1e946b6b-e8ab-4c6a-ac7b-b2ae4204f095',
+        'appKey' => '00f6af51-39a7-4918-b87a-2716ab4489cf',
         'authKey' => 'Bl25APBU3Tcahyo9Rd0ZcCbloR4Gj1i6Ll5lRq6Y3J4DikKUS4'
     ];
 
