@@ -30,7 +30,8 @@ class PageController extends MemberPageController
         }
 
         // Get database pesantren
-        $db = \Config\Database::connect();
+        $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $db = $Tarbiyya->initDBPesantren();
 
         // Check google recaptcha response
         $recaptchaSecretKey = config('App')->recaptcha['secretKey'];

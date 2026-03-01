@@ -24,7 +24,7 @@ document.addEventListener('alpine:init', () => {
                 'sitekey' : recaptchaSiteKey
             });
             if(this.recaptchaWidget === null)
-                window.location.href = '/reset_password'
+                window.location.href = '/member/reset_password'
         },
 
         sendTo(to) {
@@ -55,7 +55,7 @@ document.addEventListener('alpine:init', () => {
 
             // Check register_confirm using axios post
             const formData = new FormData();
-            postPageData('/reset_password', {
+            postPageData('/member/reset_password', {
                 recaptcha: this.recaptcha,
                 phone: this.model.phone,
                 email: this.model.email,
@@ -65,7 +65,7 @@ document.addEventListener('alpine:init', () => {
                 window.console.log(response)
                 if(response.success == 1){
                     let token = response.token + '_' + response.id + 'X' + Math.random().toString(36).substring(7)
-                    window.PineconeRouter.context.redirect('/reset_password/change/' + token)
+                    window.PineconeRouter.context.redirect('/member/reset_password/change/' + token)
                 } else {
                     toastr(response.message, 'danger')
                     grecaptcha.reset(this.recaptchaWidget)

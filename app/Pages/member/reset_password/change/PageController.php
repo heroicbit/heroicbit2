@@ -1,13 +1,13 @@
-<?php namespace App\Pages\reset_password\change;
+<?php namespace App\Pages\member\reset_password\change;
 
-use App\Pages\BaseController as MemberPageController;
+use App\Pages\member\PageController as MemberPageController;
 use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController 
 {
     public function getContent()
     {
-        return pageView('reset_password/change/index', $this->data);
+        return pageView('member/reset_password/change/index', $this->data);
     }
     
     public function postIndex()
@@ -21,7 +21,7 @@ class PageController extends MemberPageController
 
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = \Config\Database::connect();
+        $db = $Tarbiyya->initDBPesantren();
 
         // Get user
         $query = "SELECT otp, token, email FROM mein_users WHERE id = :id:";
@@ -60,7 +60,8 @@ class PageController extends MemberPageController
 
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $db = \Config\Database::connect();
+        $db = $Tarbiyya->initDBPesantren();
+
         $query = "SELECT name, phone, token FROM mein_users WHERE id = :id:";
         $user = $db->query($query, ['id' => $id])->getRow();
         if(strcmp($user?->token, $token) !== 0) {

@@ -15,14 +15,14 @@ window.reset_password_confirm = function(tokens){
         
         init(){
             document.title = this.title
-            Alpine.store('masagi').currentPage = 'change_password'
+            Alpine.store('tarbiyya').currentPage = 'change_password'
             
-            this.data.logo = Alpine.store('masagi').settings.auth_logo
+            this.data.logo = Alpine.store('tarbiyya').tarbiyyaSetting.auth_logo;
 
             const tokenRegex = /^[a-f0-9]+_[0-9]+X.+$/;
             const urlParams = new URLSearchParams(window.location.search);
             if (!tokenRegex.test(tokens)) {
-                window.PineconeRouter.context.redirect('/reset_password')
+                window.PineconeRouter.context.redirect('/member/reset_password')
             }
 
             const [part1, rest] = tokens.split('_');  // Bagian pertama sebelum _ adalah token
@@ -49,16 +49,16 @@ window.reset_password_confirm = function(tokens){
             formData.append('token', this.data.token ?? '');
             formData.append('otp', this.data.otp ?? '');
             formData.append('password', this.data.password ?? '');
-            axios.post('/reset_password/change/confirm', formData, {
+            axios.post('/member/reset_password/change/confirm', formData, {
                 headers: {
                     'Content-Type': 'multipart/form-data',
-                    'Pesantrenku-ID': Alpine.store('masagi').pesantrenID
+                    'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
                 }
             }).then(response => {
                 if(response.data.success == 1){
                     localStorage.setItem('heroic_token', response.data.jwt)
                     setTimeout(() => {
-                        Alpine.store('masagi').sessionToken = localStorage.getItem('heroic_token')
+                        Alpine.store('tarbiyya').sessionToken = localStorage.getItem('heroic_token')
                         window.PineconeRouter.context.redirect('/')
                     })
                 } else {
