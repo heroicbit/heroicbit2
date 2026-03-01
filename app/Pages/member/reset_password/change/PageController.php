@@ -91,30 +91,7 @@ Terima kasih telah mendaftar di aplikasi {$namaAplikasi}
 Untuk melanjutkan proses pendaftaran, silahkan masukan kode registrasi berikut ini ke dalam aplikasi:\n
 *{$otp}*\n
 Salam,";
-
-        $curl = curl_init();
-
-        curl_setopt_array($curl, [
-            CURLOPT_URL => 'https://app.saungwa.com/api/create-message',
-            CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_ENCODING => '',
-            CURLOPT_MAXREDIRS => 10,
-            CURLOPT_TIMEOUT => 0,
-            CURLOPT_FOLLOWLOCATION => true,
-            CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST => 'POST',
-            CURLOPT_POSTFIELDS => array(
-            'appkey' => '1e946b6b-e8ab-4c6a-ac7b-b2ae4204f095',
-            'authkey' => 'Bl25APBU3Tcahyo9Rd0ZcCbloR4Gj1i6Ll5lRq6Y3J4DikKUS4',
-            'to' => $user->phone,
-            'message' => $message,
-            'sandbox' => 'false'
-            ),
-        ]);
-
-        $response = curl_exec($curl);
-
-        curl_close($curl);
+        $Tarbiyya->sendWhatsapp($user->phone, $message);
 
         return $this->respond([
             'success' => 1, 'message' => 'Kode OTP berhasil dikirim ulang.', 'token' => $token, 'id' => $id

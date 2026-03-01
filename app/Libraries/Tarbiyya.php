@@ -122,34 +122,37 @@ class Tarbiyya {
 		return $phone;
 	}
 
-	public function sendWhatsapp($phone, $message) 
-    {
+	public function sendWhatsapp($phone, $message)
+	{
 		// Make sure the number begin with 62
 		$phone = $this->normalizePhoneNumber($phone);
-		
-        $curl = curl_init();
-        curl_setopt_array($curl, [
-            CURLOPT_URL 			=> 'https://app.saungwa.com/api/create-message',
-            CURLOPT_RETURNTRANSFER 	=> true,
-            CURLOPT_ENCODING 		=> '',
-            CURLOPT_MAXREDIRS 		=> 10,
-            CURLOPT_TIMEOUT 		=> 0,
-            CURLOPT_FOLLOWLOCATION 	=> true,
-            CURLOPT_HTTP_VERSION 	=> CURL_HTTP_VERSION_1_1,
-            CURLOPT_CUSTOMREQUEST 	=> 'POST',
-            CURLOPT_POSTFIELDS 		=> [
-				'sandbox' 	=> 'false',
-            	'appkey'	=> config('App')->saungWA['appKey'],
-            	'authkey'	=> config('App')->saungWA['authKey'],
-            	'to' 		=> $phone,
-            	'message'	=> $message,
-			],
-        ]);
 
-        $response = curl_exec($curl);
-        curl_close($curl);
-        return json_decode($response);
-    }
+		$curl = curl_init();
+		$session = 'pesantrenku';
+		$url = "https://wasender.cloudapp.web.id/{$session}/send?app_key=39d16e98cb483a9ac9523ba0938b5f2cba94e452d89bfa63cc2be492e7e111d8";
+
+		$data = [
+			'number' => $phone,
+			'message' => $message
+		];
+
+		$options = [
+			'http' => [
+				'header'  => "Content-Type: application/json\r\n",
+				'method'  => 'POST',
+				'content' => json_encode($data)
+			]
+		];
+
+		$context  = stream_context_create($options);
+		$result = file_get_contents($url, false, $context);
+
+		if ($result === FALSE) {
+			die('Error sending message');
+		}
+
+		return json_decode($result, true);
+	}
 
 	public function sendEmail($to, $subject, $message, $debug = 0)
 	{
