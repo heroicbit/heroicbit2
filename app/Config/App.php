@@ -220,8 +220,8 @@ class App extends BaseConfig
 
     // ReCAPTCHA
     public $recaptcha = [
-        'siteKey' => '6LcDLbAqAAAAAMgwHkDRBfDU6NMPC2Kmt6dKw1g5',
-        'secretKey' => '6LcDLbAqAAAAAJQpyWXfTvXJXJctF3F6wBijnAjX'
+        'siteKey' => '6LcOWa8qAAAAAJaNSwehPPcTQGgQcL2aBP5NbCIe',
+        'secretKey' => '6LcOWa8qAAAAAN_6pCz2ZEOKggR0VckPOcBflewP'
     ];
 
     // Xendit Keys
