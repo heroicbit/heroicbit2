@@ -1,6 +1,6 @@
-<?php namespace App\Pages\reset_password;
+<?php namespace App\Pages\member\reset_password;
 
-use App\Pages\PageController as MemberPageController;
+use App\Pages\member\PageController as MemberPageController;
 use CodeIgniter\API\ResponseTrait;
 
 class PageController extends MemberPageController 
@@ -11,7 +11,7 @@ class PageController extends MemberPageController
     {
         $this->data['recaptcha_site_key'] = config('App')->recaptcha['siteKey'];
 
-        return pageView('reset_password/index', $this->data);
+        return pageView('member/reset_password/index', $this->data);
     }
     
     public function postIndex()

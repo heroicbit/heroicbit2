@@ -3,7 +3,7 @@
 namespace App\Pages\webhook;
 
 use App\Libraries\Transaction;
-use App\Pages\PageController as MemberPageController;
+use App\Pages\BaseController as MemberPageController;
 
 class PageController extends MemberPageController
 {

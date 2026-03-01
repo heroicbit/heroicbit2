@@ -2,7 +2,7 @@
 
 namespace App\Pages\checkout;
 
-use App\Pages\PageController as MemberPageController;
+use App\Pages\BaseController as MemberPageController;
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
 

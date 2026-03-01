@@ -1,6 +1,6 @@
 <?php namespace App\Pages\reset_password\change;
 
-use App\Pages\PageController as MemberPageController;
+use App\Pages\BaseController as MemberPageController;
 use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController 
