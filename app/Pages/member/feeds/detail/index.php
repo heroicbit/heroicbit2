@@ -34,7 +34,7 @@
                         <img :src="feed[0]?.avatar ? feed[0]?.avatar : `${base_url}mobilekit/assets/img/walisantri/avatar/user.png`" alt="image" class="imaged w32 rounded me-1">
                         <span x-text="feed[0]?.author_name"></span>
                     </div>
-                    <div class="card-body px-3 pb-3">
+                    <div class="card-body page-content px-3 pb-3">
                         <h3 class="card-title mb-1" x-text="feed[0]?.title"></h3>
                         <div class="text-muted mb-3" x-text="formatDate(feed[0]?.published_at)"></div>
                         <p class="card-text" x-html="nl2br(feed[0]?.content)"></p>

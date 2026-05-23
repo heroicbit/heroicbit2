@@ -18,16 +18,16 @@ class PageController extends MemberPageController {
 		$offset = ($page-1) * $perpage;
 
         // Get post data
-		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
+		$query = "SELECT `view_union_posts`.`id`, `medias`, `featured_image`, `title`, `content`, 
             `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
-            `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
-            `mein_microblogs`.`created_at` as `created_at`, 
-            `mein_microblogs`.`published_at` as `published_at`
-            FROM `mein_microblogs`
-            JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-            WHERE `mein_microblogs`.`status` = :status:
-            AND (`mein_microblogs`.`youtube_url` IS NULL OR `mein_microblogs`.`youtube_url` = '')
-            ORDER BY `mein_microblogs`.`published_at` DESC
+            `mein_users`.`name` as `author_name`, `view_union_posts`.`status` as `status`, 
+            `view_union_posts`.`created_at` as `created_at`, 
+            `view_union_posts`.`published_at` as `published_at`
+            FROM `view_union_posts`
+            JOIN `mein_users` ON `mein_users`.`id`=`view_union_posts`.`author`
+            WHERE `view_union_posts`.`status` = :status:
+            AND (`view_union_posts`.`youtube_url` IS NULL OR `view_union_posts`.`youtube_url` = '')
+            ORDER BY `view_union_posts`.`published_at` DESC
             LIMIT :offset:, :perpage:";
 
 

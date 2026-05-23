@@ -9393,3 +9393,8 @@ body.dark-mode-active.rtl-mode .notification-dialog.android-style .notification-
   width: 32px;
   opacity: 0.5;
 }
+
+.page-content img {
+  max-width: 100%;
+  border-radius: 8px;
+}

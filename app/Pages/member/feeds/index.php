@@ -20,7 +20,7 @@
                             <span x-text="article.author_name"></span>
                         </div>
                         <a href="javascript:void()" x-on:click="showDetail(articleIndex)">
-                            <img :src="article.medias[0].url" class="w-100" alt="image">
+                            <img :src="article.medias ? article.medias[0].url : article.featured_image" class="w-100" alt="image">
                         </a>
                         <div class="card-body px-3 pt-2 pb-3">
                             <small class="text-muted" x-text="formatDate(article.published_at)"></small>

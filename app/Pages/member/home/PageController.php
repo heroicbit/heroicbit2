@@ -46,15 +46,15 @@ class PageController extends MemberPageController
         /**
          * Get post data (articles and videos)
          **/
-		$postQuery = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
+		$postQuery = "SELECT `view_union_posts`.`id`, `medias`, `featured_image`, `title`, `content`, `youtube_url`,
         `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
-        `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
-        `mein_microblogs`.`created_at` as `created_at`, 
-        `mein_microblogs`.`published_at` as `published_at`
-        FROM `mein_microblogs`
-        JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-        WHERE `mein_microblogs`.`status` = 'publish'
-        ORDER BY `mein_microblogs`.`published_at` DESC
+        `mein_users`.`name` as `author_name`, `view_union_posts`.`status` as `status`, 
+        `view_union_posts`.`created_at` as `created_at`, 
+        `view_union_posts`.`published_at` as `published_at`
+        FROM `view_union_posts`
+        JOIN `mein_users` ON `mein_users`.`id`=`view_union_posts`.`author`
+        WHERE `view_union_posts`.`status` = 'publish'
+        ORDER BY `view_union_posts`.`published_at` DESC
         LIMIT 5";
 
         $posts = $db->query($postQuery)->getResultArray();
