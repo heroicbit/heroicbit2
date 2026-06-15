@@ -22,6 +22,19 @@ class PageController extends MemberPageController
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
 
+        // If username is not email, then it is phone number, sanitize it
+        if(!filter_var($username, FILTER_VALIDATE_EMAIL)) {
+            // Sanitize phone number from any characeter except number
+            $username = preg_replace('/\D/', '', $username);
+
+            // Make sure the number begin with 62
+            $username = substr($username, 0, 1)=='0' 
+            ? substr_replace($username, '62', 0, 1) 
+            : $username;
+            if(substr($username, 0, 1)=='8') 
+                $username = '62'.$username;
+        }
+
         // Check login to database directly using $db
         $found = $db->query('SELECT * FROM mein_users where (email = :username: OR phone = :username:) AND status = "active"', ['username' => $username])->getRow();
         $jwt = null;
