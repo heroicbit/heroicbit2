@@ -17,6 +17,7 @@ class PageController extends MemberPageController
 
         $validation->setRules([
             'fullname' => 'required|min_length[2]',
+            'email' => 'required|valid_email',
             'whatsapp' => 'required',
             'password' => 'required|max_length[50]|min_length[6]',
             'repeat_password' => 'required|matches[password]',
@@ -29,6 +30,9 @@ class PageController extends MemberPageController
             ]);
         }
         $validData = $validation->getValidated();
+
+        // Sanitize phone number from any characeter except number
+        $validData['whatsapp'] = preg_replace('/\D/', '', $validData['whatsapp']);
 
         // Make sure the number begin with 62
 		$phone = substr($validData['whatsapp'], 0, 1)=='0' 
@@ -60,6 +64,7 @@ class PageController extends MemberPageController
 
         $userData = [
             'name' => $validData['fullname'],
+            'email' => $validData['email'],
             'phone' => $phone,
             'username' => $phone,
             'password' => $password,

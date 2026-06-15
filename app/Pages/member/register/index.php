@@ -32,13 +32,13 @@
                         </div>
                     </div>
 
-                    <!-- <div class="form-group px-3 boxed">
+                    <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
-                            <label class="fw-bold" for="email">Email</label>
+                            <label class="text-white fs-6" for="email">Email</label>
                             <input type="email" class="form-control" id="email" x-model="data.email" required>
                             <small class="text-danger" x-show="errors.email" x-text="errors.email"></small>
                         </div>
-                    </div> -->
+                    </div>
                     
                     <div class="form-group px-3 boxed">
                         <div class="text-start input-wrapper">
