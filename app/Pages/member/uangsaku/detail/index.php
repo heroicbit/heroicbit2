@@ -141,7 +141,7 @@
         </div>
         </template>
 
-        <template x-if="!santri && !loadingSaldo">
+        <template x-if="loaded && !santri">
             <div class="text-center py-3 px-3">
                 <p>Data uang saku santri dengan NIS yang dimaksud tidak ditemukan.</p>
                 <button class="btn btn-sm btn-outline-info" onclick="history.back()"><i class="bi bi-arrow-left"></i> Kembali</button>

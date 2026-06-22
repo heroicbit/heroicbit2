@@ -8,6 +8,7 @@ window.member_uangsaku_detail = function(nis) {
         historyData: [],
         loadingSaldo: false,
         loadingHistory: false,
+        loaded: false,
         errorSaldo: null,
         errorHistory: null,
 
@@ -30,6 +31,9 @@ window.member_uangsaku_detail = function(nis) {
                     this.loadSaldo();
                     this.loadHistory();
                 }
+            })
+            .finally(() => {
+                this.loaded = true;
             });
         },
 
