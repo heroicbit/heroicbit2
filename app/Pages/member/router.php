@@ -114,6 +114,13 @@
         x-handler="isLoggedIn"
         ></template>
     
+        <!-- Santri -->
+    <template 
+        x-route="/santri/:id" 
+        x-template.preload="['/member/santri/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-handler="isLoggedIn"
+        ></template>
+    
     <!-- Profile -->
     <template 
         x-route="/profile" 

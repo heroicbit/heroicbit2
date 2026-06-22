@@ -16,7 +16,7 @@
                 <ul class="listview image-listview media mb-2">
                     <template x-for="(santri,santriIndex) in data.santri">
                     <li>
-                        <a href="javascript:void()" class="item" x-on:click="showDetail(santriIndex)" data-bs-toggle="offcanvas" data-bs-target="#detailCanvas" aria-controls="detailCanvas">
+                        <a href="javascript:void()" class="item" x-on:click="window.PineconeRouter.context.navigate(`/santri/${santri.id}`)">
                             <div class="imageWrapper">
                                 <img :src="santri.photo ? santri.photo : `<?= $themeURL ?>assets/img/walisantri/avatar/${santri.jenis_kelamin}.svg`" alt="image" class="imaged w64">
                             </div>
@@ -46,10 +46,6 @@
                 </ul>
             </div>
         </div>
-
-        <!-- Offcanvas detail -->
-        <?= $this->include('member/santri/_detailSantri') ?>
-        <!-- End OffCanvas -->
 
         <!-- Dialog Form -->
         <?= $this->include('member/santri/_formAdd') ?>
