@@ -71,7 +71,7 @@
                 
                 <div class="float-start" style="width:85px;height:90px">
                     <a href="/uangsaku">
-                        <img src="https://image.web.id/images/icon-smartcard.th.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/icon-smartcard.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Uang Saku</small>
                     </a>
                 </div>
