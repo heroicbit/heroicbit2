@@ -68,6 +68,13 @@
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Pembayaran</small>
                     </a>
                 </div>
+                
+                <div class="float-start" style="width:85px;height:90px">
+                    <a href="/uangsaku">
+                        <img src="https://image.web.id/images/icon-smartcard.th.png" style="max-width:48px">
+                        <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Uang Saku</small>
+                    </a>
+                </div>
 
                 <?php if(($settings['fitur_kajian'] ?? null) == 1): ?>
                 <!-- <div class="float-start" style="width:85px;height:90px">

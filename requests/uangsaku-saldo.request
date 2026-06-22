@@ -1,0 +1,2 @@
+GET https://api.persisbenda.my.id/simbenda/uangsaku/saldo?nis=25267055 HTTP/1.1
+x-pb-api-key: Alh4mDuLiLLaH!

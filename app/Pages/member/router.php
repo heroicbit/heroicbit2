@@ -107,6 +107,20 @@
         x-handler="isLoggedIn"
         ></template>
     
+    <!-- Uang Saku -->
+    <template 
+        x-route="/uangsaku" 
+        x-template.preload="['/member/uangsaku/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-handler="isLoggedIn"
+        ></template>
+    
+    <!-- Detail Uang Saku -->
+    <template 
+        x-route="/uangsaku/:nis" 
+        x-template.preload="['/member/uangsaku/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-handler="isLoggedIn"
+        ></template>
+    
     <!-- Santri -->
     <template 
         x-route="/santri" 
@@ -114,7 +128,7 @@
         x-handler="isLoggedIn"
         ></template>
     
-        <!-- Santri -->
+    <!-- Detail Santri -->
     <template 
         x-route="/santri/:id" 
         x-template.preload="['/member/santri/detail/content', '/_components/bottommenu?pid=' + pesantrenID]" 
