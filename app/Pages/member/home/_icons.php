@@ -64,14 +64,14 @@
 
                 <div class="float-start" style="width:85px;height:90px">
                     <a native href="https://persis67benda.sch.id/">
-                        <img src="<?= $themeURL ?>assets/img/icon/bendapay2.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/icon_bendapay.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Pembayaran</small>
                     </a>
                 </div>
                 
                 <div class="float-start" style="width:85px;height:90px">
                     <a href="/uangsaku">
-                        <img src="<?= $themeURL ?>assets/img/icon/icon-smartcard.png" style="max-width:48px">
+                        <img src="<?= $themeURL ?>assets/img/icon/icon_smartcard.png" style="max-width:48px">
                         <small class="smallthin mt-1 text-primary d-block" style="line-height: 18px">Uang Saku</small>
                     </a>
                 </div>
