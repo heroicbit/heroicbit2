@@ -58,4 +58,24 @@ class PageController extends MemberPageController {
         return $this->respond(['found' => 0, 'message' => 'Presensi tidak ditemukan']);
     }
 
+    public function deleteIndex($id = null)
+    {
+        $Tarbiyya = new \App\Libraries\Tarbiyya();
+        $user = $Tarbiyya->checkToken();
+
+        // Get database pesantren
+        $db = $Tarbiyya->initDBPesantren();
+
+        $deleted = $db->query(
+            "DELETE FROM md_student_user WHERE user_id = :user_id: AND student_id = :student_id:",
+            ['user_id' => $user->user_id, 'student_id' => $id]
+        );
+
+        if ($deleted && $db->affectedRows() > 0) {
+            return $this->respond(['status' => 'success', 'message' => 'Santri berhasil dihapus dari perwalian']);
+        }
+
+        return $this->respond(['status' => 'failed', 'message' => 'Gagal menghapus santri dari perwalian'], 400);
+    }
+
 }

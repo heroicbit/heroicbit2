@@ -202,6 +202,29 @@ window.member_santri_detail = function (id) {
       }
     },
 
+    async hapusSantri() {
+      const confirmed = await Prompts.confirm(
+        `Hapus ${this.detailSantri.nama_santri} dari daftar perwalian?`
+      );
+      if (!confirmed) return;
+
+      axios
+        .delete(`/member/santri/detail/${this.id}`, {
+          headers: {
+            Authorization: `Bearer ` + Alpine.store("tarbiyya").sessionToken,
+            "Pesantrenku-ID": Alpine.store("tarbiyya").pesantrenID,
+          },
+        })
+        .then((response) => {
+          if (response.data.status === "success") {
+            delete cachePageData["member/santri"];
+            window.PineconeRouter.context.navigate("/member/santri");
+          } else {
+            Prompts.alert(response.data.message ?? "Gagal menghapus santri dari perwalian");
+          }
+        });
+    },
+
     formatDate(dateString) {
       if (dateString && dateString != "0000-00-00") {
         const date = new Date(dateString + "T00:00:00");

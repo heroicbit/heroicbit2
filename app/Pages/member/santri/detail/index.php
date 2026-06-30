@@ -6,8 +6,7 @@
             </a>
         </div>
         <div class="pageTitle text-white" x-text="detailSantri.nama_santri"></div>
-        <div class="right">
-        </div>
+        <div class="right"></div>
     </div>
 
     <!-- App Capsule -->
@@ -74,6 +73,13 @@
                         <dl><dt>Kodepos</dt><dd x-text="detailSantri.kodepos"></dd></dl>
                         <hr>
                         <dl><dt>Infaq Bulanan</dt><dd x-text="detailSantri.iuran_bulanan"></dd></dl> -->
+
+                        <div class="mt-3 border-top pt-3">
+                            <button class="btn btn-sm btn-outline-danger" x-on:click="hapusSantri" title="Hapus dari perwalian">
+                                <ion-icon name="trash-outline"></ion-icon>
+                                Hapus dari perwalian
+                            </button>
+                        </div>
                     </div>
                     <div class="tab-pane fade" id="presensi" role="tabpanel">
                         <div id="calendar" style="width:100%"></div>
