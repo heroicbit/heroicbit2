@@ -133,3 +133,9 @@ button.vanilla-calendar-day__btn.alpa, .presensi-status-container.alpa { backgro
     top: 12px;
     right: 10px;
 }
+
+/* ATM Card */
+.atm-card { position: relative; border-radius: 18px; padding: 20px; overflow: hidden; min-height: 170px; display: flex; flex-direction: column; justify-content: space-between; box-shadow: 0 8px 28px rgba(21, 124, 161, .35); transition: transform .15s ease, box-shadow .15s ease; max-width: 380px; margin: auto; }
+.atm-card:active { transform: scale(.97); box-shadow: 0 4px 14px rgba(21, 124, 161, .25); }
+.atm-card::before { content: ""; position: absolute; top: -55px; right: -55px; width: 190px; height: 190px; border-radius: 50%; background: rgba(255,255,255,.10); pointer-events: none; }
+.atm-card::after { content: ""; position: absolute; bottom: -80px; right: 30px; width: 230px; height: 230px; border-radius: 50%; background: rgba(255,255,255,.06); pointer-events: none; }

@@ -1,10 +1,16 @@
 // Page member/uangsaku
 window.member_uangsaku = function() {
     return {
-        title: "Uang Saku",
+        title: "Smartcard",
         data: [],
         saldoList: {},
         loadingSaldoList: false,
+        cardGradients: [
+            'linear-gradient(135deg, #3BC0CF 0%, #1565C0 100%)',
+            'linear-gradient(135deg, #1A8C9B 0%, #1e74fd 100%)',
+            'linear-gradient(135deg, #157CA1 0%, #0D4B8A 100%)',
+            'linear-gradient(135deg, #0d7a8a 0%, #1a4fd4 100%)',
+        ],
 
         init() {
             document.title = this.title;
