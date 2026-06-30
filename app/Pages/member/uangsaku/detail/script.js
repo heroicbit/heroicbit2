@@ -6,8 +6,12 @@ window.member_uangsaku_detail = function(nis) {
         santri: null,
         saldoData: null,
         historyData: [],
+        historyOffset: 0,
+        historyLimit: 20,
+        historyHasMore: false,
         loadingSaldo: false,
         loadingHistory: false,
+        loadingMoreHistory: false,
         loaded: false,
         errorSaldo: null,
         errorHistory: null,
@@ -71,7 +75,10 @@ window.member_uangsaku_detail = function(nis) {
             const cacheKey = 'uangsaku/history/' + this.nis;
 
             if (cachePageData[cacheKey]) {
-                this.historyData = cachePageData[cacheKey];
+                const cached = cachePageData[cacheKey];
+                this.historyData = cached.data;
+                this.historyHasMore = cached.hasMore;
+                this.historyOffset = cached.offset;
                 return;
             }
 
@@ -80,13 +87,16 @@ window.member_uangsaku_detail = function(nis) {
 
             try {
                 const response = await axios.get('https://api.persisbenda.my.id/simbenda/uangsaku/history', {
-                    params: { nis: this.nis },
+                    params: { nis: this.nis, limit: this.historyLimit, offset: 0 },
                     headers: { 'x-pb-api-key': 'Alh4mDuLiLLaH!' }
                 });
 
                 if (response.data.success) {
-                    this.historyData = response.data.data.transaksi || [];
-                    cachePageData[cacheKey] = this.historyData;
+                    const { transaksi, pagination } = response.data.data;
+                    this.historyData = transaksi || [];
+                    this.historyOffset = pagination.offset + pagination.current_count;
+                    this.historyHasMore = this.historyOffset < pagination.total;
+                    cachePageData[cacheKey] = { data: this.historyData, hasMore: this.historyHasMore, offset: this.historyOffset };
                 } else {
                     this.errorHistory = response.data.message || 'Gagal memuat riwayat';
                 }
@@ -94,6 +104,31 @@ window.member_uangsaku_detail = function(nis) {
                 this.errorHistory = err.response?.data?.message || err.message || 'Gagal terhubung ke server';
             } finally {
                 this.loadingHistory = false;
+            }
+        },
+
+        async loadMoreHistory() {
+            if (this.loadingMoreHistory || !this.historyHasMore) return;
+            this.loadingMoreHistory = true;
+
+            try {
+                const response = await axios.get('https://api.persisbenda.my.id/simbenda/uangsaku/history', {
+                    params: { nis: this.nis, limit: this.historyLimit, offset: this.historyOffset },
+                    headers: { 'x-pb-api-key': 'Alh4mDuLiLLaH!' }
+                });
+
+                if (response.data.success) {
+                    const { transaksi, pagination } = response.data.data;
+                    this.historyData = [...this.historyData, ...(transaksi || [])];
+                    this.historyOffset = pagination.offset + pagination.current_count;
+                    this.historyHasMore = this.historyOffset < pagination.total;
+                    const cacheKey = 'uangsaku/history/' + this.nis;
+                    cachePageData[cacheKey] = { data: this.historyData, hasMore: this.historyHasMore, offset: this.historyOffset };
+                }
+            } catch (err) {
+                // silently fail on load more
+            } finally {
+                this.loadingMoreHistory = false;
             }
         },
 

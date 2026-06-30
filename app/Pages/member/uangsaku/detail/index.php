@@ -122,6 +122,14 @@
                                 </template>
                             </div>
                         </template>
+                        <template x-if="historyHasMore || loadingMoreHistory">
+                            <div class="text-center mt-2 pb-1">
+                                <button class="btn btn-sm btn-outline-secondary px-4" x-on:click="loadMoreHistory" :disabled="loadingMoreHistory">
+                                    <span x-show="loadingMoreHistory" class="spinner-border spinner-border-sm me-1" role="status"></span>
+                                    <span x-text="loadingMoreHistory ? 'Memuat...' : 'Muat Lainnya'"></span>
+                                </button>
+                            </div>
+                        </template>
                     </div>
                 </div>
 
