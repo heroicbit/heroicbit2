@@ -36,7 +36,9 @@ class PageController extends MemberPageController
         }
 
         // Check login to database directly using $db
-        $found = $db->query('SELECT * FROM mein_users where (email = :username: OR phone = :username:) AND status = "active"', ['username' => $username])->getRow();
+        $found = $db->query('SELECT *, mein_users.id FROM mein_users 
+        JOIN mein_roles ON mein_roles.id = mein_users.role_id
+        WHERE (email = :username: OR phone = :username:) AND mein_users.status = "active"', ['username' => $username])->getRow();
         $jwt = null;
         if($found) {
             $Phpass = new \App\Libraries\Phpass();
@@ -47,6 +49,7 @@ class PageController extends MemberPageController
                     'logged_in' => true,
                     'user_id' => $found->id,
                     'email' => $found->email,
+                    'role' => $found->role_slug,
                     'timestamp' => time()
                 ];
                 $jwt = JWT::encode($userSession, config('App')->jwtKey['secret'], 'HS256');
@@ -54,7 +57,8 @@ class PageController extends MemberPageController
                 $user = [
                     'name' => $found->name,
                     'email' => $found->email,
-                    'phone' => $found->phone
+                    'phone' => $found->phone,
+                    'role' => $found->role_slug,
                 ];
             }
         }

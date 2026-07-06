@@ -57,7 +57,11 @@ window.member_login = function () {
             Alpine.store('tarbiyya').sessionToken = localStorage.getItem("heroic_token");
 
             setTimeout(() => {
-              window.location.replace("/");
+              if(response.data.user.role == "member"){
+                window.location.replace("/");
+              } else {
+                window.location.replace("/member/checkin");
+              }
             }, 500);
           } else {
             this.buttonSubmitting = false;

@@ -40,13 +40,15 @@ class PageController extends BaseController
 		$userToken = $Tarbiyya->getUserToken();
 		if($userToken) {
 			$userQuery = $db->table('mein_users')
-							->where('id', $userToken->user_id)
+							->join('mein_roles', 'mein_roles.id = mein_users.role_id', 'left')
+							->where('mein_users.id', $userToken->user_id)
 							->get()
 							->getRowArray();
 			$user = [
 				'name' => $userQuery['name'] ?? '',
 				'email' => $userQuery['email'] ?? '',
 				'phone' => $userQuery['phone'] ?? '',
+				'role' => $userQuery['role_slug'] ?? '',
 				'avatar' => $userQuery['avatar'] ?? '',
 				'date_join' => $userQuery['created_at'] ?? '',
 			];

@@ -65,6 +65,20 @@
         x-template="['/member/page/content', '/_components/bottommenu?pid=' + pesantrenID]"
         ></template>
     
+    <!-- Checkin (Presensi Karyawan) -->
+    <template 
+        x-route="/checkin" 
+        x-template="['/member/checkin/content']" 
+        x-handler="isLoggedIn"
+        ></template>
+    
+    <!-- Rekap Kehadiran (Admin) -->
+    <template 
+        x-route="/checkin/rekap" 
+        x-template="['/member/checkin/rekap/content']" 
+        x-handler="isLoggedIn"
+        ></template>
+    
     <!-- Feeds -->
     <template 
         x-route="/feeds" 
