@@ -32,7 +32,7 @@ class PageController extends MemberPageController {
                 'response_code'    => 404,
                 'response_message' => 'Data karyawan tidak ditemukan',
                 'data'             => null
-            ], 404);
+            ]);
         }
 
         // --- Ambil lokasi kantor aktif ---
@@ -187,9 +187,10 @@ class PageController extends MemberPageController {
 
         if (!$employee) {
             return $this->respond([
-                'response_code'    => 404,
+                'response_code'    => 200,
+                'found'            => 0,
                 'response_message' => 'Data karyawan tidak ditemukan.'
-            ], 404);
+            ]);
         }
 
         $today = date('Y-m-d');

@@ -11,6 +11,7 @@ document.addEventListener('alpine:init', () => {
 
         tab: 'home',
         employee: { name: '', position: '', unit: '', role: '' },
+        employeeNotFound: false,
         officeLocation: null,
 
         clockHM: '', clockS: '', dateLong: '',
@@ -100,6 +101,7 @@ document.addEventListener('alpine:init', () => {
 
                     this.$nextTick(() => this.initMap());
                 } else if (data && data.response_code === 404) {
+                    this.employeeNotFound = true;
                     this.employee = { name: 'Karyawan tidak ditemukan', role: '', unit: '' };
                     this.loadingToday = false;
                 }

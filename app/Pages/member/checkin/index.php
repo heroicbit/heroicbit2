@@ -810,7 +810,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
-    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 
     <div class="app-shell">
 
@@ -847,6 +846,27 @@
 
             <!-- TAB: BERANDA -->
             <div x-show="tab==='home'">
+
+                <!-- KARYAWAN TIDAK DITEMUKAN -->
+                <div x-show="employeeNotFound" style="text-align:center;padding:40px 16px;">
+                    <div style="margin-bottom:16px;">
+                        <svg width="56" height="56" viewBox="0 0 56 56" fill="none" style="display:inline-block;">
+                            <circle cx="28" cy="28" r="28" fill="#F5DEDE"/>
+                            <path d="M28 20v12M28 38h.01" stroke="#D94F4F" stroke-width="3" stroke-linecap="round"/>
+                            <circle cx="28" cy="28" r="22" stroke="#D94F4F" stroke-width="2"/>
+                        </svg>
+                    </div>
+                    <h3 style="font-family:'Space Grotesk',sans-serif;font-size:18px;font-weight:700;color:var(--ink);margin:0 0 8px;">Karyawan Belum Terdaftar</h3>
+                    <p style="font-size:13.5px;color:var(--ink-soft);margin:0;line-height:1.6;">
+                        Akun Anda belum terdaftar sebagai karyawan atau jadwal presensi belum diatur.
+                    </p>
+                    <p style="font-size:12px;color:var(--ink-faint);margin:6px 0 0;">
+                        Silakan hubungi admin atau operator pesantren untuk mendaftarkan Anda.
+                    </p>
+                </div>
+
+                <!-- KONTEN UTAMA (jika karyawan ditemukan) -->
+                <div x-show="!employeeNotFound">
 
                 <div class="greeting">
                     <div class="eyebrow">Assalamu'alaikum,</div>
@@ -1025,6 +1045,8 @@
                         </div>
                     </div>
                 </div>
+
+                </div><!-- /!employeeNotFound -->
             </div>
 
             <!-- TAB: RIWAYAT -->
