@@ -6,6 +6,7 @@ class PageController extends MemberPageController {
 
     public function getContent()
     {
+        $this->data['page_title'] = 'Rekap Kehadiran';
         return pageView('member/checkin/rekap/index', $this->data);
     }
 

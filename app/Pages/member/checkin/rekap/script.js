@@ -70,6 +70,7 @@ document.addEventListener('alpine:init', () => {
                     this.dailyError = 'Gagal memuat data rekap.';
                 }
             } catch (e) {
+                console.error('Gagal memuat data rekap harian:', e);
                 this.dailyError = e.message || 'Terjadi kesalahan jaringan.';
             } finally {
                 this.loadingDaily = false;
@@ -125,6 +126,7 @@ document.addEventListener('alpine:init', () => {
                     this.periodId = active ? active.id : (this.periods[0] ? this.periods[0].id : null);
                 }
             } catch (e) {
+                console.error('Gagal memuat daftar periode:', e);
                 this.showToast('error', 'Gagal memuat daftar periode', e.message);
             }
         },
@@ -147,6 +149,7 @@ document.addEventListener('alpine:init', () => {
                     this.detailError = data.response_message || 'Gagal memuat detail.';
                 }
             } catch (e) {
+                console.error('Gagal memuat detail presensi:', e);
                 this.detailError = e.message || 'Terjadi kesalahan jaringan.';
             } finally {
                 this.loadingDetail = false;

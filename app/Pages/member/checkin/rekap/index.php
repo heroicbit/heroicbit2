@@ -1,3 +1,5 @@
+<div id="member_checkin_rekap" x-data="member_checkin_rekap()" x-cloak>
+
 <style>
   :root{
     --bg-page:#E9F3F5; --bg-surface:#ffffff; --bg-surface-2:#F1F8FA;
@@ -185,7 +187,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<div id="member_checkin_rekap" x-data="member_checkin_rekap()" x-init="init()" x-cloak>
   <div class="app-shell">
 
     <!-- ===================== REKAP HARIAN ===================== -->
