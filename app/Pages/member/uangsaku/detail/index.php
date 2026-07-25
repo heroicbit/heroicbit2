@@ -97,7 +97,11 @@
                                         <template x-for="(trx, trxIndex) in getTransactionsByDate(date)" :key="trxIndex">
                                             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-2">
                                                 <div>
-                                                    <div class="fw-bold small" x-text="trx.keterangan"></div>
+                                                    <div class="fs-6 small" x-text="trx.keterangan"></div>
+                                                    <div>
+                                                        Unit: 
+                                                        <small class="small" x-show="trx?.unit" x-text="trx?.unit.namaunit"></small>
+                                                    </div>
                                                     <small class="text-muted" x-text="`Pukul ${formatTime(trx.tgl)}`"></small>
                                                     <br>
                                                     <small class="text-muted" x-show="trx.uraian" x-text="trx.uraian"></small>
