@@ -53,8 +53,14 @@ window.member_register = function(){
                 }
             }).then(response => {
                 if(response.data.success == 1){
-                    let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
-                    window.PineconeRouter.context.navigate('/member/register/confirm/?token=' + token)
+                    // let token = response.data.token + '_' + response.data.id + 'X' + Math.random().toString(36).substring(7)
+                    // window.PineconeRouter.context.navigate('/member/register/confirm/?token=' + token)
+                    localStorage.setItem("heroic_token", response.data.jwt);
+
+                    Alpine.store("tarbiyya").sessionToken =
+                      localStorage.getItem("heroic_token");
+
+                    window.location.replace("/");
                 } else {
                     this.errors = response.data.errors
                     this.registering = false;

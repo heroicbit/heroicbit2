@@ -1,6 +1,7 @@
 <?php namespace App\Pages\member\register;
 
 use App\Pages\member\PageController as MemberPageController;
+use Firebase\JWT\JWT;
 
 class PageController extends MemberPageController 
 {    
@@ -58,9 +59,9 @@ class PageController extends MemberPageController
         $Phpass = new \App\Libraries\Phpass();
         $password = $Phpass->HashPassword($validData['password']);
         
-        helper('text');
-        $otp = random_string('numeric', 6);
-        $token = sha1($otp);
+        // helper('text');
+        // $otp = random_string('numeric', 6);
+        // $token = sha1($otp);
 
         $userData = [
             'name' => $validData['fullname'],
@@ -68,8 +69,8 @@ class PageController extends MemberPageController
             'phone' => $phone,
             'username' => $phone,
             'password' => $password,
-            'token' => $token,
-            'otp' => $otp,
+            // 'token' => $token,
+            // 'otp' => $otp,
             'created_at' => date('Y-m-d H:i:s'),
         ];
         $db->table('mein_users')->insert($userData);
@@ -77,25 +78,47 @@ class PageController extends MemberPageController
         if($db->affectedRows() > 0)
         {
             // Send OTP
-            $appSetting = $db->table('mein_options')
-                          ->where('option_name', 'app_title')
-                          ->where('option_group', 'tarbiyya')
-                          ->get()->getRowArray();
-            $namaAplikasi = $appSetting['option_value'] ?? null; 
+            //             $appSetting = $db->table('mein_options')
+            //                           ->where('option_name', 'app_title')
+            //                           ->where('option_group', 'tarbiyya')
+            //                           ->get()->getRowArray();
+            //             $namaAplikasi = $appSetting['option_value'] ?? null; 
 
-            $message = "Halo {$userData['name']},\n            
-Terima kasih telah mendaftar di aplikasi {$namaAplikasi}
-Untuk melanjutkan proses pendaftaran, silahkan masukan kode registrasi berikut ini ke dalam aplikasi:\n
-*{$userData['otp']}*\n
-Salam,";
-            $Tarbiyya->sendWhatsapp($phone, $message);
+            //             $message = "Halo {$userData['name']},\n            
+            // Terima kasih telah mendaftar di aplikasi {$namaAplikasi}
+            // Untuk melanjutkan proses pendaftaran, silahkan masukan kode registrasi berikut ini ke dalam aplikasi:\n
+            // *{$userData['otp']}*\n
+            // Salam,";
+            //             $Tarbiyya->sendWhatsapp($phone, $message);
+
+            //             return $this->respond([
+            //                 'success' => 1,
+            //                 'id' => $id,
+            //                 'token' => $token
+            //             ]);
+
+            // Aktifkan user
+            $db->query(
+                "UPDATE mein_users SET status = 'active' WHERE id = :id:",
+                ['id' => $id]
+            );
+
+            // Buat JWT
+            $userSession = [
+                'logged_in' => true,
+                'user_id'   => $id,
+                'email'     => $validData['email'],
+                'timestamp' => time()
+            ];
+
+            $key = config('App')->jwtKey['secret'];
+            $jwt = JWT::encode($userSession, $key, 'HS256');
 
             return $this->respond([
                 'success' => 1,
-                'id' => $id,
-                'token' => $token
+                'jwt'     => $jwt
             ]);
-            
+
         } else {
             return $this->respond([
                 'success' => 0, 'message' => 'Gagal menambahkan akun. Silahkan coba kembali.'
