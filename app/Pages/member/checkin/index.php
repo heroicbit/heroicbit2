@@ -10,6 +10,7 @@
             --ink-faint: #92AAB0;
             --primary: #3BC0CF;
             --primary-soft: #D4F0F3;
+            --green: #2FA96A;
             --brass: #157CA1;
             --brass-soft: #CEE6F0;
             --brass-ink: #0D5370;
@@ -407,8 +408,11 @@
             color: #fff;
         }
 
-        .cta-btn.enabled.pulang {
-            background: var(--brass-ink);
+        .cta-btn.done {
+            background: var(--green);
+            color: #fff;
+            cursor: default;
+            opacity: 1;
         }
 
         .cta-btn.disabled {
@@ -938,45 +942,96 @@
                 </div>
 
                 <!-- TOMBOL CTA (check-in / check-out) -->
-                <div x-show="!geoErrorMsg">
+                <!-- MODE LAMA: unit tanpa jadwal (perilaku sebelumnya) -->
+                <div x-show="!geoErrorMsg && unitSchedules.length === 0">
                     <div>
                         <button
                             class="cta-btn"
-                            :class="ctaEnabled ? ('enabled ' + (todayStatus.checked_in && !todayStatus.checked_out ? 'pulang' : '')) : 'disabled'"
+                            :class="todayStatus.checked_in ? 'done' : (ctaEnabled ? 'enabled' : 'disabled')"
                             :disabled="!ctaEnabled || submitting"
                             @click="handleCta()">
                             <span x-show="submitting" class="spinner"></span>
-                            <svg x-show="!submitting && !todayStatus.checked_in" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+                            <svg x-show="!submitting" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
                                 <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
-                            <svg x-show="!submitting && todayStatus.checked_in && !todayStatus.checked_out" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
-                                <rect x="4" y="4" width="12" height="12" rx="2" />
                             </svg>
                             <span x-text="ctaLabel"></span>
                         </button>
                         <div class="cta-helper" :class="!inRadius && !geoLoading && 'warn'">
                             <span x-show="geoLoading">Menunggu deteksi lokasi sebelum bisa absen...</span>
-                            <span x-show="!geoLoading && todayStatus.checked_in && todayStatus.checked_out">Presensi hari ini sudah lengkap.</span>
+                            <span x-show="!geoLoading && todayStatus.checked_in">
+                                Anda sudah checkin hari ini.
+                            </span>
                             <span x-show="!geoLoading && todayStatus.is_holiday">
                                 Hari ini libur: <b x-text="todayStatus.holiday_name"></b>
                             </span>
                             <span x-show="!geoLoading && todayStatus.is_day_off && !todayStatus.is_holiday">
                                 Hari ini bukan hari kerja Anda.
                             </span>
-                            <div x-show="!geoLoading && !inRadius && !todayStatus.is_holiday && !todayStatus.is_day_off && !(todayStatus.checked_in && todayStatus.checked_out)">
+                            <span x-show="!geoLoading && beforeExpectedTime">
+                                Checkin aktif mulai pukul <b x-text="expectedTimeLabel"></b>
+                            </span>
+                            <div x-show="!geoLoading && !inRadius && !todayStatus.is_holiday && !todayStatus.is_day_off && !beforeExpectedTime && !todayStatus.checked_in">
                                 Anda harus berada dalam radius <span x-text="officeLocation ? officeLocation.radius_meter : '—'"></span> m dari pesantren untuk bisa absen.
                             </div>
-                            <div x-show="!geoLoading && inRadius && !todayStatus.is_holiday && !todayStatus.is_day_off && !(todayStatus.checked_in && todayStatus.checked_out)">
+                            <div x-show="!geoLoading && inRadius && !todayStatus.is_holiday && !todayStatus.is_day_off && !beforeExpectedTime && !todayStatus.checked_in">
                                 Anda berada dalam jangkauan. Ketuk tombol untuk mencatat kehadiran.
                             </div>
                         </div>
                     </div>
                 </div>
 
+                <!-- TOMBOL CTA MODE BARU: jadwal unit (pres_unit_schedules) -->
+                <div x-show="!geoErrorMsg && unitSchedules.length > 0">
+
+                    <!-- Bukan hari kerja / libur -> jangan tampilkan tombol checkin -->
+                    <div class="cta-helper" x-show="!geoLoading && (todayStatus.is_holiday || todayStatus.is_day_off)">
+                        <span x-show="todayStatus.is_holiday">
+                            Hari ini libur: <b x-text="todayStatus.holiday_name"></b>
+                        </span>
+                        <span x-show="todayStatus.is_day_off && !todayStatus.is_holiday">
+                            Hari ini bukan hari kerja Anda.
+                        </span>
+                    </div>
+
+                    <!-- Tombol checkin per jadwal unit (tetap tampil walau sudah checkin) -->
+                    <div x-show="!(todayStatus.is_holiday || todayStatus.is_day_off)">
+                        <template x-for="s in unitSchedules" :key="s.id">
+                            <div style="margin-bottom:12px;">
+                                <button
+                                    class="cta-btn"
+                                    :class="isScheduleDone(s) ? 'done' : (isScheduleButtonEnabled(s) ? 'enabled' : 'disabled')"
+                                    :disabled="!isScheduleButtonEnabled(s)"
+                                    @click="handleScheduleCta(s)">
+                                    <span x-show="submitting" class="spinner"></span>
+                                    <svg x-show="!submitting" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
+                                        <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                    <span x-text="s.title"></span>
+                                </button>
+                                <div class="cta-helper" :class="!inRadius && !geoLoading && 'warn'">
+                                    <span x-show="geoLoading">Menunggu deteksi lokasi sebelum bisa absen...</span>
+                                    <span x-show="!geoLoading && isScheduleDone(s)">
+                                        Anda sudah checkin untuk jadwal ini hari ini.
+                                    </span>
+                                    <span x-show="!geoLoading && !isScheduleDone(s) && !isScheduleWindowActive(s)">Jadwal aktif pukul <b x-text="scheduleWindowLabel(s)"></b></span>
+                                    <span x-show="!geoLoading && !isScheduleDone(s) && isScheduleWindowActive(s) && !inRadius">
+                                        Anda harus berada dalam radius <span x-text="officeLocation ? officeLocation.radius_meter : '—'"></span> m dari pesantren untuk bisa absen.
+                                    </span>
+                                    <span x-show="!geoLoading && !isScheduleDone(s) && isScheduleWindowActive(s) && inRadius">
+                                        Anda berada dalam jangkauan. Ketuk tombol untuk mencatat kehadiran.
+                                    </span>
+                                </div>
+                            </div>
+                        </template>
+                    </div>
+                </div>
+
                 <!-- AKTIVITAS HARI INI -->
                 <div class="section-label">Aktivitas Hari Ini</div>
                 <div x-show="loadingToday" class="skeleton skel-row"></div>
-                <div x-show="!loadingToday && todayStatus.checked_in">
+
+                <!-- Daftar check-in hari ini (bisa lebih dari satu) -->
+                <template x-for="(c, i) in todayCheckins" :key="i">
                     <div class="today-item">
                         <div class="dot">
                             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
@@ -984,26 +1039,14 @@
                             </svg>
                         </div>
                         <div class="info">
-                            <div class="t1">Absen Masuk</div>
-                            <div class="t2" x-text="'Pukul ' + todayStatus.check_in_time + (todayStatus.check_in_distance_meter !== null ? (' · ' + todayStatus.check_in_distance_meter + ' m dari lokasi') : '')"></div>
+                            <div class="t1" x-text="c.title || 'Checkin Masuk'"></div>
+                            <div class="t2" x-text="'Pukul ' + c.check_in_time + (c.check_in_distance_meter !== null ? (' · ' + c.check_in_distance_meter + ' m dari lokasi') : '')"></div>
                         </div>
-                        <div class="badge" :class="todayStatus.status==='hadir' && todayStatus.schedule && todayStatus.schedule.expected_time_in && 'ontime'" x-text="todayStatus.status==='terlambat' ? 'Terlambat' : (todayStatus.schedule && todayStatus.schedule.expected_time_in ? 'Tepat waktu' : 'Hadir')"></div>
+                        <div class="badge" :class="c.status==='hadir' && todayStatus.schedule && todayStatus.schedule.expected_time_in && 'ontime'" x-text="c.status==='terlambat' ? 'Terlambat' : (todayStatus.schedule && todayStatus.schedule.expected_time_in ? 'Tepat waktu' : 'Hadir')"></div>
                     </div>
-                </div>
-                <div x-show="!loadingToday && todayStatus.checked_out">
-                    <div class="today-item">
-                        <div class="dot out">
-                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                                <rect x="4" y="4" width="12" height="12" rx="2" />
-                            </svg>
-                        </div>
-                        <div class="info">
-                            <div class="t1">Absen Pulang</div>
-                            <div class="t2" x-text="'Pukul ' + todayStatus.check_out_time"></div>
-                        </div>
-                    </div>
-                </div>
-                <div x-show="!loadingToday && !todayStatus.checked_in && !todayStatus.is_holiday && !todayStatus.is_day_off">
+                </template>
+
+                <div x-show="!loadingToday && todayCheckins.length === 0 && !todayStatus.is_holiday && !todayStatus.is_day_off">
                     <div class="today-item">
                         <div class="dot muted">
                             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">

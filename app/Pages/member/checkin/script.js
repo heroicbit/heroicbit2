@@ -13,6 +13,9 @@ document.addEventListener('alpine:init', () => {
         employee: { name: '', position: '', unit: '', role: '' },
         employeeNotFound: false,
         officeLocation: null,
+        unitSchedules: [],
+        usedUnitScheduleIds: [],
+        todayCheckins: [],
 
         clockHM: '', clockS: '', dateLong: '',
 
@@ -40,7 +43,6 @@ document.addEventListener('alpine:init', () => {
             holiday_name: null,
             schedule: null
         },
-        checkInTimestamp: null,  // epoch ms kapan check-in dilakukan
         submitting: false,
 
         loadingHistory: true,
@@ -68,8 +70,10 @@ document.addEventListener('alpine:init', () => {
                 this.employee = cached.data.employee;
                 this.officeLocation = cached.data.office_location;
                 this.todayStatus = cached.data.today_status;
+                this.unitSchedules = cached.data.unit_schedules || [];
+                this.usedUnitScheduleIds = cached.data.used_unit_schedule_ids || [];
+                this.todayCheckins = cached.data.today_checkins || [];
                 this.loadingToday = false;
-                this.restoreCheckInTimestamp();
 
                 this.$nextTick(() => this.initMap());
             } else {
@@ -96,8 +100,10 @@ document.addEventListener('alpine:init', () => {
                     this.employee = data.data.employee;
                     this.officeLocation = data.data.office_location;
                     this.todayStatus = data.data.today_status;
+                    this.unitSchedules = data.data.unit_schedules || [];
+                    this.usedUnitScheduleIds = data.data.used_unit_schedule_ids || [];
+                    this.todayCheckins = data.data.today_checkins || [];
                     this.loadingToday = false;
-                    this.restoreCheckInTimestamp();
 
                     this.$nextTick(() => this.initMap());
                 } else if (data && data.response_code === 404) {
@@ -327,13 +333,26 @@ document.addEventListener('alpine:init', () => {
             if (this.geoLoading || this.submitting || !this.inRadius) return false;
             const ts = this.todayStatus || {};
             if (ts.is_holiday || ts.is_day_off) return false;
-            if (ts.checked_in && ts.checked_out) return false;
-            // Check-out hanya bisa setelah 1 jam sejak check-in
-            if (ts.checked_in && !ts.checked_out && this.checkInTimestamp) {
-                const elapsed = (Date.now() - this.checkInTimestamp) / 1000;
-                if (elapsed < 3600) return false;
+            if (ts.checked_in) return false; // sudah checkin hari ini
+            // Checkin aktif mulai expected_time_in (jika diatur)
+            if (ts.schedule && ts.schedule.expected_time_in) {
+                if (this.clockHM < this.timeToHM(ts.schedule.expected_time_in)) return false;
             }
             return true;
+        },
+
+        // Belum waktunya check-in (legacy: sebelum expected_time_in)
+        get beforeExpectedTime() {
+            const ts = this.todayStatus || {};
+            if (ts.checked_in) return false;
+            const ei = ts.schedule && ts.schedule.expected_time_in;
+            if (!ei) return false;
+            return this.clockHM < this.timeToHM(ei);
+        },
+
+        get expectedTimeLabel() {
+            const ei = this.todayStatus.schedule && this.todayStatus.schedule.expected_time_in;
+            return ei ? this.timeToHM(ei) : '';
         },
 
         get ctaLabel() {
@@ -341,28 +360,69 @@ document.addEventListener('alpine:init', () => {
             const ts = this.todayStatus || {};
             if (ts.is_holiday) return 'Hari Libur';
             if (ts.is_day_off) return 'Bukan Hari Kerja';
-            if (ts.checked_in && ts.checked_out) return 'Presensi Selesai';
-            if (ts.checked_in && !ts.checked_out && this.checkInTimestamp) {
-                const elapsed = (Date.now() - this.checkInTimestamp) / 1000;
-                if (elapsed < 3600) {
-                    const remaining = Math.ceil((3600 - elapsed) / 60);
-                    return 'Tunggu ' + remaining + ' mnt';
-                }
-            }
-            if (ts.checked_in) return 'Absen Pulang';
-            return 'Absen Masuk';
+            return 'Checkin Masuk';
         },
 
         async handleCta() {
             if (!this.ctaEnabled) return;
-            if (this.todayStatus.checked_in) {
-                await this.checkOut();
-            } else {
-                await this.checkIn();
-            }
+            await this.checkIn();
         },
 
-        async checkIn() {
+        // ------------------------------------------------------------
+        // JADWAL UNIT (pres_unit_schedules)
+        // ------------------------------------------------------------
+        // Normalisasi jam "HH:MM:SS" -> "HH:MM" (null jika kosong)
+        timeToHM(t) {
+            if (t === null || t === undefined || t === '') return null;
+            return String(t).slice(0, 5);
+        },
+
+        // Label rentang waktu aktif sebuah jadwal
+        scheduleWindowLabel(s) {
+            const tIn = this.timeToHM(s.time_in);
+            const tOut = this.timeToHM(s.time_out);
+            if (tIn === null) return 'setiap waktu';
+            if (tOut !== null) return tIn + ' – ' + tOut;
+            return 'mulai ' + tIn;
+        },
+
+        // Apakah waktu sekarang berada dalam rentang time_in..time_out jadwal.
+        // Jika time_in NULL -> selalu aktif (tidak dibatasi waktu).
+        isScheduleWindowActive(s) {
+            const tIn = this.timeToHM(s.time_in);
+            if (tIn === null) return true;
+            const now = this.clockHM; // diperbarui tiap detik oleh startClock
+            const tOut = this.timeToHM(s.time_out);
+            // Rentang lintas tengah malam (mis. 22:00 -> 02:00)
+            if (tOut !== null && tOut < tIn) {
+                return now >= tIn || now <= tOut;
+            }
+            if (now < tIn) return false;
+            if (tOut !== null && now > tOut) return false;
+            return true;
+        },
+
+        // Tombol jadwal sudah dipakai hari ini (hijau & disabled)
+        isScheduleDone(s) {
+            return this.usedUnitScheduleIds.indexOf(s.id) !== -1;
+        },
+
+        // Tombol checkin sebuah jadwal aktif atau tidak (lokasi + waktu + status)
+        isScheduleButtonEnabled(s) {
+            if (this.geoLoading || this.submitting || !this.inRadius) return false;
+            const ts = this.todayStatus || {};
+            if (ts.is_holiday || ts.is_day_off) return false;
+            if (this.isScheduleDone(s)) return false; // sudah dipakai hari ini
+            return this.isScheduleWindowActive(s);
+        },
+
+        // Klik tombol checkin sesuai jadwal unit
+        async handleScheduleCta(s) {
+            if (!this.isScheduleButtonEnabled(s)) return;
+            await this.checkIn(s);
+        },
+
+        async checkIn(schedule) {
             this.submitting = true;
             try {
                 const response = await axios.post(
@@ -370,7 +430,8 @@ document.addEventListener('alpine:init', () => {
                     {
                         latitude: this.currentLat,
                         longitude: this.currentLng,
-                        accuracy: this.accuracy
+                        accuracy: this.accuracy,
+                        schedule_id: schedule ? schedule.id : null
                     },
                     {
                         headers: {
@@ -387,8 +448,15 @@ document.addEventListener('alpine:init', () => {
                     this.todayStatus.check_in_time = res.data.check_in_time;
                     this.todayStatus.check_in_distance_meter = res.data.distance_meter;
                     this.todayStatus.status = res.data.status;
-                    this.checkInTimestamp = Date.now();
-                    this.persistCheckInTimestamp();
+                    if (schedule && this.usedUnitScheduleIds.indexOf(schedule.id) === -1) {
+                        this.usedUnitScheduleIds.push(schedule.id);
+                    }
+                    this.todayCheckins.push({
+                        title: schedule ? schedule.title : null,
+                        check_in_time: res.data.check_in_time,
+                        check_in_distance_meter: res.data.distance_meter,
+                        status: res.data.status
+                    });
                     this.showPopup('success',
                         'Absen Masuk Berhasil 🎉',
                         'Pukul ' + res.data.check_in_time + ' · ' + res.data.distance_meter + ' m dari lokasi',
@@ -401,46 +469,6 @@ document.addEventListener('alpine:init', () => {
                     ? e.response.data.response_message
                     : 'Terjadi kesalahan. Silakan coba lagi.';
                 this.showToast('error', 'Absen masuk gagal', msg);
-            } finally {
-                this.submitting = false;
-            }
-        },
-
-        async checkOut() {
-            this.submitting = true;
-            try {
-                const response = await axios.post(
-                    base_url + 'member/checkin/checkOut',
-                    {
-                        latitude: this.currentLat,
-                        longitude: this.currentLng,
-                        accuracy: this.accuracy
-                    },
-                    {
-                        headers: {
-                            'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                            'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
-                            'Content-Type': 'application/json'
-                        }
-                    }
-                );
-
-                const res = response.data;
-                if (res.response_code === 200 && res.data) {
-                    this.todayStatus.checked_out = true;
-                    this.todayStatus.check_out_time = res.data.check_out_time;
-                    this.showPopup('success',
-                        'Absen Pulang Berhasil 👋',
-                        'Pukul ' + res.data.check_out_time + ' · ' + res.data.distance_meter + ' m dari lokasi',
-                        'Sampai jumpa besok!');
-                } else {
-                    this.showToast('error', 'Absen pulang gagal', res.response_message || 'Silakan coba lagi.');
-                }
-            } catch (e) {
-                const msg = e.response && e.response.data && e.response.data.response_message
-                    ? e.response.data.response_message
-                    : 'Terjadi kesalahan. Silakan coba lagi.';
-                this.showToast('error', 'Absen pulang gagal', msg);
             } finally {
                 this.submitting = false;
             }
@@ -492,39 +520,6 @@ document.addEventListener('alpine:init', () => {
 
         closePopup() {
             this.popup.show = false;
-        },
-
-        // Kembalikan timestamp check-in dari check_in_time (tahan refresh)
-        restoreCheckInTimestamp() {
-            if (!this.todayStatus.checked_in || this.todayStatus.checked_out) return;
-            if (this.checkInTimestamp) return; // sudah ada
-
-            // Coba ambil dari localStorage dulu
-            const stored = localStorage.getItem('checkin_ts_' + this.todayStatus.check_in_time);
-            if (stored) {
-                this.checkInTimestamp = parseInt(stored, 10);
-                return;
-            }
-
-            // Fallback: rekonstruksi dari check_in_time (HH:MM)
-            if (this.todayStatus.check_in_time) {
-                const parts = this.todayStatus.check_in_time.split(':');
-                if (parts.length === 2) {
-                    const now = new Date();
-                    const d = new Date(now.getFullYear(), now.getMonth(), now.getDate(),
-                        parseInt(parts[0], 10), parseInt(parts[1], 10), 0);
-                    this.checkInTimestamp = d.getTime();
-                }
-            }
-        },
-
-        persistCheckInTimestamp() {
-            if (this.checkInTimestamp && this.todayStatus.check_in_time) {
-                try {
-                    localStorage.setItem('checkin_ts_' + this.todayStatus.check_in_time,
-                        String(this.checkInTimestamp));
-                } catch (e) { /* ignore */ }
-            }
         }
     }));
 });

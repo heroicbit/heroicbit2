@@ -43,10 +43,11 @@ class PageController extends MemberPageController {
             LIMIT 1
         ")->getRowArray();
 
-        // --- Ambil status presensi hari ini ---
+        // --- Ambil semua presensi hari ini (bisa lebih dari satu check-in) ---
         $today = date('Y-m-d');
-        $attendance = $db->query("
+        $attendances = $db->query("
             SELECT a.id, a.date, a.status, a.check_in_time, a.check_out_time,
+                   a.unit_schedule_id,
                    a.check_in_distance_meter, a.check_out_distance_meter,
                    a.check_in_latitude, a.check_in_longitude,
                    a.check_out_latitude, a.check_out_longitude,
@@ -54,10 +55,11 @@ class PageController extends MemberPageController {
             FROM pres_attendances a
             WHERE a.employee_id = :employee_id:
             AND a.date = :date:
+            ORDER BY a.check_in_time ASC
         ", [
             'employee_id' => $employee['id'],
             'date'        => $today
-        ])->getRowArray();
+        ])->getResultArray();
 
         // Tentukan jadwal hari ini (untuk menentukan expected time & toleransi)
         $dayOfWeek = (int)date('N'); // 1=Senin, 7=Minggu
@@ -114,17 +116,97 @@ class PageController extends MemberPageController {
             ] : null,
         ];
 
-        if ($attendance) {
-            $todayStatus['checked_in']               = $attendance['check_in_time'] !== null;
-            $todayStatus['checked_out']              = $attendance['check_out_time'] !== null;
-            $todayStatus['check_in_time']            = $attendance['check_in_time'] 
-                ? date('H:i', strtotime($attendance['check_in_time'])) : null;
-            $todayStatus['check_out_time']           = $attendance['check_out_time'] 
-                ? date('H:i', strtotime($attendance['check_out_time'])) : null;
-            $todayStatus['check_in_distance_meter']  = $attendance['check_in_distance_meter'];
-            $todayStatus['check_out_distance_meter'] = $attendance['check_out_distance_meter'];
-            $todayStatus['status']                   = $attendance['status'];
+        // Ringkas info check-in untuk UI (pakai record terakhir dari hari ini)
+        $todayCheckins = [];
+        foreach ($attendances as $att) {
+            $todayCheckins[] = [
+                'check_in_time'           => $att['check_in_time']
+                    ? date('H:i', strtotime($att['check_in_time'])) : null,
+                'check_in_distance_meter' => $att['check_in_distance_meter'],
+                'status'                  => $att['status'],
+            ];
         }
+        $lastCheckin = !empty($todayCheckins)
+            ? $todayCheckins[count($todayCheckins) - 1]
+            : null;
+
+        $todayStatus['checked_in']               = !empty($todayCheckins);
+        $todayStatus['checked_out']              = false;
+        $todayStatus['check_in_time']            = $lastCheckin ? $lastCheckin['check_in_time'] : null;
+        $todayStatus['check_out_time']           = null;
+        $todayStatus['check_in_distance_meter']  = $lastCheckin ? $lastCheckin['check_in_distance_meter'] : null;
+        $todayStatus['check_out_distance_meter'] = null;
+        $todayStatus['status']                   = $lastCheckin ? $lastCheckin['status'] : null;
+
+        // --- Ambil jadwal unit (pres_unit_schedules) milik unit karyawan ---
+        // Jika unit memiliki jadwal, tombol checkin ditentukan oleh jadwal tersebut.
+        // Jika unit tidak memiliki jadwal, perilaku lama tetap digunakan.
+        $unitSchedules = [];
+        if (!empty($employee['unit_id'])) {
+            try {
+                $rows = $db->query("
+                    SELECT id, title, description, time_in, time_out, is_mandatory
+                    FROM pres_unit_schedules
+                    WHERE unit_id = :unit_id:
+                    AND deleted_at IS NULL
+                    ORDER BY (time_in IS NULL) ASC, time_in ASC, id ASC
+                ", ['unit_id' => $employee['unit_id']])->getResultArray();
+
+                foreach ($rows as $row) {
+                    $unitSchedules[] = [
+                        'id'           => (int)$row['id'],
+                        'title'        => $row['title'],
+                        'description'  => $row['description'],
+                        'time_in'      => $row['time_in'],
+                        'time_out'     => $row['time_out'],
+                        'is_mandatory' => (int)$row['is_mandatory'],
+                    ];
+                }
+            } catch (\Throwable $e) {
+                // Tabel pres_unit_schedules belum tersedia -> fallback ke perilaku lama
+                $unitSchedules = [];
+            }
+        }
+
+        // --- Tentukan jadwal unit yang sudah digunakan hari ini ---
+        // Prioritas: kolom unit_schedule_id yang tersimpan saat check-in.
+        // Fallback: inferensi waktu check-in terhadap rentang time_in..time_out
+        // (untuk record lama yang belum terisi kolom unit_schedule_id).
+        $scheduleTitleMap = [];
+        foreach ($unitSchedules as $s) {
+            $scheduleTitleMap[$s['id']] = $s['title'];
+        }
+
+        $resolvedScheduleIds = [];
+        foreach ($attendances as $att) {
+            $matchedId = null;
+            if (!empty($att['unit_schedule_id'])) {
+                $matchedId = (int)$att['unit_schedule_id'];
+            } elseif ($att['check_in_time']) {
+                $matched = $this->matchUnitSchedule($unitSchedules, date('H:i', strtotime($att['check_in_time'])));
+                if ($matched) {
+                    $matchedId = $matched['id'];
+                }
+            }
+            $resolvedScheduleIds[] = $matchedId;
+        }
+
+        $usedUnitScheduleIds = [];
+        foreach ($resolvedScheduleIds as $id) {
+            if ($id !== null && !in_array($id, $usedUnitScheduleIds, true)) {
+                $usedUnitScheduleIds[] = $id;
+            }
+        }
+
+        // Tambahkan title jadwal unit pada tiap check-in untuk tampilan
+        // "Aktivitas Hari Ini" (fallback "Checkin Masuk" di sisi UI).
+        foreach ($todayCheckins as $i => &$c) {
+            $matchedId = $resolvedScheduleIds[$i] ?? null;
+            $c['title'] = ($matchedId !== null && isset($scheduleTitleMap[$matchedId]))
+                ? $scheduleTitleMap[$matchedId]
+                : null;
+        }
+        unset($c);
 
         $data = [
             'employee'       => [
@@ -143,7 +225,10 @@ class PageController extends MemberPageController {
                 'longitude'    => (float)$officeLocation['longitude'],
                 'radius_meter' => (int)$officeLocation['radius_meter'],
             ] : null,
-            'today_status'    => $todayStatus,
+            'today_status'          => $todayStatus,
+            'today_checkins'        => $todayCheckins,
+            'unit_schedules'        => $unitSchedules,
+            'used_unit_schedule_ids'=> $usedUnitScheduleIds,
         ];
 
         return $this->respond([
@@ -170,6 +255,8 @@ class PageController extends MemberPageController {
         $longitude = $input->longitude ?? null;
         $accuracy  = $input->accuracy ?? null;
 
+        $scheduleId = $input->schedule_id ?? null;
+
         if ($latitude === null || $longitude === null) {
             return $this->respond([
                 'response_code'    => 422,
@@ -195,18 +282,8 @@ class PageController extends MemberPageController {
 
         $today = date('Y-m-d');
 
-        // Cek apakah sudah check-in hari ini
-        $existing = $db->query("
-            SELECT id FROM pres_attendances 
-            WHERE employee_id = :employee_id: AND date = :date:
-        ", ['employee_id' => $employee['id'], 'date' => $today])->getRow();
-
-        if ($existing) {
-            return $this->respond([
-                'response_code'    => 422,
-                'response_message' => 'Anda sudah melakukan absen masuk hari ini.'
-            ], 422);
-        }
+        // Catatan: tidak ada pembatas satu check-in per hari.
+        // Setiap request check-in membuat record baru di pres_attendances.
 
         // Ambil lokasi kantor aktif
         $officeLocation = $db->query("
@@ -308,6 +385,11 @@ class PageController extends MemberPageController {
             'check_in_longitude'     => $longitude,
             'check_in_distance_meter'=> $distance,
         ];
+
+        // Simpan jadwal unit yang dipakai (kolom unit_schedule_id)
+        if ($scheduleId !== null && $scheduleId !== '') {
+            $insertData['unit_schedule_id'] = (int)$scheduleId;
+        }
 
         // Cari schedule_period_id
         $period = $db->query("
@@ -490,6 +572,28 @@ class PageController extends MemberPageController {
             'response_message' => 'success',
             'data'             => $history
         ]);
+    }
+
+    /**
+     * Cocokkan jam check-in (HH:MM) ke jadwal unit berdasarkan rentang
+     * time_in..time_out. Mengembalikan data jadwal yang cocok atau null.
+     */
+    private function matchUnitSchedule(array $unitSchedules, ?string $checkInHM): ?array
+    {
+        if ($checkInHM === null || $checkInHM === '' || empty($unitSchedules)) {
+            return null;
+        }
+        foreach ($unitSchedules as $s) {
+            if ($s['time_in'] === null || $s['time_in'] === '') {
+                return $s;
+            }
+            $tIn  = substr($s['time_in'], 0, 5);
+            $tOut = $s['time_out'] ? substr($s['time_out'], 0, 5) : null;
+            if ($checkInHM >= $tIn && ($tOut === null || $checkInHM <= $tOut)) {
+                return $s;
+            }
+        }
+        return null;
     }
 
     /**
