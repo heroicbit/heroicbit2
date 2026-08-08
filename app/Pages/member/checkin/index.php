@@ -464,11 +464,16 @@
             display: flex;
             align-items: center;
             gap: 12px;
-            background: var(--bg-surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius-md);
-            padding: 12px 14px;
-            margin-bottom: 8px;
+            background: transparent;
+            border: none;
+            border-radius: 0;
+            padding: 12px 0;
+            margin-bottom: 0;
+            border-bottom: 1px solid var(--line);
+        }
+
+        .today-item:last-child {
+            border-bottom: none;
         }
 
         .today-item .dot {
@@ -481,6 +486,21 @@
             align-items: center;
             justify-content: center;
             flex-shrink: 0;
+        }
+
+        .today-item .dot.done {
+            background: var(--green);
+            color: #fff;
+        }
+
+        .today-item .dot.active {
+            background: var(--brass-soft);
+            color: var(--brass-ink);
+        }
+
+        .today-item .dot.late {
+            background: var(--rust-soft);
+            color: var(--rust);
         }
 
         .today-item .dot.out {
@@ -496,6 +516,11 @@
         .today-item .info {
             flex: 1;
             min-width: 0;
+        }
+
+        .today-item .badge.late {
+            background: var(--rust-soft);
+            color: var(--rust);
         }
 
         .today-item .info .t1 {
@@ -898,7 +923,7 @@
                 </div>
 
                 <!-- CARD: LOKASI & PETA -->
-                <div class="card" x-show="!geoErrorMsg">
+                <div class="card" x-show="!geoErrorMsg && !todayStatus.is_holiday && !todayStatus.is_day_off">
                     <div class="geo-top">
                         <!-- Radar indicator -->
                         <div class="radar" :class="geoLoading ? 'pending' : (inRadius ? 'active' : 'inactive')">
@@ -999,8 +1024,9 @@
                             <div style="margin-bottom:12px;">
                                 <button
                                     class="cta-btn"
-                                    :class="isScheduleDone(s) ? 'done' : (isScheduleButtonEnabled(s) ? 'enabled' : 'disabled')"
-                                    :disabled="!isScheduleButtonEnabled(s)"
+                                    x-show="!isScheduleDone(s) && (isScheduleWindowActive(s) || isScheduleNextUpcoming(s))"
+                                    :class="isScheduleButtonEnabled(s) ? 'enabled' : 'disabled'"
+                                    :disabled="(!isScheduleWindowActive(s) && !isScheduleNextUpcoming(s)) || !isScheduleButtonEnabled(s)"
                                     @click="handleScheduleCta(s)">
                                     <span x-show="submitting" class="spinner"></span>
                                     <svg x-show="!submitting" width="17" height="17" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.8">
@@ -1008,17 +1034,17 @@
                                     </svg>
                                     <span x-text="s.title"></span>
                                 </button>
+
                                 <div class="cta-helper" :class="!inRadius && !geoLoading && 'warn'">
                                     <span x-show="geoLoading">Menunggu deteksi lokasi sebelum bisa absen...</span>
-                                    <span x-show="!geoLoading && isScheduleDone(s)">
-                                        Anda sudah checkin untuk jadwal ini hari ini.
+                                    <span x-show="!geoLoading && !isScheduleDone(s) && isScheduleNextUpcoming(s)">
+                                        Jadwal berikutnya mulai pukul <b x-text="scheduleWindowLabel(s)"></b>.
                                     </span>
-                                    <span x-show="!geoLoading && !isScheduleDone(s) && !isScheduleWindowActive(s)">Jadwal aktif pukul <b x-text="scheduleWindowLabel(s)"></b></span>
                                     <span x-show="!geoLoading && !isScheduleDone(s) && isScheduleWindowActive(s) && !inRadius">
-                                        Anda harus berada dalam radius <span x-text="officeLocation ? officeLocation.radius_meter : '—'"></span> m dari pesantren untuk bisa absen.
+                                        Jadwal aktif pukul <b x-text="scheduleWindowLabel(s)"></b>. Anda harus berada dalam radius <span x-text="officeLocation ? officeLocation.radius_meter : '—'"></span> m dari pesantren untuk bisa absen.
                                     </span>
                                     <span x-show="!geoLoading && !isScheduleDone(s) && isScheduleWindowActive(s) && inRadius">
-                                        Anda berada dalam jangkauan. Ketuk tombol untuk mencatat kehadiran.
+                                        Jadwal aktif pukul <b x-text="scheduleWindowLabel(s)"></b>. Anda berada dalam jangkauan. Ketuk tombol untuk mencatat kehadiran.
                                     </span>
                                 </div>
                             </div>
@@ -1027,26 +1053,70 @@
                 </div>
 
                 <!-- AKTIVITAS HARI INI -->
-                <div class="section-label">Aktivitas Hari Ini</div>
+                <div class="section-label" x-show="!todayStatus.is_holiday && !todayStatus.is_day_off">Aktivitas Hari Ini</div>
                 <div x-show="loadingToday" class="skeleton skel-row"></div>
 
-                <!-- Daftar check-in hari ini (bisa lebih dari satu) -->
-                <template x-for="(c, i) in todayCheckins" :key="i">
-                    <div class="today-item">
-                        <div class="dot">
-                            <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                                <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
-                            </svg>
+                <!-- Daftar jadwal unit dan status check-in hari ini -->
+                <div x-show="unitSchedules.length > 0 && !todayStatus.is_holiday && !todayStatus.is_day_off">
+                    <template x-for="s in unitSchedules" :key="s.id">
+                        <div class="today-item">
+                            <div class="dot"
+                                :class="{
+                                    'late': !isScheduleDone(s) && isScheduleMissed(s),
+                                    'active': !isScheduleDone(s) && isScheduleWindowActive(s),
+                                    'done': isScheduleDone(s)
+                                }">
+                                <template x-if="isScheduleDone(s)">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
+                                    </svg>
+                                </template>
+                                <template x-if="!isScheduleDone(s) && isScheduleWindowActive(s)">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M10 3v6l4 2" stroke-linecap="round" />
+                                        <circle cx="10" cy="10" r="6" />
+                                    </svg>
+                                </template>
+                                <template x-if="!isScheduleDone(s) && isScheduleMissed(s)">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M6 6l8 8M14 6l-8 8" stroke-linecap="round" />
+                                    </svg>
+                                </template>
+                                <template x-if="!isScheduleDone(s) && !isScheduleWindowActive(s) && !isScheduleMissed(s)">
+                                    <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                        <circle cx="10" cy="10" r="6" />
+                                    </svg>
+                                </template>
+                            </div>
+                            <div class="info">
+                                <div class="t1" x-text="s.title"></div>
+                                <div class="t2" x-text="isScheduleDone(s)
+                                    ? ('Checkin ' + getScheduleCheckinTime(s) + (getScheduleCheckinDistance(s) !== null ? (' · ' + getScheduleCheckinDistance(s) + ' m dari lokasi') : ''))
+                                    : (isScheduleMissed(s) ? 'Absen · ' : 'Belum Checkin · ') + scheduleWindowLabel(s)"></div>
+                            </div>
+                            <div class="badge" :class="isScheduleDone(s) ? (getScheduleCheckinStatus(s) === 'terlambat' ? 'late' : 'ontime') : (isScheduleMissed(s) ? 'late' : '')" x-text="isScheduleDone(s) ? (getScheduleCheckinStatus(s) === 'terlambat' ? 'Terlambat' : 'Sudah Checkin') : (isScheduleMissed(s) ? 'Absen' : 'Belum Checkin')"></div>
                         </div>
-                        <div class="info">
-                            <div class="t1" x-text="c.title || 'Checkin Masuk'"></div>
-                            <div class="t2" x-text="'Pukul ' + c.check_in_time + (c.check_in_distance_meter !== null ? (' · ' + c.check_in_distance_meter + ' m dari lokasi') : '')"></div>
+                    </template>
+                </div>
+
+                <template x-if="unitSchedules.length === 0">
+                    <template x-for="(c, i) in todayCheckins" :key="i">
+                        <div class="today-item">
+                            <div class="dot">
+                                <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
+                                </svg>
+                            </div>
+                            <div class="info">
+                                <div class="t1" x-text="c.title || 'Checkin Masuk'"></div>
+                                <div class="t2" x-text="'Pukul ' + c.check_in_time + (c.check_in_distance_meter !== null ? (' · ' + c.check_in_distance_meter + ' m dari lokasi') : '')"></div>
+                            </div>
+                            <div class="badge" :class="c.status==='hadir' && todayStatus.schedule && todayStatus.schedule.expected_time_in && 'ontime'" x-text="c.status==='terlambat' ? 'Terlambat' : (todayStatus.schedule && todayStatus.schedule.expected_time_in ? 'Tepat waktu' : 'Hadir')"></div>
                         </div>
-                        <div class="badge" :class="c.status==='hadir' && todayStatus.schedule && todayStatus.schedule.expected_time_in && 'ontime'" x-text="c.status==='terlambat' ? 'Terlambat' : (todayStatus.schedule && todayStatus.schedule.expected_time_in ? 'Tepat waktu' : 'Hadir')"></div>
-                    </div>
+                    </template>
                 </template>
 
-                <div x-show="!loadingToday && todayCheckins.length === 0 && !todayStatus.is_holiday && !todayStatus.is_day_off">
+                <div x-show="!loadingToday && todayCheckins.length === 0 && unitSchedules.length === 0 && !todayStatus.is_holiday && !todayStatus.is_day_off">
                     <div class="today-item">
                         <div class="dot muted">
                             <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">

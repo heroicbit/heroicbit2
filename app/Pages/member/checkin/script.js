@@ -402,6 +402,49 @@ document.addEventListener('alpine:init', () => {
             return true;
         },
 
+        isScheduleMissed(s) {
+            if (this.isScheduleDone(s)) return false;
+            const tIn = this.timeToHM(s.time_in);
+            if (tIn === null) return false;
+            const now = this.clockHM;
+            const tOut = this.timeToHM(s.time_out);
+            if (tOut === null) {
+                return false;
+            }
+            if (tOut < tIn) {
+                return now > tOut && now < tIn;
+            }
+            return now > tOut;
+        },
+
+        getNextUpcomingSchedule() {
+            const now = this.clockHM;
+            for (const s of this.unitSchedules) {
+                if (this.isScheduleDone(s) || this.isScheduleWindowActive(s) || this.isScheduleMissed(s)) {
+                    continue;
+                }
+                const tIn = this.timeToHM(s.time_in);
+                if (tIn === null) {
+                    continue;
+                }
+                if (tIn > now) {
+                    return s;
+                }
+            }
+            return null;
+        },
+
+        hasPendingActiveSchedule() {
+            return this.unitSchedules.some(s => !this.isScheduleDone(s) && this.isScheduleWindowActive(s));
+        },
+
+        isScheduleNextUpcoming(s) {
+            const next = this.getNextUpcomingSchedule();
+            if (!next) return false;
+            if (this.hasPendingActiveSchedule()) return false;
+            return next.id === s.id;
+        },
+
         // Tombol jadwal sudah dipakai hari ini (hijau & disabled)
         isScheduleDone(s) {
             return this.usedUnitScheduleIds.indexOf(s.id) !== -1;
@@ -452,13 +495,17 @@ document.addEventListener('alpine:init', () => {
                         this.usedUnitScheduleIds.push(schedule.id);
                     }
                     this.todayCheckins.push({
+                        unit_schedule_id: schedule ? schedule.id : null,
                         title: schedule ? schedule.title : null,
                         check_in_time: res.data.check_in_time,
                         check_in_distance_meter: res.data.distance_meter,
                         status: res.data.status
                     });
+                    const popupTitle = schedule && schedule.title
+                        ? 'Absen Masuk: ' + schedule.title
+                        : 'Absen Masuk Berhasil 🎉';
                     this.showPopup('success',
-                        'Absen Masuk Berhasil 🎉',
+                        popupTitle,
                         'Pukul ' + res.data.check_in_time + ' · ' + res.data.distance_meter + ' m dari lokasi',
                         res.data.status === 'terlambat' ? 'Anda tercatat terlambat hari ini.' : '');
                 } else {
@@ -501,6 +548,26 @@ document.addEventListener('alpine:init', () => {
                 'cuti': 'Cuti'
             };
             return labels[status] || status;
+        },
+
+        getScheduleCheckinById(scheduleId) {
+            if (scheduleId === null || scheduleId === undefined) return null;
+            return this.todayCheckins.find(c => c.unit_schedule_id === scheduleId) || null;
+        },
+
+        getScheduleCheckinTime(schedule) {
+            const checkin = this.getScheduleCheckinById(schedule.id);
+            return checkin ? checkin.check_in_time : '—';
+        },
+
+        getScheduleCheckinDistance(schedule) {
+            const checkin = this.getScheduleCheckinById(schedule.id);
+            return checkin ? checkin.check_in_distance_meter : null;
+        },
+
+        getScheduleCheckinStatus(schedule) {
+            const checkin = this.getScheduleCheckinById(schedule.id);
+            return checkin ? checkin.status : null;
         },
 
         get showBottomNav() {

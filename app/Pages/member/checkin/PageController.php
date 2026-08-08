@@ -116,10 +116,45 @@ class PageController extends MemberPageController {
             ] : null,
         ];
 
+        // --- Ambil jadwal unit (pres_unit_schedules) milik unit karyawan ---
+        // Jika unit memiliki jadwal, tombol checkin ditentukan oleh jadwal tersebut.
+        // Jika unit tidak memiliki jadwal, perilaku lama tetap digunakan.
+        $unitSchedules = [];
+        if (!empty($employee['unit_id'])) {
+            try {
+                $rows = $db->query("\n                    SELECT id, title, description, time_in, time_out, is_mandatory\n                    FROM pres_unit_schedules\n                    WHERE unit_id = :unit_id:\n                    AND deleted_at IS NULL\n                    ORDER BY (time_in IS NULL) ASC, time_in ASC, id ASC\n                ", ['unit_id' => $employee['unit_id']])->getResultArray();
+
+                foreach ($rows as $row) {
+                    $unitSchedules[] = [
+                        'id'           => (int)$row['id'],
+                        'title'        => $row['title'],
+                        'description'  => $row['description'],
+                        'time_in'      => $row['time_in'],
+                        'time_out'     => $row['time_out'],
+                        'is_mandatory' => (int)$row['is_mandatory'],
+                    ];
+                }
+            } catch (\Throwable $e) {
+                // Tabel pres_unit_schedules belum tersedia -> fallback ke perilaku lama
+                $unitSchedules = [];
+            }
+        }
+
         // Ringkas info check-in untuk UI (pakai record terakhir dari hari ini)
         $todayCheckins = [];
         foreach ($attendances as $att) {
+            $matchedId = null;
+            if (!empty($att['unit_schedule_id'])) {
+                $matchedId = (int)$att['unit_schedule_id'];
+            } elseif ($att['check_in_time']) {
+                $matched = $this->matchUnitSchedule($unitSchedules, date('H:i', strtotime($att['check_in_time'])));
+                if ($matched) {
+                    $matchedId = $matched['id'];
+                }
+            }
+
             $todayCheckins[] = [
+                'unit_schedule_id'        => $matchedId,
                 'check_in_time'           => $att['check_in_time']
                     ? date('H:i', strtotime($att['check_in_time'])) : null,
                 'check_in_distance_meter' => $att['check_in_distance_meter'],
@@ -137,8 +172,6 @@ class PageController extends MemberPageController {
         $todayStatus['check_in_distance_meter']  = $lastCheckin ? $lastCheckin['check_in_distance_meter'] : null;
         $todayStatus['check_out_distance_meter'] = null;
         $todayStatus['status']                   = $lastCheckin ? $lastCheckin['status'] : null;
-
-        // --- Ambil jadwal unit (pres_unit_schedules) milik unit karyawan ---
         // Jika unit memiliki jadwal, tombol checkin ditentukan oleh jadwal tersebut.
         // Jika unit tidak memiliki jadwal, perilaku lama tetap digunakan.
         $unitSchedules = [];
