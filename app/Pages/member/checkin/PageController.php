@@ -35,13 +35,16 @@ class PageController extends MemberPageController {
             ]);
         }
 
-        // --- Ambil lokasi kantor aktif ---
-        $officeLocation = $db->query("
+        // --- Ambil SEMUA titik lokasi presensi aktif ---
+        // Check-in dapat dilakukan di beberapa titik yang terdaftar. Titik
+        // terdekat dari posisi pengguna ditentukan di sisi klien dan ditampilkan
+        // pada peta; validasi final tetap dihitung ulang di server.
+        $officeLocations = $db->query("
             SELECT id, name, latitude, longitude, radius_meter
             FROM pres_office_locations
             WHERE is_active = 1
-            LIMIT 1
-        ")->getRowArray();
+            ORDER BY name ASC
+        ")->getResultArray();
 
         // --- Ambil semua presensi hari ini (bisa lebih dari satu check-in) ---
         $today = date('Y-m-d');
@@ -249,13 +252,15 @@ class PageController extends MemberPageController {
                 'employee_code'   => $employee['employee_code'],
                 'employment_type' => $employee['employment_type'],
             ],
-            'office_location' => $officeLocation ? [
-                'id'           => $officeLocation['id'],
-                'name'         => $officeLocation['name'],
-                'latitude'     => (float)$officeLocation['latitude'],
-                'longitude'    => (float)$officeLocation['longitude'],
-                'radius_meter' => (int)$officeLocation['radius_meter'],
-            ] : null,
+            'office_locations' => array_map(function ($loc) {
+                return [
+                    'id'           => (int)$loc['id'],
+                    'name'         => $loc['name'],
+                    'latitude'     => (float)$loc['latitude'],
+                    'longitude'    => (float)$loc['longitude'],
+                    'radius_meter' => (int)$loc['radius_meter'],
+                ];
+            }, $officeLocations),
             'today_status'          => $todayStatus,
             'today_checkins'        => $todayCheckins,
             'unit_schedules'        => $unitSchedules,
@@ -316,31 +321,21 @@ class PageController extends MemberPageController {
         // Catatan: tidak ada pembatas satu check-in per hari.
         // Setiap request check-in membuat record baru di pres_attendances.
 
-        // Ambil lokasi kantor aktif
-        $officeLocation = $db->query("
-            SELECT id, latitude, longitude, radius_meter
-            FROM pres_office_locations
-            WHERE is_active = 1
-            LIMIT 1
-        ")->getRowArray();
+        // Tentukan titik presensi terdekat yang masih dalam radius dari
+        // koordinat pengguna (mendukung multi-lokasi).
+        [$officeLocation, $distance] = $this->resolveOfficeLocation($db, (float)$latitude, (float)$longitude);
 
-        if (!$officeLocation) {
+        if ($officeLocation === null) {
             return $this->respond([
                 'response_code'    => 500,
                 'response_message' => 'Lokasi presensi belum dikonfigurasi.'
             ], 500);
         }
 
-        // Validasi jarak di server (Haversine)
-        $distance = $this->haversineDistance(
-            (float)$latitude, (float)$longitude,
-            (float)$officeLocation['latitude'], (float)$officeLocation['longitude']
-        );
-
         if ($distance > (int)$officeLocation['radius_meter']) {
             return $this->respond([
                 'response_code'    => 422,
-                'response_message' => "Anda berada di luar radius presensi ({$distance} m). Maksimal {$officeLocation['radius_meter']} m dari lokasi."
+                'response_message' => "Anda berada di luar radius presensi (jarak terdekat {$distance} m dari \"{$officeLocation['name']}\"). Pastikan Anda berada di salah satu titik presensi."
             ], 422);
         }
 
@@ -441,6 +436,8 @@ class PageController extends MemberPageController {
                 'check_in_time'           => $now->format('H:i'),
                 'distance_meter'          => $distance,
                 'status'                  => $status,
+                'office_location_id'      => (int)$officeLocation['id'],
+                'office_location_name'    => $officeLocation['name'],
             ]
         ]);
     }
@@ -504,31 +501,21 @@ class PageController extends MemberPageController {
             ], 422);
         }
 
-        // Ambil lokasi kantor
-        $officeLocation = $db->query("
-            SELECT id, latitude, longitude, radius_meter
-            FROM pres_office_locations
-            WHERE is_active = 1
-            LIMIT 1
-        ")->getRowArray();
+        // Tentukan titik presensi terdekat yang masih dalam radius dari
+        // koordinat pengguna (mendukung multi-lokasi).
+        [$officeLocation, $distance] = $this->resolveOfficeLocation($db, (float)$latitude, (float)$longitude);
 
-        if (!$officeLocation) {
+        if ($officeLocation === null) {
             return $this->respond([
                 'response_code'    => 500,
                 'response_message' => 'Lokasi presensi belum dikonfigurasi.'
             ], 500);
         }
 
-        // Validasi jarak
-        $distance = $this->haversineDistance(
-            (float)$latitude, (float)$longitude,
-            (float)$officeLocation['latitude'], (float)$officeLocation['longitude']
-        );
-
         if ($distance > (int)$officeLocation['radius_meter']) {
             return $this->respond([
                 'response_code'    => 422,
-                'response_message' => "Anda berada di luar radius presensi ({$distance} m). Maksimal {$officeLocation['radius_meter']} m dari lokasi."
+                'response_message' => "Anda berada di luar radius presensi (jarak terdekat {$distance} m dari \"{$officeLocation['name']}\"). Pastikan Anda berada di salah satu titik presensi."
             ], 422);
         }
 
@@ -623,6 +610,54 @@ class PageController extends MemberPageController {
             }
         }
         return null;
+    }
+
+    /**
+     * Tentukan titik lokasi presensi terdekat yang masih dalam radius dari
+     * koordinat pengguna. Mendukung multi-lokasi: pengguna boleh check-in di
+     * titik mana pun yang aktif, asalkan berada dalam radius titik tersebut.
+     *
+     * @param object|\CodeIgniter\Database\BaseConnection $db Koneksi DB pesantren.
+     * @return array{0: array|null, 1: int|null} [lokasi, jarakMeter].
+     */
+    private function resolveOfficeLocation($db, float $lat, float $lng): array
+    {
+        $locations = $db->query("
+            SELECT id, name, latitude, longitude, radius_meter
+            FROM pres_office_locations
+            WHERE is_active = 1
+        ")->getResultArray();
+
+        if (!$locations) {
+            return [null, null];
+        }
+
+        $nearestInRadius = null;  // lokasi terdekat yang masih dalam radius
+        $nearestDist     = null;
+        $overallNearest  = null;  // lokasi terdekat (untuk pesan error)
+        $overallDist     = null;
+
+        foreach ($locations as $loc) {
+            $d = $this->haversineDistance($lat, $lng, (float)$loc['latitude'], (float)$loc['longitude']);
+
+            if ($overallDist === null || $d < $overallDist) {
+                $overallDist    = $d;
+                $overallNearest = $loc;
+            }
+
+            if ($d <= (int)$loc['radius_meter']) {
+                if ($nearestDist === null || $d < $nearestDist) {
+                    $nearestDist     = $d;
+                    $nearestInRadius = $loc;
+                }
+            }
+        }
+
+        if ($nearestInRadius !== null) {
+            return [$nearestInRadius, $nearestDist];
+        }
+
+        return [$overallNearest, $overallDist];
     }
 
     /**

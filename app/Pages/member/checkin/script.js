@@ -12,7 +12,8 @@ document.addEventListener('alpine:init', () => {
         tab: 'home',
         employee: { name: '', position: '', unit: '', role: '' },
         employeeNotFound: false,
-        officeLocation: null,
+        officeLocations: [],
+        nearestLocation: null,
         unitSchedules: [],
         usedUnitScheduleIds: [],
         todayCheckins: [],
@@ -30,7 +31,7 @@ document.addEventListener('alpine:init', () => {
         map: null,
         mapInitialized: false,
         userMarker: null,
-        officeMarker: null,
+        officeMarkers: [],
         radiusCircle: null,
 
         loadingToday: true,
@@ -54,6 +55,13 @@ document.addEventListener('alpine:init', () => {
         // Popup sukses (lebih prominent daripada toast)
         popup: { show: false, type: 'success', title: '', desc: '', sub: '' },
 
+        // Titik lokasi presensi terdekat dari posisi pengguna.
+        // Dipakai untuk tampilan jarak, radius, nama di topbar, dan sebagai
+        // titik check-in. Ditentukan ulang setiap posisi berubah.
+        get officeLocation() {
+            return this.nearestLocation;
+        },
+
         // ------------------------------------------------------------
         // INIT
         // ------------------------------------------------------------
@@ -68,13 +76,15 @@ document.addEventListener('alpine:init', () => {
             if (cachePageData['member/checkin']) {
                 const cached = cachePageData['member/checkin'];
                 this.employee = cached.data.employee;
-                this.officeLocation = cached.data.office_location;
+                this.officeLocations = cached.data.office_locations
+                    || (cached.data.office_location ? [cached.data.office_location] : []);
                 this.todayStatus = cached.data.today_status;
                 this.unitSchedules = cached.data.unit_schedules || [];
                 this.usedUnitScheduleIds = cached.data.used_unit_schedule_ids || [];
                 this.todayCheckins = cached.data.today_checkins || [];
                 this.loadingToday = false;
 
+                this.updateNearestLocation();
                 this.$nextTick(() => this.initMap());
             } else {
                 await this.loadSupplyData();
@@ -98,13 +108,14 @@ document.addEventListener('alpine:init', () => {
                 if (data && data.response_code === 200 && data.data) {
                     cachePageData['member/checkin'] = data;
                     this.employee = data.data.employee;
-                    this.officeLocation = data.data.office_location;
+                    this.officeLocations = data.data.office_locations || [];
                     this.todayStatus = data.data.today_status;
                     this.unitSchedules = data.data.unit_schedules || [];
                     this.usedUnitScheduleIds = data.data.used_unit_schedule_ids || [];
                     this.todayCheckins = data.data.today_checkins || [];
                     this.loadingToday = false;
 
+                    this.updateNearestLocation();
                     this.$nextTick(() => this.initMap());
                 } else if (data && data.response_code === 404) {
                     this.employeeNotFound = true;
@@ -197,14 +208,38 @@ document.addEventListener('alpine:init', () => {
             this.currentLat = pos.coords.latitude;
             this.currentLng = pos.coords.longitude;
             this.accuracy = pos.coords.accuracy;
-            if (this.officeLocation) {
-                this.distance = this.distanceMeters(
-                    this.currentLat, this.currentLng,
-                    this.officeLocation.latitude, this.officeLocation.longitude
-                );
-                this.inRadius = this.distance <= this.officeLocation.radius_meter;
-            }
+            this.updateNearestLocation();
             this.updateMap();
+        },
+
+        // Tentukan titik presensi terdekat dari posisi pengguna.
+        updateNearestLocation() {
+            if (!this.officeLocations || !this.officeLocations.length) {
+                this.nearestLocation = null;
+                this.distance = null;
+                this.inRadius = false;
+                return;
+            }
+            // Sebelum posisi diketahui, tampilkan titik pertama sebagai default
+            // (mis. nama lokasi di topbar).
+            if (this.currentLat === null || this.currentLng === null) {
+                this.nearestLocation = this.officeLocations[0];
+                this.distance = null;
+                this.inRadius = false;
+                return;
+            }
+            let nearest = null;
+            let minDist = Infinity;
+            for (const loc of this.officeLocations) {
+                const d = this.distanceMeters(this.currentLat, this.currentLng, loc.latitude, loc.longitude);
+                if (d < minDist) {
+                    minDist = d;
+                    nearest = loc;
+                }
+            }
+            this.nearestLocation = nearest;
+            this.distance = minDist;
+            this.inRadius = minDist <= nearest.radius_meter;
         },
 
         handleGeoError(err) {
@@ -239,7 +274,7 @@ document.addEventListener('alpine:init', () => {
         // MAP (Leaflet)
         // ------------------------------------------------------------
         initMap() {
-            if (this.mapInitialized || !this.officeLocation || !this.$refs.mapContainer) return;
+            if (this.mapInitialized || !this.officeLocations || !this.officeLocations.length || !this.$refs.mapContainer) return;
 
             // Tunggu Leaflet siap (CDN script mungkin belum selesai load
             // karena view di-render async oleh PineconeRouter)
@@ -251,9 +286,9 @@ document.addEventListener('alpine:init', () => {
             this.mapInitialized = true;
 
             try {
-                const ol = this.officeLocation;
+                const first = this.officeLocations[0];
                 this.map = L.map(this.$refs.mapContainer, {
-                    center: [ol.latitude, ol.longitude],
+                    center: [first.latitude, first.longitude],
                     zoom: 16,
                     zoomControl: true,
                     attributionControl: true
@@ -264,28 +299,18 @@ document.addEventListener('alpine:init', () => {
                     attribution: '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap</a>'
                 }).addTo(this.map);
 
-                // Ikon pesantren
-                const officeIcon = L.divIcon({
-                    html: '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="#3BC0CF" stroke="#fff" stroke-width="2.5"/><path d="M14 8c-2.2 0-4 1.8-4 4 0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4zm0 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#fff"/></svg>',
-                    className: '',
-                    iconSize: [28, 28],
-                    iconAnchor: [14, 28],
-                    popupAnchor: [0, -32]
+                // Marker untuk setiap titik lokasi presensi
+                this.officeMarkers = this.officeLocations.map(loc => {
+                    const marker = L.marker([loc.latitude, loc.longitude], {
+                        icon: this.makeOfficeIcon(loc, false)
+                    })
+                        .addTo(this.map)
+                        .bindPopup('<b>' + loc.name + '</b><br>Titik lokasi presensi');
+                    return { loc, marker };
                 });
 
-                this.officeMarker = L.marker([ol.latitude, ol.longitude], { icon: officeIcon })
-                    .addTo(this.map)
-                    .bindPopup('<b>' + ol.name + '</b><br>Lokasi pesantren');
-
-                // Lingkaran radius
-                this.radiusCircle = L.circle([ol.latitude, ol.longitude], {
-                    radius: ol.radius_meter,
-                    color: '#3BC0CF',
-                    fillColor: '#D4F0F3',
-                    fillOpacity: 0.35,
-                    weight: 2,
-                    dashArray: '5, 8'
-                }).addTo(this.map);
+                // Lingkaran radius & gaya marker titik terdekat
+                this.updateMap();
 
                 setTimeout(() => this.map && this.map.invalidateSize(), 300);
             } catch (e) {
@@ -294,10 +319,46 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
+        // Ikon titik presensi. Titik terdekat dari pengguna diberi warna berbeda.
+        makeOfficeIcon(loc, isNearest) {
+            const color = isNearest ? '#157CA1' : '#3BC0CF';
+            return L.divIcon({
+                html: '<svg width="28" height="28" viewBox="0 0 28 28" fill="none"><circle cx="14" cy="14" r="12" fill="' + color + '" stroke="#fff" stroke-width="2.5"/><path d="M14 8c-2.2 0-4 1.8-4 4 0 3 4 7 4 7s4-4 4-7c0-2.2-1.8-4-4-4zm0 5.5a1.5 1.5 0 110-3 1.5 1.5 0 010 3z" fill="#fff"/></svg>',
+                className: '',
+                iconSize: [28, 28],
+                iconAnchor: [14, 28],
+                popupAnchor: [0, -32]
+            });
+        },
+
         updateMap() {
             if (!this.map || !this.mapInitialized) return;
+
+            // Sorot titik terdekat & gambar ulang lingkaran radius di titik tersebut
+            const nearest = this.officeLocation;
+            if (this.officeMarkers) {
+                for (const { loc, marker } of this.officeMarkers) {
+                    marker.setIcon(this.makeOfficeIcon(loc, nearest && loc.id === nearest.id));
+                }
+            }
+            if (this.radiusCircle) {
+                this.map.removeLayer(this.radiusCircle);
+                this.radiusCircle = null;
+            }
+            if (nearest) {
+                this.radiusCircle = L.circle([nearest.latitude, nearest.longitude], {
+                    radius: nearest.radius_meter,
+                    color: '#157CA1',
+                    fillColor: '#CEE6F0',
+                    fillOpacity: 0.35,
+                    weight: 2,
+                    dashArray: '5, 8'
+                }).addTo(this.map);
+            }
+
             if (this.currentLat === null || this.currentLng === null) return;
 
+            // Marker posisi pengguna
             if (this.userMarker) {
                 this.userMarker.setLatLng([this.currentLat, this.currentLng]);
             } else {
@@ -313,10 +374,9 @@ document.addEventListener('alpine:init', () => {
                     .bindPopup('Lokasi Anda saat ini');
             }
 
-            if (!this.map._userBoundsAdjusted) {
+            if (!this.map._userBoundsAdjusted && this.officeMarkers && this.officeMarkers.length) {
                 const group = L.featureGroup([
-                    this.officeMarker,
-                    L.circle([this.officeLocation.latitude, this.officeLocation.longitude], { radius: this.officeLocation.radius_meter }),
+                    ...this.officeMarkers.map(m => m.marker),
                     this.userMarker
                 ]);
                 this.map.fitBounds(group.getBounds(), { padding: [30, 30], maxZoom: 17 });
@@ -474,7 +534,8 @@ document.addEventListener('alpine:init', () => {
                         latitude: this.currentLat,
                         longitude: this.currentLng,
                         accuracy: this.accuracy,
-                        schedule_id: schedule ? schedule.id : null
+                        schedule_id: schedule ? schedule.id : null,
+                        office_location_id: this.officeLocation ? this.officeLocation.id : null
                     },
                     {
                         headers: {
@@ -499,14 +560,17 @@ document.addEventListener('alpine:init', () => {
                         title: schedule ? schedule.title : null,
                         check_in_time: res.data.check_in_time,
                         check_in_distance_meter: res.data.distance_meter,
-                        status: res.data.status
+                        status: res.data.status,
+                        office_location_name: res.data.office_location_name || null
                     });
                     const popupTitle = schedule && schedule.title
                         ? 'Absen Masuk: ' + schedule.title
                         : 'Absen Masuk Berhasil 🎉';
+                    const locName = res.data.office_location_name
+                        || (this.officeLocation ? this.officeLocation.name : '');
                     this.showPopup('success',
                         popupTitle,
-                        'Pukul ' + res.data.check_in_time + ' · ' + res.data.distance_meter + ' m dari lokasi',
+                        'Pukul ' + res.data.check_in_time + ' · ' + res.data.distance_meter + ' m dari lokasi' + (locName ? ' (' + locName + ')' : ''),
                         res.data.status === 'terlambat' ? 'Anda tercatat terlambat hari ini.' : '');
                 } else {
                     this.showToast('error', 'Absen masuk gagal', res.response_message || 'Silakan coba lagi.');
