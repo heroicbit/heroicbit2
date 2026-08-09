@@ -7,6 +7,7 @@
     --primary:#157CA1; --primary-light:#3BC0CF; --primary-soft:#DCF1F5;
     --brass:#C79A3E; --brass-soft:#F3E7CC; --brass-ink:#8A6A22;
     --rust:#B65B45; --rust-soft:#F3DED7;
+    --green:#2FA96A; --green-soft:#D9F2E5;
     --slate:#7A8A93; --slate-soft:#E4EAEC;
     --line:#DCEAEE;
     --radius-lg:24px; --radius-md:16px; --radius-sm:10px;
@@ -64,8 +65,8 @@
     border-radius:var(--radius-md); padding:10px 14px; }
   .stat-pill .n{ font-family:'Space Grotesk',sans-serif; font-size:20px; font-weight:700; }
   .stat-pill .l{ font-size:10.5px; color:var(--ink-faint); margin-top:1px; white-space:nowrap; }
-  .stat-pill.hadir .n{ color:var(--primary); }
-  .stat-pill.telat .n{ color:var(--brass-ink); }
+  .stat-pill.hadir .n{ color:var(--green); }
+  .stat-pill.parsial .n{ color:var(--brass-ink); }
   .stat-pill.alpa .n{ color:var(--rust); }
   .stat-pill.libur .n{ color:var(--slate); }
 
@@ -86,8 +87,8 @@
   .emp-info .un{ font-size:11.5px; color:var(--ink-faint); margin-top:1px; }
   .emp-right{ text-align:right; flex-shrink:0; }
   .status-badge{ font-size:10.5px; font-weight:700; padding:4px 9px; border-radius:999px; display:inline-block; }
-  .status-badge.hadir{ background:var(--primary-soft); color:var(--primary); }
-  .status-badge.terlambat{ background:var(--brass-soft); color:var(--brass-ink); }
+  .status-badge.hadir{ background:var(--green-soft); color:var(--green); }
+  .status-badge.parsial{ background:var(--brass-soft); color:var(--brass-ink); }
   .status-badge.tidak_hadir{ background:var(--rust-soft); color:var(--rust); }
   .status-badge.libur{ background:var(--slate-soft); color:var(--slate); }
   .status-badge.bukan_hari_kerja{ background:var(--bg-surface-2); color:var(--ink-faint); border:1px dashed var(--line); }
@@ -121,8 +122,8 @@
   .stat-box{ background:var(--bg-surface); border:1px solid var(--line); border-radius:var(--radius-md); padding:12px 14px; }
   .stat-box .n{ font-family:'Space Grotesk',sans-serif; font-size:19px; font-weight:700; }
   .stat-box .l{ font-size:11px; color:var(--ink-faint); margin-top:1px; }
-  .stat-box.hadir .n{ color:var(--primary); }
-  .stat-box.telat .n{ color:var(--brass-ink); }
+  .stat-box.hadir .n{ color:var(--green); }
+  .stat-box.parsial .n{ color:var(--brass-ink); }
   .stat-box.alpa .n{ color:var(--rust); }
   .stat-box.libur .n{ color:var(--slate); }
 
@@ -135,8 +136,8 @@
   .cal-dow{ font-size:9.5px; color:var(--ink-faint); text-align:center; font-weight:700; }
   .cal-cell{ aspect-ratio:1; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:10.5px; font-weight:600; }
   .cal-cell.empty{ visibility:hidden; }
-  .cal-cell.hadir{ background:var(--primary); color:#fff; }
-  .cal-cell.terlambat{ background:var(--brass); color:#fff; }
+  .cal-cell.hadir{ background:var(--green); color:#fff; }
+  .cal-cell.parsial{ background:var(--brass); color:#fff; }
   .cal-cell.tidak_hadir{ background:var(--rust); color:#fff; }
   .cal-cell.libur{ background:var(--slate-soft); color:var(--slate); }
   .cal-cell.bukan_hari_kerja{ background:var(--bg-surface-2); color:var(--ink-faint); border:1px dashed var(--line); }
@@ -145,8 +146,8 @@
   .legend{ display:flex; flex-wrap:wrap; gap:10px; margin-top:14px; padding-top:12px; border-top:1px dashed var(--line); }
   .legend .li{ display:flex; align-items:center; gap:5px; font-size:10.5px; color:var(--ink-soft); }
   .legend .dot{ width:9px; height:9px; border-radius:3px; flex-shrink:0; }
-  .legend .dot.hadir{ background:var(--primary); }
-  .legend .dot.terlambat{ background:var(--brass); }
+  .legend .dot.hadir{ background:var(--green); }
+  .legend .dot.parsial{ background:var(--brass); }
   .legend .dot.tidak_hadir{ background:var(--rust); }
   .legend .dot.libur{ background:var(--slate); }
   .legend .dot.bukan_hari_kerja{ background:var(--bg-surface-2); border:1px dashed var(--ink-faint); }
@@ -155,7 +156,7 @@
     border-radius:var(--radius-md); padding:12px 13px; margin-bottom:8px; }
   .note-row .icn{ width:32px;height:32px;border-radius:9px;display:flex;align-items:center;justify-content:center;flex-shrink:0; }
   .note-row .icn.tidak_hadir{ background:var(--rust-soft); color:var(--rust); }
-  .note-row .icn.terlambat{ background:var(--brass-soft); color:var(--brass-ink); }
+  .note-row .icn.parsial{ background:var(--brass-soft); color:var(--brass-ink); }
   .note-row .b1{ font-size:13px; font-weight:700; }
   .note-row .b2{ font-size:11px; color:var(--ink-faint); margin-top:1px; }
 
@@ -243,7 +244,7 @@
           <div x-show="!loadingDaily && daily">
             <div class="stat-row">
               <div class="stat-pill hadir"><div class="n" x-text="daily.counts.hadir"></div><div class="l">Hadir</div></div>
-              <div class="stat-pill telat"><div class="n" x-text="daily.counts.terlambat"></div><div class="l">Terlambat</div></div>
+              <div class="stat-pill parsial"><div class="n" x-text="daily.counts.parsial"></div><div class="l">Sebagian</div></div>
               <div class="stat-pill alpa"><div class="n" x-text="daily.counts.tidak_hadir"></div><div class="l">Tidak Hadir</div></div>
               <div class="stat-pill libur"><div class="n" x-text="daily.counts.libur + daily.counts.bukan_hari_kerja"></div><div class="l">Libur/Off</div></div>
             </div>
@@ -256,7 +257,7 @@
             <div class="chip-row">
               <button class="chip" :class="filter==='semua' && 'selected'" @click="filter='semua'">Semua</button>
               <button class="chip" :class="filter==='hadir' && 'selected'" @click="filter='hadir'">Hadir</button>
-              <button class="chip" :class="filter==='terlambat' && 'selected'" @click="filter='terlambat'">Terlambat</button>
+              <button class="chip" :class="filter==='parsial' && 'selected'" @click="filter='parsial'">Sebagian</button>
               <button class="chip" :class="filter==='tidak_hadir' && 'selected'" @click="filter='tidak_hadir'">Tidak Hadir</button>
               <button class="chip" :class="filter==='libur' && 'selected'" @click="filter='libur'">Libur/Off</button>
             </div>
@@ -269,8 +270,8 @@
                   <div class="un" x-text="e.unit"></div>
                 </div>
                 <div class="emp-right">
-                  <span class="status-badge" :class="e.status" x-text="statusLabel(e.status)"></span>
-                  <div class="tm" x-show="e.status==='hadir' || e.status==='terlambat'" x-text="e.check_in_time"></div>
+                  <span class="status-badge" :class="e.status" x-text="statusLabel(e)"></span>
+                  <div class="tm" x-show="coverageLabel(e)" x-text="coverageLabel(e)"></div>
                 </div>
               </div>
             </template>
@@ -329,7 +330,7 @@
 
           <div class="stat-grid">
             <div class="stat-box hadir"><div class="n" x-text="detail.stats.hadir"></div><div class="l">Hadir</div></div>
-            <div class="stat-box telat"><div class="n" x-text="detail.stats.telat"></div><div class="l">Terlambat</div></div>
+            <div class="stat-box parsial"><div class="n" x-text="detail.stats.parsial"></div><div class="l">Sebagian</div></div>
             <div class="stat-box alpa"><div class="n" x-text="detail.stats.alpa"></div><div class="l">Tidak Hadir</div></div>
             <div class="stat-box libur"><div class="n" x-text="detail.stats.libur"></div><div class="l">Libur / Bukan Hari Kerja</div></div>
           </div>
@@ -353,7 +354,7 @@
             </div>
             <div class="legend">
               <div class="li"><span class="dot hadir"></span>Hadir</div>
-              <div class="li"><span class="dot terlambat"></span>Terlambat</div>
+              <div class="li"><span class="dot parsial"></span>Sebagian</div>
               <div class="li"><span class="dot tidak_hadir"></span>Alpa</div>
               <div class="li"><span class="dot libur"></span>Libur</div>
               <div class="li"><span class="dot bukan_hari_kerja"></span>Bukan hari kerja</div>
@@ -365,15 +366,15 @@
             <div class="note-row">
               <div class="icn" :class="n.status">
                 <svg x-show="n.status==='tidak_hadir'" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M14 6l-8 8" stroke-linecap="round"/></svg>
-                <svg x-show="n.status==='terlambat'" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="10" cy="10" r="7"/><path d="M10 6v4l3 2" stroke-linecap="round"/></svg>
+                <svg x-show="n.status==='parsial'" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 6v5M10 14h.01" stroke-linecap="round"/><circle cx="10" cy="10" r="8"/></svg>
               </div>
               <div>
-                <div class="b1" x-text="n.status==='tidak_hadir' ? 'Tidak hadir' : 'Terlambat'"></div>
-                <div class="b2" x-text="formatDateLong(n.date)"></div>
+                <div class="b1" x-text="absenceNoteTitle(n.status)"></div>
+                <div class="b2" x-text="absenceNoteDesc(n)"></div>
               </div>
             </div>
           </template>
-          <div class="empty-state" x-show="absenceNotes().length===0">Tidak ada catatan alpa/terlambat bulan ini.</div>
+          <div class="empty-state" x-show="absenceNotes().length===0">Tidak ada catatan alpa/hadir sebagian bulan ini.</div>
         </div>
       </div>
     </div>

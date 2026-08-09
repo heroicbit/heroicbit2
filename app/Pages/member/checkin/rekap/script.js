@@ -77,9 +77,26 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
-        statusLabel(s) {
-            const labels = { hadir:'Hadir', terlambat:'Terlambat', tidak_hadir:'Tidak Hadir', libur:'Libur', bukan_hari_kerja:'Bukan Hari Kerja' };
-            return labels[s] || s;
+        statusLabel(e) {
+            if (e.status === 'hadir') {
+                // Satu jadwal (atau tanpa jadwal unit) = cukup "Hadir" tanpa persentase.
+                return (e.total_schedules || 0) <= 1 ? 'Hadir' : 'Hadir 100%';
+            }
+            if (e.status === 'parsial') return 'Hadir ' + (e.percent ?? 0) + '%';
+            if (e.status === 'tidak_hadir') return 'Tidak Hadir';
+            if (e.status === 'libur') return 'Libur';
+            if (e.status === 'bukan_hari_kerja') return 'Bukan Hari Kerja';
+            return e.status || '';
+        },
+
+        // Label cakupan check-in: "1/2 jadwal · 08:00" (untuk jadwal ganda)
+        coverageLabel(e) {
+            if (e.status === 'libur' || e.status === 'bukan_hari_kerja') return '';
+            if ((e.total_schedules || 0) > 1) {
+                const c = e.check_in_count + '/' + e.total_schedules + ' jadwal';
+                return e.check_in_time ? c + ' · ' + e.check_in_time : c;
+            }
+            return e.check_in_time || '';
         },
 
         initials(name) {
@@ -187,7 +204,20 @@ document.addEventListener('alpine:init', () => {
 
         absenceNotes() {
             if (!this.detail) return [];
-            return this.detail.calendar.filter(c => c.status === 'tidak_hadir' || c.status === 'terlambat');
+            return this.detail.calendar.filter(c => c.status === 'tidak_hadir' || c.status === 'parsial');
+        },
+
+        absenceNoteTitle(status) {
+            if (status === 'tidak_hadir') return 'Tidak hadir';
+            if (status === 'parsial') return 'Hadir sebagian';
+            return 'Terlambat';
+        },
+
+        absenceNoteDesc(n) {
+            if (n.status === 'parsial' && n.total_schedules > 0) {
+                return 'Hanya check-in ' + n.check_in_count + ' dari ' + n.total_schedules + ' jadwal (' + (n.percent ?? 0) + '%) · ' + this.formatDateLong(n.date);
+            }
+            return this.formatDateLong(n.date);
         },
 
         formatDateLong(iso) {

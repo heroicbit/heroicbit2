@@ -62,4 +62,35 @@ class PageController extends BaseController
 		dd($_SESSION);
 	}
 
+	/**
+	 * Membangun klausa "IN (...)" untuk pencocokan pres_employee_schedules.day_of_week.
+	 *
+	 * Kode ini memakai konvensi ISO-8601 (date('N')): 1 = Senin ... 7 = Minggu.
+	 * Namun data jadwal bisa tersimpan dengan konvensi JavaScript Date.getDay()
+	 * (0 = Minggu ... 6 = Sabtu), terutama bila diinput lewat panel admin berbasis JS.
+	 * Oleh karena itu pada hari Minggu nilai 7 dan 0 sama-sama dicocokkan.
+	 *
+	 * @param string|null $date Tanggal 'Y-m-d' (null = hari ini).
+	 * @return array{in: string, params: array<string,int>}
+	 */
+	protected function dayOfWeekIn(?string $date = null): array
+	{
+		$ts   = $date ? strtotime($date) : time();
+		$iso  = (int)date('N', $ts);
+		$vals = $iso === 7 ? [7, 0] : [$iso];
+
+		$placeholders = [];
+		$params       = [];
+		foreach ($vals as $i => $v) {
+			$key = 'dow' . $i;
+			$placeholders[] = ':' . $key . ':';  // nantinya diganti jadi ? oleh binder CI4
+			$params[$key] = $v;
+		}
+
+		return [
+			'in'     => implode(', ', $placeholders),
+			'params' => $params,
+		];
+	}
+
 }

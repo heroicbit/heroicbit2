@@ -62,7 +62,8 @@ class PageController extends MemberPageController {
         ])->getResultArray();
 
         // Tentukan jadwal hari ini (untuk menentukan expected time & toleransi)
-        $dayOfWeek = (int)date('N'); // 1=Senin, 7=Minggu
+        // Minggu kadang tersimpan sebagai 0 (getDay JS) alih-alih 7 (ISO), jadi cocokkan keduanya.
+        $dowIn      = $this->dayOfWeekIn();
         $employeeId = (int)$employee['id'];
 
         $schedule = $db->query("
@@ -71,14 +72,11 @@ class PageController extends MemberPageController {
             FROM pres_employee_schedules es
             JOIN pres_schedule_periods sp ON sp.id = es.period_id
             WHERE es.employee_id = :employee_id:
-            AND es.day_of_week = :day_of_week:
+            AND es.day_of_week IN ({$dowIn['in']})
             AND sp.is_active = 1
             AND CURDATE() BETWEEN sp.start_date AND sp.end_date
             LIMIT 1
-        ", [
-            'employee_id' => $employeeId,
-            'day_of_week' => $dayOfWeek
-        ])->getRowArray();
+        ", array_merge(['employee_id' => $employeeId], $dowIn['params']))->getRowArray();
 
         // Cek apakah hari ini libur
         $holiday = $db->query("
@@ -363,21 +361,19 @@ class PageController extends MemberPageController {
         }
 
         // Tentukan status: hadir / terlambat
-        $status = 'hadir';
-        $dayOfWeek = (int)date('N');
+        // Minggu kadang tersimpan sebagai 0 (getDay JS) alih-alih 7 (ISO), jadi cocokkan keduanya.
+        $status   = 'hadir';
+        $dowIn    = $this->dayOfWeekIn();
         $schedule = $db->query("
             SELECT es.expected_time_in, es.late_tolerance_minutes
             FROM pres_employee_schedules es
             JOIN pres_schedule_periods sp ON sp.id = es.period_id
             WHERE es.employee_id = :employee_id:
-            AND es.day_of_week = :day_of_week:
+            AND es.day_of_week IN ({$dowIn['in']})
             AND sp.is_active = 1
             AND CURDATE() BETWEEN sp.start_date AND sp.end_date
             LIMIT 1
-        ", [
-            'employee_id' => (int)$employee['id'],
-            'day_of_week' => $dayOfWeek
-        ])->getRowArray();
+        ", array_merge(['employee_id' => (int)$employee['id']], $dowIn['params']))->getRowArray();
 
         $now = new \DateTime();
         $checkInTime = $now->format('Y-m-d H:i:s');
