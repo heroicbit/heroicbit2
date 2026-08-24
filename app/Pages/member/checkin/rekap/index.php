@@ -37,6 +37,11 @@
   .appbar .titles h2{ font-family:'Space Grotesk',sans-serif; font-size:18px; margin:0; font-weight:600;
     white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
   .appbar .titles .sub{ font-size:12px; color:var(--ink-faint); margin-top:1px; }
+  .appbar .btn-download{ width:34px;height:34px;border-radius:50%;background:var(--primary);border:none;
+    display:flex;align-items:center;justify-content:center;color:#fff;cursor:pointer;flex-shrink:0;
+    box-shadow:0 8px 18px -8px rgba(21,124,161,0.6); transition:transform .12s ease; }
+  .appbar .btn-download:active{ transform:scale(0.92); }
+  .appbar .btn-download svg{ pointer-events:none; }
 
   .content{ flex:1; overflow-y:auto; padding:8px 20px 32px; }
 
@@ -182,6 +187,29 @@
   .toast .t1{ font-size:13px; font-weight:700; }
   .toast .t2{ font-size:11px; opacity:.85; margin-top:1px; }
 
+  .modal-overlay{ position:fixed; inset:0; background:rgba(15,38,48,0.5); backdrop-filter:blur(2px);
+    display:flex; align-items:center; justify-content:center; z-index:70; padding:16px; }
+  .modal-card{ width:100%; max-width:420px; background:var(--bg-surface); border-radius:20px;
+    box-shadow:0 30px 60px -20px rgba(15,60,80,0.45); overflow:hidden; }
+  .modal-head{ display:flex; align-items:center; justify-content:space-between; padding:16px 18px 10px; }
+  .modal-head h3{ font-family:'Space Grotesk',sans-serif; font-size:16px; margin:0; font-weight:600; }
+  .modal-x{ width:30px;height:30px;border-radius:50%;border:1px solid var(--line);background:var(--bg-surface-2);
+    display:flex;align-items:center;justify-content:center;color:var(--ink-soft);cursor:pointer;flex-shrink:0; }
+  .modal-body{ padding:4px 18px 20px; }
+  .modal-desc{ font-size:12.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.5; }
+  .field-label{ display:block; font-size:11.5px; font-weight:700; color:var(--ink-soft); margin:0 0 6px; }
+  .field-select{ width:100%; padding:12px 14px; border-radius:12px; border:1px solid var(--line);
+    background:var(--bg-surface-2); font-family:'Plus Jakarta Sans',sans-serif; font-size:13.5px; font-weight:600;
+    color:var(--ink); margin-bottom:14px; appearance:none;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 20 20' fill='none' stroke='%235B6A5F' stroke-width='2'><path d='M5 8l5 5 5-5'/></svg>");
+    background-repeat:no-repeat; background-position:right 14px center; }
+  .btn-primary{ width:100%; display:flex; align-items:center; justify-content:center; gap:8px;
+    background:var(--primary); color:#fff; border:none; border-radius:12px; padding:13px;
+    font-family:'Plus Jakarta Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer;
+    box-shadow:0 12px 24px -10px rgb(21, 124, 161); transition:transform .12s ease; }
+  .btn-primary:disabled{ opacity:.6; cursor:not-allowed; }
+  .btn-primary:active{ transform:scale(0.99); }
+
   svg{ display:block; }
 </style>
 
@@ -200,6 +228,9 @@
           <h2>Rekap Kehadiran</h2>
           <div class="sub">Seluruh karyawan &amp; guru</div>
         </div>
+        <button class="btn-download" @click="openExportModal()" title="Unduh rekap bulanan">
+          <svg width="16" height="16" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2"><path d="M10 3v10M6 9l4 4 4-4M4 17h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
       </div>
 
       <div class="content">
@@ -375,6 +406,37 @@
             </div>
           </template>
           <div class="empty-state" x-show="absenceNotes().length===0">Tidak ada catatan alpa/hadir sebagian bulan ini.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ===================== MODAL UNDUH REKAP ===================== -->
+    <div class="modal-overlay" x-show="exportModal" x-cloak x-transition.opacity @click.self="exportModal=false">
+      <div class="modal-card" @keydown.escape.window="exportModal=false">
+        <div class="modal-head">
+          <h3>Unduh Rekap Bulanan</h3>
+          <button class="modal-x" @click="exportModal=false">
+            <svg width="14" height="14" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l8 8M14 6l-8 8" stroke-linecap="round"/></svg>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p class="modal-desc">Unduh rekap presensi seluruh karyawan selama satu bulan dalam format Excel. Kolom tanggal berjumlah sesuai hari pada bulan terpilih.</p>
+          <label class="field-label">Bulan</label>
+          <select class="field-select" x-model.number="exportMonth">
+            <template x-for="(m, i) in monthNames" :key="i">
+              <option :value="i + 1" x-text="m"></option>
+            </template>
+          </select>
+          <label class="field-label">Tahun</label>
+          <select class="field-select" x-model.number="exportYear">
+            <template x-for="y in exportYears" :key="y">
+              <option :value="y" x-text="y"></option>
+            </template>
+          </select>
+          <button class="btn-primary" @click="downloadExport()" :disabled="exporting">
+            <svg x-show="!exporting" width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="#fff" stroke-width="2"><path d="M10 3v10M6 9l4 4 4-4M4 17h12" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            <span x-text="exporting ? 'Mengunduh...' : 'Unduh Data'"></span>
+          </button>
         </div>
       </div>
     </div>

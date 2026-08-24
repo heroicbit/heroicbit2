@@ -19,6 +19,12 @@ document.addEventListener('alpine:init', () => {
         calYear: null,
         calMonth: null,
 
+        // Export rekap bulanan
+        exportModal: false,
+        exportMonth: null,
+        exportYear: null,
+        exporting: false,
+
         toast: { show: false, type: 'success', title: '', desc: '' },
 
         async init() {
@@ -116,6 +122,66 @@ document.addEventListener('alpine:init', () => {
                 list = list.filter(e => e.name.toLowerCase().includes(q));
             }
             return list;
+        },
+
+        // ---------- Export rekap bulanan ----------
+        get monthNames() {
+            return ['Januari','Februari','Maret','April','Mei','Juni','Juli','Agustus','September','Oktober','November','Desember'];
+        },
+        get exportYears() {
+            const y = new Date().getFullYear();
+            return [y, y - 1];
+        },
+        get exportMonthLabel() {
+            return this.monthNames[(this.exportMonth || 1) - 1].toLowerCase();
+        },
+
+        openExportModal() {
+            const now = new Date();
+            this.exportMonth = now.getMonth() + 1;
+            this.exportYear = now.getFullYear();
+            this.exportModal = true;
+        },
+
+        async downloadExport() {
+            if (!this.exportMonth || !this.exportYear || this.exporting) return;
+            this.exporting = true;
+            try {
+                const month = String(this.exportMonth).padStart(2, '0');
+                const url = base_url + 'member/checkin/rekap/export?month=' + month + '&year=' + this.exportYear + '&dataonly=1';
+                const resp = await axios.get(url, {
+                    headers: {
+                        'Authorization': 'Bearer ' + localStorage.getItem('heroic_token'),
+                        'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
+                    },
+                    responseType: 'blob'
+                });
+
+                // Nama file dari header Content-Disposition, fallback ke format default
+                let filename = 'rekap-checkin-' + this.exportMonthLabel + '-' + this.exportYear + '.xls';
+                const cd = resp.headers['content-disposition'];
+                if (cd) {
+                    const match = cd.match(/filename="?([^";]+)"?/i);
+                    if (match && match[1]) filename = match[1].trim();
+                }
+
+                const blobUrl = window.URL.createObjectURL(resp.data);
+                const a = document.createElement('a');
+                a.href = blobUrl;
+                a.download = filename;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                window.URL.revokeObjectURL(blobUrl);
+
+                this.exportModal = false;
+                this.showToast('success', 'Rekap berhasil diunduh', filename);
+            } catch (e) {
+                console.error('Gagal mengunduh rekap bulanan:', e);
+                this.showToast('error', 'Gagal mengunduh', 'Terjadi kesalahan saat mengunduh data. Coba lagi.');
+            } finally {
+                this.exporting = false;
+            }
         },
 
         // ---------- Detail employee ----------
