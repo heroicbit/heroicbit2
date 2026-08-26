@@ -54,6 +54,12 @@ window.member_santri_detail = function (id) {
     calendar: null,
     selectedDate: null,
     selectedPresensi: {},
+    nilaiPondokBulanIni: [],
+    nilaiPondokSemesterKemarin: null,
+    loadingNilaiPondok: false,
+    bulanLabel: "",
+    semesterLabel: "",
+    tahunLabel: "",
 
     init() {
       document.title = this.title;
@@ -200,6 +206,30 @@ window.member_santri_detail = function (id) {
       } else {
         this.selectedPresensi = {};
       }
+    },
+
+    loadNilaiPondok() {
+      if (this.loadingNilaiPondok) return;
+      this.loadingNilaiPondok = true;
+
+      fetchPageData("member/santri/detail/nilaiPondok/" + this.id, {
+        headers: {
+          Authorization: `Bearer ` + Alpine.store("tarbiyya").sessionToken,
+          "Pesantrenku-ID": Alpine.store("tarbiyya").pesantrenID,
+        },
+      })
+        .then((data) => {
+          if (data.found == 1) {
+            this.nilaiPondokBulanIni = data.bulan_ini?.nilai ?? [];
+            this.nilaiPondokSemesterKemarin = data.semester_kemarin;
+            this.bulanLabel = data.bulan_ini?.bulan_label ?? "";
+            this.semesterLabel = data.bulan_ini?.semester_label ?? "";
+            this.tahunLabel = data.bulan_ini?.tahun_label ?? "";
+          }
+        })
+        .finally(() => {
+          this.loadingNilaiPondok = false;
+        });
     },
 
     async hapusSantri() {

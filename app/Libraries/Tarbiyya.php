@@ -43,6 +43,17 @@ class Tarbiyya {
 	}
 
 	/**
+     * Get database penilaianpondok (nilai pondok)
+     */
+    public function initDBPondok()
+	{
+		$db = db_connect();
+		$db->setDatabase('penilaianpondok');
+
+		return $db;
+	}
+
+	/**
 	 * Check user token
 	 */
 	public function checkToken()

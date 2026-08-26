@@ -28,6 +28,11 @@
                             Presensi
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-bs-toggle="tab" href="#pondok" role="tab" aria-selected="false" x-on:click="loadNilaiPondok">
+                            Pondok
+                        </a>
+                    </li>
                 </ul>
                 <div class="tab-content p-1">
                     <div class="tab-pane mt-2 fade active show" id="profil" role="tabpanel">
@@ -96,6 +101,48 @@
                             <span class="text-warning fs-4">&bull;</span> Total izin: <span x-text="detailSantri.total_izin"></span><br>
                             <span class="text-danger fs-4">&bull;</span> Total tanpa keterangan: <span x-text="detailSantri.total_alpa"></span>
                         </div>
+                    </div>
+                    <div class="tab-pane fade" id="pondok" role="tabpanel">
+                        <div x-show="loadingNilaiPondok" class="text-center py-4">
+                            <div class="spinner-border text-primary" role="status"></div>
+                        </div>
+
+                        <template x-if="!loadingNilaiPondok">
+                            <div>
+                                <div class="section-title">Nilai Pondok Bulan Ini</div>
+                                <div class="text-muted small mb-2" x-text="`${bulanLabel} - ${semesterLabel} - ${tahunLabel}`"></div>
+
+                                <template x-if="!nilaiPondokBulanIni.length">
+                                    <p class="text-muted small">Belum ada nilai pondok bulan ini.</p>
+                                </template>
+                                <template x-for="n in nilaiPondokBulanIni" :key="n.nama_komponen">
+                                    <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom:1px solid #f1f1f1">
+                                        <div class="pe-3">
+                                            <div class="fw-bold" x-text="n.nama_komponen"></div>
+                                            <small class="text-muted d-block" x-show="n.keterangan" x-text="n.keterangan"></small>
+                                        </div>
+                                        <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle border fw-bold" style="width:38px;height:38px;color:#05b2c5">
+                                            <span x-text="n.nilai ?? '-' "></span>
+                                        </div>
+                                    </div>
+                                </template>
+
+                                <div class="section-title mt-3 border-top pt-2">Nilai Pondok Semester Kemarin</div>
+                                <template x-if="nilaiPondokSemesterKemarin && nilaiPondokSemesterKemarin.nilai.length">
+                                    <template x-for="n in nilaiPondokSemesterKemarin.nilai" :key="n.nama_komponen">
+                                        <dl>
+                                            <dt x-text="n.nama_komponen"></dt>
+                                            <dd>
+                                                <span class="badge bg-brand" x-text="n.nilai ?? '-' "></span>
+                                            </dd>
+                                        </dl>
+                                    </template>
+                                </template>
+                                <template x-if="!nilaiPondokSemesterKemarin || !nilaiPondokSemesterKemarin.nilai.length">
+                                    <p class="text-muted small">Tidak ada data semester kemarin.</p>
+                                </template>
+                            </div>
+                        </template>
                     </div>
                 </div>
             </div>
