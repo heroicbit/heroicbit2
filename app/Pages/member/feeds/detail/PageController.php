@@ -12,26 +12,23 @@ class PageController extends MemberPageController
 
     public function getSupply($id = null)
     {
-        // Retrieve extension attributes
-        $uri = $this->request->getUri();
-
         // Get post data
-		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, 
-            `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
-            `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
-            `mein_microblogs`.`created_at` as `created_at`, 
-            `mein_microblogs`.`published_at` as `published_at`
-            FROM `mein_microblogs`
-            JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-            WHERE `mein_microblogs`.`status` = 'publish'
-            AND `mein_microblogs`.`id` = :id:";
+		$query = "SELECT `mein_posts`.`id`, `featured_image`, `title`, `content`, 
+            `author` as `author_id`, mein_users.avatar,
+            `mein_users`.`name` as `author_name`, `mein_posts`.`status` as `status`, 
+            `mein_posts`.`created_at` as `created_at`, 
+            `mein_posts`.`published_at` as `published_at`
+            FROM `mein_posts`
+            LEFT JOIN `mein_users` ON `mein_users`.`id`=`mein_posts`.`author`
+            WHERE `mein_posts`.`status` = 'publish'
+            AND `mein_posts`.`id` = :id:";
 
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
-
+        // dd($query);
         $post = $db->query($query, ['id' => $id])->getResultArray();
-        $post[0]['medias'] = json_decode($post[0]['medias'], true);
+        $post[0]['medias'] = $post[0]['featured_image'] ? [['url' => $post[0]['featured_image']]] : [];
         $data['post'] = $post;
 
 		return $this->respond([

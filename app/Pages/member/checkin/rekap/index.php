@@ -6,8 +6,8 @@
     --ink:#0F2630; --ink-soft:#4E6873; --ink-faint:#8CA3AB;
     --primary:#157CA1; --primary-light:#3BC0CF; --primary-soft:#DCF1F5;
     --brass:#ffbb31; --brass-soft:#F3E7CC; --brass-ink:#8A6A22;
-    --rust:#ef291a; --rust-soft:#F3DED7;
-    --green:#2FA96A; --green-soft:#D9F2E5;
+    --rust:#ff4233; --rust-soft:#F3DED7;
+    --green:#00d065; --green-soft:#D9F2E5;
     --slate:#7A8A93; --slate-soft:#E4EAEC;
     --line:#DCEAEE;
     --radius-lg:24px; --radius-md:16px; --radius-sm:10px;

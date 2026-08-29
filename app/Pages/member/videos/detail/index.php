@@ -42,6 +42,17 @@
             </div>
         </div>
 
+        <!-- Video tidak ditemukan -->
+        <div class="section mt-2" x-show="notFound">
+            <div class="card">
+                <div class="card-body text-center py-5">
+                    <ion-icon name="videocam-off-outline" class="text-muted" style="font-size: 48px;"></ion-icon>
+                    <h5 class="mt-3">Video tidak ditemukan</h5>
+                    <p class="text-muted mb-0">Video mungkin telah dihapus atau tidak tersedia.</p>
+                </div>
+            </div>
+        </div>
+
     </div>
     <!-- * App Capsule -->
 </div>

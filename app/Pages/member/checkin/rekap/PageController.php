@@ -312,8 +312,11 @@ class PageController extends MemberPageController {
             foreach ($schedRows as $s) {
                 $dow = (int)$s['day_of_week'];
                 $workDow[$dow] = true;
-                if ($dow === 7) {
-                    $workDow[0] = true; // Minggu: konvensi ISO (7) dan getDay (0)
+                // Minggu bisa tersimpan sebagai 7 (ISO date('N')) atau 0 (JS getDay());
+                // set keduanya supaya Minggu tetap dianggap hari kerja.
+                if ($dow === 7 || $dow === 0) {
+                    $workDow[0] = true;
+                    $workDow[7] = true;
                 }
             }
 
@@ -581,8 +584,11 @@ class PageController extends MemberPageController {
             $eid = (int)$s['employee_id'];
             $dow = (int)$s['day_of_week'];
             $workDowByEmployee[$eid][$dow] = true;
-            if ($dow === 7) {
-                $workDowByEmployee[$eid][0] = true; // Minggu: konvensi ISO (7) & getDay JS (0)
+            // Minggu bisa tersimpan sebagai 7 (ISO date('N')) atau 0 (JS getDay());
+            // set keduanya supaya Minggu tetap dianggap hari kerja.
+            if ($dow === 7 || $dow === 0) {
+                $workDowByEmployee[$eid][0] = true;
+                $workDowByEmployee[$eid][7] = true;
             }
         }
 

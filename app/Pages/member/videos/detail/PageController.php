@@ -16,27 +16,39 @@ class PageController extends MemberPageController {
         $uri = $request->getUri();
 
         // Get post data
-		$query = "SELECT `mein_microblogs`.`id`, `medias`, `title`, `content`, `youtube_url`,
-            `total_like`, `total_comment`, `author` as `author_id`, mein_users.avatar,
-            `mein_users`.`name` as `author_name`, `mein_microblogs`.`status` as `status`, 
-            `mein_microblogs`.`created_at` as `created_at`, 
-            `mein_microblogs`.`published_at` as `published_at`
-            FROM `mein_microblogs`
-            JOIN `mein_users` ON `mein_users`.`id`=`mein_microblogs`.`author`
-            WHERE `mein_microblogs`.`status` = 'publish'
-            AND (`mein_microblogs`.`youtube_url` IS NOT NULL OR `mein_microblogs`.`youtube_url` != '')
-            AND `mein_microblogs`.`id` = :id:";
+        // Video disimpan di tabel `mein_posts` (type='video'); ID/URL YouTube ada di kolom `embed_video`.
+		$query = "SELECT `p`.`id`, `p`.`title`, `p`.`content`, `p`.`author` as `author_id`,
+            `u`.`avatar`, `u`.`name` as `author_name`, `p`.`status` as `status`,
+            `p`.`created_at` as `created_at`, `p`.`published_at` as `published_at`,
+            `p`.`featured_image`, `p`.`intro`, `p`.`embed_video` as `youtube_url`,
+            `p`.`video_duration`
+            FROM `mein_posts` `p`
+            LEFT JOIN `mein_users` `u` ON `u`.`id` = `p`.`author`
+            WHERE `p`.`status` = 'publish'
+            AND (`p`.`embed_video` IS NOT NULL AND `p`.`embed_video` != '')
+            AND `p`.`id` = :id:";
 
         // Get database pesantren
         $Tarbiyya = new \App\Libraries\Tarbiyya();
         $db = $Tarbiyya->initDBPesantren();
         $post = $db->query($query, ['id' => $id])->getResultArray();
-        $post[0]['medias'] = json_decode($post[0]['medias'], true);
-        $data['video'] = $post;
 
-        // Parse URL untuk mendapatkan bagian query string
-        parse_str(parse_url($data['video'][0]['youtube_url'], PHP_URL_QUERY), $queryParams);
-        $data['video'][0]['youtube_id'] = isset($queryParams['v']) ? $queryParams['v'] : null;
+        // Video tidak ditemukan -> kembalikan array kosong, jangan sampai crash.
+        // Frontend akan menampilkan state notFound bila data.video kosong.
+        $data['video'] = [];
+        if (!empty($post)) {
+            // embed_video di mein_posts berisi ID YouTube langsung (bukan URL).
+            $youtubeId = (string)($post[0]['youtube_url'] ?? '');
+            $post[0]['youtube_id'] = $youtubeId !== '' ? $youtubeId : null;
+
+            // Thumbnail: featured_image, fallback ke thumbnail YouTube.
+            $thumb = !empty($post[0]['featured_image'])
+                ? $post[0]['featured_image']
+                : 'https://img.youtube.com/vi/' . $youtubeId . '/hqdefault.jpg';
+            $post[0]['medias'] = [['url' => $thumb]];
+
+            $data['video'] = $post;
+        }
 
 		return $this->respond([
 			'response_code'    => 200,

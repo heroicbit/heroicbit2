@@ -14,7 +14,7 @@ window.member_videos_detail = function(id){
             Alpine.store('tarbiyya').showBottomMenu = true
 
             // Get cache if exists
-            this.video = cachePageData[`member/videos`]?.videos.filter(item => item.id == this.id) ?? {};
+            this.video = cachePageData[`member/videos`]?.videos?.filter(item => item.id == this.id) ?? {};
             if(Object.keys(this.video).length == 0) {
                 fetchPageData(`member/videos/detail/supply/${this.id}`, {
                     headers: {
@@ -23,11 +23,15 @@ window.member_videos_detail = function(id){
                     }
                 })
                 .then(data => {
-                    if(data.data.video.length == 0){
+                    const vids = data?.data?.video;
+                    if(!vids || vids.length == 0){
                         this.notFound = true
                     } else {
-                        this.video = data.data.video
+                        this.video = vids
                     }
+                })
+                .catch(() => {
+                    this.notFound = true
                 })
             }
         },
