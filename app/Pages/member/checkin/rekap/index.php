@@ -5,8 +5,8 @@
     --bg-page:#E9F3F5; --bg-surface:#ffffff; --bg-surface-2:#F1F8FA;
     --ink:#0F2630; --ink-soft:#4E6873; --ink-faint:#8CA3AB;
     --primary:#157CA1; --primary-light:#3BC0CF; --primary-soft:#DCF1F5;
-    --brass:#C79A3E; --brass-soft:#F3E7CC; --brass-ink:#8A6A22;
-    --rust:#B65B45; --rust-soft:#F3DED7;
+    --brass:#ffbb31; --brass-soft:#F3E7CC; --brass-ink:#8A6A22;
+    --rust:#ef291a; --rust-soft:#F3DED7;
     --green:#2FA96A; --green-soft:#D9F2E5;
     --slate:#7A8A93; --slate-soft:#E4EAEC;
     --line:#DCEAEE;
