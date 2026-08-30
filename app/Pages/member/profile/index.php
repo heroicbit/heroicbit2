@@ -44,6 +44,12 @@
                                 </a>
                             </li>
                             <li>
+                                <a href="/profile/edit_password" class="item">
+                                    <i class="fs-4 me-2 bi bi-shield-lock text-primary"></i>
+                                    <span>Ganti Kata Sandi</span>
+                                </a>
+                            </li>
+                            <li>
                                 <a href="/invoice" class="item">
                                     <i class="bi bi-receipt fs-4 text-primary me-2"></i>
                                     <span>Transaksi Saya</span>

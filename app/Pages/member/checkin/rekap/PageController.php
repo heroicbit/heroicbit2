@@ -762,9 +762,10 @@ class PageController extends MemberPageController {
         $styles .= '</Styles>';
 
         // Pembuat cell
-        $cell = function (string $styleId, string $type, string $value): string {
+        // $value boleh null (mis. user_email/unit_name kosong di DB) -> ditangani jadi string kosong.
+        $cell = function (string $styleId, string $type, ?string $value = ''): string {
             return '<Cell ss:StyleID="' . $styleId . '"><Data ss:Type="' . $type . '">'
-                . htmlspecialchars($value, ENT_QUOTES, 'UTF-8') . '</Data></Cell>';
+                . htmlspecialchars((string) $value, ENT_QUOTES, 'UTF-8') . '</Data></Cell>';
         };
 
         // Pembuat cell header dengan atribut tambahan (untuk merge vertikal/horizontal)

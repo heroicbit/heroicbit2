@@ -176,6 +176,13 @@
         x-template="['/member/profile/edit_account/content', '/_components/bottommenu?pid=' + pesantrenID]" 
         x-handler="isLoggedIn"
         ></template>
+
+    <!-- Profile Edit Password -->
+    <template 
+        x-route="/profile/edit_password" 
+        x-template="['/member/profile/edit_password/content', '/_components/bottommenu?pid=' + pesantrenID]" 
+        x-handler="isLoggedIn"
+        ></template>
     
     <!-- Tagihan -->
     <template 

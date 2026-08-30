@@ -31,26 +31,23 @@ window.profile_edit_info = function () {
         this.data = cachePageData['member/profile']
         this.prepareModel();
       } else {   
-          fetchPageData('/member/profile/supply', {
-              headers: {
-                  'Authorization': `Bearer ` + Alpine.store('tarbiyya').sessionToken,
-                  'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID,
+          fetchPageData('/member/profile/supply').then(data => {
+              if (data?.profile) {
+                cachePageData['member/profile'] = data
+                this.data = data
+                this.prepareModel();
               }
-          }).then(data => {
-              cachePageData['member/profile'] = data
-              this.data = data
-              this.prepareModel();
           })
       }
     },
 
     prepareModel() {
         // Prepare data model
-        this.model.name = this.data.profile.name;
-        this.model.short_description = this.data.profile.short_description;
-        this.model.gender = this.data.profile.gender;
-        this.model.birthday = this.data.profile.birthday;
-        this.model.jobs = this.data.profile.jobs;
+        this.model.name = this.data?.profile?.name ?? "";
+        this.model.short_description = this.data?.profile?.short_description ?? "";
+        this.model.gender = this.data?.profile?.gender ?? "";
+        this.model.birthday = this.data?.profile?.birthday ?? "";
+        this.model.jobs = this.data?.profile?.jobs ?? "";
     },
 
     save() {
@@ -59,17 +56,36 @@ window.profile_edit_info = function () {
         short_description: "",
         gender: "",
         birthday: "",
-        status_marital: "",
         jobs: "",
       };
 
       // Check login using axios post
       postPageData("/member/profile/edit_info", this.model)
       .then((response) => {
-        if (response.success == 1) {
+        if (response?.success == 1) {
           toastr('Data info berhasil diperbaharui', 'success', 'bottom');
+          // Perbarui nama di store global agar halaman home tidak menampilkan data lama
+          if (Alpine.store('tarbiyya').user) {
+            Alpine.store('tarbiyya').user.name = this.model.name;
+          }
+          // Ambil ulang data profil dari server agar cache & form selalu sinkron
+          this.refreshProfileData();
         } else {
-          this.errors = response.errors;
+          this.errors = response?.errors || {};
+        }
+      });
+    },
+
+    refreshProfileData() {
+      fetchPageData('/member/profile/supply').then(data => {
+        if (data?.profile) {
+          cachePageData['member/profile'] = data;
+          this.data = data;
+          this.prepareModel();
+          // Sinkronkan store user dari data profil terbaru
+          if (Alpine.store('tarbiyya').user) {
+            Alpine.store('tarbiyya').user.name = data.profile.name;
+          }
         }
       });
     },

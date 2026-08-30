@@ -28,34 +28,33 @@
 
                 <div class="form-group boxed">
                     <div class="text-start input-wrapper">
-                        <label class="form-label" for="email">Personal Branding</label>
-                        <textarea id="bio" class="form-control" x-model="model.short_description"></textarea>
+                        <label class="form-label" for="short_description">Personal Branding</label>
+                        <textarea id="short_description" class="form-control" x-model="model.short_description"></textarea>
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="text-start input-wrapper">
-                        <label class="form-label" for="email">Tanggal Lahir</label>
+                        <label class="form-label" for="birthday">Tanggal Lahir</label>
                         <input type="date" class="form-control" id="birthday" x-model="model.birthday">
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="text-start input-wrapper">
-                        <label class="form-label" for="email">Status Marital</label>
-                        <select name="marital" id="marital" class="form-select" x-model="model.status_marital">
+                        <label class="form-label" for="gender">Jenis Kelamin</label>
+                        <select id="gender" class="form-select" x-model="model.gender">
                             <option value=""></option>
-                            <option value="single">Belum Menikah</option>
-                            <option value="married">Menikah</option>
-                            <option value="widowed">Duda</option>
+                            <option value="l">Laki-laki</option>
+                            <option value="p">Perempuan</option>
                         </select>
                     </div>
                 </div>
 
                 <div class="form-group boxed">
                     <div class="text-start input-wrapper">
-                        <label class="form-label" for="email">Pekerjaan</label>
-                        <textarea id="bio" class="form-control" x-model="model.jobs"></textarea>
+                        <label class="form-label" for="jobs">Pekerjaan</label>
+                        <textarea id="jobs" class="form-control" x-model="model.jobs"></textarea>
                     </div>
                 </div>
 
