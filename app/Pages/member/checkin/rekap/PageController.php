@@ -214,7 +214,7 @@ class PageController extends MemberPageController {
         $employee = $db->query("
             SELECT id, user_name as name, unit_name as unit, unit_id, position, employee_code
             FROM view_employees
-            WHERE id = :id: AND is_active = 1
+            WHERE id = :id: AND is_active = 1 AND deleted_at is null
         ", ['id' => $employeeId])->getRowArray();
 
         if (!$employee) {
@@ -519,6 +519,7 @@ class PageController extends MemberPageController {
                    ve.unit_id, ve.employee_code
             FROM view_employees ve
             WHERE ve.is_active = 1
+            AND deleted_at is null
             ORDER BY ve.unit_name, ve.user_name
         ")->getResultArray();
 
