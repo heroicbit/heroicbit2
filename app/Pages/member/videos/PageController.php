@@ -28,7 +28,7 @@ class PageController extends MemberPageController {
             FROM `mein_posts` `p`
             JOIN `mein_users` `u` ON `u`.`id` = `p`.`author`
             WHERE `p`.`status` = :status:
-            AND `p`.`type` = 'video'
+            AND (`p`.`type` = 'video' OR `p`.`embed_video` IS NOT NULL)
             AND (`p`.`embed_video` IS NOT NULL AND `p`.`embed_video` != '')
             ORDER BY `p`.`published_at` DESC
             LIMIT :offset:, :perpage:";
