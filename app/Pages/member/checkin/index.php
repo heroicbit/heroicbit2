@@ -548,100 +548,6 @@
             color: var(--primary);
         }
 
-        .hist-summary {
-            background: var(--bg-surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius-lg);
-            padding: 16px;
-            display: flex;
-            margin: 10px 0 18px;
-        }
-
-        .hist-summary .col {
-            flex: 1;
-            text-align: center;
-            border-right: 1px solid var(--line);
-        }
-
-        .hist-summary .col:last-child {
-            border-right: none;
-        }
-
-        .hist-summary .col .num {
-            font-family: 'Space Grotesk', sans-serif;
-            font-size: 20px;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .hist-summary .col .lbl {
-            font-size: 10.5px;
-            color: var(--ink-faint);
-            margin-top: 2px;
-        }
-
-        .hist-row {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            background: var(--bg-surface);
-            border: 1px solid var(--line);
-            border-radius: var(--radius-md);
-            padding: 12px 13px;
-            margin-bottom: 8px;
-        }
-
-        .hist-row .icn {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .hist-row .icn.in {
-            background: var(--primary-soft);
-            color: var(--primary);
-        }
-
-        .hist-row .icn.late {
-            background: var(--rust-soft);
-            color: var(--rust);
-        }
-
-        .hist-row .body {
-            flex: 1;
-            min-width: 0;
-        }
-
-        .hist-row .body .r1 {
-            font-size: 13px;
-            font-weight: 600;
-        }
-
-        .hist-row .body .r2 {
-            font-size: 11px;
-            color: var(--ink-faint);
-            margin-top: 1px;
-        }
-
-        .hist-row .status {
-            font-size: 10px;
-            font-weight: 700;
-            padding: 4px 8px;
-            border-radius: 999px;
-            background: var(--primary-soft);
-            color: var(--primary);
-            white-space: nowrap;
-        }
-
-        .hist-row .status.late {
-            background: var(--rust-soft);
-            color: var(--rust);
-        }
-
         .skeleton {
             background: linear-gradient(90deg, var(--bg-surface) 25%, var(--bg-surface-2) 37%, var(--bg-surface) 63%);
             background-size: 400% 100%;
@@ -659,21 +565,9 @@
             }
         }
 
-        .skel-card {
-            height: 100px;
-            margin-bottom: 14px;
-        }
-
         .skel-row {
             height: 56px;
             margin-bottom: 8px;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 30px 12px;
-            color: var(--ink-faint);
-            font-size: 12.5px;
         }
 
         .bottomnav {
@@ -867,10 +761,10 @@
 
         <!-- CONTENT -->
         <div class="content">
-            <!-- TABS -->
+            <!-- TABS: Riwayat kini halaman terpisah (/checkin/history) -->
             <div class="tabs">
                 <button :class="tab==='home' && 'active'" @click="tab='home'">Beranda</button>
-                <button :class="tab==='history' && 'active'" @click="switchToHistory()">Riwayat</button>
+                <button @click="goHistory()">Riwayat</button>
             </div>
 
             <!-- TAB: BERANDA -->
@@ -1161,58 +1055,6 @@
 
                 </div><!-- /!employeeNotFound -->
             </div>
-
-            <!-- TAB: RIWAYAT -->
-            <div x-show="tab==='history'">
-                <div class="greeting" style="padding-bottom:2px;">
-                    <div class="eyebrow">Riwayat</div>
-                    <h2>Presensi Saya</h2>
-                </div>
-
-                <div x-show="loadingHistory">
-                    <div class="skeleton skel-card"></div>
-                    <div class="skeleton skel-row"></div>
-                    <div class="skeleton skel-row"></div>
-                </div>
-
-                <div x-show="!loadingHistory">
-                    <div>
-                        <!-- Ringkasan -->
-                        <div class="hist-summary">
-                            <div class="col">
-                                <div class="num" x-text="historySummary.hadir"></div>
-                                <div class="lbl">Hadir</div>
-                            </div>
-                            <div class="col">
-                                <div class="num" x-text="historySummary.terlambat"></div>
-                                <div class="lbl">Terlambat</div>
-                            </div>
-                            <div class="col">
-                                <div class="num" x-text="historySummary.total"></div>
-                                <div class="lbl">Total Tercatat</div>
-                            </div>
-                        </div>
-
-                        <!-- Daftar riwayat -->
-                        <template x-for="h in history" :key="h.date">
-                            <div class="hist-row">
-                                <div class="icn" :class="h.status==='terlambat' ? 'late' : 'in'">
-                                    <svg width="15" height="15" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="2">
-                                        <path d="M4 10l4 4 8-9" stroke-linecap="round" stroke-linejoin="round" />
-                                    </svg>
-                                </div>
-                                <div class="body">
-                                    <div class="r1" x-text="formatDateLabel(h.date) + ' · Masuk ' + (h.check_in_time || '—')"></div>
-                                    <div class="r2" x-text="h.check_out_time ? ('Pulang ' + h.check_out_time) : 'Belum absen pulang'"></div>
-                                </div>
-                                <div class="status" :class="h.status==='terlambat' && 'late'" x-text="statusLabel(h.status)"></div>
-                            </div>
-                        </template>
-
-                        <div class="empty-state" x-show="history.length===0">Belum ada riwayat presensi.</div>
-                    </div>
-                </div>
-            </div>
         </div>
 
         <!-- BOTTOM NAVIGATION (hanya untuk super/admin) -->
@@ -1224,7 +1066,7 @@
                 </svg>
                 <span>Checkin</span>
             </button>
-            <a href="/member/checkin/rekap" class="item" :class="tab==='history' && 'active'">
+            <a href="/member/checkin/rekap" class="item">
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z" />
                     <polyline points="14 2 14 8 20 8" />

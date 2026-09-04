@@ -542,55 +542,6 @@ class PageController extends MemberPageController {
     }
 
     /**
-     * GET: Riwayat presensi
-     */
-    public function getHistory()
-    {
-        date_default_timezone_set('Asia/Jakarta');
-
-        $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $user = $Tarbiyya->checkToken();
-        $db = $Tarbiyya->initDBPesantren();
-
-        $limit = (int)($this->request->getGet('limit') ?? 30);
-
-        $employee = $db->query("
-            SELECT id FROM view_employees
-            WHERE user_id = :user_id: AND is_active = 1
-        ", ['user_id' => $user->user_id])->getRowArray();
-
-        if (!$employee) {
-            return $this->respond([
-                'response_code'    => 404,
-                'response_message' => 'Data karyawan tidak ditemukan.',
-                'data'             => []
-            ], 404);
-        }
-
-        $history = $db->query("
-            SELECT a.date, 
-                   DATE_FORMAT(a.check_in_time, '%H:%i') as check_in_time,
-                   DATE_FORMAT(a.check_out_time, '%H:%i') as check_out_time,
-                   a.status,
-                   a.check_in_distance_meter,
-                   a.check_out_distance_meter
-            FROM pres_attendances a
-            WHERE a.employee_id = :employee_id:
-            ORDER BY a.date DESC
-            LIMIT :limit:
-        ", [
-            'employee_id' => $employee['id'],
-            'limit'       => $limit
-        ])->getResultArray();
-
-        return $this->respond([
-            'response_code'    => 200,
-            'response_message' => 'success',
-            'data'             => $history
-        ]);
-    }
-
-    /**
      * Cocokkan jam check-in (HH:MM) ke jadwal unit berdasarkan rentang
      * time_in..time_out. Mengembalikan data jadwal yang cocok atau null.
      */

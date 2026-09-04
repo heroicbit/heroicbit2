@@ -79,6 +79,13 @@
         x-handler="isLoggedIn"
         ></template>
     
+    <!-- Riwayat Presensi (Karyawan) -->
+    <template 
+        x-route="/checkin/history" 
+        x-template="['/member/checkin/history/content']" 
+        x-handler="isLoggedIn"
+        ></template>
+    
     <!-- Feeds -->
     <template 
         x-route="/feeds" 

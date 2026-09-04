@@ -5,8 +5,7 @@ document.addEventListener('alpine:init', () => {
         APP_CONFIG: {
             minAccuracyMeter: 50,
             geoTimeout: 15000,
-            geoMaximumAge: 5000,
-            historyLimit: 30
+            geoMaximumAge: 5000
         },
 
         tab: 'home',
@@ -45,10 +44,6 @@ document.addEventListener('alpine:init', () => {
             schedule: null
         },
         submitting: false,
-
-        loadingHistory: true,
-        historyLoaded: false,
-        history: [],
 
         toast: { show: false, type: 'success', title: '', desc: '' },
 
@@ -129,35 +124,9 @@ document.addEventListener('alpine:init', () => {
             }
         },
 
-        switchToHistory() {
-            this.tab = 'history';
-            if (!this.historyLoaded) this.loadHistory();
-        },
-
-        async loadHistory() {
-            this.loadingHistory = true;
-            try {
-                const data = await fetchPageData(
-                    'member/checkin/history?limit=' + this.APP_CONFIG.historyLimit,
-                    {
-                        headers: {
-                            'Authorization': `Bearer ` + localStorage.getItem('heroic_token'),
-                            'Pesantrenku-ID': Alpine.store('tarbiyya').pesantrenID
-                        }
-                    }
-                );
-                if (data && data.response_code === 200) {
-                    this.history = data.data || [];
-                } else {
-                    this.history = [];
-                }
-                this.historyLoaded = true;
-            } catch (e) {
-                this.showToast('error', 'Gagal memuat riwayat presensi', e.message);
-                this.history = [];
-            } finally {
-                this.loadingHistory = false;
-            }
+        // Buka halaman riwayat (halaman terpisah dari halaman check-in)
+        goHistory() {
+            window.PineconeRouter.context.navigate('/checkin/history');
         },
 
         // ------------------------------------------------------------
@@ -588,32 +557,6 @@ document.addEventListener('alpine:init', () => {
         // ------------------------------------------------------------
         // COMPUTED & HELPERS
         // ------------------------------------------------------------
-        get historySummary() {
-            const total = this.history.length;
-            const terlambat = this.history.filter(h => h.status === 'terlambat').length;
-            return { total, terlambat, hadir: total - terlambat };
-        },
-
-        formatDateLabel(isoDate) {
-            const d = new Date(isoDate + 'T00:00:00');
-            const bulan = ['Jan','Feb','Mar','Apr','Mei','Jun','Jul','Agu','Sep','Okt','Nov','Des'][d.getMonth()];
-            return d.getDate() + ' ' + bulan;
-        },
-
-        statusLabel(status) {
-            const labels = {
-                'hadir': 'Hadir',
-                'terlambat': 'Terlambat',
-                'tidak_hadir': 'Tidak Hadir',
-                'libur': 'Libur',
-                'bukan_hari_kerja': 'Bukan Hari Kerja',
-                'izin': 'Izin',
-                'sakit': 'Sakit',
-                'cuti': 'Cuti'
-            };
-            return labels[status] || status;
-        },
-
         getScheduleCheckinById(scheduleId) {
             if (scheduleId === null || scheduleId === undefined) return null;
             return this.todayCheckins.find(c => c.unit_schedule_id === scheduleId) || null;
