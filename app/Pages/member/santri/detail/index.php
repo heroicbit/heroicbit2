@@ -109,21 +109,30 @@
 
                         <template x-if="!loadingNilaiPondok">
                             <div>
-                                <div class="section-title">Nilai Pondok Bulan Ini</div>
-                                <div class="text-muted small mb-2" x-text="`${bulanLabel} - ${semesterLabel} - ${tahunLabel}`"></div>
+                                <div class="section-title">Nilai Pondok Semester Ini</div>
+                                <div class="text-muted small mb-2" x-text="`${semesterLabel} - ${tahunLabel}`"></div>
 
-                                <template x-if="!nilaiPondokBulanIni.length">
-                                    <p class="text-muted small">Belum ada nilai pondok bulan ini.</p>
+                                <template x-if="!nilaiPondok.length">
+                                    <p class="text-muted small">Belum ada nilai pondok di semester ini.</p>
                                 </template>
-                                <template x-for="n in nilaiPondokBulanIni" :key="n.nama_komponen">
-                                    <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom:1px solid #f1f1f1">
-                                        <div class="pe-3">
-                                            <div class="fw-bold" x-text="n.nama_komponen"></div>
-                                            <small class="text-muted d-block" x-show="n.keterangan" x-text="n.keterangan"></small>
-                                        </div>
-                                        <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle border fw-bold" style="width:38px;height:38px;color:#05b2c5">
-                                            <span x-text="n.nilai ?? '-' "></span>
-                                        </div>
+
+                                <template x-for="m in nilaiPondok" :key="m.bulan">
+                                    <div class="mb-3">
+                                        <div class="fw-bold mb-1" style="color:#05b2c5" x-text="m.bulan_label"></div>
+                                        <template x-if="!m.nilai.length">
+                                            <p class="text-muted small">Belum ada nilai di bulan ini.</p>
+                                        </template>
+                                        <template x-for="n in m.nilai" :key="m.bulan + '-' + n.nama_komponen">
+                                            <div class="d-flex align-items-center justify-content-between py-2" style="border-bottom:1px solid #f1f1f1">
+                                                <div class="pe-3">
+                                                    <div class="fw-bold" x-text="n.nama_komponen"></div>
+                                                    <small class="text-muted d-block" x-show="n.keterangan" x-text="n.keterangan"></small>
+                                                </div>
+                                                <div class="flex-shrink-0 d-flex align-items-center justify-content-center rounded-circle border fw-bold" style="width:38px;height:38px;color:#05b2c5">
+                                                    <span x-text="n.nilai ?? '-' "></span>
+                                                </div>
+                                            </div>
+                                        </template>
                                     </div>
                                 </template>
 

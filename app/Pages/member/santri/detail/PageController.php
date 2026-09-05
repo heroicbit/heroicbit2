@@ -95,51 +95,34 @@ class PageController extends MemberPageController {
         $semRow = $pdb->table('mein_options')->where('option_name', 'active_semester')->get()->getRow();
         $activeSemester = (int) ($semRow->option_value ?? 0);
 
-        // Bulan berjalan (filter "bulan ini")
-        $bulan = (int) date('n');
-
-        // 1) Nilai bulan ini per aspek (nilai terbaru tiap komponen)
-        $bulanIni = [];
-        $bulanTampil = $bulan; // bulan yang benar-benar ditampilkan (bisa fallback ke bulan terakhir)
-        if ($activeYear && $activeSemester) {
-            $bulanIni = $this->ambilNilaiBulan($pdb, $student_id, $activeYear, $activeSemester, $bulanTampil);
-
-            // Fallback: jika bulan berjalan belum ada, ambil bulan terakhir yang punya data
-            if (empty($bulanIni)) {
-                $lastBulan = $pdb->query("SELECT MAX(bulan) AS m FROM asrama_nilai_bulanan
-                    WHERE santri_id = :sid: AND tahun_ajaran_id = :y: AND semester = :sem:
-                      AND deleted_at IS NULL",
-                    ['sid' => $student_id, 'y' => $activeYear, 'sem' => $activeSemester])->getRow()->m;
-
-                if ($lastBulan && (int) $lastBulan != $bulanTampil) {
-                    $bulanTampil = (int) $lastBulan;
-                    $bulanIni = $this->ambilNilaiBulan($pdb, $student_id, $activeYear, $activeSemester, $bulanTampil);
-                }
-            }
-        }
-
-        // Lengkapi dengan semua aspek penilaian (nilai null bila belum dinilai)
-        $semuaKomponen = $pdb->table('asrama_nilai_komponen')
-            ->where('deleted_at', null)->orderBy('id')->get()->getResultArray();
-        $nilaiMap = [];
-        foreach ($bulanIni as $n) {
-            $nilaiMap[$n['nama_komponen']] = $n;
-        }
-        $bulanIni = array_map(function ($k) use ($nilaiMap) {
-            return [
-                'nama_komponen' => $k['nama_komponen'],
-                'nilai'         => $nilaiMap[$k['nama_komponen']]['nilai'] ?? null,
-                'keterangan'    => $nilaiMap[$k['nama_komponen']]['keterangan'] ?? null,
-            ];
-        }, $semuaKomponen);
-
-        // Label bulan, semester, tahun untuk tampilan
+        // Nama bulan & tahun ajaran untuk tampilan
         $namaBulan = [1 => 'Januari', 2 => 'Februari', 3 => 'Maret', 4 => 'April', 5 => 'Mei', 6 => 'Juni',
             7 => 'Juli', 8 => 'Agustus', 9 => 'September', 10 => 'Oktober', 11 => 'November', 12 => 'Desember'];
         $tahunLabel = null;
         if ($activeYear) {
             $yRow = $pdb->table('md_year')->where('id', $activeYear)->get()->getRow();
             $tahunLabel = $yRow->year_label ?? null;
+        }
+
+        // 1) Semua nilai per bulan pada semester berjalan
+        $bulanan = [];
+        if ($activeYear && $activeSemester) {
+            // Bulan-bulan yang sudah punya catatan nilai di semester ini
+            $bulanList = $pdb->query("SELECT DISTINCT bulan FROM asrama_nilai_bulanan
+                WHERE santri_id = :sid: AND tahun_ajaran_id = :y: AND semester = :sem:
+                  AND deleted_at IS NULL
+                ORDER BY bulan",
+                ['sid' => $student_id, 'y' => $activeYear, 'sem' => $activeSemester])->getResultArray();
+
+            foreach ($bulanList as $rowBulan) {
+                $bulan = (int) $rowBulan['bulan'];
+                $bulanan[] = [
+                    'bulan'       => $bulan,
+                    'bulan_label' => $namaBulan[$bulan] ?? $bulan,
+                    // Nilai terbaru tiap komponen pada bulan tersebut
+                    'nilai'       => $this->ambilNilaiBulan($pdb, $student_id, $activeYear, $activeSemester, $bulan),
+                ];
+            }
         }
 
         // 2) Nilai semester kemarin (record terakhir sebelum semester berjalan)
@@ -166,15 +149,13 @@ class PageController extends MemberPageController {
 
         return $this->respond([
             'found' => 1,
-            'bulan_ini' => [
-                'bulan'           => $bulanTampil,
-                'bulan_label'     => $namaBulan[$bulanTampil] ?? $bulanTampil,
+            'semester' => [
                 'semester'        => $activeSemester,
                 'semester_label'  => $activeSemester == 1 ? 'Semester Ganjil' : 'Semester Genap',
                 'tahun_ajaran_id' => $activeYear,
                 'tahun_label'     => $tahunLabel,
-                'nilai'           => $bulanIni,
             ],
+            'bulanan'          => $bulanan,
             'semester_kemarin' => $semesterKemarin,
         ]);
     }

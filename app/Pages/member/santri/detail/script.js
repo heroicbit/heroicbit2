@@ -54,10 +54,9 @@ window.member_santri_detail = function (id) {
     calendar: null,
     selectedDate: null,
     selectedPresensi: {},
-    nilaiPondokBulanIni: [],
+    nilaiPondok: [],
     nilaiPondokSemesterKemarin: null,
     loadingNilaiPondok: false,
-    bulanLabel: "",
     semesterLabel: "",
     tahunLabel: "",
 
@@ -220,11 +219,10 @@ window.member_santri_detail = function (id) {
       })
         .then((data) => {
           if (data.found == 1) {
-            this.nilaiPondokBulanIni = data.bulan_ini?.nilai ?? [];
+            this.nilaiPondok = data.bulanan ?? [];
             this.nilaiPondokSemesterKemarin = data.semester_kemarin;
-            this.bulanLabel = data.bulan_ini?.bulan_label ?? "";
-            this.semesterLabel = data.bulan_ini?.semester_label ?? "";
-            this.tahunLabel = data.bulan_ini?.tahun_label ?? "";
+            this.semesterLabel = data.semester?.semester_label ?? "";
+            this.tahunLabel = data.semester?.tahun_label ?? "";
           }
         })
         .finally(() => {
