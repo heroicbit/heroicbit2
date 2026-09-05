@@ -84,7 +84,7 @@ class PageController extends MemberPageController {
         $user = $Tarbiyya->checkToken();
 
         // DB penilaianpondok (sumber data nilai pondok)
-        $pdb = $Tarbiyya->initDBPondok();
+        $pdb = $Tarbiyya->initDBPesantren();
 
         // Tahun ajaran & semester aktif DIAMBIL DARI penilaianpondok,
         // persis seperti cara nilai disimpan saat submit di penilaianpondok:
@@ -229,7 +229,7 @@ class PageController extends MemberPageController {
 
         // Nama komponen dari DB penilaianpondok
         $Tarbiyya = new \App\Libraries\Tarbiyya();
-        $pdb = $Tarbiyya->initDBPondok();
+        $pdb = $Tarbiyya->initDBPesantren();
         $komponen = $pdb->query("SELECT id, nama_komponen FROM asrama_nilai_komponen WHERE deleted_at IS NULL")
             ->getResultArray();
         $namaMap = array_column($komponen, 'nama_komponen', 'id');
