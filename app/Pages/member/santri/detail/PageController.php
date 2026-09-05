@@ -111,7 +111,7 @@ class PageController extends MemberPageController {
             $bulanList = $pdb->query("SELECT DISTINCT bulan FROM asrama_nilai_bulanan
                 WHERE santri_id = :sid: AND tahun_ajaran_id = :y: AND semester = :sem:
                   AND deleted_at IS NULL
-                ORDER BY bulan",
+                ORDER BY bulan DESC",
                 ['sid' => $student_id, 'y' => $activeYear, 'sem' => $activeSemester])->getResultArray();
 
             foreach ($bulanList as $rowBulan) {
