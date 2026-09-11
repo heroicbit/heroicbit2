@@ -1049,7 +1049,7 @@
                                         <div class="ms-body">
                                             <div class="ms-t" x-text="s.title"></div>
                                             <div class="ms-sub" x-text="schedWindow(s)"></div>
-                                            <div class="ms-sub ok" x-show="s.present" x-text="'Masuk ' + (s.check_in_time || '—') + (s.check_in_distance_meter !== null ? (' · ' + s.check_in_distance_meter + ' m') : '')"></div>
+                                            <div class="ms-sub ok" x-show="s.present" x-text="'Check-in ' + (s.check_in_time || '—') + (s.check_in_distance_meter !== null ? (' · ' + s.check_in_distance_meter + ' m') : '')"></div>
                                         </div>
                                         <span class="ms-badge" x-text="s.present ? 'Hadir' : 'Tidak Hadir'"></span>
                                     </div>

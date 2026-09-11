@@ -533,7 +533,7 @@ document.addEventListener('alpine:init', () => {
                         office_location_name: res.data.office_location_name || null
                     });
                     const popupTitle = schedule && schedule.title
-                        ? 'Absen Masuk: ' + schedule.title
+                        ? 'Checkin berhasil: ' + schedule.title
                         : 'Absen Masuk Berhasil 🎉';
                     const locName = res.data.office_location_name
                         || (this.officeLocation ? this.officeLocation.name : '');
